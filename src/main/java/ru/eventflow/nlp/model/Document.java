@@ -17,7 +17,16 @@ public class Document {
 
     @Id
     @Column(name = "id")
-    private Integer id;
+    private int id;
+
+    public Document() {
+    }
+
+    public Document(int id, String url, String text) {
+        this.url = url;
+        this.text = text;
+        this.id = id;
+    }
 
     public String getText() {
         return text;
@@ -35,11 +44,11 @@ public class Document {
         this.url = url;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

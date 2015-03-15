@@ -1,0 +1,122 @@
+Проблемы с экспортом текстов OpenCorpora
+
+1. bzip2 архив битый
+2. в zip архиве
+      встречаются пробелы внутри тегов (напр. <tag> ... </tag >)
+      не экранируются амперсанды
+
+      <?xml version="1.0" encoding="utf-8"?><text id="146" parent="56" name="Контрабанда водки по трубопроводу"><tags><tag>url:http://ru.wikinews.org/w/index.php?title=Контрабанда_водки_по_трубопроводу&oldid=16552</tag>
+
+
+Настройка текстовой конфигурации в PostgreSQL
+
+  http://linuxgazette.net/164/sephton.html
+  http://www.postgresql.org/docs/9.1/static/textsearch-intro.html
+
+
+Baseline demo session
+
+-- CREATE TABLE document (
+--   id character varying(255) NOT NULL,
+--   text text,
+--   url text,
+--   CONSTRAINT document_pkey PRIMARY KEY (id)
+-- )
+
+track1=# \dF
+               List of text search configurations
+   Schema   |    Name    |              Description
+------------+------------+---------------------------------------
+ pg_catalog | danish     | configuration for danish language
+ pg_catalog | dutch      | configuration for dutch language
+ pg_catalog | english    | configuration for english language
+ pg_catalog | finnish    | configuration for finnish language
+ pg_catalog | french     | configuration for french language
+ pg_catalog | german     | configuration for german language
+ pg_catalog | hungarian  | configuration for hungarian language
+ pg_catalog | italian    | configuration for italian language
+ pg_catalog | norwegian  | configuration for norwegian language
+ pg_catalog | portuguese | configuration for portuguese language
+ pg_catalog | romanian   | configuration for romanian language
+ pg_catalog | russian    | configuration for russian language
+ pg_catalog | simple     | simple configuration
+ pg_catalog | spanish    | configuration for spanish language
+ pg_catalog | swedish    | configuration for swedish language
+ pg_catalog | turkish    | configuration for turkish language
+(16 rows)
+
+-- default FTS configuration for Russian
+track1=# alter database track1 SET default_text_search_config = 'pg_catalog.russian';
+ALTER DATABASE
+
+-- no stemming here
+track1=# select to_tsvector('ворон к ворону летит ворон ворону кричит');
+                     to_tsvector
+-----------------------------------------------------
+ 'ворон':1,5 'ворону':3,6 'к':2 'кричит':7 'летит':4
+(1 row)
+
+track1=# CREATE TEXT SEARCH CONFIGURATION public.fts_config ( COPY=pg_catalog.russian );
+CREATE TEXT SEARCH CONFIGURATION
+
+track1=# CREATE TEXT SEARCH DICTIONARY russian_stem ( TEMPLATE=snowball, language='russian', stopwords='russian' );
+CREATE TEXT SEARCH DICTIONARY
+
+track1=# SET default_text_search_config = 'public.fts_config';
+SET
+
+-- now we have stop words stripping and the snowball stemmer for russian
+track1=# select to_tsvector('ворон к ворону летит ворон ворону кричит');
+           to_tsvector
+----------------------------------
+ 'ворон':1,3,5,6 'крич':7 'лет':4
+(1 row)
+
+-- ts_query
+track1=# select to_tsquery('книги | павича');
+    to_tsquery
+------------------
+ 'книг' | 'павич'
+(1 row)
+
+track1=# select to_tsquery('(книги | журналы) & павича');
+           to_tsquery
+---------------------------------
+ ( 'книг' | 'журнал' ) & 'павич'
+(1 row)
+
+track1=# select plainto_tsquery('книги павича');
+ plainto_tsquery
+------------------
+ 'книг' & 'павич'
+(1 row)
+
+-- примеры запросов
+
+-- точное вхождение
+track1=# select count(*) from "document" WHERE "text" @@ 'книги и журналы';
+
+-- стемминг и удаление стоп-слов
+track1=# select count(*) from "document" WHERE "text" @@ plainto_tsquery('книги и журналы');
+ count
+-------
+    16
+(1 row)
+
+-- AND (то же, что предыдущий запрос)
+track1=# select count(*) from "document" WHERE "text" @@ to_tsquery('книги & журналы');
+ count
+-------
+    16
+(1 row)
+
+-- OR
+track1=# select count(*) from "document" WHERE "text" @@ to_tsquery('книги | журналы');
+ count
+-------
+   200
+(1 row)
+
+-- простейший индекс
+CREATE INDEX document_idx ON "document"
+  USING gin(to_tsvector('russian', "text"));

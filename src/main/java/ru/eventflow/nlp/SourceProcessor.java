@@ -39,6 +39,7 @@ public class SourceProcessor {
             init();
         } catch (Exception e) {
             logger.severe("Initialization failed");
+            e.printStackTrace();
             System.exit(1);
         }
     }
@@ -68,6 +69,8 @@ public class SourceProcessor {
             if (flush) flushToDisk(doc);
         }
         em.getTransaction().commit();
+
+        configureFTS();
     }
 
     private List<File> scanResources(File root) {
@@ -137,6 +140,18 @@ public class SourceProcessor {
         FileOutputStream fout = new FileOutputStream(fullTextFile);
         fout.write(doc.getText().getBytes());
         fout.close();
+    }
+
+    private void configureFTS() {
+        em.getTransaction().begin();
+        em.createNativeQuery("DROP TEXT SEARCH CONFIGURATION IF EXISTS public.fts_config;").executeUpdate();
+        em.createNativeQuery("DROP TEXT SEARCH DICTIONARY IF EXISTS public.russian_stem;").executeUpdate();
+        em.createNativeQuery("DROP INDEX IF EXISTS public.document_idx;").executeUpdate();
+        em.createNativeQuery("CREATE TEXT SEARCH CONFIGURATION public.fts_config ( COPY=pg_catalog.russian );").executeUpdate();
+        em.createNativeQuery("CREATE TEXT SEARCH DICTIONARY public.russian_stem ( TEMPLATE=snowball, language='russian', stopwords='russian' );").executeUpdate();
+        em.createNativeQuery("CREATE INDEX document_idx ON public.document USING gin(to_tsvector('russian', text));").executeUpdate();
+        em.createNativeQuery("SET default_text_search_config = 'public.fts_config';").executeUpdate();
+        em.getTransaction().commit();
     }
 
 }

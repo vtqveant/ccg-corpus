@@ -120,3 +120,26 @@ track1=# select count(*) from "document" WHERE "text" @@ to_tsquery('книги 
 -- простейший индекс
 CREATE INDEX document_idx ON "document"
   USING gin(to_tsvector('russian', "text"));
+
+
+-------------
+
+  transcend@transcend-desktop:~/code/NLU-RG/tracks/track1/baseline$ java -jar target/baseline-1.0-SNAPSHOT-jar-with-dependencies.jar -d ~/code/NLU-RG/tracks/track1/baseline/src/main/resources/gold/
+  -d, /home/transcend/code/NLU-RG/tracks/track1/baseline/src/main/resources/gold/
+  baseline> владел русским
+  [19]
+  baseline> Владел русским
+  [19]
+  baseline> владела русским
+  [19]
+  baseline> Владела русским
+  [19]
+  baseline> "владел русским"
+  []
+  baseline> "Владел русским"
+  [19]
+  baseline> "Владела русским"
+  []
+  baseline> "владела русским"
+  []
+  baseline>

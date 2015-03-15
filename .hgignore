@@ -5,3 +5,4 @@
 out/
 target
 src/main/resources/annot.opcorpora.xml
+src/main/resources/gold

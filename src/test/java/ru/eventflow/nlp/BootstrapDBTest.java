@@ -1,7 +1,6 @@
 package ru.eventflow.nlp;
 
 import org.junit.Test;
-import ru.eventflow.nlp.model.Document;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;

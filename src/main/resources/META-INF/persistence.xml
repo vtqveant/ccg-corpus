@@ -5,7 +5,7 @@
     <persistence-unit name="track1">
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 
-        <class>ru.eventflow.nlp.model.Document</class>
+        <class>ru.eventflow.nlp.Document</class>
 
         <properties>
             <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/track1"/>
@@ -14,7 +14,6 @@
             <property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>
 
             <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(foreignKeys=true,SchemaAction='dropDB,add')"/>
-            <!--<property name="openjpa.Log" value="DefaultLevel=WARN,Tool=INFO,SQL=TRACE"/>-->
             <property name="openjpa.Log" value="DefaultLevel=WARN,Tool=INFO"/>
         </properties>
     </persistence-unit>

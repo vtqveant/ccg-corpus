@@ -2,7 +2,6 @@ package ru.eventflow.nlp;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -15,15 +14,17 @@ public class Runner {
     private static EntityManager em =  Persistence.createEntityManagerFactory("track1").createEntityManager();
 
     public static void main(String[] args) throws Exception {
-        System.out.println(args[0] + ", " + args[1]);
+//        System.out.println(args[0] + ", " + args[1]);
 
         if (args.length < 2 || args.length % 2 != 0 || !(args[0].equals("-d") || args[0].equals("--data"))) {
-            usage();
+            System.out.println("Usage:");
+            System.out.println("  -d, --data\tdata directory");
             System.exit(1);
         }
 
-        new SourceProcessor(em, args[1], true); // TODO print datasource statistics
-        Processor processor = new Processor(em);
+        SourceProcessor sourceProcessor = new SourceProcessor(em, args[1], true);
+        sourceProcessor.init();
+        SearchEngine searchEngine = new SearchEngine(em);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
@@ -39,16 +40,9 @@ public class Runner {
                 continue;
             }
 
-            List<Integer> ids = processor.executeQuery(input);
+            List<Integer> ids = searchEngine.executeQuery(input);
             System.out.println(ids);
         }
     }
-
-    private static void usage() {
-        System.out.println("Usage:");
-        System.out.println("\t-d, --data\t\tdata directory");
-    }
-
-
 
 }

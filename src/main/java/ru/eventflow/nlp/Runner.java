@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class Runner {
 
-    private static final Logger logger = Logger.getLogger("Runner");
+    private static final Logger logger = Logger.getLogger(Runner.class.getName());
 
     private static EntityManager em =  Persistence.createEntityManagerFactory("track1").createEntityManager();
 
@@ -23,6 +23,7 @@ public class Runner {
         }
 
         new SourceProcessor(em, args[1], true); // TODO print datasource statistics
+        Processor processor = new Processor(em);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
@@ -38,7 +39,7 @@ public class Runner {
                 continue;
             }
 
-            List<Integer> ids = executeQuery(input);
+            List<Integer> ids = processor.executeQuery(input);
             System.out.println(ids);
         }
     }
@@ -48,17 +49,6 @@ public class Runner {
         System.out.println("\t-d, --data\t\tdata directory");
     }
 
-    @SuppressWarnings("unchecked")
-    private static List<Integer> executeQuery(String query) {
-        Query q;
-        if (query.startsWith("\"") && query.endsWith("\"")) { // if this is an exact match query
-            query = query.substring(1, query.length() - 1);
-            q = em.createNativeQuery("SELECT id FROM document WHERE text LIKE '%" + query + "%';", Integer.class);
-        } else {
-            q = em.createNativeQuery("SELECT id FROM document WHERE text @@ plainto_tsquery('" + query + "');", Integer.class);
-        }
-        return (List<Integer>) q.getResultList();
-    }
 
 
 }

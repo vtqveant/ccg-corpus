@@ -5,12 +5,12 @@ import javax.persistence.Persistence;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BatchRunner {
 
-    public static final char SEP = ';';
     public static final String RESULT_CSV = "/tmp/opcorpora/result.csv";
 
     private static EntityManager em = Persistence.createEntityManagerFactory("track1").createEntityManager();
@@ -35,42 +35,11 @@ public class BatchRunner {
             File file = new File(RESULT_CSV);
             file.getParentFile().mkdirs();
             FileOutputStream out = new FileOutputStream(file);
-            flushMatrix(documentIds, matrix, out);
+            new ResultCSVWriter().write(documentIds, matrix, out);
+            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void flushMatrix(List<Integer> documentIds, Map<String, List<Integer>> matrix,
-                                    OutputStream out) throws IOException {
-        StringBuilder sb = new StringBuilder();
-
-        // header
-        for (Integer id : documentIds) {
-            sb.append(SEP);
-            sb.append(id);
-        }
-        sb.append('\n');
-
-        // rows
-        for (Map.Entry<String, List<Integer>> entry : matrix.entrySet()) {
-            sb.append(entry.getKey());
-            List<Integer> evaluations = entry.getValue();
-
-            int i = 0;
-            int lastEvalIdx = (evaluations.size() > 0 ) ? evaluations.get(evaluations.size() - 1) : -1;
-            for (Integer docId : documentIds) {
-                sb.append(SEP);
-                if (docId > lastEvalIdx || docId < evaluations.get(i)) {
-                    sb.append('f');
-                } else {
-                    sb.append('t');
-                    i++;
-                }
-            }
-            sb.append('\n');
-        }
-
-        out.write(sb.toString().getBytes());
-    }
 }

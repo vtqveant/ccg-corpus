@@ -16,12 +16,13 @@
 
 Baseline demo session
 
--- CREATE TABLE document (
---   id character varying(255) NOT NULL,
---   text text,
---   url text,
---   CONSTRAINT document_pkey PRIMARY KEY (id)
--- )
+CREATE TABLE document
+(
+  id integer NOT NULL,
+  text text,
+  url text,
+  CONSTRAINT document_pkey PRIMARY KEY (id)
+)
 
 track1=# \dF
                List of text search configurations
@@ -46,7 +47,7 @@ track1=# \dF
 (16 rows)
 
 -- default FTS configuration for Russian
-track1=# alter database track1 SET default_text_search_config = 'pg_catalog.russian';
+track1=# ALTER DATABASE track1 SET default_text_search_config = 'pg_catalog.russian';
 ALTER DATABASE
 
 -- no stemming here

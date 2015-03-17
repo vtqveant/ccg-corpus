@@ -1,4 +1,4 @@
-package ru.eventflow.nlp.model;
+package ru.eventflow.nlp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -8,12 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class CSVReader {
+public class RequestsCSVLoader implements RequestsLoader {
 
     private static final String SEPARATOR = ";";
+    public static final String REQUESTS_CSV = "/requests.csv";
 
     public Set<String> getRequests() throws IOException {
-        Map<String, String[]> map = parse("/requests.csv", true);
+        Map<String, String[]> map = parse(REQUESTS_CSV, true);
         return map.keySet();
     }
 

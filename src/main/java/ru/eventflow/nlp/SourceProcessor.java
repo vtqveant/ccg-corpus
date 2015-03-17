@@ -1,6 +1,5 @@
 package ru.eventflow.nlp;
 
-import ru.eventflow.nlp.model.Document;
 import ru.eventflow.nlp.xml.Paragraph;
 import ru.eventflow.nlp.xml.Sentence;
 import ru.eventflow.nlp.xml.Text;
@@ -13,8 +12,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -35,42 +33,55 @@ public class SourceProcessor {
         this.em = em;
         this.resourcesLocation = resourcesLocation;
         this.flush = flush;
+
         try {
-            init();
-        } catch (Exception e) {
+            JAXBContext jc = JAXBContext.newInstance("ru.eventflow.nlp.xml");
+            unmarshaller = jc.createUnmarshaller();
+        } catch (JAXBException e) {
             logger.severe("Initialization failed");
             e.printStackTrace();
             System.exit(1);
         }
     }
 
-    private void init() throws JAXBException, IOException {
-        JAXBContext jc = JAXBContext.newInstance("ru.eventflow.nlp.xml");
-        unmarshaller = jc.createUnmarshaller();
+    public List<Integer> init() {
+        List<Integer> documentIds = new ArrayList<>();
+        try {
+            List<File> files = scanResources(new File(resourcesLocation));
+            logger.info(files.size() + " documents in corpus");
 
-        List<File> files = scanResources(new File(resourcesLocation));
-
-        em.getTransaction().begin();
-        for (File f : files) {
-            Document doc;
-            if (f.getName().endsWith(".xml")) {
-                try {
-                    doc = processXmlFile(f);
-                } catch (JAXBException e) {
-                    logger.info(f.getName());
+            em.getTransaction().begin();
+            for (File f : files) {
+                Document doc;
+                if (f.getName().endsWith(".xml")) {
+                    try {
+                        doc = processXmlFile(f);
+                    } catch (JAXBException e) {
+                        logger.warning(f.getName());
+                        continue;
+                    }
+                } else if (f.getName().endsWith(".txt")) {
+                    doc = processTxtFile(f);
+                } else {
                     continue;
                 }
-            } else if (f.getName().endsWith(".txt")) {
-                doc = processTxtFile(f);
-            } else {
-                continue;
+                em.persist(doc);
+                documentIds.add(doc.getId());
+                if (flush) flushToDisk(doc);
             }
-            em.persist(doc);
-            if (flush) flushToDisk(doc);
-        }
-        em.getTransaction().commit();
+            em.getTransaction().commit();
+            logger.info(documentIds.size() + " documents processed");
 
-        configureFTS();
+            configureFTS();
+            logger.info("FTS configuration done");
+        } catch (IOException e) {
+            logger.severe("Initialization failed");
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        Collections.sort(documentIds);
+        return documentIds;
     }
 
     private List<File> scanResources(File root) {
@@ -92,10 +103,10 @@ public class SourceProcessor {
     }
 
     private Document processTxtFile(File file) throws IOException {
-        StringBuilder sb = new StringBuilder();
         BufferedReader reader = new BufferedReader(new FileReader(file));
         char[] buf = new char[1024];
         int numRead = 0;
+        StringBuilder sb = new StringBuilder();
         while ((numRead = reader.read(buf)) != -1) {
             String readData = String.valueOf(buf, 0, numRead);
             sb.append(readData);

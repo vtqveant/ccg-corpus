@@ -5,9 +5,7 @@ import javax.persistence.Persistence;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BatchRunner {
 
@@ -21,6 +19,7 @@ public class BatchRunner {
         List<Integer> documentIds = sourceProcessor.init();
         SearchEngine searchEngine = new SearchEngine(em);
         RequestsLoader requestsLoader = new RequestsCSVLoader();
+        RelevanceLoader relevanceLoader = new RelevanceLoader();
 
         try {
             // in
@@ -29,6 +28,34 @@ public class BatchRunner {
                 List<Integer> ids = searchEngine.executeQuery(request);
                 matrix.put(request, ids);
                 System.out.println(request + ": " + ids);
+            }
+
+
+            // compute metrics
+            Map<String, Set<Integer>> relevance = relevanceLoader.loadRelevanceData();
+            float precision;
+            float recall;
+            float fmeasure;
+
+            System.out.println();
+            System.out.printf("%-30s\t%-5s\t%-5s\t%-5s\n\n", "query", "P", "R", "F1");
+
+            for (String request : matrix.keySet()) {
+                Set<Integer> truePositives = new HashSet<Integer>(matrix.get(request));
+                truePositives.retainAll(relevance.get(request));
+
+                int truePositivesCount = truePositives.size();
+                int totalRelevantCount = relevance.get(request).size();
+                int totalRetrievedCount =  matrix.get(request).size();
+
+                try {
+                    precision = 100 * truePositivesCount / totalRetrievedCount;
+                    recall = 100 * truePositivesCount / totalRelevantCount;
+                    fmeasure = 2 * precision * recall / (precision + recall);
+                    System.out.printf("%-30s\t%-5s\t%-5s\t%-5s\n", request,  precision, recall, fmeasure);
+                } catch (Exception e) {
+
+                }
             }
 
             // out

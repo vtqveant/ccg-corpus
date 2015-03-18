@@ -20,7 +20,7 @@ public class ResultWriterTest {
         matrix.put("d", Arrays.asList(4));
         matrix.put("e", Arrays.asList(5));
 
-        // diagonal matrix in CSV format is expected
+        // a matrix with t's on the diagonal in CSV format is expected
         ResultWriter writer = new ResultCSVWriter();
         writer.write(docIds, matrix, System.out);
     }

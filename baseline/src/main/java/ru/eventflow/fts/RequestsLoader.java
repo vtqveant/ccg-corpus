@@ -1,4 +1,4 @@
-package ru.eventflow.ir;
+package ru.eventflow.fts;
 
 import java.io.IOException;
 import java.util.Set;

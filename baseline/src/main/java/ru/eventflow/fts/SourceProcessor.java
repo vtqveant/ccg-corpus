@@ -1,8 +1,9 @@
-package ru.eventflow.ir;
+package ru.eventflow.fts;
 
-import ru.eventflow.ir.xml.Paragraph;
-import ru.eventflow.ir.xml.Sentence;
-import ru.eventflow.ir.xml.Text;
+import ru.eventflow.fts.datasource.Document;
+import ru.eventflow.fts.xml.Paragraph;
+import ru.eventflow.fts.xml.Sentence;
+import ru.eventflow.fts.xml.Text;
 
 import javax.persistence.EntityManager;
 import javax.xml.bind.JAXBContext;
@@ -35,7 +36,7 @@ public class SourceProcessor {
         this.flush = flush;
 
         try {
-            JAXBContext jc = JAXBContext.newInstance("ru.eventflow.ir.xml");
+            JAXBContext jc = JAXBContext.newInstance("ru.eventflow.fts.xml");
             unmarshaller = jc.createUnmarshaller();
         } catch (JAXBException e) {
             logger.severe("Initialization failed");

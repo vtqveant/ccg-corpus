@@ -1,4 +1,4 @@
-package ru.eventflow.ir;
+package ru.eventflow.fts.datasource;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package ru.eventflow.ir;
+package ru.eventflow.fts;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;

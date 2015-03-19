@@ -81,7 +81,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <packageName>ru.eventflow.nlp.xml</packageName>
+                    <packageName>ru.eventflow.ir.xml</packageName>
                 </configuration>
             </plugin>
             <plugin>
@@ -92,7 +92,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>ru.eventflow.nlp.Runner</mainClass>
+                            <mainClass>ru.eventflow.ir.Runner</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

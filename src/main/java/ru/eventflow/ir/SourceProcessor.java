@@ -1,8 +1,8 @@
-package ru.eventflow.nlp;
+package ru.eventflow.ir;
 
-import ru.eventflow.nlp.xml.Paragraph;
-import ru.eventflow.nlp.xml.Sentence;
-import ru.eventflow.nlp.xml.Text;
+import ru.eventflow.ir.xml.Paragraph;
+import ru.eventflow.ir.xml.Sentence;
+import ru.eventflow.ir.xml.Text;
 
 import javax.persistence.EntityManager;
 import javax.xml.bind.JAXBContext;
@@ -35,7 +35,7 @@ public class SourceProcessor {
         this.flush = flush;
 
         try {
-            JAXBContext jc = JAXBContext.newInstance("ru.eventflow.nlp.xml");
+            JAXBContext jc = JAXBContext.newInstance("ru.eventflow.ir.xml");
             unmarshaller = jc.createUnmarshaller();
         } catch (JAXBException e) {
             logger.severe("Initialization failed");

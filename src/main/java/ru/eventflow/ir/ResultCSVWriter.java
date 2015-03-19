@@ -1,4 +1,4 @@
-package ru.eventflow.nlp;
+package ru.eventflow.ir;
 
 import java.io.IOException;
 import java.io.OutputStream;

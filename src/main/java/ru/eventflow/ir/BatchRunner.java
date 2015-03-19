@@ -1,4 +1,4 @@
-package ru.eventflow.nlp;
+package ru.eventflow.ir;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;

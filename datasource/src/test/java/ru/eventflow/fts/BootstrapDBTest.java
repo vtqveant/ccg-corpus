@@ -1,6 +1,7 @@
-package ru.eventflow.ir;
+package ru.eventflow.fts;
 
 import org.junit.Test;
+import ru.eventflow.fts.datasource.Document;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;

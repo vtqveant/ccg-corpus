@@ -7,6 +7,7 @@
 
         <class>ru.eventflow.fts.datasource.Document</class>
         <class>ru.eventflow.fts.datasource.Query</class>
+        <class>ru.eventflow.fts.datasource.Assessment</class>
 
         <properties>
             <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/track1"/>

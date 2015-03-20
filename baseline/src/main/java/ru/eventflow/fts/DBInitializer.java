@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class DBInitializer {
 
-    public static final String DUMP_LOCATION = "/home/transcend/code/NLU-RG/tracks/track1/baseline/baseline/src/main/resources/annot.opcorpora.xml.byfile";
+    public static final String DUMP_LOCATION = "/home/transcend/code/NLU-RG/tracks/track1/data/annot.opcorpora.xml.byfile";
     private static EntityManager em = Persistence.createEntityManagerFactory("track1").createEntityManager();
 
     public static void main(String[] args) throws IOException {

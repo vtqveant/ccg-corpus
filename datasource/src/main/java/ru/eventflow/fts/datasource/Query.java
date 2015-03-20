@@ -18,7 +18,7 @@ public class Query {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(targetEntity = Assessment.class, mappedBy = "query", cascade = CascadeType.MERGE)
+    @OneToMany(targetEntity = Assessment.class, cascade = CascadeType.MERGE)
     private Set<Assessment> assessments = new HashSet<Assessment>();
 
     public Query() {

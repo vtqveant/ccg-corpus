@@ -1,4 +1,4 @@
-package ru.eventflow.assessment;
+package ru.eventflow.fts.assessment;
 
 import javax.swing.*;
 import java.awt.*;

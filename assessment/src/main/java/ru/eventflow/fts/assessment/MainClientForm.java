@@ -1,10 +1,12 @@
-package ru.eventflow.assessment;
+package ru.eventflow.fts.assessment;
 
 import ru.eventflow.fts.datasource.Document;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -22,7 +24,7 @@ public class MainClientForm extends JFrame {
     private JPanel assessmentPanel;
     private JTextPane relevanceTextPane;
     private JTextPane documentTextPane;
-    private JList documentsList;
+    private JList docList;
 
     public MainClientForm() {
 
@@ -105,26 +107,25 @@ public class MainClientForm extends JFrame {
         EntityManager em = Persistence.createEntityManagerFactory("fts-datasource").createEntityManager();
         List<Document> documents = em.createQuery("SELECT x FROM Document x ORDER BY x.id ASC", Document.class).getResultList();
 
-        DefaultListModel documentsListModel = new DefaultListModel();
+        DefaultListModel<Document> listModel = new DefaultListModel<Document>();
         for (Document document : documents) {
-            documentsListModel.addElement(document);
+            listModel.addElement(document);
         }
-        documentsList.setModel(documentsListModel);
-        documentsList.setCellRenderer(new ListCellRenderer() {
+        docList.setModel(listModel);
+        docList.setCellRenderer(new MyListCellRenderer());
+        docList.addListSelectionListener(new ListSelectionListener() {
             @Override
-            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                Document document = (Document) value;
-                JLabel label = new JLabel();
-                String line = (document.getText().length() < 30) ?
-                        document.getText() : document.getText().substring(0, 30) + "...";
-                label.setText(String.format("%6s %30s", document.getId(), line));
-                return label;
+            public void valueChanged(ListSelectionEvent e) {
+                JList list = (JList) e.getSource();
+                Document selectedValue = (Document) list.getSelectedValue();
+                documentTextPane.setText(selectedValue.getText());
+                documentTextPane.setCaretPosition(0);
             }
         });
 
 
-        relevanceTextPane.setText("sdfsdfsdf");
-        documentTextPane.setText("sdsdf");
+//        relevanceTextPane.setText("sdfsdfsdf");
+//        documentTextPane.setText("sdsdf");
     }
 
 
@@ -133,4 +134,15 @@ public class MainClientForm extends JFrame {
     }
 
 
+    class MyListCellRenderer extends JLabel implements ListCellRenderer {
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            Document document = (Document) value;
+            String line = (document.getText().length() < 20) ?
+                    document.getText() : document.getText().substring(0, 20) + "...";
+            setText(String.format("%6s %20s", document.getId(), line));
+            setOpaque(true);
+            setBackground(isSelected ? Color.LIGHT_GRAY : Color.WHITE);
+            return this;
+        }
+    }
 }

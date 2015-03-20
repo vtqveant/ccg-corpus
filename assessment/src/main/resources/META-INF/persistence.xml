@@ -6,6 +6,7 @@
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 
         <class>ru.eventflow.fts.datasource.Document</class>
+        <class>ru.eventflow.fts.datasource.Query</class>
 
         <properties>
             <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/track1"/>

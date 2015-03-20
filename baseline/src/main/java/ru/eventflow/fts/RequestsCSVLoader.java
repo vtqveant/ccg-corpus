@@ -18,6 +18,10 @@ public class RequestsCSVLoader implements RequestsLoader {
         return map.keySet();
     }
 
+    public Map<String, String> getFullRequests() throws IOException {
+        return parse(REQUESTS_CSV, true);
+    }
+
     private Map<String, String> parse(String resource, boolean skipFirst) throws IOException {
         InputStream in = BatchRunner.class.getResourceAsStream(resource);
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -32,7 +36,7 @@ public class RequestsCSVLoader implements RequestsLoader {
             }
             int colPos = line.indexOf(SEP);
             String key = line.substring(0, colPos);
-            String value = line.substring(colPos);
+            String value = line.substring(colPos + 1);
             map.put(key, value);
         }
 

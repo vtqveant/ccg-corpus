@@ -1,23 +1,20 @@
 package ru.eventflow.fts.datasource;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "document")
 public class Document {
+
+    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(name = "url", columnDefinition = "TEXT")
     private String url;
 
     @Column(name = "text", columnDefinition = "TEXT")
     private String text;
-
-    @Id
-    @Column(name = "id")
-    private int id;
 
     public Document() {
     }
@@ -51,4 +48,5 @@ public class Document {
     public void setId(int id) {
         this.id = id;
     }
+
 }

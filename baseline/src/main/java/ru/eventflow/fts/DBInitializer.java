@@ -1,6 +1,5 @@
 package ru.eventflow.fts;
 
-import ru.eventflow.fts.csv.RequestsCSVReader;
 import ru.eventflow.fts.datasource.Query;
 
 import javax.persistence.EntityManager;

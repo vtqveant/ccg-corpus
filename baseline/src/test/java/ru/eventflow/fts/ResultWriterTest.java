@@ -1,7 +1,6 @@
 package ru.eventflow.fts;
 
 import org.junit.Test;
-import ru.eventflow.fts.csv.ResultCSVWriter;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;

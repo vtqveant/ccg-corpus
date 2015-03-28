@@ -39,4 +39,22 @@ public class Scorer {
         }
 
     }
+
+    public static void main(String[] args) throws IOException {
+        final AssessmentCommonsCSVReader assessmentReader = new AssessmentCommonsCSVReader();
+        Map<String, Set<Integer>> assessments = assessmentReader.getAssessments();
+        Scorer scorer = new Scorer(assessments);
+
+        String[] resources = new String[] {
+                "/results/baseline.csv",
+                "/results/blavachinskaya et al.csv"
+        };
+
+        for (String resource : resources) {
+            List<Result> results = new ResultsCSVReader().getRequests(resource);
+            System.out.println(resource);
+            scorer.evaluateResults(results);
+            System.out.println();
+        }
+    }
 }

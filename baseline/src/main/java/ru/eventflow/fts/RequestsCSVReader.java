@@ -1,8 +1,7 @@
-package ru.eventflow.fts.csv;
+package ru.eventflow.fts;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import ru.eventflow.fts.Request;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +17,7 @@ public class RequestsCSVReader {
     public Set<Request> getRequests() throws IOException {
         InputStream in = RequestsCSVReader.class.getResourceAsStream(REQUESTS_CSV);
         Reader reader = new InputStreamReader(in);
-        Iterable<CSVRecord> records = CSVFormat.EXCEL.withDelimiter(';').parse(reader);
+        Iterable<CSVRecord> records = CSVFormat.EXCEL.withDelimiter(';').withHeader().parse(reader);
 
         Set<Request> requests = new HashSet<>();
         for (CSVRecord record : records) {

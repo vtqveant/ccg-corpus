@@ -1,8 +1,5 @@
 package ru.eventflow.fts;
 
-import ru.eventflow.fts.csv.RequestsCSVReader;
-import ru.eventflow.fts.csv.ResultCSVWriter;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.io.File;
@@ -33,9 +30,6 @@ public class BatchRunner {
                 results.add(result);
                 System.out.println(request + ": " + result.getDocuments());
             }
-
-            // compute metrics
-//            Scorer.computeScore(results);
 
             // out
             File file = new File(RESULT_CSV);

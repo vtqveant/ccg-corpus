@@ -1,4 +1,4 @@
-package ru.eventflow.fts.csv;
+package ru.eventflow.fts;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -17,7 +17,7 @@ public class ResultCSVWriter {
         Collections.sort(documentIds);
 
         String[] header = buildHeader(documentIds);
-        final CSVPrinter printer = CSVFormat.DEFAULT.withHeader(header).print(out);
+        final CSVPrinter printer = CSVFormat.DEFAULT.withDelimiter(';').withHeader(header).print(out);
 
         // rows
         for (Result result : results) {
@@ -27,9 +27,9 @@ public class ResultCSVWriter {
             int lastEvalIdx = (evaluations.size() > 0) ? evaluations.get(evaluations.size() - 1) : -1;
             for (Integer docId : documentIds) {
                 if (docId > lastEvalIdx || docId < evaluations.get(i)) {
-                    printer.print('f');
+                    printer.print('0');
                 } else {
-                    printer.print('t');
+                    printer.print('1');
                     i++;
                 }
             }

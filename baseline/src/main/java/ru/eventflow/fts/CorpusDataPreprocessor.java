@@ -19,18 +19,18 @@ import java.util.logging.Logger;
 /**
  * Prepares a DB, preprocesses dumps and input texts
  */
-public class SourceProcessor {
+class CorpusDataPreprocessor {
 
     private String resourcesLocation;
 
-    private static final Logger logger = Logger.getLogger(SourceProcessor.class.getName());
+    private static final Logger logger = Logger.getLogger(CorpusDataPreprocessor.class.getName());
 
     private Unmarshaller unmarshaller;
     private EntityManager em;
 
     private boolean flush;
 
-    public SourceProcessor(EntityManager em, String resourcesLocation, boolean flush) {
+    public CorpusDataPreprocessor(EntityManager em, String resourcesLocation, boolean flush) {
         this.em = em;
         this.resourcesLocation = resourcesLocation;
         this.flush = flush;

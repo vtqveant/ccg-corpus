@@ -14,7 +14,7 @@ public class AssessmentCommonsCSVReader {
 
     public static final int CORPUS_SIZE = 50;
 
-    private static final String RELEVANCE_CSV = "/relevance.csv";
+    private static final String ASSESSMENT_CSV = "/assessment.csv";
     private Map<String, Set<Integer>> assessments = new HashMap<>();
 
     /**
@@ -22,7 +22,7 @@ public class AssessmentCommonsCSVReader {
      * I also have to transpose it
      */
     public Map<String, Set<Integer>> getAssessments() throws IOException {
-        InputStream in = AssessmentCommonsCSVReader.class.getResourceAsStream(RELEVANCE_CSV);
+        InputStream in = getClass().getResourceAsStream(ASSESSMENT_CSV);
         Reader reader = new InputStreamReader(in);
         CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader);
 

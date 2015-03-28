@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Scorer {
 
+    public static final String FORMAT = "%-40s\t%-5s\t%-5s\t%-5s\n";
     Map<String, Set<Integer>> assessments = new HashMap<>();
 
     public Scorer(Map<String, Set<Integer>> assessments) {
@@ -16,8 +17,10 @@ public class Scorer {
         float recall;
         float fmeasure;
 
+        Collections.sort(results);
+
+        System.out.printf(FORMAT, "query", "P", "R", "F1");
         System.out.println();
-        System.out.printf("%-30s\t%-5s\t%-5s\t%-5s\n\n", "query", "P", "R", "F1");
 
         for (Result result : results) {
             String request = result.getRequest();
@@ -32,7 +35,7 @@ public class Scorer {
                 precision = 100 * truePositivesCount / totalRetrievedCount;
                 recall = 100 * truePositivesCount / totalRelevantCount;
                 fmeasure = 2 * precision * recall / (precision + recall);
-                System.out.printf("%-30s\t%-5s\t%-5s\t%-5s\n", request, precision, recall, fmeasure);
+                System.out.printf(FORMAT, request, precision, recall, fmeasure);
             } catch (Exception e) {
                 // ignore
             }
@@ -47,7 +50,8 @@ public class Scorer {
 
         String[] resources = new String[] {
                 "/results/baseline.csv",
-                "/results/blavachinskaya et al.csv"
+                "/results/blavachinskaya et al.csv",
+                "/results/invalid.csv"
         };
 
         for (String resource : resources) {

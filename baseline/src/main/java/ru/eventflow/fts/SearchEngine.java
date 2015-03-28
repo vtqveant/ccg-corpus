@@ -2,6 +2,7 @@ package ru.eventflow.fts;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchEngine {
@@ -13,7 +14,7 @@ public class SearchEngine {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Integer> executeQuery(String query) {
+    public Result executeQuery(String query) {
         Query q;
         if (query.startsWith("\"") && query.endsWith("\"")) { // if this is an exact match query
             query = query.substring(1, query.length() - 1);
@@ -21,7 +22,9 @@ public class SearchEngine {
         } else {
             q = em.createNativeQuery("SELECT id FROM document WHERE text @@ plainto_tsquery('" + query + "') ORDER BY id ASC;", Integer.class);
         }
-        return (List<Integer>) q.getResultList();
+        return new Result(query, (List<Integer>) q.getResultList());
     }
+
+
 
 }

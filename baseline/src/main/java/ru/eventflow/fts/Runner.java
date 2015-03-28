@@ -4,17 +4,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class Runner {
 
-    private static final Logger logger = Logger.getLogger(Runner.class.getName());
-
     private static EntityManager em =  Persistence.createEntityManagerFactory("track1").createEntityManager();
 
     public static void main(String[] args) throws Exception {
-//        System.out.println(args[0] + ", " + args[1]);
 
         if (args.length < 2 || args.length % 2 != 0 || !(args[0].equals("-d") || args[0].equals("--data"))) {
             System.out.println("Usage:");
@@ -22,8 +18,8 @@ public class Runner {
             System.exit(1);
         }
 
-        SourceProcessor sourceProcessor = new SourceProcessor(em, args[1], true);
-        sourceProcessor.init();
+        CorpusDataPreprocessor corpusDataPreprocessor = new CorpusDataPreprocessor(em, args[1], true);
+        corpusDataPreprocessor.init();
         SearchEngine searchEngine = new SearchEngine(em);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -40,8 +36,8 @@ public class Runner {
                 continue;
             }
 
-            List<Integer> ids = searchEngine.executeQuery(input);
-            System.out.println(ids);
+            Result result = searchEngine.executeQuery(input);
+            System.out.println(result.getDocuments());
         }
     }
 

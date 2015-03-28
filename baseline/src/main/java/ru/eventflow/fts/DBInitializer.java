@@ -1,11 +1,11 @@
 package ru.eventflow.fts;
 
+import ru.eventflow.fts.csv.RequestsCSVReader;
 import ru.eventflow.fts.datasource.Query;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.io.IOException;
-import java.util.Map;
 
 public class DBInitializer {
 
@@ -14,22 +14,17 @@ public class DBInitializer {
 
     public static void main(String[] args) throws IOException {
         // 1. process the OpenCorpora dump
-        SourceProcessor sourceProcessor = new SourceProcessor(em, DUMP_LOCATION, false);
-        sourceProcessor.init();
+        CorpusDataPreprocessor corpusDataPreprocessor = new CorpusDataPreprocessor(em, DUMP_LOCATION, false);
+        corpusDataPreprocessor.init();
 
         // 3. process queries
-        RequestsCSVLoader requestsLoader = new RequestsCSVLoader();
+        RequestsCSVReader requestsCSVReader = new RequestsCSVReader();
         em.getTransaction().begin();
-        for (Map.Entry<String, String> entry : requestsLoader.getFullRequests().entrySet()) {
-            Query query = new Query(entry.getKey(), entry.getValue());
+        for (Request request : requestsCSVReader.getRequests()) {
+            Query query = new Query(request.getText(), request.getDescription());
             em.persist(query);
         }
         em.getTransaction().commit();
-
-        // 2. process assessments
-        // TODO
-        // RelevanceLoader relevanceLoader = new RelevanceLoader();
     }
-
 
 }

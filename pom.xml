@@ -21,6 +21,7 @@
         <module>baseline</module>
         <module>assessment</module>
         <module>datasource</module>
+        <module>scorer</module>
     </modules>
 
     <dependencies>

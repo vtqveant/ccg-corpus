@@ -55,7 +55,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>ru.eventflow.fts.assessment.Runner</mainClass>
+                            <mainClass>ru.eventflow.fts.assessment.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

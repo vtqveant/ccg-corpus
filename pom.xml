@@ -19,10 +19,9 @@
 
     <modules>
         <module>baseline</module>
-        <module>assessment</module>
         <module>datasource</module>
         <module>scorer</module>
-        <module>manager</module>
+        <module>annotation</module>
     </modules>
 
     <dependencies>

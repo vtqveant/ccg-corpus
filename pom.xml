@@ -22,6 +22,7 @@
         <module>assessment</module>
         <module>datasource</module>
         <module>scorer</module>
+        <module>manager</module>
     </modules>
 
     <dependencies>

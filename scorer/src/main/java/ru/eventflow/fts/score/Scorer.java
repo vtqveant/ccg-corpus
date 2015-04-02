@@ -50,6 +50,7 @@ public class Scorer {
 
         String[] resources = new String[] {
                 "/results/baseline.csv",
+                "/results/baseline_no_stemming.csv",
                 "/results/blavachinskaya et al.csv",
                 "/results/invalid.csv"
         };

@@ -11,11 +11,18 @@ public class MainPresenter implements Presenter<MainView> {
 
     private EventBus eventBus;
 
+    private DocumentsPresenter documentsPresenter;
+
     @Inject
-    public MainPresenter(MainView view, EventBus eventBus) {
+    public MainPresenter(MainView view, EventBus eventBus,
+                         DocumentsPresenter documentsPresenter, DetailsPresenter detailsPresenter) {
         this.view = view;
         this.eventBus = eventBus;
-        eventBus.fireEvent(new LogEvent("RootPresenter initialized"));
+        this.documentsPresenter = documentsPresenter;
+        view.setLeftComponent(documentsPresenter.getView());
+        view.setRightComponent(detailsPresenter.getView());
+
+        eventBus.fireEvent(new LogEvent("MainPresenter initialized"));
     }
 
     @Override

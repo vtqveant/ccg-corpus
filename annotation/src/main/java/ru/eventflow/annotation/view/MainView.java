@@ -1,7 +1,6 @@
 package ru.eventflow.annotation.view;
 
 import ru.eventflow.annotation.Stuff;
-import ru.eventflow.annotation.presenter.MainPresenter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,34 +8,29 @@ import java.awt.*;
 public class MainView extends JPanel {
 
     private JPanel topPanel;
-    private JPanel documentsPanel;
-    private JPanel assessmentPanel;
+    private final JSplitPane splitPane;
 
     public MainView() {
         setLayout(new BorderLayout());
 
         // TODO rewrite if you need a menu
         topPanel = new JPanel();
+        topPanel.setLayout(new FlowLayout());
         JMenuBar menuBar = Stuff.getStuff();
         topPanel.add(menuBar);
-        add(topPanel);
+        add(topPanel, BorderLayout.NORTH);
 
-        assessmentPanel = new JPanel();
-        add(assessmentPanel);
-
-        documentsPanel = new JPanel();
-        add(documentsPanel);
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setContinuousLayout(true);
+        add(splitPane, BorderLayout.CENTER);
     }
 
-    public JPanel getTopPanel() {
-        return topPanel;
+    public void setLeftComponent(Component component) {
+        splitPane.setLeftComponent(component);
     }
 
-    public JPanel getDocumentsPanel() {
-        return documentsPanel;
-    }
-
-    public JPanel getAssessmentPanel() {
-        return assessmentPanel;
+    public void setRightComponent(Component component) {
+        splitPane.setRightComponent(component);
     }
 }

@@ -1,7 +1,7 @@
 package ru.eventflow.annotation.event;
 
 import com.pennychecker.eventbus.Event;
-import ru.eventflow.fts.datasource.Document;
+import ru.eventflow.annotation.model.Document;
 
 public class DocumentSelectedEvent extends Event<DocumentSelectedEventHandler> {
 

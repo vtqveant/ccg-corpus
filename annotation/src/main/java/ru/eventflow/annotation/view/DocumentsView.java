@@ -1,6 +1,6 @@
 package ru.eventflow.annotation.view;
 
-import ru.eventflow.fts.datasource.Document;
+import ru.eventflow.annotation.model.Document;
 
 import javax.swing.*;
 import java.awt.*;

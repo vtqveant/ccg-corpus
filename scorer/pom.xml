@@ -10,7 +10,7 @@
     <artifactId>scorer</artifactId>
     <packaging>jar</packaging>
 
-    <name>scorer</name>
+    <name>FTS :: Scorer</name>
 
     <dependencies>
         <dependency>

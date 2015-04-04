@@ -6,11 +6,14 @@ import com.pennychecker.eventbus.EventBus;
 import ru.eventflow.annotation.presenter.DetailsPresenter;
 import ru.eventflow.annotation.presenter.DocumentsPresenter;
 import ru.eventflow.annotation.presenter.MainPresenter;
+import ru.eventflow.annotation.presenter.MenuPresenter;
 import ru.eventflow.annotation.view.DetailsView;
 import ru.eventflow.annotation.view.DocumentsView;
 import ru.eventflow.annotation.view.MainView;
+import ru.eventflow.annotation.view.MenuView;
 
 public class UIModule extends AbstractModule {
+
     @Override
     protected void configure() {
         bind(EventBus.class).in(Singleton.class);
@@ -19,9 +22,11 @@ public class UIModule extends AbstractModule {
         bind(MainPresenter.class).in(Singleton.class);
         bind(DocumentsPresenter.class).in(Singleton.class);
         bind(DetailsPresenter.class).in(Singleton.class);
+        bind(MenuPresenter.class).in(Singleton.class);
 
         bind(MainView.class).in(Singleton.class);
         bind(DocumentsView.class).in(Singleton.class);
         bind(DetailsView.class).in(Singleton.class);
+        bind(MenuView.class).in(Singleton.class);
     }
 }

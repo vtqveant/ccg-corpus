@@ -2,7 +2,7 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence persistence_2_0.xsd">
-    <persistence-unit name="fts-datasource">
+    <persistence-unit name="h2-openjpa" transaction-type="RESOURCE_LOCAL">
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 
         <class>ru.eventflow.fts.datasource.Document</class>
@@ -10,12 +10,11 @@
         <class>ru.eventflow.fts.datasource.Assessment</class>
 
         <properties>
-            <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/track1"/>
-            <property name="openjpa.ConnectionUserName" value="postgres"/>
-            <property name="openjpa.ConnectionPassword" value="postgres"/>
-            <property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>
-
-            <!--<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(foreignKeys=true,SchemaAction='dropDB,add')"/>-->
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:${h2.databaseDirectory}/corpus"/>
+            <property name="javax.persistence.jdbc.user" value="sa"/>
+            <property name="openjpa.RuntimeUnenhancedClasses" value="supported"/>
+            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(foreignKeys=true,SchemaAction='dropDB,add')"/>
             <property name="openjpa.Log" value="DefaultLevel=WARN,Tool=INFO"/>
         </properties>
     </persistence-unit>

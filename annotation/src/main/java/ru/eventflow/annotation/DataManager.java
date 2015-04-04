@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class DataManager {
 
-    private static final EntityManager em = Persistence.createEntityManagerFactory("fts-datasource").createEntityManager();
+    private static final EntityManager em = Persistence.createEntityManagerFactory("h2-openjpa").createEntityManager();
 
     public static List<ru.eventflow.annotation.model.Document> getAllDocuments() {
         List<Document> documents = em.createQuery("SELECT x FROM Document x ORDER BY x.id ASC", Document.class).getResultList();

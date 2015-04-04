@@ -1,4 +1,4 @@
-package ru.eventflow.annotation.event;
+package ru.eventflow.annotation.ui.event;
 
 import com.pennychecker.eventbus.EventHandler;
 

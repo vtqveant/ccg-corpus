@@ -2,10 +2,8 @@ package ru.eventflow.annotation;
 
 import com.google.inject.Inject;
 import com.pennychecker.eventbus.EventBus;
-import ru.eventflow.annotation.event.DocumentSelectedEvent;
-import ru.eventflow.annotation.event.DocumentSelectedEventHandler;
-import ru.eventflow.annotation.event.LogEvent;
-import ru.eventflow.annotation.event.LogEventHandler;
+import ru.eventflow.annotation.ui.event.LogEvent;
+import ru.eventflow.annotation.ui.event.LogEventHandler;
 
 import java.util.logging.Logger;
 

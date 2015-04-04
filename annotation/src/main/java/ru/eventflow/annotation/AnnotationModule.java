@@ -3,16 +3,16 @@ package ru.eventflow.annotation;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.pennychecker.eventbus.EventBus;
-import ru.eventflow.annotation.presenter.DetailsPresenter;
-import ru.eventflow.annotation.presenter.DocumentsPresenter;
-import ru.eventflow.annotation.presenter.MainPresenter;
-import ru.eventflow.annotation.presenter.MenuPresenter;
-import ru.eventflow.annotation.view.DetailsView;
-import ru.eventflow.annotation.view.DocumentsView;
-import ru.eventflow.annotation.view.MainView;
-import ru.eventflow.annotation.view.MenuView;
+import ru.eventflow.annotation.ui.presenter.DetailsPresenter;
+import ru.eventflow.annotation.ui.presenter.DocumentsPresenter;
+import ru.eventflow.annotation.ui.presenter.MainPresenter;
+import ru.eventflow.annotation.ui.presenter.MenuPresenter;
+import ru.eventflow.annotation.ui.view.DetailsView;
+import ru.eventflow.annotation.ui.view.DocumentsView;
+import ru.eventflow.annotation.ui.view.MainView;
+import ru.eventflow.annotation.ui.view.MenuView;
 
-public class UIModule extends AbstractModule {
+public class AnnotationModule extends AbstractModule {
 
     @Override
     protected void configure() {

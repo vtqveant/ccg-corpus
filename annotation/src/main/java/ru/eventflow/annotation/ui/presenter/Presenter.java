@@ -1,4 +1,4 @@
-package ru.eventflow.annotation.presenter;
+package ru.eventflow.annotation.ui.presenter;
 
 import java.awt.*;
 

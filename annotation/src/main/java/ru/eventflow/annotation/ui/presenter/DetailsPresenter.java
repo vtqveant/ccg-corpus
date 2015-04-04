@@ -1,10 +1,10 @@
-package ru.eventflow.annotation.presenter;
+package ru.eventflow.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import com.pennychecker.eventbus.EventBus;
-import ru.eventflow.annotation.event.DocumentSelectedEvent;
-import ru.eventflow.annotation.event.DocumentSelectedEventHandler;
-import ru.eventflow.annotation.view.DetailsView;
+import ru.eventflow.annotation.ui.event.DocumentSelectedEvent;
+import ru.eventflow.annotation.ui.event.DocumentSelectedEventHandler;
+import ru.eventflow.annotation.ui.view.DetailsView;
 
 
 public class DetailsPresenter implements Presenter<DetailsView> {
@@ -20,7 +20,7 @@ public class DetailsPresenter implements Presenter<DetailsView> {
         this.eventBus.addHandler(DocumentSelectedEvent.TYPE, new DocumentSelectedEventHandler() {
             @Override
             public void onEvent(DocumentSelectedEvent e) {
-                view.setText(e.getDocument().getText());
+                view.setText(e.getDoc().getText());
             }
         });
     }

@@ -1,11 +1,11 @@
-package ru.eventflow.annotation.presenter;
+package ru.eventflow.annotation.ui.presenter;
 
 import com.pennychecker.eventbus.EventBus;
-import ru.eventflow.annotation.DataManager;
-import ru.eventflow.annotation.event.DocumentSelectedEvent;
-import ru.eventflow.annotation.event.LogEvent;
+import ru.eventflow.annotation.data.DataManager;
 import ru.eventflow.annotation.model.Document;
-import ru.eventflow.annotation.view.DocumentsView;
+import ru.eventflow.annotation.ui.event.DocumentSelectedEvent;
+import ru.eventflow.annotation.ui.event.LogEvent;
+import ru.eventflow.annotation.ui.view.DocumentsView;
 
 import javax.inject.Inject;
 import javax.swing.*;
@@ -35,7 +35,7 @@ public class DocumentsPresenter implements Presenter<DocumentsView> {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                ru.eventflow.annotation.model.Document document = view.getModel().get(lsm.getMinSelectionIndex());
+                Document document = view.getModel().get(lsm.getMinSelectionIndex());
                 eventBus.fireEvent(new DocumentSelectedEvent(document));
             }
         });

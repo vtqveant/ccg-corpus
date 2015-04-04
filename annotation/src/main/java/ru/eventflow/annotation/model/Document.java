@@ -1,22 +1,35 @@
 package ru.eventflow.annotation.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "document")
 public class Document {
+
+    @Id
     private int id;
+
+    @Column(name = "url", columnDefinition = "VARCHAR(4294967295)")
     private String url;
+
+    @Column(name = "text", columnDefinition = "VARCHAR(4294967295)")
     private String text;
 
+    public Document() {
+    }
+
     public Document(int id, String url, String text) {
-        this.id = id;
         this.url = url;
         this.text = text;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getUrl() {
@@ -27,11 +40,12 @@ public class Document {
         this.url = url;
     }
 
-    public String getText() {
-        return text;
+    public int getId() {
+        return id;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setId(int id) {
+        this.id = id;
     }
+
 }

@@ -1,4 +1,4 @@
-package ru.eventflow.annotation.view;
+package ru.eventflow.annotation.ui.view;
 
 import javax.swing.*;
 import java.awt.*;

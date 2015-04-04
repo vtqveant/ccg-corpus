@@ -8,3 +8,4 @@ assessment/target
 baseline/target
 baseline/src/main/resources/annot.opcorpora.xml
 baseline/src/main/resources/gold
+annotation/db

@@ -1,9 +1,9 @@
-package ru.eventflow.annotation.presenter;
+package ru.eventflow.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import com.pennychecker.eventbus.EventBus;
-import ru.eventflow.annotation.event.LogEvent;
-import ru.eventflow.annotation.view.MenuView;
+import ru.eventflow.annotation.ui.event.LogEvent;
+import ru.eventflow.annotation.ui.view.MenuView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

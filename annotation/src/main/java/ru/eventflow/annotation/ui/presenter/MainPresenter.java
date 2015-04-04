@@ -1,12 +1,12 @@
-package ru.eventflow.annotation.presenter;
+package ru.eventflow.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import com.pennychecker.eventbus.EventBus;
-import ru.eventflow.annotation.event.DocumentSelectedEvent;
-import ru.eventflow.annotation.event.DocumentSelectedEventHandler;
-import ru.eventflow.annotation.event.LogEvent;
 import ru.eventflow.annotation.model.Document;
-import ru.eventflow.annotation.view.MainView;
+import ru.eventflow.annotation.ui.event.DocumentSelectedEvent;
+import ru.eventflow.annotation.ui.event.DocumentSelectedEventHandler;
+import ru.eventflow.annotation.ui.event.LogEvent;
+import ru.eventflow.annotation.ui.view.MainView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +15,7 @@ public class MainPresenter implements Presenter<MainView> {
 
     private MainView view;
     private EventBus eventBus;
-    private Document currentDocument;
+    private Document currentDoc;
 
     @Inject
     public MainPresenter(final MainView view, final EventBus eventBus) {
@@ -26,13 +26,13 @@ public class MainPresenter implements Presenter<MainView> {
         this.view.getRelevantBtn().addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eventBus.fireEvent(new LogEvent("doc id = " + currentDocument.getId() + " marked relevant"));
+                eventBus.fireEvent(new LogEvent("doc id = " + currentDoc.getId() + " marked relevant"));
             }
         });
         this.view.getNonrelevantBtn().addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eventBus.fireEvent(new LogEvent("doc id = " + currentDocument.getId() + " marked nonrelevant"));
+                eventBus.fireEvent(new LogEvent("doc id = " + currentDoc.getId() + " marked nonrelevant"));
             }
         });
 
@@ -40,7 +40,7 @@ public class MainPresenter implements Presenter<MainView> {
         this.eventBus.addHandler(DocumentSelectedEvent.TYPE, new DocumentSelectedEventHandler() {
             @Override
             public void onEvent(DocumentSelectedEvent e) {
-                currentDocument = e.getDocument();
+                currentDoc = e.getDoc();
                 view.getRelevantBtn().setEnabled(true);
                 view.getNonrelevantBtn().setEnabled(true);
             }

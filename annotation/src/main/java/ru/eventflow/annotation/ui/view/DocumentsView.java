@@ -1,4 +1,4 @@
-package ru.eventflow.annotation.view;
+package ru.eventflow.annotation.ui.view;
 
 import ru.eventflow.annotation.model.Document;
 
@@ -37,8 +37,8 @@ public class DocumentsView extends JPanel {
 
     class DocumentListCellRenderer extends JLabel implements ListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            Document document = (Document) value;
-            setText(String.format("%6s %20s", document.getId(), document.getUrl()));
+            Document doc = (Document) value;
+            setText(String.format("%6s %20s", doc.getId(), doc.getUrl()));
             setOpaque(true);
             setBackground(isSelected ? Color.LIGHT_GRAY : Color.WHITE);
             return this;

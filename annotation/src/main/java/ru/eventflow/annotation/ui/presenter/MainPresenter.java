@@ -6,6 +6,7 @@ import ru.eventflow.annotation.model.Document;
 import ru.eventflow.annotation.ui.event.DocumentSelectedEvent;
 import ru.eventflow.annotation.ui.event.DocumentSelectedEventHandler;
 import ru.eventflow.annotation.ui.event.LogEvent;
+import ru.eventflow.annotation.ui.event.LogEventHandler;
 import ru.eventflow.annotation.ui.view.MainView;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class MainPresenter implements Presenter<MainView> {
         this.view = view;
         this.eventBus = eventBus;
 
-        // publish
+        // publish events from the view
         this.view.getRelevantBtn().addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -36,13 +37,19 @@ public class MainPresenter implements Presenter<MainView> {
             }
         });
 
-        // subscribe
+        // subscribe to events from the event bus
         this.eventBus.addHandler(DocumentSelectedEvent.TYPE, new DocumentSelectedEventHandler() {
             @Override
             public void onEvent(DocumentSelectedEvent e) {
                 currentDoc = e.getDoc();
                 view.getRelevantBtn().setEnabled(true);
                 view.getNonrelevantBtn().setEnabled(true);
+            }
+        });
+        this.eventBus.addHandler(LogEvent.TYPE, new LogEventHandler() {
+            @Override
+            public void onEvent(LogEvent e) {
+                view.getStatusLabel().setText(e.getMessage());
             }
         });
 

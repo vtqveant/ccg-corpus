@@ -1,6 +1,7 @@
 package ru.eventflow.annotation.ui.view;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class MainView extends JPanel {
@@ -10,6 +11,7 @@ public class MainView extends JPanel {
     private final JButton nextBtn = new JButton("Next");
     private final JButton relevantBtn = new JButton("Relevant");
     private final JButton nonrelevantBtn = new JButton("Nonrelevant");
+    private final JLabel statusLabel = new JLabel();
 
     public MainView() {
         setLayout(new BorderLayout());
@@ -34,6 +36,10 @@ public class MainView extends JPanel {
         splitPane.setOneTouchExpandable(true);
         splitPane.setContinuousLayout(true);
         add(splitPane, BorderLayout.CENTER);
+
+        statusLabel.setBorder(new EmptyBorder(2, 5, 2, 2));
+        statusLabel.setFont(new Font("Sans", Font.PLAIN, 11));
+        add(statusLabel, BorderLayout.SOUTH);
     }
 
     public void setLeftComponent(Component component) {
@@ -59,4 +65,10 @@ public class MainView extends JPanel {
     public JButton getNonrelevantBtn() {
         return nonrelevantBtn;
     }
+
+    public JLabel getStatusLabel() {
+        return statusLabel;
+    }
+
+
 }

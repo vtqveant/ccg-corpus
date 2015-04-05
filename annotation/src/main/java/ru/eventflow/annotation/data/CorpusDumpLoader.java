@@ -1,6 +1,5 @@
 package ru.eventflow.annotation.data;
 
-import com.google.inject.Inject;
 import ru.eventflow.annotation.model.Document;
 import ru.eventflow.annotation.xml.Paragraph;
 import ru.eventflow.annotation.xml.Sentence;
@@ -27,10 +26,10 @@ public class CorpusDumpLoader {
     private static final Logger logger = Logger.getLogger(CorpusDumpLoader.class.getName());
 
     private Unmarshaller unmarshaller;
-    private EntityManager em;
+    private EntityManager entityManager;
 
     public CorpusDumpLoader() {
-        this.em = DataManager.getEnitityManager();
+        this.entityManager = DataManager.getEnitityManager();
         try {
             JAXBContext jc = JAXBContext.newInstance("ru.eventflow.annotation.xml");
             unmarshaller = jc.createUnmarshaller();
@@ -52,7 +51,7 @@ public class CorpusDumpLoader {
             List<File> files = scanResources(resourcesLocationFile);
             logger.info(files.size() + " documents in corpus");
 
-            em.getTransaction().begin();
+            entityManager.getTransaction().begin();
             for (File f : files) {
                 Document doc;
                 if (f.getName().endsWith(".xml")) {
@@ -67,10 +66,10 @@ public class CorpusDumpLoader {
                 } else {
                     continue;
                 }
-                em.persist(doc);
+                entityManager.persist(doc);
                 documentIds.add(doc.getId());
             }
-            em.getTransaction().commit();
+            entityManager.getTransaction().commit();
             logger.info(documentIds.size() + " documents processed");
         } catch (IOException e) {
             logger.severe("Initialization failed");

@@ -6,9 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.util.List;
 
-/**
- * Ходим в БД
- */
 public class DataManager {
 
     static final EntityManager enitityManager = Persistence.createEntityManagerFactory("h2-openjpa").createEntityManager();

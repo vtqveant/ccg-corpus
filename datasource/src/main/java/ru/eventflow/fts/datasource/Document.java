@@ -10,15 +10,10 @@ public class Document {
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    /**
-     * CLOB is for compatibility with H2
-     */
-    @Column(name = "url", columnDefinition = "CLOB")
-    @Lob
+    @Column(name = "url", columnDefinition = "TEXT")
     private String url;
 
-    @Column(name = "text", columnDefinition = "CLOB")
-    @Lob
+    @Column(name = "text", columnDefinition = "TEXT")
     private String text;
 
     public Document() {

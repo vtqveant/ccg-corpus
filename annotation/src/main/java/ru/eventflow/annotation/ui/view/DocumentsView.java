@@ -23,7 +23,6 @@ public class DocumentsView extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(list);
         scrollPane.setPreferredSize(new Dimension(200, 300));
-
         add(scrollPane);
     }
 

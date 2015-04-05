@@ -13,7 +13,9 @@ public class DetailsView extends JPanel {
 
         textArea = new JTextArea();
         textArea.setEditable(false);
+        textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
+        textArea.setMargin(new Insets(2, 2, 2, 2));
 
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

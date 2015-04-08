@@ -1,7 +1,6 @@
 package ru.eventflow.annotation;
 
 import com.google.inject.Inject;
-import com.pennychecker.eventbus.EventBus;
 import ru.eventflow.annotation.ui.event.LogEvent;
 import ru.eventflow.annotation.ui.event.LogEventHandler;
 

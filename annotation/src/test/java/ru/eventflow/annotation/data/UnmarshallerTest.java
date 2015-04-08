@@ -27,4 +27,10 @@ public class UnmarshallerTest {
 
         xml.close();
     }
+
+    //@Test
+    public void testDisambiguatedDump() {
+        DisambiguatedDumpLoader loader = new DisambiguatedDumpLoader();
+        loader.init("/home/transcend/code/NLU-RG/tracks/track1/data/annot.opcorpora.no_ambig.xml");
+    }
 }

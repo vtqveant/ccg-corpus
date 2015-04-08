@@ -1,7 +1,7 @@
 package ru.eventflow.annotation.ui.presenter;
 
 import com.google.inject.Inject;
-import com.pennychecker.eventbus.EventBus;
+import ru.eventflow.annotation.EventBus;
 import ru.eventflow.annotation.ui.event.LogEvent;
 import ru.eventflow.annotation.ui.view.MenuView;
 

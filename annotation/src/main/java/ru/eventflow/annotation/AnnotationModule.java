@@ -2,7 +2,6 @@ package ru.eventflow.annotation;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
-import com.pennychecker.eventbus.EventBus;
 import ru.eventflow.annotation.ui.presenter.DetailsPresenter;
 import ru.eventflow.annotation.ui.presenter.DocumentsPresenter;
 import ru.eventflow.annotation.ui.presenter.MainPresenter;

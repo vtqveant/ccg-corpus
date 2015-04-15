@@ -42,6 +42,7 @@ public class Application {
             public void run() {
 
                 final LoggingController loggingController = injector.getInstance(LoggingController.class);
+                final DataAccessController dataAccessController = injector.getInstance(DataAccessController.class);
 
                 final Presenter<MainView> mainPresenter = injector.getInstance(MainPresenter.class);
                 final Presenter<DocumentsView> documentsPresenter = injector.getInstance(DocumentsPresenter.class);

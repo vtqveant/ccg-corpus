@@ -8,16 +8,15 @@ import java.util.List;
 
 public class DataManager {
 
-    static final EntityManager enitityManager = Persistence.createEntityManagerFactory("h2-openjpa").createEntityManager();
+    private static final EntityManager enitityManager = Persistence.createEntityManagerFactory("h2-openjpa").createEntityManager();
 
-    public static List<Document> getAllDocuments() {
-        List<Document> documents = enitityManager.createQuery("SELECT x FROM Document x ORDER BY x.id ASC", Document.class).getResultList();
-        return documents;
+    public List<Document> getAllDocuments() {
+        return enitityManager.createQuery("SELECT x FROM Document x ORDER BY x.id ASC", Document.class).getResultList();
     }
 
-    public static void setRelevant(int documentId) {
+    public void setRelevant(Document document) {
         // TODO
-        // enitityManager.createQuery("UPDATE ");
+        System.out.println(document.getId() + " set relevant");
     }
 
     public static EntityManager getEnitityManager() {

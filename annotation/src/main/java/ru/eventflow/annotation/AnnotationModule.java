@@ -2,6 +2,7 @@ package ru.eventflow.annotation;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
+import ru.eventflow.annotation.data.DataManager;
 import ru.eventflow.annotation.ui.presenter.DetailsPresenter;
 import ru.eventflow.annotation.ui.presenter.DocumentsPresenter;
 import ru.eventflow.annotation.ui.presenter.MainPresenter;
@@ -15,8 +16,11 @@ public class AnnotationModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(DataManager.class).in(Singleton.class);
+
         bind(EventBus.class).in(Singleton.class);
         bind(LoggingController.class).in(Singleton.class);
+        bind(DataAccessController.class).in(Singleton.class);
 
         bind(MainPresenter.class).in(Singleton.class);
         bind(DocumentsPresenter.class).in(Singleton.class);

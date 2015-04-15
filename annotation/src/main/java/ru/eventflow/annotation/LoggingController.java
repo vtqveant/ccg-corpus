@@ -1,8 +1,8 @@
 package ru.eventflow.annotation;
 
 import com.google.inject.Inject;
-import ru.eventflow.annotation.ui.event.LogEvent;
-import ru.eventflow.annotation.ui.event.LogEventHandler;
+import ru.eventflow.annotation.ui.event.StatusUpdateEvent;
+import ru.eventflow.annotation.ui.event.StatusUpdateEventHandler;
 
 import java.util.logging.Logger;
 
@@ -19,9 +19,9 @@ public class LoggingController {
     }
 
     private void init() {
-        eventBus.addHandler(LogEvent.TYPE, new LogEventHandler() {
+        eventBus.addHandler(StatusUpdateEvent.TYPE, new StatusUpdateEventHandler() {
             @Override
-            public void onEvent(LogEvent e) {
+            public void onEvent(StatusUpdateEvent e) {
                 logger.info(e.getMessage());
             }
         });

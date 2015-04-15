@@ -7,14 +7,14 @@ public class DocumentSelectedEvent extends Event<DocumentSelectedEventHandler> {
 
     public final static Type<DocumentSelectedEventHandler> TYPE = new Type<DocumentSelectedEventHandler>();
 
-    private Document doc;
+    private Document document;
 
-    public DocumentSelectedEvent(Document doc) {
-        this.doc = doc;
+    public DocumentSelectedEvent(Document document) {
+        this.document = document;
     }
 
-    public Document getDoc() {
-        return doc;
+    public Document getDocument() {
+        return document;
     }
 
     @Override

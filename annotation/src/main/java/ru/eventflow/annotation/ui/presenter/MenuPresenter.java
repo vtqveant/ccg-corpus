@@ -2,7 +2,7 @@ package ru.eventflow.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import ru.eventflow.annotation.EventBus;
-import ru.eventflow.annotation.ui.event.LogEvent;
+import ru.eventflow.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.annotation.ui.view.MenuView;
 
 import java.awt.event.ActionEvent;
@@ -21,14 +21,14 @@ public class MenuPresenter implements Presenter<MenuView> {
         this.view.getFirstMenuItem().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eventBus.fireEvent(new LogEvent("first menu item"));
+                eventBus.fireEvent(new StatusUpdateEvent("first menu item"));
             }
         });
 
         this.view.getSecondMenuItem().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eventBus.fireEvent(new LogEvent("second menu item"));
+                eventBus.fireEvent(new StatusUpdateEvent("second menu item"));
             }
         });
     }

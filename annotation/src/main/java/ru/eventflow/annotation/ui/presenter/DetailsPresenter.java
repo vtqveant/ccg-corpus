@@ -20,7 +20,7 @@ public class DetailsPresenter implements Presenter<DetailsView> {
         this.eventBus.addHandler(DocumentSelectedEvent.TYPE, new DocumentSelectedEventHandler() {
             @Override
             public void onEvent(DocumentSelectedEvent e) {
-                view.setText(e.getDoc().getText());
+                view.setText(e.getDocument().getText());
             }
         });
     }

@@ -3,10 +3,7 @@ package ru.eventflow.annotation.ui.presenter;
 import com.google.inject.Inject;
 import ru.eventflow.annotation.EventBus;
 import ru.eventflow.annotation.model.Document;
-import ru.eventflow.annotation.ui.event.DocumentSelectedEvent;
-import ru.eventflow.annotation.ui.event.DocumentSelectedEventHandler;
-import ru.eventflow.annotation.ui.event.LogEvent;
-import ru.eventflow.annotation.ui.event.LogEventHandler;
+import ru.eventflow.annotation.ui.event.*;
 import ru.eventflow.annotation.ui.view.MainView;
 
 import javax.swing.*;
@@ -16,7 +13,11 @@ public class MainPresenter implements Presenter<MainView> {
 
     private MainView view;
     private EventBus eventBus;
-    private Document currentDoc;
+
+    /**
+     * currently selected document
+     */
+    private Document document;
 
     @Inject
     public MainPresenter(final MainView view, final EventBus eventBus) {
@@ -27,13 +28,15 @@ public class MainPresenter implements Presenter<MainView> {
         this.view.getRelevantBtn().addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eventBus.fireEvent(new LogEvent("doc id = " + currentDoc.getId() + " marked relevant"));
+                eventBus.fireEvent(new StatusUpdateEvent("doc id = " + document.getId() + " marked relevant"));
+                eventBus.fireEvent(new DocumentMarkedEvent(document, true));
             }
         });
         this.view.getNonrelevantBtn().addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eventBus.fireEvent(new LogEvent("doc id = " + currentDoc.getId() + " marked nonrelevant"));
+                eventBus.fireEvent(new StatusUpdateEvent("doc id = " + document.getId() + " marked nonrelevant"));
+                eventBus.fireEvent(new DocumentMarkedEvent(document, false));
             }
         });
 
@@ -41,19 +44,19 @@ public class MainPresenter implements Presenter<MainView> {
         this.eventBus.addHandler(DocumentSelectedEvent.TYPE, new DocumentSelectedEventHandler() {
             @Override
             public void onEvent(DocumentSelectedEvent e) {
-                currentDoc = e.getDoc();
+                document = e.getDocument();
                 view.getRelevantBtn().setEnabled(true);
                 view.getNonrelevantBtn().setEnabled(true);
             }
         });
-        this.eventBus.addHandler(LogEvent.TYPE, new LogEventHandler() {
+        this.eventBus.addHandler(StatusUpdateEvent.TYPE, new StatusUpdateEventHandler() {
             @Override
-            public void onEvent(LogEvent e) {
+            public void onEvent(StatusUpdateEvent e) {
                 view.getStatusLabel().setText(e.getMessage());
             }
         });
 
-        this.eventBus.fireEvent(new LogEvent("MainPresenter initialized"));
+        this.eventBus.fireEvent(new StatusUpdateEvent("MainPresenter initialized"));
     }
 
     @Override

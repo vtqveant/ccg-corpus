@@ -7,6 +7,8 @@
 
         <!-- enhanced classes -->
         <class>ru.eventflow.annotation.model.Document</class>
+        <class>ru.eventflow.annotation.model.Assessment</class>
+        <class>ru.eventflow.annotation.model.Query</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

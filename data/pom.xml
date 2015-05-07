@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>data</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>CCG Corpus :: Data</name>
@@ -31,7 +31,7 @@
                         <phase>generate-resources</phase>
                         <configuration>
                             <tasks>
-                                <ant antfile="download.xml" target="download"/>
+                                <ant antfile="download.xml" target="unpack"/>
                             </tasks>
                         </configuration>
                         <goals>

@@ -17,7 +17,10 @@ public class MenuPresenter implements Presenter<MenuView> {
     public MenuPresenter(MenuView view, final EventBus eventBus) {
         this.view = view;
         this.eventBus = eventBus;
+        init();
+    }
 
+    private void init() {
         this.view.getFirstMenuItem().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

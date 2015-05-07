@@ -1,4 +1,4 @@
-package ru.eventflow.fts.datasource;
+package ru.eventflow.annotation.model;
 
 import javax.persistence.*;
 import java.util.HashSet;

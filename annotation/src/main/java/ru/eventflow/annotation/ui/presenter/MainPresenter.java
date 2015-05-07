@@ -23,7 +23,11 @@ public class MainPresenter implements Presenter<MainView> {
     public MainPresenter(final MainView view, final EventBus eventBus) {
         this.view = view;
         this.eventBus = eventBus;
+        init();
+        this.eventBus.fireEvent(new StatusUpdateEvent("MainPresenter initialized"));
+    }
 
+    private void init() {
         // publish events from the view
         this.view.getRelevantBtn().addActionListener(new AbstractAction() {
             @Override
@@ -32,6 +36,7 @@ public class MainPresenter implements Presenter<MainView> {
                 eventBus.fireEvent(new DocumentMarkedEvent(document, true));
             }
         });
+
         this.view.getNonrelevantBtn().addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -49,14 +54,13 @@ public class MainPresenter implements Presenter<MainView> {
                 view.getNonrelevantBtn().setEnabled(true);
             }
         });
+
         this.eventBus.addHandler(StatusUpdateEvent.TYPE, new StatusUpdateEventHandler() {
             @Override
             public void onEvent(StatusUpdateEvent e) {
                 view.getStatusLabel().setText(e.getMessage());
             }
         });
-
-        this.eventBus.fireEvent(new StatusUpdateEvent("MainPresenter initialized"));
     }
 
     @Override

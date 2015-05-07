@@ -19,6 +19,10 @@ public class DataManager {
         System.out.println(document.getId() + " set relevant");
     }
 
+    public void setNonrelevant(Document document) {
+        // TODO
+    }
+
     public static EntityManager getEnitityManager() {
         return enitityManager;
     }

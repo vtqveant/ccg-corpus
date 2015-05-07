@@ -19,6 +19,7 @@
 
     <modules>
         <module>annotation</module>
+        <module>data</module>
     </modules>
 
     <dependencies>

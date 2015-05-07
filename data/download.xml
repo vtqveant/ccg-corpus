@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="helper" default="download" basedir=".">
+    <target name="download">
+        <copy todir="downloads/resources" flatten="true">
+            <resources>
+                <url url="http://opencorpora.org/files/export/annot/annot.opcorpora.xml.byfile.bz2"/>
+            </resources>
+        </copy>
+    </target>
+</project>

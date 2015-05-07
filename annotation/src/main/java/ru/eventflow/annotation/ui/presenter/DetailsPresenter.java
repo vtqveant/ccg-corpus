@@ -16,7 +16,10 @@ public class DetailsPresenter implements Presenter<DetailsView> {
     public DetailsPresenter(final DetailsView view, final EventBus eventBus) {
         this.view = view;
         this.eventBus = eventBus;
+        init();
+    }
 
+    private void init() {
         this.eventBus.addHandler(DocumentSelectedEvent.TYPE, new DocumentSelectedEventHandler() {
             @Override
             public void onEvent(DocumentSelectedEvent e) {

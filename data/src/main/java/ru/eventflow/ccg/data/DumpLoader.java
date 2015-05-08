@@ -1,8 +1,8 @@
 package ru.eventflow.ccg.data;
 
-import ru.eventflow.ccg.annotation.xml.Paragraph;
-import ru.eventflow.ccg.annotation.xml.Sentence;
-import ru.eventflow.ccg.annotation.xml.Text;
+import ru.eventflow.ccg.data.xml.Paragraph;
+import ru.eventflow.ccg.data.xml.Sentence;
+import ru.eventflow.ccg.data.xml.Text;
 import ru.eventflow.ccg.model.Document;
 
 import javax.persistence.EntityManager;
@@ -58,7 +58,7 @@ public class DumpLoader {
         }
 
         try {
-            JAXBContext jc = JAXBContext.newInstance("ru.eventflow.annotation.xml");
+            JAXBContext jc = JAXBContext.newInstance("ru.eventflow.ccg.data.xml");
             unmarshaller = jc.createUnmarshaller();
         } catch (JAXBException e) {
             logger.severe("Initialization failed");

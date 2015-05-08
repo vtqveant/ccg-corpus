@@ -76,7 +76,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <packageName>ru.eventflow.annotation.xml</packageName>
+                    <packageName>ru.eventflow.ccg.data.xml</packageName>
                 </configuration>
             </plugin>
             <plugin>
@@ -134,7 +134,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <h2.databaseDirectory>${project.build.directory}/db</h2.databaseDirectory>
+                <h2.databaseDirectory>${project.basedir}/database</h2.databaseDirectory>
             </properties>
         </profile>
     </profiles>

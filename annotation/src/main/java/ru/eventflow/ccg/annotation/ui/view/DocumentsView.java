@@ -38,6 +38,7 @@ public class DocumentsView extends JPanel {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             Document doc = (Document) value;
             setText(String.format("%6s %20s", doc.getId(), doc.getUrl()));
+            setFont(new Font("Courier New", Font.PLAIN, 11));
             setOpaque(true);
             setBackground(isSelected ? Color.LIGHT_GRAY : Color.WHITE);
             return this;

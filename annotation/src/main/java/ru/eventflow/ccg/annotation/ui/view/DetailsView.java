@@ -1,20 +1,20 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 
 public class DetailsView extends JPanel {
 
-    private final JTextArea textArea;
+    private final JTextPane textArea;
 
     public DetailsView() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(200, 300));
 
-        textArea = new JTextArea();
+        textArea = new JTextPane();
         textArea.setEditable(false);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
+        textArea.setParagraphAttributes(SimpleAttributeSet.EMPTY, true);
         textArea.setMargin(new Insets(2, 2, 2, 2));
 
         JScrollPane scrollPane = new JScrollPane(textArea);

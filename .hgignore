@@ -6,3 +6,4 @@ out/
 target
 annotation/db
 data/.*/*.bz2
+data/database

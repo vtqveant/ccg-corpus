@@ -40,7 +40,6 @@ public class DumpLoader {
                 properties.load(ClassLoader.getSystemResourceAsStream("config.properties"));
             }
             String resourcesLocation = properties.getProperty("opencorpora.dump.location");
-//            String databaseLocation = properties.getProperty("opencorpora.database.location");
             if (resourcesLocation != null) {
                 new DumpLoader(resourcesLocation).init();
             }

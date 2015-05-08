@@ -21,6 +21,7 @@
         <module>annotation</module>
         <module>data</module>
         <module>parser</module>
+        <module>assistant</module>
     </modules>
 
     <dependencies>

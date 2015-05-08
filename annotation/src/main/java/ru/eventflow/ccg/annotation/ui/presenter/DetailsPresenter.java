@@ -13,8 +13,8 @@ public class DetailsPresenter implements Presenter<DetailsView> {
     private EventBus eventBus;
 
     @Inject
-    public DetailsPresenter(final DetailsView view, final EventBus eventBus) {
-        this.view = view;
+    public DetailsPresenter(final EventBus eventBus) {
+        this.view = new DetailsView();
         this.eventBus = eventBus;
         init();
     }

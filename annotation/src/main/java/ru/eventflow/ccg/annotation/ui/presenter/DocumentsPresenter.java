@@ -1,10 +1,10 @@
 package ru.eventflow.ccg.annotation.ui.presenter;
 
 import ru.eventflow.ccg.annotation.EventBus;
-import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
-import ru.eventflow.ccg.data.DataManager;
 import ru.eventflow.ccg.annotation.ui.event.DocumentSelectedEvent;
+import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.view.DocumentsView;
+import ru.eventflow.ccg.data.DataManager;
 import ru.eventflow.ccg.model.Document;
 
 import javax.inject.Inject;
@@ -19,10 +19,9 @@ public class DocumentsPresenter implements Presenter<DocumentsView> {
     private DataManager dataManager;
 
     @Inject
-    public DocumentsPresenter(final DocumentsView view,
-                              final EventBus eventBus,
+    public DocumentsPresenter(final EventBus eventBus,
                               final DataManager dataManager) {
-        this.view = view;
+        this.view = new DocumentsView();
         this.eventBus = eventBus;
         this.dataManager = dataManager;
         init();

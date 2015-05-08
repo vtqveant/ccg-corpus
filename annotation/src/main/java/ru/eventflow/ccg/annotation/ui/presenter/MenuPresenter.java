@@ -14,8 +14,8 @@ public class MenuPresenter implements Presenter<MenuView> {
     private EventBus eventBus;
 
     @Inject
-    public MenuPresenter(MenuView view, final EventBus eventBus) {
-        this.view = view;
+    public MenuPresenter(final EventBus eventBus) {
+        this.view = new MenuView();
         this.eventBus = eventBus;
         init();
     }

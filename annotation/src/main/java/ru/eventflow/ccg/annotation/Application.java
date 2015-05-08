@@ -3,10 +3,7 @@ package ru.eventflow.ccg.annotation;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import ru.eventflow.ccg.annotation.ui.presenter.*;
-import ru.eventflow.ccg.annotation.ui.view.DetailsView;
-import ru.eventflow.ccg.annotation.ui.view.DocumentsView;
-import ru.eventflow.ccg.annotation.ui.view.MainView;
-import ru.eventflow.ccg.annotation.ui.view.MenuView;
+import ru.eventflow.ccg.annotation.ui.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,11 +19,13 @@ public class Application {
                 final LoggingController loggingController = injector.getInstance(LoggingController.class);
                 final DataAccessController dataAccessController = injector.getInstance(DataAccessController.class);
 
-                final Presenter<MainView> mainPresenter = injector.getInstance(MainPresenter.class);
                 final Presenter<DocumentsView> documentsPresenter = injector.getInstance(DocumentsPresenter.class);
-                mainPresenter.getView().setLeftComponent(documentsPresenter.getView());
                 final Presenter<DetailsView> detailsPresenter = injector.getInstance(DetailsPresenter.class);
+
+                final Presenter<MainView> mainPresenter = injector.getInstance(MainPresenter.class);
+                mainPresenter.getView().setLeftComponent(documentsPresenter.getView());
                 mainPresenter.getView().setRightComponent(detailsPresenter.getView());
+
                 final Presenter<MenuView> menuPresenter = injector.getInstance(MenuPresenter.class);
 
                 final JFrame frame = new JFrame("Eventflow Annotation Tool");

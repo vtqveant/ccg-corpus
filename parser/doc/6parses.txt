@@ -1,0 +1,134 @@
+CCG Rules
+----------------
+
+  >   Forward Application:            X/Y       Y        ->  X
+  <   Backward Application:           Y         X\Y      ->  X
+
+  >B  Forward Composition:            X/Y       Y/Z      ->  X/Z
+  <B  Backward Composition:           Y\Z       X\Y      ->  X\Z
+  >T  Forward type-raising:           X                  ->  T/(T\X)
+  <T  Backward type-raising:          X                  ->  T\(T/X)
+
+Lexicon
+----------------
+
+John  :- np
+Mary  :- np
+loves :- (s\np)/np
+
+
+Parses
+----------------
+
+John loves Mary
+6 parse(s)
+
+
+1)
+
+John	     loves            Mary
+np           (s\np)/np        np
+---------->  ---------------------->
+s/(s\np)              s\np
+---------------------------->
+            s
+
+2)
+
+John	     loves            Mary
+np           (s\np)/np        np
+            ----------------------->
+                  s\np
+------------------------<
+            s
+
+3)
+
+John	     loves            Mary
+np           (s\np)/np        np
+---------T>                   ---------T>
+s/(s\np)                      s/(s\np)
+             --------------------------B<
+                      s\np
+----------------------------->
+            s
+
+4) 
+
+John	     loves            Mary
+np           (s\np)/np        np
+---------T>
+s/(s\np)
+-----------------------B>
+           s/np
+          ------------------------>
+                      s
+
+5)
+
+John	     loves            Mary
+np           (s\np)/np        np
+                              ---------T>
+                              s/(s\np)
+             --------------------------B<
+                       s\np
+-----------------------------<
+              s
+
+6)
+
+John	     loves            Mary
+np           (s\np)/np        np
+--------T>                    ----------T<
+s/(s\np)                      s\(s/np)
+----------------------B>
+           s/np
+          ---------------------------<
+                        s
+
+MMCCG
+
+Типы слэшей: * x <> .
+
+. is least restricitve
+* is most restrictive
+<> and x are mutually exclusive
+. subsumes everything (therefore often omitted)
+
+   *
+ /  \
+<>   x
+ \  /
+   .
+
+* is the supertype, i.e. application rules can combine all other types
+
+Модификации правил:
+
+  >   Forward Application:            X/*Y      Y        ->  X
+  <   Backward Application:           Y         X\*Y     ->  X
+
+  >B  Forward Composition:            X/<>Y     Y/<>Z    ->  X/<>Z
+  <B  Backward Composition:           Y\<>Z     X\<>Y    ->  X\<>Z
+  >T  Forward type-raising:           X                  ->  Ti/(Ti\X)
+  <T  Backward type-raising:          X                  ->  Ti\(Ti/X)
+
+Принцип наследования типа:
+
+If the  category that results from the application of  a combinatory rule
+is a function category, then the slash type of a given argument in that
+category will be the same as the one(s) of the corresponding argument(s)
+in the input function(s).
+
+Комментарии:
+
+(explication of >B with slash types)
+  >B  Forward Composition:            X/<>Y     Y/<>Z    ->  X/<>Z
+  >B  Forward Composition:            X/<>Y     Y/.Z     ->  X/.Z
+  >B  Forward Composition:            X/.Y      Y/<>Z    ->  X/<>Z
+  >B  Forward Composition:            X/.Y      Y/.Z     ->  X/.Z
+
+
+Пример записи в словаре:
+
+that :- (n\*n)/*(s/np)

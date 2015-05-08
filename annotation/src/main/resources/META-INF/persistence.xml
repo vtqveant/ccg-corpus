@@ -6,9 +6,9 @@
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 
         <!-- enhanced classes -->
-        <class>ru.eventflow.ccgbank.model.Document</class>
-        <class>ru.eventflow.ccgbank.model.Assessment</class>
-        <class>ru.eventflow.ccgbank.model.Query</class>
+        <class>ru.eventflow.ccg.model.Document</class>
+        <class>ru.eventflow.ccg.model.Assessment</class>
+        <class>ru.eventflow.ccg.model.Query</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

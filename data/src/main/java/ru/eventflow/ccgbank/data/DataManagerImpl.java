@@ -8,7 +8,11 @@ import java.util.List;
 
 public class DataManagerImpl implements DataManager {
 
-    private static final EntityManager enitityManager = Persistence.createEntityManagerFactory("h2-openjpa").createEntityManager();
+    private final EntityManager enitityManager;
+
+    public DataManagerImpl(String persistenceUnitName) {
+        enitityManager = Persistence.createEntityManagerFactory(persistenceUnitName).createEntityManager();
+    }
 
     @Override
     public List<Document> getAllDocuments() {
@@ -24,9 +28,5 @@ public class DataManagerImpl implements DataManager {
     @Override
     public void setNonrelevant(Document document) {
         // TODO
-    }
-
-    public static EntityManager getEnitityManager() {
-        return enitityManager;
     }
 }

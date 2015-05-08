@@ -12,8 +12,7 @@
     </target>
 
     <target name="unpack">
-        <untar src="${download-dir}/annot.opcorpora.xml.byfile.bz2" dest="${target-dir}" compression="bzip2"
-               overwrite="false"/>
+        <untar src="${download-dir}/annot.opcorpora.xml.byfile.bz2" dest="${target-dir}" compression="bzip2"/>
     </target>
 
     <target name="prepare-sources" depends="download,unpack"/>

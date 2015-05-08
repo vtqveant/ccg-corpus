@@ -2,7 +2,6 @@ package ru.eventflow.annotation;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import ru.eventflow.annotation.data.CorpusDumpLoader;
 import ru.eventflow.annotation.ui.presenter.*;
 import ru.eventflow.annotation.ui.view.DetailsView;
 import ru.eventflow.annotation.ui.view.DocumentsView;
@@ -11,8 +10,6 @@ import ru.eventflow.annotation.ui.view.MenuView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.util.Properties;
 
 public class Application {
 
@@ -22,25 +19,6 @@ public class Application {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Properties properties = new Properties();
-                    properties.load(ClassLoader.getSystemResourceAsStream("config.properties"));
-                    String dumpLocation = properties.getProperty("opencorpora.dump.location");
-                    if (dumpLocation != null) {
-                        CorpusDumpLoader corpusDumpLoader = injector.getInstance(CorpusDumpLoader.class);
-                        corpusDumpLoader.init(dumpLocation);
-                    }
-                } catch (IOException e) {
-                    System.out.println("Premature exit due to misconfiguration");
-                    System.exit(-1);
-                }
-            }
-        });
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-
                 final LoggingController loggingController = injector.getInstance(LoggingController.class);
                 final DataAccessController dataAccessController = injector.getInstance(DataAccessController.class);
 

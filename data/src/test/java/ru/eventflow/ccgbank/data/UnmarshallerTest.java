@@ -1,4 +1,4 @@
-package ru.eventflow.annotation.data;
+package ru.eventflow.ccgbank.data;
 
 import org.junit.Test;
 import ru.eventflow.annotation.xml.Text;
@@ -28,9 +28,4 @@ public class UnmarshallerTest {
         xml.close();
     }
 
-    //@Test
-    public void testDisambiguatedDump() {
-        DisambiguatedDumpLoader loader = new DisambiguatedDumpLoader();
-        loader.init("/home/transcend/code/NLU-RG/tracks/track1/data/annot.opcorpora.no_ambig.xml");
-    }
 }

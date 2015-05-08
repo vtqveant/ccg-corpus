@@ -1,4 +1,4 @@
-package ru.eventflow.annotation.model;
+package ru.eventflow.ccgbank.model;
 
 import javax.persistence.*;
 

@@ -1,6 +1,6 @@
 package ru.eventflow.annotation.ui.view;
 
-import ru.eventflow.annotation.model.Document;
+import ru.eventflow.ccgbank.model.Document;
 
 import javax.swing.*;
 import java.awt.*;

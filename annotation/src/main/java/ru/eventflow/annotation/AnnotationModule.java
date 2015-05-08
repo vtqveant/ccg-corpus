@@ -2,7 +2,7 @@ package ru.eventflow.annotation;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
-import ru.eventflow.annotation.data.DataManager;
+import ru.eventflow.ccgbank.data.DataManagerImpl;
 import ru.eventflow.annotation.ui.presenter.DetailsPresenter;
 import ru.eventflow.annotation.ui.presenter.DocumentsPresenter;
 import ru.eventflow.annotation.ui.presenter.MainPresenter;
@@ -16,7 +16,7 @@ public class AnnotationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(DataManager.class).in(Singleton.class);
+        bind(DataManagerImpl.class).in(Singleton.class);
 
         bind(EventBus.class).in(Singleton.class);
         bind(LoggingController.class).in(Singleton.class);

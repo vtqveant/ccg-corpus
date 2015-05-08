@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="helper" default="unpack" basedir=".">
+<project name="helper" default="prepare-sources" basedir=".">
+    <property name="download-dir" value="downloads/resources"/>
+    <property name="target-dir" value="target/data/annot.opcorpora.xml.byfile"/>
+
     <target name="download">
-        <copy todir="downloads/resources" flatten="true">
+        <copy todir="${download-dir}" flatten="true">
             <resources>
                 <url url="http://opencorpora.org/files/export/annot/annot.opcorpora.xml.byfile.bz2"/>
             </resources>
         </copy>
     </target>
-    <target name="unpack" depends="download">
-        <untar src="downloads/resources/annot.opcorpora.xml.byfile.bz2"
-               dest="src/main/resources/org/opencorpora/data"
-               compression="bzip2"/>
+
+    <target name="unpack">
+        <untar src="${download-dir}/annot.opcorpora.xml.byfile.bz2" dest="${target-dir}" compression="bzip2"
+               overwrite="false"/>
     </target>
+
+    <target name="prepare-sources" depends="download,unpack"/>
 </project>

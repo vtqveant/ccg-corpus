@@ -6,4 +6,3 @@ out/
 target
 annotation/db
 data/.*/*.bz2
-data/src/main/resources/.*/*.xml

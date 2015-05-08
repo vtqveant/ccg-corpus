@@ -1,0 +1,37 @@
+CCG Rules
+
+AB Grammar includes >, <
+CCG (Steedman's version) includes >, <, >B, <B, >T, <T
+CCG (Baldridge et al.) includes all the rest
+
+  >   Forward Application:            X/Y       Y        ->  X
+  <   Backward Application:           Y         X\Y      ->  X
+
+  >B  Forward Composition:            X/Y       Y/Z      ->  X/Z
+  <B  Backward Composition:           Y\Z       X\Y      ->  X\Z
+  >T  Forward type-raising:           X                  ->  T/(T\X)
+  <T  Backward type-raising:          X                  ->  T\(T/X)
+
+  <&> Conjunction                     X   conj  X        ->  X
+
+  >Bx Forward Crossing Composition:   X/Y       Y\Z      ->  X\Z
+  <Bx Backward Crossing Composition:  Y/Z       X\Y      ->  X/Z
+      Forward Substitution:           (X/Y)/Z   Y/Z      ->  X/Z
+      Backward Substitution:          Y\Z       (X\Y)\Z  ->  X\Z
+      Forward Crossing Substitution:  (X/Y)\Z   Y\Z      ->  X\Z
+      Backward Crossing Substitution: Y/Z       (X\Y)/Z  ->  X/Z
+
+
+An implementation of type raising rules is a bit tricky,
+s. Steedman (1991) Type-raising and Directionality in Combinatory Grammar.
+
+
+
+QTree compatible online tree drawing tools
+
+  * http://www.ironcreek.net/phpsyntaxtree/
+  * http://yohasebe.com/rsyntaxtree/
+
+  overview:
+
+  * http://www.cavar.me/damir/blog/files/c1d9aeaf0f1c2aa6bfd59e0e5c121715-5.html

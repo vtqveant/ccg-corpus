@@ -4,9 +4,6 @@ import ru.eventflow.ccgbank.model.Document;
 
 import java.util.List;
 
-/**
- * Created by transcend on 08.05.15.
- */
 public interface DataManager {
     List<Document> getAllDocuments();
 

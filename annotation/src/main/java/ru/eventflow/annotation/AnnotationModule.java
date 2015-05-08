@@ -1,8 +1,8 @@
 package ru.eventflow.annotation;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import ru.eventflow.ccgbank.data.DataManagerImpl;
 import ru.eventflow.annotation.ui.presenter.DetailsPresenter;
 import ru.eventflow.annotation.ui.presenter.DocumentsPresenter;
 import ru.eventflow.annotation.ui.presenter.MainPresenter;
@@ -11,12 +11,14 @@ import ru.eventflow.annotation.ui.view.DetailsView;
 import ru.eventflow.annotation.ui.view.DocumentsView;
 import ru.eventflow.annotation.ui.view.MainView;
 import ru.eventflow.annotation.ui.view.MenuView;
+import ru.eventflow.ccgbank.data.DataManager;
+import ru.eventflow.ccgbank.data.DataManagerImpl;
 
 public class AnnotationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(DataManagerImpl.class).in(Singleton.class);
+        bind(DataManager.class).toProvider(DataManagerProvider.class).in(Singleton.class);
 
         bind(EventBus.class).in(Singleton.class);
         bind(LoggingController.class).in(Singleton.class);
@@ -31,5 +33,12 @@ public class AnnotationModule extends AbstractModule {
         bind(DocumentsView.class).in(Singleton.class);
         bind(DetailsView.class).in(Singleton.class);
         bind(MenuView.class).in(Singleton.class);
+    }
+
+    private static class DataManagerProvider implements Provider<DataManager> {
+        @Override
+        public DataManager get() {
+            return new DataManagerImpl("h2-openjpa");
+        }
     }
 }

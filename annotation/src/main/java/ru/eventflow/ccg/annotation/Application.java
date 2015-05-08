@@ -3,7 +3,10 @@ package ru.eventflow.ccg.annotation;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import ru.eventflow.ccg.annotation.ui.presenter.*;
-import ru.eventflow.ccg.annotation.ui.view.*;
+import ru.eventflow.ccg.annotation.ui.view.DetailsView;
+import ru.eventflow.ccg.annotation.ui.view.DocumentsView;
+import ru.eventflow.ccg.annotation.ui.view.MainView;
+import ru.eventflow.ccg.annotation.ui.view.MenuView;
 
 import javax.swing.*;
 import java.awt.*;

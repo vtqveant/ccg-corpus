@@ -2,7 +2,7 @@ package ru.eventflow.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import ru.eventflow.annotation.EventBus;
-import ru.eventflow.annotation.model.Document;
+import ru.eventflow.ccgbank.model.Document;
 import ru.eventflow.annotation.ui.event.*;
 import ru.eventflow.annotation.ui.view.MainView;
 

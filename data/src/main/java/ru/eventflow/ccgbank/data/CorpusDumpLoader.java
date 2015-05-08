@@ -1,17 +1,21 @@
-package ru.eventflow.annotation.data;
+package ru.eventflow.ccgbank.data;
 
-import ru.eventflow.annotation.model.Document;
+
 import ru.eventflow.annotation.xml.Paragraph;
 import ru.eventflow.annotation.xml.Sentence;
 import ru.eventflow.annotation.xml.Text;
+import ru.eventflow.ccgbank.model.Document;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,12 +28,10 @@ import java.util.logging.Logger;
 public class CorpusDumpLoader {
 
     private static final Logger logger = Logger.getLogger(CorpusDumpLoader.class.getName());
-
-    private Unmarshaller unmarshaller;
-    private EntityManager entityManager;
+    private static final EntityManager entityManager = Persistence.createEntityManagerFactory("h2-openjpa").createEntityManager();
+    private static Unmarshaller unmarshaller;
 
     public CorpusDumpLoader() {
-        this.entityManager = DataManager.getEnitityManager();
         try {
             JAXBContext jc = JAXBContext.newInstance("ru.eventflow.annotation.xml");
             unmarshaller = jc.createUnmarshaller();
@@ -61,8 +63,6 @@ public class CorpusDumpLoader {
                         logger.warning(f.getName());
                         continue;
                     }
-                } else if (f.getName().endsWith(".txt")) {
-                    doc = processTxtFile(f);
                 } else {
                     continue;
                 }
@@ -97,21 +97,6 @@ public class CorpusDumpLoader {
             }
         }
         return files;
-    }
-
-    private Document processTxtFile(File file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        char[] buf = new char[1024];
-        int numRead = 0;
-        StringBuilder sb = new StringBuilder();
-        while ((numRead = reader.read(buf)) != -1) {
-            String readData = String.valueOf(buf, 0, numRead);
-            sb.append(readData);
-        }
-        reader.close();
-
-        String name = file.getName();
-        return new Document(new Integer(name.substring(0, name.indexOf(".txt"))), null, sb.toString());
     }
 
     private Document processXmlFile(File file) throws IOException, JAXBException {

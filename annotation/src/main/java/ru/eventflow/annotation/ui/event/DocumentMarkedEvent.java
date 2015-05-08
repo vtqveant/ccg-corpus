@@ -1,7 +1,7 @@
 package ru.eventflow.annotation.ui.event;
 
 import com.pennychecker.eventbus.Event;
-import ru.eventflow.annotation.model.Document;
+import ru.eventflow.ccgbank.model.Document;
 
 public class DocumentMarkedEvent extends Event<DocumentMarkedEventHandler> {
 

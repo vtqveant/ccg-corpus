@@ -5,9 +5,9 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import org.mockito.Mockito;
 import ru.eventflow.annotation.DataAccessController;
-import ru.eventflow.annotation.data.DataManager;
-import ru.eventflow.annotation.model.Document;
 import ru.eventflow.annotation.ui.view.DocumentsView;
+import ru.eventflow.ccgbank.data.DataManager;
+import ru.eventflow.ccgbank.model.Document;
 
 import java.util.ArrayList;
 

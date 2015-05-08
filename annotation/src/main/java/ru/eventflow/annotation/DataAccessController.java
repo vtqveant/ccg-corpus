@@ -1,7 +1,7 @@
 package ru.eventflow.annotation;
 
 import com.google.inject.Inject;
-import ru.eventflow.annotation.data.DataManager;
+import ru.eventflow.ccgbank.data.DataManager;
 import ru.eventflow.annotation.ui.event.DocumentMarkedEvent;
 import ru.eventflow.annotation.ui.event.DocumentMarkedEventHandler;
 

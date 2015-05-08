@@ -6,20 +6,18 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.eventflow.annotation.DataAccessController;
 import ru.eventflow.annotation.EventBus;
-import ru.eventflow.annotation.model.Document;
 import ru.eventflow.annotation.ui.event.DocumentMarkedEvent;
 import ru.eventflow.annotation.ui.presenter.DocumentsPresenter;
+import ru.eventflow.ccgbank.model.Document;
 
 public class DocumentsPresenterTest {
 
     private DocumentsPresenter documentsPresenter;
     private EventBus eventBus;
-    private DataAccessController dataAccessController;
 
     @Before
     public void setUp() {
         Injector injector = Guice.createInjector(new MockAnnotationModule());
-        dataAccessController = injector.getInstance(DataAccessController.class);
         eventBus = injector.getInstance(EventBus.class);
         documentsPresenter = injector.getInstance(DocumentsPresenter.class);
     }

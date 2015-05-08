@@ -24,5 +24,6 @@ public class DetailsView extends JPanel {
 
     public void setText(String text) {
         textArea.setText(text);
+        textArea.setCaretPosition(0);
     }
 }

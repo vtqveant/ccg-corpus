@@ -12,9 +12,10 @@
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost:9092/corpus"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:${h2.databaseDirectory}/corpus"/>
             <property name="javax.persistence.jdbc.user" value="sa"/>
             <property name="openjpa.RuntimeUnenhancedClasses" value="supported"/>
+            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(foreignKeys=true,SchemaAction='dropDB,add')"/>
             <property name="openjpa.Log" value="DefaultLevel=WARN,Tool=INFO"/>
         </properties>
     </persistence-unit>

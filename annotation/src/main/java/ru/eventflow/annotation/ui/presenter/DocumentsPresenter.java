@@ -1,11 +1,11 @@
 package ru.eventflow.annotation.ui.presenter;
 
 import ru.eventflow.annotation.EventBus;
-import ru.eventflow.annotation.data.DataManager;
-import ru.eventflow.annotation.model.Document;
+import ru.eventflow.ccgbank.data.DataManager;
 import ru.eventflow.annotation.ui.event.DocumentSelectedEvent;
 import ru.eventflow.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.annotation.ui.view.DocumentsView;
+import ru.eventflow.ccgbank.model.Document;
 
 import javax.inject.Inject;
 import javax.swing.*;

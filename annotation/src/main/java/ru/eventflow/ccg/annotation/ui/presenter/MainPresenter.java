@@ -20,8 +20,8 @@ public class MainPresenter implements Presenter<MainView> {
     private Document document;
 
     @Inject
-    public MainPresenter(final MainView view, final EventBus eventBus) {
-        this.view = view;
+    public MainPresenter(final EventBus eventBus) {
+        this.view = new MainView();
         this.eventBus = eventBus;
         init();
         this.eventBus.fireEvent(new StatusUpdateEvent("MainPresenter initialized"));

@@ -76,6 +76,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <schemaDirectory>${project.basedir}/src/main/xsd</schemaDirectory>
                     <packageName>ru.eventflow.ccg.data.xml</packageName>
                 </configuration>
             </plugin>

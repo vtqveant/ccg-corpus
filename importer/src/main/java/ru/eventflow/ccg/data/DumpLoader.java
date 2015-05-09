@@ -3,7 +3,8 @@ package ru.eventflow.ccg.data;
 import ru.eventflow.ccg.data.xml.annot.Paragraph;
 import ru.eventflow.ccg.data.xml.annot.Sentence;
 import ru.eventflow.ccg.data.xml.annot.Text;
-import ru.eventflow.ccg.model.Document;
+import ru.eventflow.ccg.datasource.DataSource;
+import ru.eventflow.ccg.datasource.model.Document;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -13,14 +14,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 public class DumpLoader {
@@ -29,24 +28,15 @@ public class DumpLoader {
     private static Unmarshaller unmarshaller;
     private File resourcesLocationFile;
 
-    private static final EntityManager entityManager = Persistence.createEntityManagerFactory("h2-openjpa-tcp").createEntityManager();
+    private static final EntityManager entityManager = Persistence.createEntityManagerFactory(DataSource.DEFAULT).createEntityManager();
 
     public static void main(String[] args) {
-        try {
-            Properties properties = new Properties();
-            if (args.length > 0 && args.length % 2 == 0 && args[0].equals("--config")) {
-                properties.load(new FileReader(new File(args[1])));
-            } else {
-                properties.load(DumpLoader.class.getResourceAsStream("/config.properties"));
-            }
-            String resourcesLocation = properties.getProperty("opencorpora.dump.location");
-            if (resourcesLocation != null) {
-                new DumpLoader(resourcesLocation).init();
-            }
-        } catch (IOException e) {
+        if (args.length == 0 || args.length % 2 != 0 || !args[0].equals("--resources")) {
             System.out.println("Exit due to misconfiguration");
             System.exit(-1);
         }
+        String resourcesLocation = args[1];
+        new DumpLoader(resourcesLocation).init();
     }
 
     public DumpLoader(String resourcesLocation) {

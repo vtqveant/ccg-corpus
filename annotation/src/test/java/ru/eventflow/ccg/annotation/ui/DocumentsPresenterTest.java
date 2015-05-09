@@ -7,7 +7,7 @@ import org.junit.Test;
 import ru.eventflow.ccg.annotation.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.DocumentMarkedEvent;
 import ru.eventflow.ccg.annotation.ui.presenter.DocumentsPresenter;
-import ru.eventflow.ccg.model.Document;
+import ru.eventflow.ccg.datasource.model.Document;
 
 public class DocumentsPresenterTest {
 

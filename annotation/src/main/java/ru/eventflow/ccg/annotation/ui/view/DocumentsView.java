@@ -1,6 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
-import ru.eventflow.ccg.model.Document;
+import ru.eventflow.ccg.datasource.model.Document;
 
 import javax.swing.*;
 import java.awt.*;

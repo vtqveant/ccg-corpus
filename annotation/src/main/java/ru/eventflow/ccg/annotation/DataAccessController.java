@@ -2,7 +2,7 @@ package ru.eventflow.ccg.annotation;
 
 import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.ui.event.DocumentMarkedEvent;
-import ru.eventflow.ccg.data.DataManager;
+import ru.eventflow.ccg.datasource.DataManager;
 import ru.eventflow.ccg.annotation.ui.event.DocumentMarkedEventHandler;
 
 public class DataAccessController {

@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.*;
 import ru.eventflow.ccg.annotation.ui.view.MainView;
-import ru.eventflow.ccg.datasource.model.Document;
+import ru.eventflow.ccg.datasource.model.corpus.Document;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

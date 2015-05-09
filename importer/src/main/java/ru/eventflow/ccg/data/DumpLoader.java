@@ -4,7 +4,7 @@ import ru.eventflow.ccg.data.xml.annot.Paragraph;
 import ru.eventflow.ccg.data.xml.annot.Sentence;
 import ru.eventflow.ccg.data.xml.annot.Text;
 import ru.eventflow.ccg.datasource.DataSource;
-import ru.eventflow.ccg.datasource.model.Document;
+import ru.eventflow.ccg.datasource.model.corpus.Document;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;

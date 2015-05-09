@@ -7,9 +7,9 @@
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 
         <!-- enhanced classes -->
-        <class>ru.eventflow.ccg.datasource.model.Document</class>
-        <class>ru.eventflow.ccg.datasource.model.Assessment</class>
-        <class>ru.eventflow.ccg.datasource.model.Query</class>
+        <class>ru.eventflow.ccg.datasource.model.corpus.Document</class>
+        <class>ru.eventflow.ccg.datasource.model.assessment.Assessment</class>
+        <class>ru.eventflow.ccg.datasource.model.assessment.Query</class>
 
         <properties>
             <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/corpus"/>

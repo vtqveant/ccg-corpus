@@ -1,6 +1,6 @@
 package ru.eventflow.ccg.datasource;
 
-import ru.eventflow.ccg.datasource.model.Document;
+import ru.eventflow.ccg.datasource.model.corpus.Document;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;

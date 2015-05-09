@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.model;
+package ru.eventflow.ccg.datasource.model;
 
 import javax.persistence.*;
 

@@ -6,8 +6,8 @@ import com.google.inject.Singleton;
 import org.mockito.Mockito;
 import ru.eventflow.ccg.annotation.DataAccessController;
 import ru.eventflow.ccg.annotation.ui.view.DocumentsView;
-import ru.eventflow.ccg.data.DataManager;
-import ru.eventflow.ccg.model.Document;
+import ru.eventflow.ccg.datasource.DataManager;
+import ru.eventflow.ccg.datasource.model.Document;
 
 import java.util.ArrayList;
 

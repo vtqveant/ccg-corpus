@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.model;
+package ru.eventflow.ccg.datasource.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -15,7 +15,7 @@ public class Query {
     @Column(name = "orthography")
     private String orthography;
 
-    @Column(name = "description", columnDefinition = "TEXT")
+    @Column(name = "description", columnDefinition = "VARCHAR(255)")
     private String description;
 
     @OneToMany(targetEntity = Assessment.class, cascade = CascadeType.MERGE)

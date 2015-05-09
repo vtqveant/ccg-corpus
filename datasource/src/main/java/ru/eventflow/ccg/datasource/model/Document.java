@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.model;
+package ru.eventflow.ccg.datasource.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,10 +12,10 @@ public class Document {
     @Id
     private int id;
 
-    @Column(name = "url", columnDefinition = "VARCHAR(4294967295)")
+    @Column(name = "url", columnDefinition = "VARCHAR(255)")
     private String url;
 
-    @Column(name = "text", columnDefinition = "VARCHAR(4294967295)")
+    @Column(name = "text", columnDefinition = "VARCHAR(255)")
     private String text;
 
     public Document() {

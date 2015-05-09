@@ -21,7 +21,7 @@
         <module>annotation</module>
         <module>parser</module>
         <module>importer</module>
-        <module>database</module>
+        <module>datasource</module>
     </modules>
 
     <dependencies>

@@ -1,6 +1,6 @@
-package ru.eventflow.ccg.data;
+package ru.eventflow.ccg.datasource;
 
-import ru.eventflow.ccg.model.Document;
+import ru.eventflow.ccg.datasource.model.Document;
 
 import java.util.List;
 

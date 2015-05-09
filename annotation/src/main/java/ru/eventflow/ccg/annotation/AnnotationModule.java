@@ -4,9 +4,9 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import ru.eventflow.ccg.annotation.ui.presenter.*;
-import ru.eventflow.ccg.annotation.ui.view.*;
-import ru.eventflow.ccg.data.DataManager;
-import ru.eventflow.ccg.data.DataManagerImpl;
+import ru.eventflow.ccg.datasource.DataManager;
+import ru.eventflow.ccg.datasource.DataManagerImpl;
+import ru.eventflow.ccg.datasource.DataSource;
 
 public class AnnotationModule extends AbstractModule {
 
@@ -28,7 +28,7 @@ public class AnnotationModule extends AbstractModule {
     private static class DataManagerProvider implements Provider<DataManager> {
         @Override
         public DataManager get() {
-            return new DataManagerImpl("h2-openjpa-tcp");
+            return new DataManagerImpl(DataSource.DEFAULT);
         }
     }
 }

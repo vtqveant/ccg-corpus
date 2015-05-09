@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="helper" default="prepare-sources" basedir=".">
-    <property name="download-dir" value="downloads/resources"/>
-    <property name="target-dir" value="target/data"/>
+<project name="helper" default="prepare-sources">
+    <property name="download-dir" value="../data/downloads"/>
+    <property name="target-dir" value="../data/resources"/>
 
     <target name="download">
         <copy todir="${download-dir}" flatten="true">

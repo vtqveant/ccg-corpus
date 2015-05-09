@@ -19,9 +19,9 @@
 
     <modules>
         <module>annotation</module>
-        <module>data</module>
         <module>parser</module>
-        <module>assistant</module>
+        <module>importer</module>
+        <module>database</module>
     </modules>
 
     <dependencies>

@@ -1,9 +1,11 @@
-package ru.eventflow.ccg.datasource.model;
+package ru.eventflow.ccg.datasource.model.assessment;
+
+import ru.eventflow.ccg.datasource.model.corpus.Document;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "assessment", uniqueConstraints = {@UniqueConstraint(columnNames = {"query_id", "document_id"})})
+@Table(schema = "assessment", name = "assessment", uniqueConstraints = {@UniqueConstraint(columnNames = {"query_id", "document_id"})})
 public class Assessment {
 
     @Basic

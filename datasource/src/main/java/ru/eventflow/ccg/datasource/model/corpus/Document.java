@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.datasource.model;
+package ru.eventflow.ccg.datasource.model.corpus;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "document")
+@Table(schema = "corpus", name = "document")
 public class Document {
 
     @Id

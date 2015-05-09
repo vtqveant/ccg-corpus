@@ -1,11 +1,11 @@
-package ru.eventflow.ccg.datasource.model;
+package ru.eventflow.ccg.datasource.model.assessment;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "query")
+@Table(schema = "assessment", name = "query")
 public class Query {
 
     @Id

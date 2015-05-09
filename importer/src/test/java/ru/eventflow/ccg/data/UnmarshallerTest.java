@@ -1,7 +1,7 @@
 package ru.eventflow.ccg.data;
 
 import org.junit.Test;
-import ru.eventflow.ccg.data.xml.Text;
+import ru.eventflow.ccg.data.xml.annot.Text;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -15,7 +15,7 @@ public class UnmarshallerTest {
 
     @Test
     public void testUnmarshaller() throws JAXBException, IOException {
-        JAXBContext jc = JAXBContext.newInstance("ru.eventflow.ccg.data.xml");
+        JAXBContext jc = JAXBContext.newInstance("ru.eventflow.ccg.data.xml.annot");
         Unmarshaller unmarshaller = jc.createUnmarshaller();
         InputStream xml = getClass().getResourceAsStream("/opcorpora/1.xml");
         JAXBElement<Text> document = unmarshaller.unmarshal(new StreamSource(xml), Text.class);

@@ -17,7 +17,7 @@ public class H2Server {
         if (args.length > 0 && args.length % 2 == 0 && args[0].equals("--config")) {
             properties.load(new FileReader(new File(args[1])));
         } else {
-            properties.load(ClassLoader.getSystemResourceAsStream("config.properties"));
+            properties.load(H2Server.class.getResourceAsStream("/config.properties"));
         }
         String databaseLocation = properties.getProperty("opencorpora.database.location");
         if (databaseLocation == null) {

@@ -1,8 +1,8 @@
 package ru.eventflow.ccg.data;
 
-import ru.eventflow.ccg.data.xml.Paragraph;
-import ru.eventflow.ccg.data.xml.Sentence;
-import ru.eventflow.ccg.data.xml.Text;
+import ru.eventflow.ccg.data.xml.annot.Paragraph;
+import ru.eventflow.ccg.data.xml.annot.Sentence;
+import ru.eventflow.ccg.data.xml.annot.Text;
 import ru.eventflow.ccg.model.Document;
 
 import javax.persistence.EntityManager;
@@ -29,7 +29,7 @@ public class DumpLoader {
     private static Unmarshaller unmarshaller;
     private File resourcesLocationFile;
 
-    private static final EntityManager entityManager = Persistence.createEntityManagerFactory("h2-openjpa").createEntityManager();
+    private static final EntityManager entityManager = Persistence.createEntityManagerFactory("h2-openjpa-tcp").createEntityManager();
 
     public static void main(String[] args) {
         try {
@@ -37,7 +37,7 @@ public class DumpLoader {
             if (args.length > 0 && args.length % 2 == 0 && args[0].equals("--config")) {
                 properties.load(new FileReader(new File(args[1])));
             } else {
-                properties.load(ClassLoader.getSystemResourceAsStream("config.properties"));
+                properties.load(DumpLoader.class.getResourceAsStream("/config.properties"));
             }
             String resourcesLocation = properties.getProperty("opencorpora.dump.location");
             if (resourcesLocation != null) {
@@ -57,7 +57,7 @@ public class DumpLoader {
         }
 
         try {
-            JAXBContext jc = JAXBContext.newInstance("ru.eventflow.ccg.data.xml");
+            JAXBContext jc = JAXBContext.newInstance("ru.eventflow.ccg.data.xml.annot");
             unmarshaller = jc.createUnmarshaller();
         } catch (JAXBException e) {
             logger.severe("Initialization failed");

@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <artifactId>ccg-corpus-parent</artifactId>
         <groupId>ru.eventflow</groupId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>data</artifactId>
+    <artifactId>database</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>CCG Corpus :: Data</name>
+    <name>CCG Corpus :: Database</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,55 +29,10 @@
             <artifactId>h2</artifactId>
             <version>1.4.186</version>
         </dependency>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>2.2.5-b10</version>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>download</id>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <tasks>
-                                <ant antfile="download.xml" target="prepare-sources"/>
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxb2-maven-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <id>xjc</id>
-                        <goals>
-                            <goal>xjc</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <schemaDirectory>${project.basedir}/src/main/xsd</schemaDirectory>
-                    <packageName>ru.eventflow.ccg.data.xml</packageName>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -115,15 +68,7 @@
                     </arguments>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.2</version>
-                <configuration>
-                    <!-- dumps can be deployed -->
-                    <skip>false</skip>
-                </configuration>
-            </plugin>
+
         </plugins>
 
         <resources>
@@ -157,7 +102,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <h2.databaseDirectory>${project.basedir}/database</h2.databaseDirectory>
+                <h2.databaseDirectory>${project.basedir}/h2</h2.databaseDirectory>
             </properties>
         </profile>
     </profiles>

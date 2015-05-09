@@ -4,4 +4,4 @@ generate with
 
 s. http://stackoverflow.com/questions/8005689/jaxb2-maven-plugin-and-configuration-inside-execution-tag
 
-to import first start the database, as the importer uses tcp connection
+Import is destructive!!!

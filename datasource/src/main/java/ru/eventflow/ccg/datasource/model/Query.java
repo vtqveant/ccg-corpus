@@ -15,7 +15,7 @@ public class Query {
     @Column(name = "orthography")
     private String orthography;
 
-    @Column(name = "description", columnDefinition = "VARCHAR(255)")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @OneToMany(targetEntity = Assessment.class, cascade = CascadeType.MERGE)

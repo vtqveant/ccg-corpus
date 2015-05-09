@@ -12,10 +12,10 @@ public class Document {
     @Id
     private int id;
 
-    @Column(name = "url", columnDefinition = "VARCHAR(255)")
+    @Column(name = "url", columnDefinition = "TEXT")
     private String url;
 
-    @Column(name = "text", columnDefinition = "VARCHAR(255)")
+    @Column(name = "text", columnDefinition = "TEXT")
     private String text;
 
     public Document() {

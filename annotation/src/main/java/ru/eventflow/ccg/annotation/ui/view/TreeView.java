@@ -14,7 +14,7 @@ public class TreeView extends JPanel {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(200, 300));
 
-        DefaultMutableTreeNode top = new DefaultMutableTreeNode("OpenCorpora Collection");
+        DefaultMutableTreeNode top = new DefaultMutableTreeNode("OpenCorpora");
         tree = new JTree(top);
         tree.setRootVisible(true);
         tree.setShowsRootHandles(true);
@@ -30,10 +30,6 @@ public class TreeView extends JPanel {
         return tree;
     }
 
-    public TreeSelectionModel getSelectionModel() {
-        return tree.getSelectionModel();
-    }
-
     class DocumentTreeCellRenderer extends JLabel implements TreeCellRenderer {
         DefaultTreeCellRenderer defaultRenderer = new DefaultTreeCellRenderer();
 
@@ -44,7 +40,7 @@ public class TreeView extends JPanel {
                 Object userObject = ((DefaultMutableTreeNode) value).getUserObject();
                 if (userObject instanceof Document) {
                     Document doc = (Document) userObject;
-                    setText(String.format("%-6s %-20s", doc.getId(), doc.getName()));
+                    setText(String.format("%-4s %-20s", doc.getId(), doc.getName()));
                     setFont(new Font("Courier New", Font.PLAIN, 11));
                     setOpaque(true);
                     setBackground(selected ? Color.LIGHT_GRAY : Color.WHITE);

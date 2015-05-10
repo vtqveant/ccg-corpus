@@ -21,8 +21,7 @@ public class TreePresenter implements Presenter<TreeView> {
     private DataManager dataManager;
 
     @Inject
-    public TreePresenter(final EventBus eventBus,
-                         final DataManager dataManager) {
+    public TreePresenter(final EventBus eventBus, final DataManager dataManager) {
         this.view = new TreeView();
         this.eventBus = eventBus;
         this.dataManager = dataManager;
@@ -31,14 +30,12 @@ public class TreePresenter implements Presenter<TreeView> {
 
     private void init() {
         // init tree model
-        int count = 0;
         Map<Integer, DefaultMutableTreeNode> nodes = new HashMap<Integer, DefaultMutableTreeNode>();
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) view.getTree().getModel().getRoot();
         nodes.put(0, root);
         for (Document document : dataManager.getAllDocuments()) {
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(document);
             nodes.put(document.getId(), node);
-            count++;
         }
         // because there's no order on documents
         for (Map.Entry<Integer, DefaultMutableTreeNode> entry : nodes.entrySet()) {
@@ -48,10 +45,9 @@ public class TreePresenter implements Presenter<TreeView> {
                 nodes.get(current.getParentId()).add(entry.getValue());
             }
         }
-        eventBus.fireEvent(new StatusUpdateEvent("fetched " + count + " entries"));
 
         // delegates the selected document to whom it may concern
-        view.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
+        view.getTree().getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
             @Override
             public void valueChanged(TreeSelectionEvent e) {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) view.getTree().getLastSelectedPathComponent();

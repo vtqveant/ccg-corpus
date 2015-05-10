@@ -10,7 +10,6 @@ import ru.eventflow.ccg.annotation.ui.presenter.TreePresenter;
 import ru.eventflow.ccg.datasource.model.corpus.Document;
 
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
 
 public class TreePresenterTest {
 

@@ -4,18 +4,17 @@ import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.DocumentSelectedEvent;
 import ru.eventflow.ccg.annotation.ui.event.DocumentSelectedEventHandler;
-import ru.eventflow.ccg.annotation.ui.view.DetailsView;
+import ru.eventflow.ccg.annotation.ui.view.TextView;
 import ru.eventflow.ccg.datasource.model.corpus.Document;
 
+public class TextPresenter implements Presenter<TextView> {
 
-public class DetailsPresenter implements Presenter<DetailsView> {
-
-    private DetailsView view;
+    private TextView view;
     private EventBus eventBus;
 
     @Inject
-    public DetailsPresenter(final EventBus eventBus) {
-        this.view = new DetailsView();
+    public TextPresenter(final EventBus eventBus) {
+        this.view = new TextView();
         this.eventBus = eventBus;
         init();
     }
@@ -35,7 +34,7 @@ public class DetailsPresenter implements Presenter<DetailsView> {
     }
 
     @Override
-    public DetailsView getView() {
+    public TextView getView() {
         return view;
     }
 }

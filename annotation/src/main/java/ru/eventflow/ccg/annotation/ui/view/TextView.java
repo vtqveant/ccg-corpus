@@ -4,11 +4,11 @@ import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 
-public class DetailsView extends JPanel {
+public class TextView extends JPanel {
 
     private final JTextPane textArea;
 
-    public DetailsView() {
+    public TextView() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(200, 300));
 

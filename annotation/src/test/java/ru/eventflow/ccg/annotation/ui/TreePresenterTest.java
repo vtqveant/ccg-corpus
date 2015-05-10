@@ -6,25 +6,25 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.eventflow.ccg.annotation.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.DocumentMarkedEvent;
-import ru.eventflow.ccg.annotation.ui.presenter.DocumentsPresenter;
+import ru.eventflow.ccg.annotation.ui.presenter.TreePresenter;
 import ru.eventflow.ccg.datasource.model.corpus.Document;
 
-public class DocumentsPresenterTest {
+public class TreePresenterTest {
 
-    private DocumentsPresenter documentsPresenter;
+    private TreePresenter treePresenter;
     private EventBus eventBus;
 
     @Before
     public void setUp() {
         Injector injector = Guice.createInjector(new MockAnnotationModule());
         eventBus = injector.getInstance(EventBus.class);
-        documentsPresenter = injector.getInstance(DocumentsPresenter.class);
+        treePresenter = injector.getInstance(TreePresenter.class);
     }
 
     @Test
     public void testMarkDocument() {
         Document document = new Document(0, "test", "test");
-        documentsPresenter.getView().getModel().addElement(document);
+      //  treePresenter.getView().getModel().addElement(document);
 
         eventBus.fireEvent(new DocumentMarkedEvent(document, true));
         eventBus.fireEvent(new DocumentMarkedEvent(document, false));

@@ -21,7 +21,7 @@ public class AnnotationModule extends AbstractModule {
 
         bind(MainPresenter.class).in(Singleton.class);
         bind(TreePresenter.class).in(Singleton.class);
-        bind(DetailsPresenter.class).in(Singleton.class);
+        bind(TextPresenter.class).in(Singleton.class);
         bind(MenuPresenter.class).in(Singleton.class);
         bind(FTSAnnotationPresenter.class).in(Singleton.class);
     }

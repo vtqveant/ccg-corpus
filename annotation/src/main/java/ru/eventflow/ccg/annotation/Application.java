@@ -33,12 +33,12 @@ public class Application {
                     final DataAccessController dataAccessController = injector.getInstance(DataAccessController.class);
 
                     final Presenter<TreeView> documentsPresenter = injector.getInstance(TreePresenter.class);
-                    final Presenter<DetailsView> detailsPresenter = injector.getInstance(DetailsPresenter.class);
+                    final Presenter<TextView> detailsPresenter = injector.getInstance(TextPresenter.class);
                     final Presenter<FTSAnnotationView> ftsAnnotationdetailsPresenter = injector.getInstance(FTSAnnotationPresenter.class);
 
                     final Presenter<MainView> mainPresenter = injector.getInstance(MainPresenter.class);
                     mainPresenter.getView().setLeftComponent(documentsPresenter.getView());
-                    mainPresenter.getView().addTab("Details", detailsPresenter.getView());
+                    mainPresenter.getView().addTab("Text", detailsPresenter.getView());
                     mainPresenter.getView().addTab("FTS Annotation", ftsAnnotationdetailsPresenter.getView());
 
                     final Presenter<MenuView> menuPresenter = injector.getInstance(MenuPresenter.class);

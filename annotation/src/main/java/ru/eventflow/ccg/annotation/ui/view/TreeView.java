@@ -44,7 +44,7 @@ public class TreeView extends JPanel {
                 Object userObject = ((DefaultMutableTreeNode) value).getUserObject();
                 if (userObject instanceof Document) {
                     Document doc = (Document) userObject;
-                    setText(String.format("%6s %20s", doc.getId(), doc.getUrl()));
+                    setText(String.format("%-6s %-20s", doc.getId(), doc.getName()));
                     setFont(new Font("Courier New", Font.PLAIN, 11));
                     setOpaque(true);
                     setBackground(selected ? Color.LIGHT_GRAY : Color.WHITE);

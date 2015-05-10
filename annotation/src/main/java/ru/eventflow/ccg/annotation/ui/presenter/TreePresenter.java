@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TreePresenter implements Presenter<TreeView> {
 
@@ -28,11 +30,23 @@ public class TreePresenter implements Presenter<TreeView> {
     }
 
     private void init() {
+        // init tree model
         int count = 0;
+        Map<Integer, DefaultMutableTreeNode> nodes = new HashMap<Integer, DefaultMutableTreeNode>();
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) view.getTree().getModel().getRoot();
+        nodes.put(0, root);
         for (Document document : dataManager.getAllDocuments()) {
-            root.add(new DefaultMutableTreeNode(document));
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode(document);
+            nodes.put(document.getId(), node);
             count++;
+        }
+        // because there's no order on documents
+        for (Map.Entry<Integer, DefaultMutableTreeNode> entry : nodes.entrySet()) {
+            Object o = entry.getValue().getUserObject();
+            if (o instanceof Document) {
+                Document current = (Document) o;
+                nodes.get(current.getParentId()).add(entry.getValue());
+            }
         }
         eventBus.fireEvent(new StatusUpdateEvent("fetched " + count + " entries"));
 

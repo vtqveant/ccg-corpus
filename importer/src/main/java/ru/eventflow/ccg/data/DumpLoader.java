@@ -107,10 +107,10 @@ public class DumpLoader {
 
     private Document processXmlFile(File file) throws IOException, JAXBException {
         InputStream in = new URL("file:///" + file.getAbsolutePath()).openStream();
-        return processXmlFile(in, file.getName());
+        return processXmlFile(in);
     }
 
-    private Document processXmlFile(InputStream in, String name) throws IOException, JAXBException {
+    private Document processXmlFile(InputStream in) throws IOException, JAXBException {
         JAXBElement<Text> document = unmarshaller.unmarshal(new StreamSource(in), Text.class);
         in.close();
 
@@ -131,7 +131,10 @@ public class DumpLoader {
             sb.append('\n');
         }
 
-        return new Document(new Integer(name.substring(0, name.indexOf(".xml"))), documentUrl, sb.toString());
+        int id = document.getValue().getId().intValue();
+        int parentId = document.getValue().getParent().intValue();
+        String name = document.getValue().getName();
+        return new Document(id, name, parentId, documentUrl, sb.toString());
     }
 
 }

@@ -9,6 +9,9 @@ import ru.eventflow.ccg.annotation.ui.event.DocumentMarkedEvent;
 import ru.eventflow.ccg.annotation.ui.presenter.TreePresenter;
 import ru.eventflow.ccg.datasource.model.corpus.Document;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
+
 public class TreePresenterTest {
 
     private TreePresenter treePresenter;
@@ -23,8 +26,9 @@ public class TreePresenterTest {
 
     @Test
     public void testMarkDocument() {
-        Document document = new Document(0, "test", "test");
-      //  treePresenter.getView().getModel().addElement(document);
+        Document document = new Document(0, "test", 0, "test", "test");
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) treePresenter.getView().getTree().getModel().getRoot();
+        node.add(new DefaultMutableTreeNode(document));
 
         eventBus.fireEvent(new DocumentMarkedEvent(document, true));
         eventBus.fireEvent(new DocumentMarkedEvent(document, false));

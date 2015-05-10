@@ -7,34 +7,16 @@ import java.awt.*;
 public class MainView extends JPanel {
 
     private final JSplitPane splitPane;
-    private final JButton prevBtn = new JButton("Prev");
-    private final JButton nextBtn = new JButton("Next");
-    private final JButton relevantBtn = new JButton("Relevant");
-    private final JButton nonrelevantBtn = new JButton("Nonrelevant");
     private final JLabel statusLabel = new JLabel();
+    private final JTabbedPane tabbedPane = new JTabbedPane();
 
     public MainView() {
         setLayout(new BorderLayout());
 
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.LINE_AXIS));
-        topPanel.setBorder(BorderFactory.createEmptyBorder(1, 5, 1, 5));
-        topPanel.add(prevBtn);
-        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        topPanel.add(nextBtn);
-        topPanel.add(Box.createRigidArea(new Dimension(5, 0)));
-        topPanel.add(Box.createHorizontalGlue());
-        topPanel.add(Box.createRigidArea(new Dimension(5, 0)));
-        relevantBtn.setEnabled(false);
-        topPanel.add(relevantBtn);
-        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        nonrelevantBtn.setEnabled(false);
-        topPanel.add(nonrelevantBtn);
-        add(topPanel, BorderLayout.NORTH);
-
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setOneTouchExpandable(true);
         splitPane.setContinuousLayout(true);
+        splitPane.setRightComponent(tabbedPane);
         add(splitPane, BorderLayout.CENTER);
 
         statusLabel.setBorder(new EmptyBorder(2, 5, 2, 2));
@@ -46,24 +28,8 @@ public class MainView extends JPanel {
         splitPane.setLeftComponent(component);
     }
 
-    public void setRightComponent(Component component) {
-        splitPane.setRightComponent(component);
-    }
-
-    public JButton getPrevBtn() {
-        return prevBtn;
-    }
-
-    public JButton getNextBtn() {
-        return nextBtn;
-    }
-
-    public JButton getRelevantBtn() {
-        return relevantBtn;
-    }
-
-    public JButton getNonrelevantBtn() {
-        return nonrelevantBtn;
+    public void addTab(String title, Component component) {
+        tabbedPane.addTab(title, component);
     }
 
     public JLabel getStatusLabel() {

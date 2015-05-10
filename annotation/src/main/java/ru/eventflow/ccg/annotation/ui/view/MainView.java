@@ -21,6 +21,7 @@ public class MainView extends JPanel {
 
         statusLabel.setBorder(new EmptyBorder(2, 5, 2, 2));
         statusLabel.setFont(new Font("Sans", Font.PLAIN, 11));
+        statusLabel.setText(" ");
         add(statusLabel, BorderLayout.SOUTH);
     }
 

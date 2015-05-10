@@ -32,7 +32,7 @@ public class Application {
                     final LoggingController loggingController = injector.getInstance(LoggingController.class);
                     final DataAccessController dataAccessController = injector.getInstance(DataAccessController.class);
 
-                    final Presenter<DocumentsView> documentsPresenter = injector.getInstance(DocumentsPresenter.class);
+                    final Presenter<TreeView> documentsPresenter = injector.getInstance(TreePresenter.class);
                     final Presenter<DetailsView> detailsPresenter = injector.getInstance(DetailsPresenter.class);
                     final Presenter<FTSAnnotationView> ftsAnnotationdetailsPresenter = injector.getInstance(FTSAnnotationPresenter.class);
 

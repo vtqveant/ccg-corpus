@@ -5,16 +5,16 @@ import ru.eventflow.ccg.annotation.ui.event.DocumentMarkedEvent;
 import ru.eventflow.ccg.annotation.ui.event.DocumentSelectedEvent;
 import ru.eventflow.ccg.annotation.ui.event.DocumentSelectedEventHandler;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
-import ru.eventflow.ccg.annotation.ui.view.FTSAnnotationView;
+import ru.eventflow.ccg.annotation.ui.view.ProofAssistantView;
 import ru.eventflow.ccg.datasource.model.corpus.Document;
 
 import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class FTSAnnotationPresenter implements Presenter<FTSAnnotationView> {
+public class ProofAssistantPresenter implements Presenter<ProofAssistantView> {
 
-    private FTSAnnotationView view;
+    private ProofAssistantView view;
     private EventBus eventBus;
 
     /**
@@ -23,8 +23,8 @@ public class FTSAnnotationPresenter implements Presenter<FTSAnnotationView> {
     private Document document;
 
     @Inject
-    public FTSAnnotationPresenter(final EventBus eventBus) {
-        this.view = new FTSAnnotationView();
+    public ProofAssistantPresenter(final EventBus eventBus) {
+        this.view = new ProofAssistantView();
         this.eventBus = eventBus;
         init();
     }
@@ -59,7 +59,7 @@ public class FTSAnnotationPresenter implements Presenter<FTSAnnotationView> {
     }
 
     @Override
-    public FTSAnnotationView getView() {
+    public ProofAssistantView getView() {
         return view;
     }
 }

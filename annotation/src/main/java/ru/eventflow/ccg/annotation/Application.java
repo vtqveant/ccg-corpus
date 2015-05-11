@@ -32,18 +32,18 @@ public class Application {
                     final LoggingController loggingController = injector.getInstance(LoggingController.class);
                     final DataAccessController dataAccessController = injector.getInstance(DataAccessController.class);
 
-                    final Presenter<TreeView> documentsPresenter = injector.getInstance(TreePresenter.class);
-                    final Presenter<TextView> detailsPresenter = injector.getInstance(TextPresenter.class);
-                    final Presenter<FTSAnnotationView> ftsAnnotationdetailsPresenter = injector.getInstance(FTSAnnotationPresenter.class);
+                    final Presenter<TreeView> treePresenter = injector.getInstance(TreePresenter.class);
+                    final Presenter<TextView> textPresenter = injector.getInstance(TextPresenter.class);
+                    final Presenter<AnnotationView> annotationPresenter = injector.getInstance(AnnotationPresenter.class);
 
                     final Presenter<MainView> mainPresenter = injector.getInstance(MainPresenter.class);
-                    mainPresenter.getView().setLeftComponent(documentsPresenter.getView());
-                    mainPresenter.getView().addTab("Text", detailsPresenter.getView());
-                    mainPresenter.getView().addTab("FTS Annotation", ftsAnnotationdetailsPresenter.getView());
+                    mainPresenter.getView().getAnnotationPanel().add(annotationPresenter.getView());
+                    mainPresenter.getView().getNavigationSplitPane().setLeftComponent(treePresenter.getView());
+                    mainPresenter.getView().getNavigationSplitPane().setRightComponent(textPresenter.getView());
 
                     final Presenter<MenuView> menuPresenter = injector.getInstance(MenuPresenter.class);
 
-                    final JFrame frame = new JFrame("Eventflow Annotation Tool");
+                    final JFrame frame = new JFrame("CCG Corpus Annotation Tool");
                     frame.setJMenuBar(menuPresenter.getView());
                     frame.setContentPane(mainPresenter.getView());
                     frame.setLocationRelativeTo(null);

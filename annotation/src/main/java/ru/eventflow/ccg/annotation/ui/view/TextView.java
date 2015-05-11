@@ -10,11 +10,12 @@ public class TextView extends JPanel {
 
     public TextView() {
         setLayout(new BorderLayout());
-        setMinimumSize(new Dimension(200, 300));
+        setMinimumSize(new Dimension(200, 150));
 
         textArea = new JTextPane();
         textArea.setEditable(false);
         textArea.setParagraphAttributes(SimpleAttributeSet.EMPTY, true);
+        textArea.setFont(new Font("Courier New", Font.PLAIN, 11));
         textArea.setMargin(new Insets(2, 2, 2, 2));
 
         JScrollPane scrollPane = new JScrollPane(textArea);

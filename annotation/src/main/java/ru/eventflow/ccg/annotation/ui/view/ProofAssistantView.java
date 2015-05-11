@@ -3,16 +3,15 @@ package ru.eventflow.ccg.annotation.ui.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class FTSAnnotationView extends JPanel {
+public class ProofAssistantView extends JPanel {
 
     private final JButton prevBtn = new JButton("Prev");
     private final JButton nextBtn = new JButton("Next");
     private final JButton relevantBtn = new JButton("Relevant");
     private final JButton nonrelevantBtn = new JButton("Nonrelevant");
 
-    public FTSAnnotationView() {
+    public ProofAssistantView() {
         setLayout(new BorderLayout());
-        setMinimumSize(new Dimension(200, 300));
 
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.LINE_AXIS));
@@ -28,7 +27,10 @@ public class FTSAnnotationView extends JPanel {
         topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
         nonrelevantBtn.setEnabled(false);
         topPanel.add(nonrelevantBtn);
-        add(topPanel, BorderLayout.NORTH);
+
+        JScrollPane scrollPane = new JScrollPane(topPanel);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        add(scrollPane, BorderLayout.PAGE_START);
     }
 
     public JButton getPrevBtn() {

@@ -23,7 +23,8 @@ public class AnnotationModule extends AbstractModule {
         bind(TreePresenter.class).in(Singleton.class);
         bind(TextPresenter.class).in(Singleton.class);
         bind(MenuPresenter.class).in(Singleton.class);
-        bind(FTSAnnotationPresenter.class).in(Singleton.class);
+        bind(ProofAssistantPresenter.class).in(Singleton.class);
+        bind(AnnotationPresenter.class).in(Singleton.class);
     }
 
     private static class DataManagerProvider implements Provider<DataManager> {

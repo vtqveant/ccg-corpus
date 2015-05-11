@@ -12,7 +12,7 @@ public class TreeView extends JPanel {
 
     public TreeView() {
         setLayout(new BorderLayout());
-        setMinimumSize(new Dimension(200, 300));
+        setMinimumSize(new Dimension(200, 150));
 
         DefaultMutableTreeNode top = new DefaultMutableTreeNode("OpenCorpora");
         tree = new JTree(top);

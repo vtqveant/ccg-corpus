@@ -16,33 +16,24 @@ public class Application {
 
     public static void main(String[] args) {
         try {
-            // setup the look and feel properties
+            // LaF properties
             Properties props = new Properties();
             props.put("logoString", "");
             props.put("windowDecoration", "off");
             props.put("linuxStyleScrollBar", "off");
 
-            // set your theme
             FastLookAndFeel.setCurrentTheme(props);
             UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");
+
+            final LoggingController loggingController = injector.getInstance(LoggingController.class);
+            final DataAccessController dataAccessController = injector.getInstance(DataAccessController.class);
+
+            final Presenter<MainView> mainPresenter = injector.getInstance(MainPresenter.class);
+            final Presenter<MenuView> menuPresenter = injector.getInstance(MenuPresenter.class);
 
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    final LoggingController loggingController = injector.getInstance(LoggingController.class);
-                    final DataAccessController dataAccessController = injector.getInstance(DataAccessController.class);
-
-                    final Presenter<TreeView> treePresenter = injector.getInstance(TreePresenter.class);
-                    final Presenter<TextView> textPresenter = injector.getInstance(TextPresenter.class);
-                    final Presenter<ContainerView> containerPresenter = injector.getInstance(ContainerPresenter.class);
-
-                    final Presenter<MainView> mainPresenter = injector.getInstance(MainPresenter.class);
-                    mainPresenter.getView().getContainerPanel().add(containerPresenter.getView());
-                    mainPresenter.getView().getNavigationSplitPane().setLeftComponent(treePresenter.getView());
-                    mainPresenter.getView().getNavigationSplitPane().setRightComponent(textPresenter.getView());
-
-                    final Presenter<MenuView> menuPresenter = injector.getInstance(MenuPresenter.class);
-
                     final JFrame frame = new JFrame("CCG Corpus Annotation Tool");
                     frame.setJMenuBar(menuPresenter.getView());
                     frame.setContentPane(mainPresenter.getView());
@@ -53,7 +44,6 @@ public class Application {
                     frame.setVisible(true);
                 }
             });
-
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(-1);

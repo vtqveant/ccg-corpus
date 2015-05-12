@@ -12,13 +12,19 @@ import java.awt.event.ActionListener;
 
 public class MainPresenter implements Presenter<MainView> {
 
-    private MainView view;
-    private EventBus eventBus;
+    private final MainView view;
+    private final EventBus eventBus;
 
     @Inject
-    public MainPresenter(final EventBus eventBus) {
+    public MainPresenter(final EventBus eventBus,
+                         final ContainerPresenter containerPresenter,
+                         final NavigationPresenter navigationPresenter,
+                         final DictionaryPresenter dictionaryPresenter) {
         this.view = new MainView();
         this.eventBus = eventBus;
+        this.view.getTopPanel().add(containerPresenter.getView());
+        this.view.getNavigationPanel().add(navigationPresenter.getView());
+        this.view.getDictionaryPanel().add(dictionaryPresenter.getView());
         init();
     }
 

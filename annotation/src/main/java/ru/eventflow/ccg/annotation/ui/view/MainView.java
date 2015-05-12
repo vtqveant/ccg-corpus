@@ -3,32 +3,57 @@ package ru.eventflow.ccg.annotation.ui.view;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class MainView extends JPanel {
 
-    private final JPanel containerPanel = new JPanel(new BorderLayout());
+    private final JPanel topPanel;
+    private final JButton annotationBtn;
+    private final JLabel statusLabel;
+    private final JSplitPane mainSplitPane;
 
-    private final JButton navigationBtn = new JButton("Corpus");
-    private final JButton dictionaryBtn = new JButton("Dictionary");
-    private final JButton annotationBtn = new JButton("Annotation");
-    private final JLabel statusLabel = new JLabel(" ");
-    private final JSplitPane navigationSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
+    private JPanel navigationPanel;
+    private JPanel dictionaryPanel;
+    private final JToggleButton navigationBtn;
+    private final JToggleButton dictionaryBtn;
 
     public MainView() {
         setLayout(new BorderLayout());
 
-        final JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, containerPanel, navigationSplitPane);
-        splitPane.setDividerLocation(0.75);
-        splitPane.setResizeWeight(0.5);
-        splitPane.setContinuousLayout(true);
-        splitPane.setBorder(BorderFactory.createEmptyBorder());
-        add(splitPane, BorderLayout.CENTER);
+        topPanel = new JPanel(new BorderLayout());
+        navigationPanel = new JPanel(new BorderLayout());
+        dictionaryPanel = new JPanel(new BorderLayout());
+
+        // initial state is navigation panel set invisible
+        mainSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, navigationPanel);
+        mainSplitPane.setDividerLocation(0.75);
+        mainSplitPane.setResizeWeight(0.5);
+        mainSplitPane.setContinuousLayout(true);
+        mainSplitPane.setBorder(BorderFactory.createEmptyBorder());
+        add(mainSplitPane, BorderLayout.CENTER);
+
+        navigationBtn = new JToggleButton("Corpus");
+        navigationBtn.setFocusable(false);
+        navigationBtn.setSelected(true);
+        navigationBtn.addItemListener(new ToggleItemListener());
+
+        dictionaryBtn = new JToggleButton("Dictionary");
+        dictionaryBtn.setFocusable(false);
+        dictionaryBtn.addItemListener(new ToggleItemListener());
+
+        NoneSelectedButtonGroup group = new NoneSelectedButtonGroup();
+        group.add(navigationBtn);
+        group.add(dictionaryBtn);
+
+        // TODO remove
+        annotationBtn = new JButton("Annotation");
 
         final JPanel bottomPanel = new JPanel(new BorderLayout());
 
         final JPanel horizontalButtonsPanel = new JPanel();
         horizontalButtonsPanel.setLayout(new BoxLayout(horizontalButtonsPanel, BoxLayout.LINE_AXIS));
-        horizontalButtonsPanel.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 5));
+        horizontalButtonsPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
         horizontalButtonsPanel.add(navigationBtn);
         horizontalButtonsPanel.add(Box.createRigidArea(new Dimension(5, 0)));
         horizontalButtonsPanel.add(dictionaryBtn);
@@ -37,23 +62,16 @@ public class MainView extends JPanel {
         horizontalButtonsPanel.add(Box.createHorizontalGlue());
         bottomPanel.add(horizontalButtonsPanel, BorderLayout.CENTER);
 
-        statusLabel.setBorder(new EmptyBorder(2, 5, 2, 2));
+        statusLabel = new JLabel(" ");
+        statusLabel.setBorder(new EmptyBorder(2, 2, 2, 2));
         statusLabel.setFont(new Font("Sans", Font.PLAIN, 11));
         bottomPanel.add(statusLabel, BorderLayout.PAGE_END);
 
         add(bottomPanel, BorderLayout.PAGE_END);
     }
 
-    public JPanel getContainerPanel() {
-        return containerPanel;
-    }
-
-    public JButton getNavigationBtn() {
-        return navigationBtn;
-    }
-
-    public JButton getDictionaryBtn() {
-        return dictionaryBtn;
+    public JPanel getTopPanel() {
+        return topPanel;
     }
 
     public JButton getAnnotationBtn() {
@@ -64,8 +82,49 @@ public class MainView extends JPanel {
         return statusLabel;
     }
 
-    public JSplitPane getNavigationSplitPane() {
-        return navigationSplitPane;
+    public JPanel getNavigationPanel() {
+        return navigationPanel;
     }
 
+    public JPanel getDictionaryPanel() {
+        return dictionaryPanel;
+    }
+
+    private class ToggleItemListener implements ItemListener {
+        private int loc = 0;
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                JToggleButton button = (JToggleButton) e.getSource();
+                JPanel current = (JPanel) mainSplitPane.getBottomComponent();
+                if (button == navigationBtn && current != navigationPanel) {
+                    mainSplitPane.setBottomComponent(navigationPanel);
+                }
+                if (button == dictionaryBtn && current != dictionaryPanel) {
+                    mainSplitPane.setBottomComponent(dictionaryPanel);
+                }
+
+                mainSplitPane.getBottomComponent().setVisible(true);
+                mainSplitPane.setDividerLocation(loc);
+                mainSplitPane.setDividerSize((Integer) UIManager.get("SplitPane.dividerSize"));
+            }
+            if (e.getStateChange() == ItemEvent.DESELECTED) {
+                loc = mainSplitPane.getDividerLocation();
+                mainSplitPane.setDividerSize(0);
+                mainSplitPane.getBottomComponent().setVisible(false);
+            }
+        }
+    }
+
+    private class NoneSelectedButtonGroup extends ButtonGroup {
+        @Override
+        public void setSelected(ButtonModel model, boolean selected) {
+            if (selected) {
+                super.setSelected(model, selected);
+            } else {
+                clearSelection();
+            }
+        }
+    }
 }

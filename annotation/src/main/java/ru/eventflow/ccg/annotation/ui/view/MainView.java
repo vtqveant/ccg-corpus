@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class MainView extends JPanel {
 
-    private final JPanel annotationPanel = new JPanel(new GridLayout(1, 1));
+    private final JPanel containerPanel = new JPanel(new BorderLayout());
 
     private final JButton navigationBtn = new JButton("Corpus");
     private final JButton dictionaryBtn = new JButton("Dictionary");
@@ -17,23 +17,23 @@ public class MainView extends JPanel {
     public MainView() {
         setLayout(new BorderLayout());
 
-        final JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, annotationPanel, navigationSplitPane);
+        final JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, containerPanel, navigationSplitPane);
         splitPane.setDividerLocation(0.75);
         splitPane.setResizeWeight(0.5);
         splitPane.setContinuousLayout(true);
+        splitPane.setBorder(BorderFactory.createEmptyBorder());
         add(splitPane, BorderLayout.CENTER);
 
         final JPanel bottomPanel = new JPanel(new BorderLayout());
 
         final JPanel horizontalButtonsPanel = new JPanel();
         horizontalButtonsPanel.setLayout(new BoxLayout(horizontalButtonsPanel, BoxLayout.LINE_AXIS));
-        horizontalButtonsPanel.setBorder(BorderFactory.createEmptyBorder(1, 5, 1, 5));
+        horizontalButtonsPanel.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 5));
         horizontalButtonsPanel.add(navigationBtn);
-        horizontalButtonsPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        horizontalButtonsPanel.add(dictionaryBtn);
-        horizontalButtonsPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        horizontalButtonsPanel.add(annotationBtn);
         horizontalButtonsPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+        horizontalButtonsPanel.add(dictionaryBtn);
+        horizontalButtonsPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+        horizontalButtonsPanel.add(annotationBtn);
         horizontalButtonsPanel.add(Box.createHorizontalGlue());
         bottomPanel.add(horizontalButtonsPanel, BorderLayout.CENTER);
 
@@ -44,8 +44,8 @@ public class MainView extends JPanel {
         add(bottomPanel, BorderLayout.PAGE_END);
     }
 
-    public JPanel getAnnotationPanel() {
-        return annotationPanel;
+    public JPanel getContainerPanel() {
+        return containerPanel;
     }
 
     public JButton getNavigationBtn() {

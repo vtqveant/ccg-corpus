@@ -34,10 +34,10 @@ public class Application {
 
                     final Presenter<TreeView> treePresenter = injector.getInstance(TreePresenter.class);
                     final Presenter<TextView> textPresenter = injector.getInstance(TextPresenter.class);
-                    final Presenter<AnnotationsView> annotationPresenter = injector.getInstance(AnnotationsPresenter.class);
+                    final Presenter<ContainerView> containerPresenter = injector.getInstance(ContainerPresenter.class);
 
                     final Presenter<MainView> mainPresenter = injector.getInstance(MainPresenter.class);
-                    mainPresenter.getView().getAnnotationPanel().add(annotationPresenter.getView());
+                    mainPresenter.getView().getContainerPanel().add(containerPresenter.getView());
                     mainPresenter.getView().getNavigationSplitPane().setLeftComponent(treePresenter.getView());
                     mainPresenter.getView().getNavigationSplitPane().setRightComponent(textPresenter.getView());
 

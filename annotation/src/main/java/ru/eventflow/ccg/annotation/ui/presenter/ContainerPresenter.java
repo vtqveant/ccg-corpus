@@ -4,28 +4,27 @@ import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.TabEvent;
 import ru.eventflow.ccg.annotation.ui.event.TabEventHandler;
-import ru.eventflow.ccg.annotation.ui.view.AnnotationsView;
+import ru.eventflow.ccg.annotation.ui.view.ContainerView;
 
-import javax.swing.*;
+public class ContainerPresenter implements Presenter<ContainerView> {
 
-public class AnnotationsPresenter implements Presenter<AnnotationsView> {
-
-    private final AnnotationsView view;
+    private final ContainerView view;
 
     @Inject
-    public AnnotationsPresenter(final EventBus eventBus) {
-        this.view = new AnnotationsView();
+    public ContainerPresenter(final EventBus eventBus) {
+        this.view = new ContainerView();
 
         eventBus.addHandler(TabEvent.TYPE, new TabEventHandler() {
             @Override
             public void onEvent(TabEvent e) {
-                view.addTab("FTS Annotation", new JLabel("sdfsd"));
+                AnnotationPresenter presenter = new AnnotationPresenter(eventBus);
+                view.addTab("FTS Annotation", presenter.getView());
             }
         });
     }
 
     @Override
-    public AnnotationsView getView() {
+    public ContainerView getView() {
         return view;
     }
 }

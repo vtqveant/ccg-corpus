@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEventHandler;
-import ru.eventflow.ccg.annotation.ui.event.ToggleFTSAnnotationEvent;
+import ru.eventflow.ccg.annotation.ui.event.TabEvent;
 import ru.eventflow.ccg.annotation.ui.view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -33,7 +33,7 @@ public class MainPresenter implements Presenter<MainView> {
         view.getAnnotationBtn().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eventBus.fireEvent(new ToggleFTSAnnotationEvent());
+                eventBus.fireEvent(new TabEvent());
             }
         });
     }

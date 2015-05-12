@@ -34,7 +34,7 @@ public class Application {
 
                     final Presenter<TreeView> treePresenter = injector.getInstance(TreePresenter.class);
                     final Presenter<TextView> textPresenter = injector.getInstance(TextPresenter.class);
-                    final Presenter<AnnotationView> annotationPresenter = injector.getInstance(AnnotationPresenter.class);
+                    final Presenter<AnnotationsView> annotationPresenter = injector.getInstance(AnnotationsPresenter.class);
 
                     final Presenter<MainView> mainPresenter = injector.getInstance(MainPresenter.class);
                     mainPresenter.getView().getAnnotationPanel().add(annotationPresenter.getView());

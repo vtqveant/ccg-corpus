@@ -3,14 +3,14 @@ package ru.eventflow.ccg.annotation.ui.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class ProofAssistantView extends JPanel {
+public class AnnotationView extends JPanel {
 
     private final JButton prevBtn = new JButton("Prev");
     private final JButton nextBtn = new JButton("Next");
     private final JButton relevantBtn = new JButton("Relevant");
     private final JButton nonrelevantBtn = new JButton("Nonrelevant");
 
-    public ProofAssistantView() {
+    public AnnotationView() {
         setLayout(new BorderLayout());
 
         JPanel topPanel = new JPanel();

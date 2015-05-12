@@ -5,14 +5,13 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.*;
 
-public class AnnotationsView extends JPanel {
+public class ContainerView extends JPanel {
 
     private final JTabbedPane tabbedPane = new JTabbedPane();
 
     public static final ImageIcon ICON = new ImageIcon(ClassLoader.getSystemResource("images/close.png"));
-//    public static final ImageIcon ROLLOVER_ICON = new ImageIcon(ClassLoader.getSystemResource("images/10.png"));
 
-    public AnnotationsView() {
+    public ContainerView() {
         setLayout(new BorderLayout());
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         add(tabbedPane, BorderLayout.CENTER);
@@ -25,7 +24,6 @@ public class AnnotationsView extends JPanel {
     }
 
     private class TabComponent extends JPanel {
-
         public TabComponent() {
             setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
             setOpaque(false);
@@ -46,7 +44,6 @@ public class AnnotationsView extends JPanel {
 
             JButton button = new JButton();
             button.setIcon(ICON);
-//            button.setRolloverIcon(ROLLOVER_ICON);
             button.setUI(new BasicButtonUI());
             button.setContentAreaFilled(false);
             button.setFocusable(false);

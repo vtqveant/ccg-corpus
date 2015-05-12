@@ -6,16 +6,18 @@ import java.awt.*;
 
 public class TextView extends JPanel {
 
-    private final JTextPane textArea;
+    private final JTextArea textArea;
 
     public TextView() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(200, 150));
 
-        textArea = new JTextPane();
+        textArea = new JTextArea();
         textArea.setEditable(false);
-        textArea.setParagraphAttributes(SimpleAttributeSet.EMPTY, true);
-        textArea.setFont(new Font("Courier New", Font.PLAIN, 11));
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setFont(new Font("Sans", Font.PLAIN, 11));
+        textArea.setBackground(Color.WHITE);
         textArea.setMargin(new Insets(2, 2, 2, 2));
 
         JScrollPane scrollPane = new JScrollPane(textArea);

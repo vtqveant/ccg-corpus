@@ -7,20 +7,37 @@ import java.awt.event.*;
 
 public class ContainerView extends JPanel {
 
-    private final JTabbedPane tabbedPane = new JTabbedPane();
+    private final JTabbedPane tabbedPane;
+    private final JLabel placeholderLabel;
+
+    private int tabCount = 0;
 
     public static final ImageIcon ICON = new ImageIcon(ClassLoader.getSystemResource("images/close.png"));
 
     public ContainerView() {
         setLayout(new BorderLayout());
+
+        tabbedPane = new JTabbedPane();
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-        add(tabbedPane, BorderLayout.CENTER);
+
+        placeholderLabel = new JLabel("No sentences are being annotated");
+        placeholderLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        placeholderLabel.setVerticalAlignment(SwingConstants.CENTER);
+        placeholderLabel.setBorder(BorderFactory.createEmptyBorder());
+        placeholderLabel.setBackground(Color.LIGHT_GRAY);
+        placeholderLabel.setOpaque(true);
+        add(placeholderLabel, BorderLayout.CENTER);
     }
 
     public void addTab(String title, Component component) {
-        int idx = tabbedPane.getTabCount();
+        if (tabCount == 0) {
+            remove(placeholderLabel);
+            add(tabbedPane, BorderLayout.CENTER);
+            updateUI();
+        }
         tabbedPane.addTab(title, component);
-        tabbedPane.setTabComponentAt(idx, new TabComponent());
+        tabbedPane.setTabComponentAt(tabCount, new TabComponent());
+        tabCount++;
     }
 
     private class TabComponent extends JPanel {
@@ -32,10 +49,7 @@ public class ContainerView extends JPanel {
             // read titles from JTabbedPane
             JLabel label = new JLabel() {
                 public String getText() {
-                    int i = tabbedPane.indexOfTabComponent(TabComponent.this);
-                    if (i != -1) {
-                        return tabbedPane.getTitleAt(i);
-                    }
+                    if (tabCount > 0) return tabbedPane.getTitleAt(tabCount - 1);
                     return null;
                 }
             };
@@ -52,9 +66,11 @@ public class ContainerView extends JPanel {
             button.addActionListener(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int i = tabbedPane.indexOfTabComponent(TabComponent.this);
-                    if (i != -1) {
-                        tabbedPane.remove(i);
+                    if (tabCount > 0) tabbedPane.remove(--tabCount);
+                    if (tabCount == 0) {
+                        ContainerView.this.remove(tabbedPane);
+                        ContainerView.this.add(placeholderLabel, BorderLayout.CENTER);
+                        ContainerView.this.updateUI();
                     }
                 }
             });

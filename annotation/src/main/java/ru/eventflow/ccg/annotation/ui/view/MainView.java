@@ -9,9 +9,10 @@ import java.awt.event.ItemListener;
 public class MainView extends JPanel {
 
     private final JPanel topPanel;
-    private final JButton annotationBtn;
     private final JLabel statusLabel;
     private final JSplitPane mainSplitPane;
+
+    private final JButton annotationBtn;
 
     private JPanel navigationPanel;
     private JPanel dictionaryPanel;
@@ -63,7 +64,7 @@ public class MainView extends JPanel {
         bottomPanel.add(horizontalButtonsPanel, BorderLayout.CENTER);
 
         statusLabel = new JLabel(" ");
-        statusLabel.setBorder(new EmptyBorder(2, 2, 2, 2));
+        statusLabel.setBorder(new EmptyBorder(2, 3, 2, 2));
         statusLabel.setFont(new Font("Sans", Font.PLAIN, 11));
         bottomPanel.add(statusLabel, BorderLayout.PAGE_END);
 

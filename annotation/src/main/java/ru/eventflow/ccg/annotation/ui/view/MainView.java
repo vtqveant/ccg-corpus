@@ -8,6 +8,7 @@ import java.awt.event.ItemListener;
 
 public class MainView extends JPanel {
 
+    public static final int DIVIDER_SIZE = 3;
     private final JPanel topPanel;
     private final JLabel statusLabel;
     private final JSplitPane mainSplitPane;
@@ -30,6 +31,7 @@ public class MainView extends JPanel {
         mainSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, navigationPanel);
         mainSplitPane.setDividerLocation(0.75);
         mainSplitPane.setResizeWeight(0.5);
+        mainSplitPane.setDividerSize(DIVIDER_SIZE);
         mainSplitPane.setContinuousLayout(true);
         mainSplitPane.setBorder(BorderFactory.createEmptyBorder());
         add(mainSplitPane, BorderLayout.CENTER);
@@ -108,7 +110,7 @@ public class MainView extends JPanel {
 
                 mainSplitPane.getBottomComponent().setVisible(true);
                 mainSplitPane.setDividerLocation(loc);
-                mainSplitPane.setDividerSize((Integer) UIManager.get("SplitPane.dividerSize"));
+                mainSplitPane.setDividerSize(DIVIDER_SIZE);
             }
             if (e.getStateChange() == ItemEvent.DESELECTED) {
                 loc = mainSplitPane.getDividerLocation();

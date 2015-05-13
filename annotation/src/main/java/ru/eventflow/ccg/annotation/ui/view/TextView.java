@@ -1,6 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 
 public class TextView extends JPanel {
@@ -21,11 +22,13 @@ public class TextView extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        add(scrollPane);
+        add(scrollPane, BorderLayout.CENTER);
+
     }
 
     public void setText(String text) {
         textArea.setText(text);
         textArea.setCaretPosition(0);
     }
+
 }

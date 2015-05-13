@@ -25,7 +25,8 @@ public class TextPresenter implements Presenter<TextView> {
             public void onEvent(DocumentSelectedEvent e) {
                 Document document = e.getDocument();
                 if (document != null) {
-                    view.setText(e.getDocument().getText());
+                    String text = e.getDocument().getText();
+                    view.setText(text);
                 } else {
                     view.setText("");
                 }
@@ -37,4 +38,5 @@ public class TextPresenter implements Presenter<TextView> {
     public TextView getView() {
         return view;
     }
+
 }

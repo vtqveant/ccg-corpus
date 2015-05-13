@@ -1,7 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import javax.swing.*;
-import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 
 public class TextView extends JPanel {

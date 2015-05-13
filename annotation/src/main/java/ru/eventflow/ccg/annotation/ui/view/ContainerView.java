@@ -12,7 +12,7 @@ public class ContainerView extends JPanel {
 
     private int tabCount = 0;
 
-    public static final ImageIcon ICON = new ImageIcon(ClassLoader.getSystemResource("images/close.png"));
+    public static final ImageIcon ICON = new ImageIcon(ClassLoader.getSystemResource("images/cross.png"));
 
     public ContainerView() {
         setLayout(new BorderLayout());

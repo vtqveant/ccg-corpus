@@ -18,3 +18,13 @@
 Задумки:
 
   * запросы с учетом синтаксической информации с помощью HLMC
+
+-----------
+
+  TODO
+
+    folding in JEditor -- http://java-sl.com/collapse_area.htmlhttp://java-sl.com/collapse_area.html
+    read on EditorKit, JTextComponent etc.  -- http://docs.oracle.com/javase/7/docs/api/javax/swing/text/EditorKit.html
+    http://www.comp.nus.edu.sg/~cs3283/ftp/Java/swingConnect/text/editor_kit/editor_kit.html
+    custom editor kit -- http://java-sl.com/editor_kit_tutorial_example.html
+    the swing text package -- http://www.comp.nus.edu.sg/~cs3283/ftp/Java/swingConnect/text/text/text.html

@@ -1,0 +1,115 @@
+\documentclass[a4paper,12pt]{article}
+
+%%% Поля и разметка страницы %%%
+\usepackage{lscape} % Для включения альбомных страниц
+\usepackage{afterpage}
+\usepackage{geometry} % Для последующего задания полей
+
+%%% Кодировки и шрифты %%%
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{amssymb,amsfonts,amsmath,mathtext}
+\usepackage{enumerate,float}
+
+%% Gentzen style natural deduction proof trees
+\usepackage{bussproofs}
+\usepackage{latexsym}
+
+%%% Оформление абзацев %%%
+\usepackage{indentfirst} % Красная строка
+
+%%% Общее форматирование
+\usepackage[singlelinecheck=off,center]{caption} % Многострочные подписи
+\usepackage{soul} % Поддержка переносоустойчивых подчёркиваний и зачёркиваний
+
+%%% Гиперссылки %%%
+\usepackage[plainpages=false,pdfpagelabels=false]{hyperref}
+
+%%% Макет страницы %%%
+\geometry{a4paper,top=2cm,bottom=2cm,left=2.5cm,right=2cm}
+
+%%% Выравнивание и переносы %%%
+\sloppy
+\clubpenalty=10000
+\widowpenalty=10000
+
+\usepackage{cite}
+\usepackage{hyperref}
+\hypersetup{%
+    colorlinks = true
+}
+
+\title{CCG Corpus}
+\author{К.~В.~Соколов}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Центральное понятие логики -- понятие \textit{следования}, которое записывается $P_1, \dots, P_n \vdash P$ и выражает выводимость $P$ из $P_1,\dots, P_n$. Такая запись говорит о том, что $P$ выводимо по правилам логики, если $P_i$ даны в качестве аксиом. Следование обладает по меньшей мере двумя ключевыми структурными свойствами, позволяющими рассматривать его в качестве отношения предпорядка:
+
+\begin{prooftree}
+  \AxiomC{}
+  \UnaryInfC{$P \vdash P$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$P \vdash Q$}
+  \AxiomC{$Q \vdash R$}
+  \BinaryInfC{$P \vdash R$}
+\end{prooftree}
+
+Кроме того, часто вводятся следующие дополнительные структурные свойства:
+
+\begin{prooftree}
+  \AxiomC{$P_1, \dots, P_n \vdash Q$}
+  \UnaryInfC{$P_1, \dots, P_n, P_{n+1} \vdash Q$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$P_1,\dots,P_i,P_{i+1},\dots,P_n\vdash Q$}
+  \UnaryInfC{$P_1,\dots,P_{i+1},P_{i},\dots,P_n\vdash Q$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$P_1,\dots,P_i,P_i,\dots,P_n\vdash Q$}
+  \UnaryInfC{$P_1,\dots,P_i,\dots,P_n\vdash Q$}
+\end{prooftree}
+
+Они говорят о том, что ``дополнительные'' аксиомы не влияют на выводимость, ``переупорядочивание'' аксиом не играет роли, ``удвоение'' аксиом не играет роли. Эти условия кажутся неизбежными, но в т.\,н. субструктурных логиках любые из этих аксиом могут не иметь места.
+
+В теории языков программирования базовая концепция -- \textit{суждение о типизации}, записыващееся как $x_1{:}A_1, \dots, x_n{:} A_n \vdash M{:}A$ и утверждающее, что $M$ есть выражение типа $A$, содержащее переменные $x_i$ типа $A_i$. Суждение о типизации должно удовлетворять следующим основным структурным свойствам:
+
+\begin{prooftree}
+  \AxiomC{}
+  \UnaryInfC{$x:A\vdash x:A$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$y:B\vdash N:C \quad x:A\vdash M:B$}
+  \UnaryInfC{$x:A\vdash [M/y]N:C$}
+\end{prooftree}
+
+Можно думать о переменных как об именах ``библиотек'', при этом первое свойство говорит о том, что использоваться может любая библиотека, а второе -- о замкнутости относительно компоновки (как в программе \textit{ld} в Unix и аналогичных), где $[M/x]N$ есть результат компоновки $x$ с библиотекой $M$ в выражении $N$. Обычно мы ожидаем, что аналоги аксиом ``дополнения'', ``переупорядочивания'' и ``удвоения'' будут выполняться и здесь, хотя это не обязательно. Их формулировка оставляется читателю в качестве упражнения.
+
+В теории категорий основная концепция -- концепция \textit{отображения} $f:X \rightarrow Y$ между структурами $X$ и $Y$. Простейшими примерами являются, вероятно, множества и функции между ними, однако чаще рассматриваются, например, топологические пространства и непрерывные отображения между ними. Отображение удовлетворяет аналогичным структурным свойствам:
+
+\begin{prooftree}
+  \AxiomC{}
+  \UnaryInfC{$\textit{id}_X : X \rightarrow X$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$f:X \rightarrow Y$}
+  \AxiomC{$g:Y \rightarrow Z$}
+  \BinaryInfC{$g \circ f : X \rightarrow Z$}
+\end{prooftree}
+
+
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}

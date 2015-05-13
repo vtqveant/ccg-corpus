@@ -1,3 +1,5 @@
+syntax: regexp
+
 .idea/
 .iml
 .ipr
@@ -8,3 +10,7 @@ annotation/db
 data/downloads
 data/resources
 database/h2
+
+tex/.*\.(aux|bbl|blg|dvi|fdb.*|gl[gos]|idx)
+tex/.*\.(ilg|ind|ist|lo[fgt]|nav|nlo|out|pdf(sync)?|ps|snm)
+tex/.*\.(synctex\.gz|toc|vrb|maf|mtc0?|bak|bcf|run\.xml)

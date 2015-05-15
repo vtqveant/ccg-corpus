@@ -7,13 +7,24 @@ public class DictionaryView extends JPanel {
 
     public DictionaryView() {
         setLayout(new BorderLayout());
-        setMinimumSize(new Dimension(-1, 150));
 
-        JLabel label = new JLabel("dictionary");
+        final JLabel titleLabel = new JLabel("Dictionary");
+        titleLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        titleLabel.setForeground(Color.GRAY);
 
-        JScrollPane scrollPane = new JScrollPane(label);
+        JToggleButton clipboardBtn = new JToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/clipboard.gif")));
+        clipboardBtn.setFocusable(false);
+
+        final JPanel headingPanel = new JPanel();
+        headingPanel.setLayout(new BoxLayout(headingPanel, BoxLayout.LINE_AXIS));
+        headingPanel.setBorder(BorderFactory.createEmptyBorder(0, 6, 3, 2));
+        headingPanel.add(titleLabel);
+        headingPanel.add(Box.createHorizontalGlue());
+        headingPanel.add(clipboardBtn);
+        add(headingPanel, BorderLayout.PAGE_START);
+
+        JScrollPane scrollPane = new JScrollPane(new JLabel(" "));
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setPreferredSize(new Dimension(-1, 300));
         add(scrollPane);
     }
 }

@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class NavigationView extends JPanel {
 
+    public static final Font HEADING_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 11);
     private final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
 
     private final JLabel infoLabel = new JLabel(" ");
@@ -13,10 +14,10 @@ public class NavigationView extends JPanel {
         setLayout(new BorderLayout());
 
         final JLabel titleLabel = new JLabel("Navigation");
-        titleLabel.setFont(new Font("Sans", Font.PLAIN, 11));
+        titleLabel.setFont(HEADING_FONT);
         titleLabel.setForeground(Color.GRAY);
 
-        infoLabel.setFont(new Font("Sans", Font.PLAIN, 11));
+        infoLabel.setFont(HEADING_FONT);
         infoLabel.setForeground(Color.DARK_GRAY);
 
         JToggleButton lockBtn = new JToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/lock.gif")));

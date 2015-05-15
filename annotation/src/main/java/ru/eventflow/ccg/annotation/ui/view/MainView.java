@@ -9,6 +9,7 @@ import java.awt.event.ItemListener;
 public class MainView extends JPanel {
 
     public static final int DIVIDER_SIZE = 3;
+    public static final double DIVIDER_LOCATION = 0.7d;
     private final JPanel topPanel;
     private final JLabel statusLabel;
     private final JSplitPane mainSplitPane;
@@ -29,21 +30,24 @@ public class MainView extends JPanel {
 
         // initial state is navigation panel set invisible
         mainSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, navigationPanel);
-        mainSplitPane.setDividerLocation(0.75);
+        mainSplitPane.setDividerLocation(DIVIDER_LOCATION);
         mainSplitPane.setResizeWeight(0.5);
         mainSplitPane.setDividerSize(DIVIDER_SIZE);
         mainSplitPane.setContinuousLayout(true);
         mainSplitPane.setBorder(BorderFactory.createEmptyBorder());
         add(mainSplitPane, BorderLayout.CENTER);
 
+        // all bottom sliding panes start in this position (pane's size has an effect, too)
+        int location = mainSplitPane.getDividerLocation();
+
         navigationBtn = new JToggleButton("Corpus");
         navigationBtn.setFocusable(false);
         navigationBtn.setSelected(true);
-        navigationBtn.addItemListener(new ToggleItemListener());
+        navigationBtn.addItemListener(new ToggleItemListener(location));
 
         dictionaryBtn = new JToggleButton("Dictionary");
         dictionaryBtn.setFocusable(false);
-        dictionaryBtn.addItemListener(new ToggleItemListener());
+        dictionaryBtn.addItemListener(new ToggleItemListener(location));
 
         NoneSelectedButtonGroup group = new NoneSelectedButtonGroup();
         group.add(navigationBtn);
@@ -67,7 +71,7 @@ public class MainView extends JPanel {
 
         statusLabel = new JLabel(" ");
         statusLabel.setBorder(new EmptyBorder(2, 3, 2, 2));
-        statusLabel.setFont(new Font("Sans", Font.PLAIN, 11));
+        statusLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
         bottomPanel.add(statusLabel, BorderLayout.PAGE_END);
 
         add(bottomPanel, BorderLayout.PAGE_END);
@@ -94,7 +98,11 @@ public class MainView extends JPanel {
     }
 
     private class ToggleItemListener implements ItemListener {
-        private int loc = 0;
+        private int location;
+
+        public ToggleItemListener(int location) {
+            this.location = location;
+        }
 
         @Override
         public void itemStateChanged(ItemEvent e) {
@@ -109,11 +117,11 @@ public class MainView extends JPanel {
                 }
 
                 mainSplitPane.getBottomComponent().setVisible(true);
-                mainSplitPane.setDividerLocation(loc);
+                mainSplitPane.setDividerLocation(location);
                 mainSplitPane.setDividerSize(DIVIDER_SIZE);
             }
             if (e.getStateChange() == ItemEvent.DESELECTED) {
-                loc = mainSplitPane.getDividerLocation();
+                location = mainSplitPane.getDividerLocation();
                 mainSplitPane.setDividerSize(0);
                 mainSplitPane.getBottomComponent().setVisible(false);
             }
@@ -124,7 +132,7 @@ public class MainView extends JPanel {
         @Override
         public void setSelected(ButtonModel model, boolean selected) {
             if (selected) {
-                super.setSelected(model, selected);
+                super.setSelected(model, true);
             } else {
                 clearSelection();
             }

@@ -33,14 +33,6 @@ public class AnnotationView extends JPanel {
         add(scrollPane, BorderLayout.PAGE_START);
     }
 
-    public JButton getPrevBtn() {
-        return prevBtn;
-    }
-
-    public JButton getNextBtn() {
-        return nextBtn;
-    }
-
     public JButton getRelevantBtn() {
         return relevantBtn;
     }

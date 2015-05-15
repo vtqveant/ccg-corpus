@@ -16,7 +16,7 @@ public class TextView extends JPanel {
         textArea.setEditable(false);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        textArea.setFont(new Font("Sans", Font.PLAIN, 11));
+        textArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
         textArea.setBackground(Color.WHITE);
         textArea.setMargin(new Insets(2, 2, 2, 2));
 

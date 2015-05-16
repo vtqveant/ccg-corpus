@@ -21,10 +21,12 @@ public class NavigationView extends JPanel {
         infoLabel.setForeground(Color.DARK_GRAY);
 
         JToggleButton lockBtn = new JToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/lock.gif")));
+        lockBtn.setToolTipText("Lock Annotated Sentences");
         lockBtn.setFocusable(false);
 
-        JToggleButton hideBtn = new JToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/magnify.gif")));
-        hideBtn.setFocusable(false);
+        JToggleButton collapseBtn = new JToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/magnify.gif")));
+        collapseBtn.setToolTipText("Collapse Annotated Sentences");
+        collapseBtn.setFocusable(false);
 
         final JPanel headingPanel = new JPanel();
         headingPanel.setLayout(new BoxLayout(headingPanel, BoxLayout.LINE_AXIS));
@@ -33,7 +35,7 @@ public class NavigationView extends JPanel {
         headingPanel.add(Box.createHorizontalGlue());
         headingPanel.add(infoLabel);
         headingPanel.add(Box.createRigidArea(new Dimension(6, 0)));
-        headingPanel.add(hideBtn);
+        headingPanel.add(collapseBtn);
         headingPanel.add(Box.createRigidArea(new Dimension(1, 0)));
         headingPanel.add(lockBtn);
         add(headingPanel, BorderLayout.PAGE_START);

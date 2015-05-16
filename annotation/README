@@ -28,3 +28,20 @@
     http://www.comp.nus.edu.sg/~cs3283/ftp/Java/swingConnect/text/editor_kit/editor_kit.html
     custom editor kit -- http://java-sl.com/editor_kit_tutorial_example.html
     the swing text package -- http://www.comp.nus.edu.sg/~cs3283/ftp/Java/swingConnect/text/text/text.html
+
+  Java GUI Thread model   (EDT - event dispatch thread)
+
+    http://www.javaworld.com/article/2077754/core-java/swing-threading-and-the-event-dispatch-thread.html
+    http://www.skipy.ru/technics/gui_sync.html
+
+  customizing LaF
+
+    http://www.jtattoo.net/ThemeProps.html
+
+  glazed lists (lists, autocomplete, serach and filtering)
+
+    http://www.glazedlists.com/documentation
+
+  more on autocomplete
+
+    http://www.orbital-computer.de/JComboBox/

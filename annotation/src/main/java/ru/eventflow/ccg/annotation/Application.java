@@ -21,6 +21,10 @@ public class Application {
             props.put("logoString", "");
             props.put("windowDecoration", "off");
             props.put("linuxStyleScrollBar", "off");
+            props.put("tooltipBorderSize", "1");
+            props.put("tooltipBackgroundColor", "255 255 204"); // light yellow
+            props.put("tooltipCastShadow", "on");
+            props.put("tooltipShadowSize", "1");
 
             FastLookAndFeel.setCurrentTheme(props);
             UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");

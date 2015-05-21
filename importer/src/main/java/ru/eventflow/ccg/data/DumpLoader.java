@@ -40,7 +40,7 @@ public class DumpLoader {
     }
 
     public DumpLoader(String resourcesLocation) {
-        this.resourcesLocationFile = new File(resourcesLocation);
+        resourcesLocationFile = new File(resourcesLocation);
         if (!resourcesLocationFile.exists()) {
             logger.severe("Unable to load corpus data, " + resourcesLocation + " does not exist");
             System.exit(1);

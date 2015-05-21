@@ -3,8 +3,8 @@ package ru.eventflow.ccg.data;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 import ru.eventflow.ccg.data.dictionary.DictionaryParser;
-import ru.eventflow.ccg.data.dictionary.Grammeme;
-import ru.eventflow.ccg.data.dictionary.Lexeme;
+import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
+import ru.eventflow.ccg.datasource.model.dictionary.Lexeme;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;

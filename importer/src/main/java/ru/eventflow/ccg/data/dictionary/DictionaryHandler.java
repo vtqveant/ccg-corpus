@@ -5,9 +5,9 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
-
-import java.util.LinkedList;
-import java.util.List;
+import ru.eventflow.ccg.datasource.model.dictionary.Form;
+import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
+import ru.eventflow.ccg.datasource.model.dictionary.Lexeme;
 
 /**
  * Uses a neat trick with switching handlers to parse child elements with a custom handler.
@@ -15,11 +15,11 @@ import java.util.List;
 public class DictionaryHandler extends DefaultHandler {
 
     private XMLReader reader;
-    protected List<Grammeme> grammemes = new LinkedList<Grammeme>();
-    protected List<Lexeme> lexemes = new LinkedList<Lexeme>();
+    private DataBridge bridge;
 
-    public DictionaryHandler(XMLReader reader) {
+    public DictionaryHandler(XMLReader reader, DataBridge bridge) {
         this.reader = reader;
+        this.bridge = bridge;
     }
 
     public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
@@ -30,10 +30,10 @@ public class DictionaryHandler extends DefaultHandler {
                 reader.setContentHandler(grammemeHandler);
                 break;
             case "lemma":
-                LemmaHandler lemmaHandler = new LemmaHandler(reader, this);
-                lemmaHandler.lexeme.setId(Integer.valueOf(attributes.getValue("id")));
-                lemmaHandler.lexeme.setRev(Integer.valueOf(attributes.getValue("rev")));
-                reader.setContentHandler(lemmaHandler);
+                LexemeHandler lexemeHandler = new LexemeHandler(reader, this);
+                lexemeHandler.lexeme.setId(Integer.valueOf(attributes.getValue("id")));
+                lexemeHandler.lexeme.setRev(Integer.valueOf(attributes.getValue("rev")));
+                reader.setContentHandler(lexemeHandler);
                 break;
             case "type":
                 // TODO
@@ -88,17 +88,17 @@ public class DictionaryHandler extends DefaultHandler {
                     grammeme.setDescription(content.toString());
                     break;
                 case "grammeme":
-                    ((DictionaryHandler) parent).grammemes.add(grammeme);
+                    bridge.addGrammeme(grammeme);
                     reader.setContentHandler(parent); // switch back to parent handler
                     break;
             }
         }
     }
 
-    class LemmaHandler extends BaseNestedHandler {
+    class LexemeHandler extends BaseNestedHandler {
         Lexeme lexeme = new Lexeme();
 
-        protected LemmaHandler(XMLReader reader, ContentHandler parent) {
+        protected LexemeHandler(XMLReader reader, ContentHandler parent) {
             super(reader, parent);
         }
 
@@ -112,7 +112,7 @@ public class DictionaryHandler extends DefaultHandler {
         @Override
         public void endElement(String uri, String localName, String name) throws SAXException {
             if (name.equals("lemma")) {
-                ((DictionaryHandler) parent).lexemes.add(lexeme);
+                bridge.addLexeme(lexeme);
                 reader.setContentHandler(parent); // switch back to parent handler
             }
         }
@@ -134,15 +134,17 @@ public class DictionaryHandler extends DefaultHandler {
 
         @Override
         public void endElement(String uri, String localName, String name) throws SAXException {
-            LemmaHandler lemmaHandler = (LemmaHandler) parent;
+            LexemeHandler lexemeHandler = (LexemeHandler) parent;
             switch (name) {
                 case "f":
-                    lemmaHandler.lexeme.addForm(form);
-                    reader.setContentHandler(lemmaHandler); // switch back to parent handler
+                    form.setLexeme(lexemeHandler.lexeme);
+                    lexemeHandler.lexeme.addForm(form);
+                    reader.setContentHandler(lexemeHandler); // switch back to parent handler
                     break;
                 case "l":
-                    lemmaHandler.lexeme.setLemma(form);
-                    reader.setContentHandler(lemmaHandler); // switch back to parent handler
+                    form.setLexeme(lexemeHandler.lexeme);
+                    lexemeHandler.lexeme.setLemma(form);
+                    reader.setContentHandler(lexemeHandler); // switch back to parent handler
                     break;
             }
         }

@@ -54,50 +54,50 @@
                     <execution>
                         <id>latex-first-run</id>
                         <phase>process-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
                         <configuration>
                             <executable>latex</executable>
                             <workingDirectory>${basedir}/target</workingDirectory>
                             <commandlineArgs>${latex.main}</commandlineArgs>
                         </configuration>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
                     </execution>
                     <execution>
                         <id>biber</id>
                         <phase>process-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
                         <configuration>
                             <executable>biber</executable>
                             <workingDirectory>${basedir}/target</workingDirectory>
                             <commandlineArgs>${latex.main}</commandlineArgs>
                         </configuration>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
                     </execution>
                     <execution>
                         <id>latex-second-run</id>
                         <phase>process-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
                         <configuration>
                             <executable>latex</executable>
                             <workingDirectory>${basedir}/target</workingDirectory>
                             <commandlineArgs>${latex.main}</commandlineArgs>
                         </configuration>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
                     </execution>
                     <execution>
                         <id>pdflatex</id>
                         <phase>process-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
                         <configuration>
                             <executable>pdflatex</executable>
                             <workingDirectory>${basedir}/target</workingDirectory>
                             <commandlineArgs>${latex.main}</commandlineArgs>
                         </configuration>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>

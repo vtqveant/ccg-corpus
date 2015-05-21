@@ -1,17 +1,30 @@
-package ru.eventflow.ccg.data.dictionary;
+package ru.eventflow.ccg.datasource.model.dictionary;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class correspond to <b>lemma</b> in OpenCorpora dump!
  */
+@Entity
+@Table(schema = "dictionary", name = "lexeme")
 public class Lexeme {
 
-    protected Form lemma;
-    protected List<Form> forms = new ArrayList<Form>();
-    protected int id;
-    protected int rev;
+    @Id
+    @Column(columnDefinition = "serial")
+    private int id;
+
+    @OneToOne(targetEntity = Form.class, cascade = CascadeType.PERSIST)
+    private Form lemma;
+
+    @OneToMany(targetEntity = Form.class, mappedBy = "lexeme", cascade = CascadeType.PERSIST)
+    private Set<Form> forms = new HashSet<Form>();
+
+    @Column(name = "rev")
+    private int rev;
 
     public Form getLemma() {
         return lemma;
@@ -21,7 +34,7 @@ public class Lexeme {
         this.lemma = lemma;
     }
 
-    public List<Form> getForms() {
+    public Set<Form> getForms() {
         return forms;
     }
 

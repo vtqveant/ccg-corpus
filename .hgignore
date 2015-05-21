@@ -4,6 +4,7 @@ syntax: regexp
 .iml
 .ipr
 .iws
+.bak
 out/
 target
 annotation/db

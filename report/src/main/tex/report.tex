@@ -1,0 +1,204 @@
+\documentclass[a4paper]{report}
+
+\usepackage[12pt]{extsizes} % report document class ignores the setting in \documentclass
+
+\usepackage{afterpage}
+
+%%% Кодировки и шрифты %%%
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+
+\usepackage{amssymb,amsfonts,amsmath,mathtext,amscd}
+
+\usepackage{cmap}   % чтобы работал поиск по pdf
+\usepackage{graphicx}
+\pdfcompresslevel=9
+
+%% красная строка
+\usepackage{indentfirst}
+\setlength{\parindent}{5.5ex}   % 5 символов
+
+%% интерлиньяж
+\linespread{1.1}                   
+
+%%% Общее форматирование
+\usepackage[singlelinecheck=off,center]{caption} % Многострочные подписи
+\usepackage{soul} % Поддержка переносоустойчивых подчёркиваний и зачёркиваний
+
+%%% Гиперссылки %%%
+\usepackage[plainpages=false,pdfpagelabels=false]{hyperref}
+
+\usepackage{geometry}
+\geometry{a4paper,top=2cm,bottom=2cm,left=2.5cm,right=1cm}
+
+%%% Выравнивание и переносы %%%
+\sloppy
+\clubpenalty=10000
+\widowpenalty=10000
+
+%%% оформление заголовков глав, секций и подсекций
+\usepackage{titlesec}
+
+\makeatletter
+    \renewcommand{\l@section}{\@dottedtocline{1}{0.85cm}{0.85cm}}
+    \renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+    \renewcommand{\section}{\@startsection{section}{1}{5.5ex}{-3.5ex plus -1ex minus -.2ex}{2.3ex plus.2ex}{\raggedright\hyphenpenalty=10000\normalfont\bfseries}}
+
+    \renewcommand{\l@subsection}{\@dottedtocline{2}{1.25cm}{1.25cm}}
+    \renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}
+    \renewcommand{\subsection}{\@startsection{subsection}{2}{5.5ex}{-3.5ex plus -1ex minus -.2ex}{2.3ex plus.2ex}{\raggedright\hyphenpenalty=10000\normalfont\bfseries}}
+\makeatother
+
+% \titleformat{command}[shape]{format}{label}{separation}{before-code}[after-code]
+\titleformat{\section}[block]{\centering\hyphenpenalty=10000\large\bfseries}{\thesection.}{0pt}{\large} 
+\titlespacing*{\section}{0pt}{-20pt}{30pt}
+\titleformat{\chapter}[block]{\centering\hyphenpenalty=10000\normalfont\large\MakeUppercase\bfseries}{\thechapter. }{0pt}{\large\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{-20pt}{30pt}
+
+%%% biblatex
+\usepackage{csquotes} % recommended by pdflatex
+\usepackage[%
+    style = gost-authoryear-min,
+    singletitle = false,
+    autolang = hyphen,
+    language = auto,
+    backend = biber,
+    defernumbers = true,
+    sortlocale = ru
+]{biblatex}
+\addbibresource{bibliography/bibliography.bib}
+
+\defbibenvironment{bibliography}
+{\enumerate{}
+{\setlength{\leftmargin}{\bibhang}%
+\setlength{\itemindent}{-\leftmargin}%
+\setlength{\itemsep}{\bibitemsep}%
+\setlength{\parsep}{\bibparsep}}}
+{\endenumerate}
+{\item}
+
+
+\usepackage{hyperref}
+\hypersetup{%
+    colorlinks = true,
+    hidelinks
+}
+
+%% graphics
+\graphicspath{{images/}}
+
+%% Gentzen style natural deduction proof trees
+\usepackage{bussproofs}
+\usepackage{latexsym}
+
+
+%%% linguistic packages
+\usepackage{drs}
+
+%%% attribute-value matrices
+\usepackage{avm}
+\avmoptions{sorted,active}
+\avmfont{\small\sc}
+\avmvalfont{\small\rm}
+\avmsortfont{\scriptsize\it}
+
+\usepackage{tikz-qtree,tikz-qtree-compat}  % regular trees (e.g. GB style)
+\usepackage{tikz-dependency}   % dependency trees (bracket style)
+\usetikzlibrary{matrix,arrows}  % for commutative diagrams
+
+\usepackage{gb4e}  % numbered lists for linguistic examples (IMPORTANT: If you use gb4e package, let it be the last \usepackage call in the document's preamble. Otherwise you may get exceeded parameter stack size error.)
+
+\title{\vfill Открытый корпус русского языка\\ с синтаксической разметкой в формализме CCG}
+\author{К.~В.~Соколов, \textit{СПбГУ}}
+\date{\vfill Санкт-Петербург\\ \the\year}
+
+\begin{document}
+
+\maketitle
+\tableofcontents    
+
+\chapter{Введение}
+
+\section{Синтаксический разбор как логический вывод}
+
+Начала подхода заложены Ламбеком в работе \parencite{lambek1958mathematics}, термин введен в \parencite{pereira1983parsing}. В работе \parencite{konig1989parsing} рассматривается система натуральной дедукции для исчисления Ламбека без произведений. Также \parencite{moot2012logic}.
+
+Задачи: алгоритм синтаксического анализа; изучение свойств формализма: разрешимость, вычислительная сложность, неоднозначность, корректность и полнота, существование нормальной формы и эффективной процедуры нормализации и пр.
+
+Исчисление: формальный язык, множество аксиом (возможно, пустое), правила вывода, определение корректного вывода.
+
+\section{Синтаксический разбор контекстно-свободных грамматик как вывод в системе гильбертовского типа}
+
+Предложен в работе \parencite{pereira1983parsing}. В системе гильбертовского типа используется понятие линейного вывода.
+
+Пример линейного вывода для логики высказываний.
+Пример синтаксического разбора по \parencite{kallmeyer2010parsing}
+
+\section{Исчисление Ламбека как секвенциальная система}
+
+Предложена в работе \parencite{lambek1958mathematics}, см. тж. \parencite{moot2012logic}.
+
+Правила вывода:
+
+
+\begin{prooftree}
+  \AxiomC{$\Gamma, B, \Gamma' \vdash C$}
+  \AxiomC{$\Delta \vdash A$}
+  \RightLabel{{\small $\textbackslash_h$}}
+  \BinaryInfC{$\Gamma, A, A \textbackslash B, \Gamma' \vdash C$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$A, \Gamma \vdash C$}
+  \RightLabel{{\small $\textbackslash_i, \Gamma \neq \epsilon$}}
+  \UnaryInfC{$\Gamma \vdash A \textbackslash C$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\Gamma, B, \Gamma' \vdash C$}
+  \AxiomC{$\Delta \vdash A$}
+  \RightLabel{{\small $/_h$}}
+  \BinaryInfC{$\Gamma, B/A, \Delta, \Gamma' \vdash C$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\Gamma, A \vdash C$}
+  \RightLabel{{\small $/_i, \Gamma \neq \epsilon$}}
+  \UnaryInfC{$\Gamma \vdash C/A$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\Gamma, A, B, \Gamma' \vdash C$}
+  \RightLabel{{\small $\bullet_h$}}
+  \UnaryInfC{$\Gamma, A \bullet B, \Gamma' \vdash C$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\Delta \vdash A$}
+  \AxiomC{$\Gamma \vdash B$}
+  \RightLabel{{\small $\bullet_i$}}
+  \BinaryInfC{$\Delta, \Gamma \vdash A \bullet B$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\Gamma \vdash A$}
+  \AxiomC{$\Delta_1, A, \Delta_2 \vdash B$}
+  \RightLabel{{\small \textit{сечение}}}
+  \BinaryInfC{$\Delta_1, \Gamma, \Delta_2 \vdash B$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{}
+  \RightLabel{{\small \textit{аксиома}}}
+  \UnaryInfC{$A \vdash A$}
+\end{prooftree}
+
+Замечание: \parencite{moot2012logic} пишут $B \textbackslash A$ там, где (Steedman et al.) пишут $A \textbackslash B$.
+
+
+
+\nocite{*}
+\printbibliography[resetnumbers=true]
+
+\end{document}

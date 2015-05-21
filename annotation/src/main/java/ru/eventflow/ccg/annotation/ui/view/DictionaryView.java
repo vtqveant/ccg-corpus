@@ -28,7 +28,7 @@ public class DictionaryView extends JPanel {
         add(headingPanel, BorderLayout.PAGE_START);
 
         // TODO refactor
-         JPanel workareaPanel = new JPanel(new BorderLayout());
+        JPanel workareaPanel = new JPanel(new BorderLayout());
 
         final Object[] elements = new Object[] { "Ester", "Jordi", "Jordina", "Jorge", "Sergi" };
         final JComboBox comboBox = new JComboBox();

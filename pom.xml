@@ -22,6 +22,7 @@
         <module>parser</module>
         <module>importer</module>
         <module>datasource</module>
+        <module>report</module>
     </modules>
 
     <dependencies>

@@ -5,6 +5,7 @@ syntax: regexp
 .ipr
 .iws
 .bak
+.tar.bz2
 out/
 target
 annotation/db

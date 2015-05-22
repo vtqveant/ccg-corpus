@@ -20,8 +20,12 @@ public class Grammeme {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "parent")
-    private String parent;
+    @ManyToOne(targetEntity = Grammeme.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "parent_id", nullable = true)
+    private Grammeme parent;
+
+    @Transient
+    private String parentTag;
 
     public int getId() {
         return id;
@@ -55,11 +59,19 @@ public class Grammeme {
         this.description = description;
     }
 
-    public String getParent() {
+    public Grammeme getParent() {
         return parent;
     }
 
-    public void setParent(String parent) {
+    public void setParent(Grammeme parent) {
         this.parent = parent;
+    }
+
+    public String getParentTag() {
+        return parentTag;
+    }
+
+    public void setParentTag(String parentTag) {
+        this.parentTag = parentTag;
     }
 }

@@ -23,7 +23,7 @@
             <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
             <property name="openjpa.jdbc.DBDictionary" value="batchLimit=25"/>
             <property name="openjpa.QueryCache" value="CacheSize=1000, SoftReferenceSize=100"/>
-            <property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO"/>
+            <property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO, SQL=TRACE"/>
         </properties>
     </persistence-unit>
 </persistence>

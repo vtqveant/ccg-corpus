@@ -13,4 +13,6 @@ public interface DataBridge {
     List<Grammeme> getGrammemes();
 
     List<Lexeme> getLexemes();
+
+    Grammeme getGrammeme(String name);
 }

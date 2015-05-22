@@ -26,7 +26,7 @@ public class DictionaryHandler extends DefaultHandler {
         switch (name) {
             case "grammeme":
                 GrammemeHandler grammemeHandler = new GrammemeHandler(reader, this);
-                grammemeHandler.grammeme.setParentTag(attributes.getValue("parent"));
+                grammemeHandler.grammeme.setParent(bridge.getGrammeme(attributes.getValue("parent")));
                 reader.setContentHandler(grammemeHandler);
                 break;
             case "lemma":
@@ -128,7 +128,8 @@ public class DictionaryHandler extends DefaultHandler {
         @Override
         public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
             if (name.equals("g")) {
-                form.addGrammeme(attributes.getValue("v"));
+                Grammeme g = bridge.getGrammeme(attributes.getValue("v"));
+                form.addGrammeme(g);
             }
         }
 
@@ -137,11 +138,13 @@ public class DictionaryHandler extends DefaultHandler {
             LexemeHandler lexemeHandler = (LexemeHandler) parent;
             switch (name) {
                 case "f":
+                    form.setLemma(false);
                     form.setLexeme(lexemeHandler.lexeme);
                     lexemeHandler.lexeme.addForm(form);
                     reader.setContentHandler(lexemeHandler); // switch back to parent handler
                     break;
                 case "l":
+                    form.setLemma(true);
                     form.setLexeme(lexemeHandler.lexeme);
                     lexemeHandler.lexeme.setLemma(form);
                     reader.setContentHandler(lexemeHandler); // switch back to parent handler

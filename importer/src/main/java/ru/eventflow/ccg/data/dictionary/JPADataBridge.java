@@ -11,7 +11,7 @@ import java.util.*;
 public class JPADataBridge implements DataBridge {
 
     private static final EntityManager entityManager = Persistence.createEntityManagerFactory(DataSource.DEFAULT).createEntityManager();
-    public static final int BUFFER_SIZE = 100;
+    public static final int BUFFER_SIZE = 10000;
 
     private static int counter = 0;
 
@@ -23,10 +23,6 @@ public class JPADataBridge implements DataBridge {
 
         // no clever stuff, the number of grammemes is very small
         entityManager.getTransaction().begin();
-        Grammeme parent = grammemes.get(grammeme.getParentTag());
-        if (parent != null) {
-            grammeme.setParent(parent);
-        }
         entityManager.persist(grammeme);
         entityManager.getTransaction().commit();
     }
@@ -45,6 +41,10 @@ public class JPADataBridge implements DataBridge {
             System.out.println(counter + " lexemes added");
             lexemes.clear();
         }
+    }
+
+    public Grammeme getGrammeme(String name) {
+        return grammemes.get(name);
     }
 
     @Override

@@ -21,10 +21,15 @@ public class Form {
     @JoinColumn(name = "lexeme_id", nullable = false)
     private Lexeme lexeme;
 
-    private List<String> grammemes = new ArrayList<String>();
+    @ManyToMany(cascade=CascadeType.PERSIST)
+    @JoinTable(name="form_to_grammeme", joinColumns=@JoinColumn(name="form_id"), inverseJoinColumns=@JoinColumn(name="grammeme_id"))
+    private List<Grammeme> grammemes = new ArrayList<Grammeme>();
 
     @Column(name = "orthography")
     private String orthography;
+
+    @Column(name = "lemma", nullable = false)
+    private boolean lemma;
 
     public int getId() {
         return id;
@@ -34,11 +39,11 @@ public class Form {
         this.id = id;
     }
 
-    public List<String> getGrammemes() {
+    public List<Grammeme> getGrammemes() {
         return grammemes;
     }
 
-    public void addGrammeme(String grammeme) {
+    public void addGrammeme(Grammeme grammeme) {
         grammemes.add(grammeme);
     }
 
@@ -56,5 +61,13 @@ public class Form {
 
     public void setLexeme(Lexeme lexeme) {
         this.lexeme = lexeme;
+    }
+
+    public boolean isLemma() {
+        return lemma;
+    }
+
+    public void setLemma(boolean lemma) {
+        this.lemma = lemma;
     }
 }

@@ -17,18 +17,18 @@ public class Form {
     @Column(columnDefinition = "serial")
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lexeme_id", nullable = false)
     private Lexeme lexeme;
 
-    @ManyToMany(cascade=CascadeType.PERSIST)
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="form_to_grammeme", joinColumns=@JoinColumn(name="form_id"), inverseJoinColumns=@JoinColumn(name="grammeme_id"))
     private List<Grammeme> grammemes = new ArrayList<Grammeme>();
 
     @Column(name = "orthography")
     private String orthography;
 
-    @Column(name = "lemma", nullable = false)
+    @Column(name = "lemma")
     private boolean lemma;
 
     public int getId() {

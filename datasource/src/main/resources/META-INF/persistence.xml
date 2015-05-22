@@ -11,8 +11,8 @@
         <class>ru.eventflow.ccg.datasource.model.dictionary.Form</class>
         <class>ru.eventflow.ccg.datasource.model.dictionary.Grammeme</class>
         <class>ru.eventflow.ccg.datasource.model.dictionary.Lexeme</class>
-        <!--<class>ru.eventflow.ccg.datasource.model.assessment.Assessment</class>-->
-        <!--<class>ru.eventflow.ccg.datasource.model.assessment.Query</class>-->
+        <class>ru.eventflow.ccg.datasource.model.dictionary.LinkType</class>
+        <class>ru.eventflow.ccg.datasource.model.dictionary.Link</class>
 
         <properties>
             <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/corpus"/>

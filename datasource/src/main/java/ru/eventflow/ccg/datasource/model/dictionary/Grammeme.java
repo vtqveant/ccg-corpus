@@ -7,10 +7,6 @@ import javax.persistence.*;
 public class Grammeme {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "serial")
-    private int id;
-
     @Column(name = "name", length = 4)
     private String name;
 
@@ -23,14 +19,6 @@ public class Grammeme {
     @ManyToOne(targetEntity = Grammeme.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id", nullable = true)
     private Grammeme parent;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

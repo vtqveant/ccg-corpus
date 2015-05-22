@@ -5,9 +5,7 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
-import ru.eventflow.ccg.datasource.model.dictionary.Form;
-import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
-import ru.eventflow.ccg.datasource.model.dictionary.Lexeme;
+import ru.eventflow.ccg.datasource.model.dictionary.*;
 
 /**
  * Uses a neat trick with switching handlers to parse child elements with a custom handler.
@@ -15,18 +13,18 @@ import ru.eventflow.ccg.datasource.model.dictionary.Lexeme;
 public class DictionaryHandler extends DefaultHandler {
 
     private XMLReader reader;
-    private DataBridge bridge;
+    private DataCollector collector;
 
-    public DictionaryHandler(XMLReader reader, DataBridge bridge) {
+    public DictionaryHandler(XMLReader reader, DataCollector collector) {
         this.reader = reader;
-        this.bridge = bridge;
+        this.collector = collector;
     }
 
     public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
         switch (name) {
             case "grammeme":
                 GrammemeHandler grammemeHandler = new GrammemeHandler(reader, this);
-                grammemeHandler.grammeme.setParent(bridge.getGrammeme(attributes.getValue("parent")));
+                grammemeHandler.grammeme.setParent(collector.getGrammeme(attributes.getValue("parent")));
                 reader.setContentHandler(grammemeHandler);
                 break;
             case "lemma":
@@ -36,10 +34,17 @@ public class DictionaryHandler extends DefaultHandler {
                 reader.setContentHandler(lexemeHandler);
                 break;
             case "type":
-                // TODO
+                LinkTypeHandler linkTypeHandler = new LinkTypeHandler(reader, this);
+                linkTypeHandler.linkType.setId(Integer.valueOf(attributes.getValue("id")));
+                reader.setContentHandler(linkTypeHandler);
                 break;
             case "link":
-                // TODO
+                Link link = new Link();
+                link.setId(Integer.valueOf(attributes.getValue("id")));
+                link.setFrom(collector.getLexeme(Integer.valueOf(attributes.getValue("from"))));
+                link.setTo(collector.getLexeme(Integer.valueOf(attributes.getValue("to"))));
+                link.setType(collector.getLinkType(Integer.valueOf(attributes.getValue("type"))));
+                collector.addLink(link);
                 break;
         }
     }
@@ -88,7 +93,7 @@ public class DictionaryHandler extends DefaultHandler {
                     grammeme.setDescription(content.toString());
                     break;
                 case "grammeme":
-                    bridge.addGrammeme(grammeme);
+                    collector.addGrammeme(grammeme);
                     reader.setContentHandler(parent); // switch back to parent handler
                     break;
             }
@@ -112,7 +117,7 @@ public class DictionaryHandler extends DefaultHandler {
         @Override
         public void endElement(String uri, String localName, String name) throws SAXException {
             if (name.equals("lemma")) {
-                bridge.addLexeme(lexeme);
+                collector.addLexeme(lexeme);
                 reader.setContentHandler(parent); // switch back to parent handler
             }
         }
@@ -128,7 +133,7 @@ public class DictionaryHandler extends DefaultHandler {
         @Override
         public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
             if (name.equals("g")) {
-                Grammeme g = bridge.getGrammeme(attributes.getValue("v"));
+                Grammeme g = collector.getGrammeme(attributes.getValue("v"));
                 form.addGrammeme(g);
             }
         }
@@ -149,6 +154,23 @@ public class DictionaryHandler extends DefaultHandler {
                     lexemeHandler.lexeme.setLemma(form);
                     reader.setContentHandler(lexemeHandler); // switch back to parent handler
                     break;
+            }
+        }
+    }
+
+    class LinkTypeHandler extends BaseNestedHandler {
+        LinkType linkType = new LinkType();
+
+        public LinkTypeHandler(XMLReader reader, ContentHandler parent) {
+            super(reader, parent);
+        }
+
+        @Override
+        public void endElement(String uri, String localName, String name) throws SAXException {
+            if (name.equals("type")) {
+                linkType.setType(content.toString());
+                collector.addLinkType(linkType);
+                reader.setContentHandler(parent); // switch back to parent handler
             }
         }
     }

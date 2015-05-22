@@ -1,5 +1,7 @@
 package ru.eventflow.ccg.data.dictionary;
 
+import org.apache.openjpa.persistence.OpenJPAEntityManager;
+import org.apache.openjpa.persistence.OpenJPAPersistence;
 import ru.eventflow.ccg.datasource.DataSource;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
 import ru.eventflow.ccg.datasource.model.dictionary.Lexeme;
@@ -11,12 +13,18 @@ import java.util.*;
 public class JPADataBridge implements DataBridge {
 
     private static final EntityManager entityManager = Persistence.createEntityManagerFactory(DataSource.DEFAULT).createEntityManager();
-    public static final int BUFFER_SIZE = 10000;
+    public static final int BUFFER_SIZE = 1000;
 
     private static int counter = 0;
 
     private Map<String, Grammeme> grammemes = new HashMap<>();
     private List<Lexeme> lexemes = new ArrayList<>();
+
+    public JPADataBridge() {
+        // disable query caching to improve preformance
+        OpenJPAEntityManager oem = OpenJPAPersistence.cast(entityManager);
+        oem.getFetchPlan().setQueryResultCacheEnabled(false);
+    }
 
     public void addGrammeme(Grammeme grammeme) {
         grammemes.put(grammeme.getName(), grammeme);

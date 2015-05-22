@@ -12,12 +12,14 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Set;
 
 public class DictionaryParser {
 
     private DataBridge bridge;
 
-    public DictionaryParser() {
+    public DictionaryParser(DataBridge bridge) {
+        this.bridge = bridge;
     }
 
     public void process(InputStream in) throws ParserConfigurationException, SAXException, IOException {
@@ -26,10 +28,8 @@ public class DictionaryParser {
         SAXParser saxParser = spf.newSAXParser();
         XMLReader xmlReader = saxParser.getXMLReader();
 
-        bridge = new DataBridge();
         DictionaryHandler handler = new DictionaryHandler(xmlReader, bridge);
         xmlReader.setContentHandler(handler);
-
         xmlReader.parse(new InputSource(in));
     }
 

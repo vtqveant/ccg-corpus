@@ -26,7 +26,7 @@ public class DictionaryHandler extends DefaultHandler {
         switch (name) {
             case "grammeme":
                 GrammemeHandler grammemeHandler = new GrammemeHandler(reader, this);
-                grammemeHandler.grammeme.setParent(attributes.getValue("parent"));
+                grammemeHandler.grammeme.setParentTag(attributes.getValue("parent"));
                 reader.setContentHandler(grammemeHandler);
                 break;
             case "lemma":

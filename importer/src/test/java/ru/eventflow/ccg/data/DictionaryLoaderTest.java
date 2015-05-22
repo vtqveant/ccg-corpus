@@ -59,5 +59,10 @@ public class DictionaryLoaderTest {
         public List<Lexeme> getLexemes() {
             return lexemes;
         }
+
+        @Override
+        public Grammeme getGrammeme(String name) {
+            return null;
+        }
     }
 }

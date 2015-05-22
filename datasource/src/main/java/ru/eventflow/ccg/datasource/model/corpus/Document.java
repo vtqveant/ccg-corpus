@@ -10,6 +10,7 @@ import javax.persistence.Table;
 public class Document {
 
     @Id
+    @Column(columnDefinition = "serial")
     private int id;
 
     @Column(name = "parent_id")

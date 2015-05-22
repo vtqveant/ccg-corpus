@@ -1,8 +1,8 @@
 package ru.eventflow.ccg.datasource.model.dictionary;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class correspond to <b>lemma</b> in OpenCorpora dump!
@@ -15,11 +15,11 @@ public class Lexeme {
     @Column(columnDefinition = "serial")
     private int id;
 
-    @OneToOne(targetEntity = Form.class, cascade = CascadeType.PERSIST)
+    @OneToOne(targetEntity = Form.class, cascade = CascadeType.ALL)
     private Form lemma;
 
-    @OneToMany(targetEntity = Form.class, mappedBy = "lexeme", cascade = CascadeType.PERSIST)
-    private Set<Form> forms = new HashSet<Form>();
+    @OneToMany(targetEntity = Form.class, mappedBy = "lexeme", cascade = CascadeType.ALL)
+    private List<Form> forms = new ArrayList<>();
 
     @Column(name = "rev")
     private int rev;
@@ -32,7 +32,7 @@ public class Lexeme {
         this.lemma = lemma;
     }
 
-    public Set<Form> getForms() {
+    public List<Form> getForms() {
         return forms;
     }
 

@@ -2,7 +2,7 @@ package ru.eventflow.ccg.data;
 
 import org.junit.Test;
 import org.xml.sax.SAXException;
-import ru.eventflow.ccg.data.dictionary.DataCollector;
+import ru.eventflow.ccg.data.dictionary.DictionaryDataCollector;
 import ru.eventflow.ccg.data.dictionary.DictionaryParser;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
 import ru.eventflow.ccg.datasource.model.dictionary.Lexeme;
@@ -20,7 +20,7 @@ public class DictionaryLoaderTest {
 
     @Test
     public void testParser() throws IOException, SAXException, ParserConfigurationException {
-        DataCollector collector = new DataCollector();
+        DictionaryDataCollector collector = new DictionaryDataCollector();
         DictionaryParser parser = new DictionaryParser(collector);
 
         InputStream in = DictionaryParser.class.getResourceAsStream("/opcorpora/dict.xml");

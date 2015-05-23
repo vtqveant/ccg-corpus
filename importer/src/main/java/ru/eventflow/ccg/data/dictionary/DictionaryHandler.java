@@ -13,9 +13,9 @@ import ru.eventflow.ccg.datasource.model.dictionary.*;
 public class DictionaryHandler extends DefaultHandler {
 
     private XMLReader reader;
-    private DataCollector collector;
+    private DictionaryDataCollector collector;
 
-    public DictionaryHandler(XMLReader reader, DataCollector collector) {
+    public DictionaryHandler(XMLReader reader, DictionaryDataCollector collector) {
         this.reader = reader;
         this.collector = collector;
     }
@@ -47,30 +47,6 @@ public class DictionaryHandler extends DefaultHandler {
                 collector.addLink(link);
                 break;
         }
-    }
-
-    abstract class BaseNestedHandler extends DefaultHandler {
-        XMLReader reader;
-        ContentHandler parent;
-        StringBuilder content = new StringBuilder();
-
-        protected BaseNestedHandler(XMLReader reader, ContentHandler parent) {
-            this.reader = reader;
-            this.parent = parent;
-        }
-
-        /**
-         * characters can be called multiple times per element so aggregate the content in a StringBuilder
-         */
-        public void characters(char[] ch, int start, int length) throws SAXException {
-            content.append(ch, start, length);
-        }
-
-        public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
-            content.setLength(0);
-        }
-
-        abstract public void endElement(String uri, String localName, String name) throws SAXException;
     }
 
     class GrammemeHandler extends BaseNestedHandler {

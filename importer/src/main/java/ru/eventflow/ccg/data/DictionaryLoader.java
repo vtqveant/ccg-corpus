@@ -7,8 +7,6 @@ import ru.eventflow.ccg.datasource.model.dictionary.*;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Dirty, unsafe and fast
@@ -18,7 +16,7 @@ public class DictionaryLoader {
     public static final String URL = "jdbc:postgresql://localhost/corpus?user=corpus&password=corpus";
     public static final String RESOURSE_LOCATION = "file:///home/transcend/code/NLU-RG/ccg-corpus/data/resources/dict.opcorpora.xml";
 
-    public static final int LIMIT = 10000;
+    public static final int CHUNK_SIZE = 5000;
 
     public DictionaryLoader() {
     }
@@ -47,8 +45,8 @@ public class DictionaryLoader {
             grammemeSt.setString(4, parentId);
             grammemeSt.executeUpdate();
         }
-        conn.commit();
         grammemeSt.close();
+        conn.commit();
 
         // link types
         PreparedStatement linkTypeSt = conn.prepareStatement("INSERT INTO dictionary.link_type(id, type) VALUES (?, ?)");
@@ -57,76 +55,72 @@ public class DictionaryLoader {
             linkTypeSt.setString(2, linkType.getType());
             linkTypeSt.executeUpdate();
         }
-        conn.commit();
         linkTypeSt.close();
+        conn.commit();
         System.out.println("grammemes and link types done");
 
         // links
-        PreparedStatement linksSt = conn.prepareStatement("INSERT INTO dictionary.link(id, from_id, to_id, type_id) VALUES (?, ?, ?, ?)");
-        List<Link> linksBuffer = new ArrayList<>(LIMIT);
+        PreparedStatement linkSt = conn.prepareStatement("INSERT INTO dictionary.link(id, from_id, to_id, type_id) VALUES (?, ?, ?, ?)");
         int i = 0;
         for (Link link : collector.getLinks()) {
-            i++;
-            linksBuffer.add(link);
-            if (i % LIMIT == 0) {
-                persistLinks(linksSt, linksBuffer);
+            linkSt.setInt(1, link.getId());
+            linkSt.setInt(2, link.getFrom().getId());
+            linkSt.setInt(3, link.getTo().getId());
+            linkSt.setInt(4, link.getType().getId());
+            linkSt.executeUpdate();
+
+            if (++i % CHUNK_SIZE == 0) {
                 conn.commit();
-                linksBuffer.clear();
                 System.out.println(i);
             }
         }
-        persistLinks(linksSt, linksBuffer); // persist what's left
+        linkSt.close();
         conn.commit();
-        linksSt.close();
         System.out.println("links done");
 
         // lexemes
         PreparedStatement formSt = conn.prepareStatement("INSERT INTO dictionary.form(lemma, orthography, lexeme_id) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         PreparedStatement formGrammemeSt = conn.prepareStatement("INSERT INTO dictionary.form_to_grammeme(form_id, grammeme_id) VALUES (?, ?)");
         PreparedStatement lexemeSt = conn.prepareStatement("INSERT INTO dictionary.lexeme(id, rev, lemma_id) VALUES (?, ?, ?)");
-        List<Lexeme> lexemesBuffer = new ArrayList<>(LIMIT);
         int j = 0;
         for (Lexeme lexeme : collector.getLexemes()) {
-            j++;
-            lexemesBuffer.add(lexeme);
-            if (j % LIMIT == 0) {
-                persistLexemes(lexemeSt, formSt, formGrammemeSt, lexemesBuffer);
+            // forms
+            for (Form form : lexeme.getForms()) {
+                persistForm(formSt, formGrammemeSt, form);
+            }
+
+            // lemma is a special form
+            int lemmaId = persistForm(formSt, formGrammemeSt, lexeme.getLemma());
+
+            // lexeme
+            lexemeSt.setInt(1, lexeme.getId());
+            lexemeSt.setInt(2, lexeme.getRev());
+            lexemeSt.setInt(3, lemmaId);
+            lexemeSt.executeUpdate();
+
+            if (++j % CHUNK_SIZE == 0) {
                 conn.commit();
-                lexemesBuffer.clear();
                 System.out.println(j);
             }
         }
-        persistLexemes(lexemeSt, formSt, formGrammemeSt, lexemesBuffer); // persist what's left
-        conn.commit();
         formSt.close();
         formGrammemeSt.close();
         lexemeSt.close();
+        conn.commit();
         System.out.println("lexemes done");
 
         conn.close();
     }
 
-    private void persistLexemes(PreparedStatement lexemeSt, PreparedStatement formSt, PreparedStatement formGrammemeSt, List<Lexeme> lexemes) throws SQLException {
-        for (Lexeme l : lexemes) {
-            for (Form form : l.getForms()) {
-                persistForm(formSt, formGrammemeSt, form);
-            }
-            int lemmaId = persistForm(formSt, formGrammemeSt, l.getLemma());
-            lexemeSt.setInt(1, l.getId());
-            lexemeSt.setInt(2, l.getRev());
-            lexemeSt.setInt(3, lemmaId);
-            lexemeSt.executeUpdate();
-        }
-    }
-
     /**
-     * forms are the only objects that do not have an id in the OpenCorpora export xml
+     * forms are the only objects that do not have an id in the OpenCorpora export xml, so we have to keep track of owr own one
      */
     private int persistForm(PreparedStatement formSt, PreparedStatement formGrammemeSt, Form form) throws SQLException {
         formSt.setBoolean(1, form.isLemma());
         formSt.setString(2, form.getOrthography());
         formSt.setInt(3, form.getLexeme().getId());
         formSt.executeUpdate();
+
         ResultSet rs = formSt.getGeneratedKeys();
         int id = -1;
         if (rs.next()) {
@@ -139,16 +133,6 @@ public class DictionaryLoader {
             formGrammemeSt.executeUpdate();
         }
         return id;
-    }
-
-    private void persistLinks(PreparedStatement linkSt, List<Link> links) throws SQLException {
-        for (Link link : links) {
-            linkSt.setInt(1, link.getId());
-            linkSt.setInt(2, link.getFrom().getId());
-            linkSt.setInt(3, link.getTo().getId());
-            linkSt.setInt(4, link.getType().getId());
-            linkSt.executeUpdate();
-        }
     }
 
     public static void main(String[] args) throws Exception {

@@ -10,14 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DataCollector {
+public class DictionaryDataCollector {
 
     private Map<String, Grammeme> grammemes = new HashMap<>();
     private Map<Integer, Lexeme> lexemes = new HashMap<>();
     private Map<Integer, LinkType> linkTypes = new HashMap<>();
     private Map<Integer, Link> links = new HashMap<>();
 
-    public DataCollector() {
+    public DictionaryDataCollector() {
     }
 
     public void addGrammeme(Grammeme grammeme) {
@@ -49,26 +49,24 @@ public class DataCollector {
     }
 
     public List<LinkType> getLinkTypes() {
-        List<LinkType> l = new ArrayList<>();
-        l.addAll(linkTypes.values());
-        return l;
+        return toList(linkTypes);
     }
 
     public List<Grammeme> getGrammemes() {
-        List<Grammeme> l = new ArrayList<>();
-        l.addAll(grammemes.values());
-        return l;
+        return toList(grammemes);
     }
 
     public List<Lexeme> getLexemes() {
-        List<Lexeme> l = new ArrayList<>();
-        l.addAll(lexemes.values());
-        return l;
+        return toList(lexemes);
     }
 
     public List<Link> getLinks() {
-        List<Link> l = new ArrayList<>();
-        l.addAll(links.values());
+        return toList(links);
+    }
+
+    private static <V> List<V> toList(Map<?, V> map) {
+        List<V> l = new ArrayList<>();
+        l.addAll(map.values());
         return l;
     }
 }

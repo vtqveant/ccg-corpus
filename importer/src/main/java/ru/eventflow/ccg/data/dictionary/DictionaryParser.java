@@ -3,22 +3,18 @@ package ru.eventflow.ccg.data.dictionary;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
-import ru.eventflow.ccg.datasource.model.dictionary.Lexeme;
-import ru.eventflow.ccg.datasource.model.dictionary.LinkType;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 public class DictionaryParser {
 
-    private DataCollector collector;
+    private DictionaryDataCollector collector;
 
-    public DictionaryParser(DataCollector collector) {
+    public DictionaryParser(DictionaryDataCollector collector) {
         this.collector = collector;
     }
 

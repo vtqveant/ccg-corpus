@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.data.dictionary;
+package ru.eventflow.ccg.data;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -6,13 +6,13 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-abstract class BaseNestedHandler extends DefaultHandler {
+public abstract class BaseNestedHandler extends DefaultHandler {
 
-    XMLReader reader;
-    ContentHandler parent;
-    StringBuilder content = new StringBuilder();
+    public XMLReader reader;
+    public ContentHandler parent;
+    public StringBuilder content = new StringBuilder();
 
-    protected BaseNestedHandler(XMLReader reader, ContentHandler parent) {
+    public BaseNestedHandler(XMLReader reader, ContentHandler parent) {
         this.reader = reader;
         this.parent = parent;
     }

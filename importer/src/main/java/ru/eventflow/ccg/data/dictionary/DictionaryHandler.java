@@ -5,6 +5,7 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
+import ru.eventflow.ccg.data.BaseNestedHandler;
 import ru.eventflow.ccg.datasource.model.dictionary.*;
 
 /**

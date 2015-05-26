@@ -2,6 +2,8 @@ package ru.eventflow.ccg.data;
 
 import org.junit.Test;
 import org.xml.sax.SAXException;
+import ru.eventflow.ccg.data.corpus.CorpusDataCollector;
+import ru.eventflow.ccg.data.corpus.CorpusParser;
 import ru.eventflow.ccg.data.dictionary.DictionaryDataCollector;
 import ru.eventflow.ccg.data.dictionary.DictionaryParser;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
@@ -16,10 +18,10 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class DictionaryLoaderTest {
+public class LoaderTest {
 
     @Test
-    public void testParser() throws IOException, SAXException, ParserConfigurationException {
+    public void testDictionaryParser() throws IOException, SAXException, ParserConfigurationException {
         DictionaryDataCollector collector = new DictionaryDataCollector();
         DictionaryParser parser = new DictionaryParser(collector);
 
@@ -37,6 +39,19 @@ public class DictionaryLoaderTest {
         List<LinkType> types = collector.getLinkTypes();
         assertNotNull(lexemes);
         assertEquals(23, types.size());
+    }
+
+    @Test
+    public void testCorpusParser() throws IOException, SAXException, ParserConfigurationException {
+        CorpusDataCollector collector = new CorpusDataCollector();
+        CorpusParser parser = new CorpusParser(collector);
+//        parser.process(getClass().getResourceAsStream("/opcorpora/no_ambig.xml"));
+        parser.process(getClass().getResourceAsStream("/opcorpora/ambig.xml"));
+
+//        InputStream in = new URL("file:///C:\\KOSTA\\code\\ccg-corpus\\data\\resources\\annot.opcorpora.xml").openStream();
+//        parser.process(in);
+
+        System.out.println();
     }
 
 }

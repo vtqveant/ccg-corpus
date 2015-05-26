@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<annotation version="0.12" revision="3741273">
+    <text id="1" parent="0" name="&quot;Частный корреспондент&quot;">
+        <tags>
+            <tag>url:http://www.chaskor.ru</tag>
+            <tag>Тип:Газета</tag>
+        </tags>
+        <paragraphs>
+        </paragraphs>
+    </text>
+    <text id="2" parent="1" name="00021 Школа злословия">
+        <tags>
+            <tag>Год:2008</tag>
+            <tag>Дата:25/08</tag>
+            <tag>Автор:Валентин Колесников</tag>
+            <tag>url:http://www.chaskor.ru/article/shkola_zlosloviya_uchit_prikusit_yazyk_21</tag>
+            <tag>Тема:ЧасКор:Медиа</tag>
+            <tag>Тема:ЧасКор:Медиа/ТВ и радио</tag>
+        </tags>
+        <paragraphs>
+            <paragraph id="1">
+                <sentence id="1">
+                    <source>«Школа злословия» учит прикусить язык</source>
+                    <tokens>
+                        <token id="1" text="«">
+                            <tfr rev_id="2420236" t="«">
+                                <v>
+                                    <l id="0" t="«">
+                                        <g v="PNCT"/>
+                                    </l>
+                                </v>
+                            </tfr>
+                            <tfr rev_id="2420237" t="«">
+                                <v>
+                                    <l id="0" t="«">
+                                        <g v="PNCT"/>
+                                    </l>
+                                </v>
+                            </tfr>
+                            <tfr rev_id="2420238" t="«">
+                                <v>
+                                    <l id="0" t="«">
+                                        <g v="PNCT"/>
+                                    </l>
+                                </v>
+                            </tfr>
+                        </token>
+                        <token id="2" text="Школа">
+                            <tfr rev_id="834910" t="Школа">
+                                <v>
+                                    <l id="380220" t="школа">
+                                        <g v="NOUN"/>
+                                        <g v="inan"/>
+                                        <g v="femn"/>
+                                        <g v="sing"/>
+                                        <g v="nomn"/>
+                                    </l>
+                                </v>
+                            </tfr>
+                        </token>
+                        <token id="3" text="злословия">
+                            <tfr rev_id="2632816" t="злословия">
+                                <v>
+                                    <l id="115766" t="злословие">
+                                        <g v="NOUN"/>
+                                        <g v="inan"/>
+                                        <g v="neut"/>
+                                        <g v="sing"/>
+                                        <g v="gent"/>
+                                    </l>
+                                </v>
+                            </tfr>
+                        </token>
+                        <token id="4" text="»">
+                            <tfr rev_id="2420237" t="»">
+                                <v>
+                                    <l id="0" t="»">
+                                        <g v="PNCT"/>
+                                    </l>
+                                </v>
+                            </tfr>
+                        </token>
+                        <token id="5" text="учит">
+                            <tfr rev_id="834913" t="учит">
+                                <v>
+                                    <l id="363313" t="учу">
+                                        <g v="VERB"/>
+                                        <g v="impf"/>
+                                        <g v="tran"/>
+                                        <g v="sing"/>
+                                        <g v="3per"/>
+                                        <g v="pres"/>
+                                        <g v="indc"/>
+                                    </l>
+                                </v>
+                            </tfr>
+                        </token>
+                        <token id="6" text="прикусить">
+                            <tfr rev_id="834914" t="прикусить">
+                                <v>
+                                    <l id="271426" t="прикусить">
+                                        <g v="INFN"/>
+                                        <g v="perf"/>
+                                        <g v="tran"/>
+                                    </l>
+                                </v>
+                            </tfr>
+                        </token>
+                        <token id="7" text="язык">
+                            <tfr rev_id="3408577" t="язык">
+                                <v>
+                                    <l id="387573" t="язык">
+                                        <g v="NOUN"/>
+                                        <g v="inan"/>
+                                        <g v="masc"/>
+                                        <g v="sing"/>
+                                        <g v="accs"/>
+                                    </l>
+                                </v>
+                            </tfr>
+                        </token>
+                    </tokens>
+                </sentence>
+            </paragraph>
+        </paragraphs>
+    </text>
+</annotation>

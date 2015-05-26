@@ -9,12 +9,13 @@ import java.net.URL;
 import java.sql.*;
 
 /**
- * Dirty, unsafe and fast
+ * Dirty, unsafe and fast. Requires 1.5G of heap to run.
  */
 public class DictionaryLoader {
 
     public static final String URL = "jdbc:postgresql://localhost/corpus?user=corpus&password=corpus";
-    public static final String RESOURSE_LOCATION = "file:///home/transcend/code/NLU-RG/ccg-corpus/data/resources/dict.opcorpora.xml";
+//    public static final String RESOURSE_LOCATION = "file:///home/transcend/code/NLU-RG/ccg-corpus/data/resources/dict.opcorpora.xml";
+    public static final String RESOURSE_LOCATION = "file:///C:\\KOSTA\\code\\ccg-corpus\\data\\resources\\dict.opcorpora.xml";
 
     public static final int CHUNK_SIZE = 5000;
 
@@ -24,7 +25,7 @@ public class DictionaryLoader {
     public void load(final String url, final String resourceLocation) throws Exception {
         DictionaryDataCollector collector = new DictionaryDataCollector();
         DictionaryParser parser = new DictionaryParser(collector);
-        InputStream in = new URL(resourceLocation).openStream();
+        InputStream in = new URL("file://" + resourceLocation).openStream();
         parser.process(in);
 
         System.out.println("Grammemes: " + collector.getGrammemes().size());
@@ -136,8 +137,15 @@ public class DictionaryLoader {
     }
 
     public static void main(String[] args) throws Exception {
+        if (args.length == 0 || args.length % 2 != 0 || !args[0].equals("--resource")) {
+            System.out.println("Usage:");
+            System.out.println("\t--resource\tOpenCorpora dictionary dump file (XML)");
+            System.exit(-1);
+        }
+        String resourceLocation = args[1];
+
         DictionaryLoader loader = new DictionaryLoader();
-        loader.load(URL, RESOURSE_LOCATION);
+        loader.load(URL, resourceLocation);
     }
 
 }

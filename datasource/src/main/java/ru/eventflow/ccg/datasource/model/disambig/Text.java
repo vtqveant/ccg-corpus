@@ -1,21 +1,31 @@
 package ru.eventflow.ccg.datasource.model.disambig;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(schema = "corpus", name = "text")
 public class Text {
 
-    private List<String> tags = new ArrayList<>();
-
-    private List<Paragraph> paragraphs = new ArrayList<>();
-
+    @Id
+    @Column(columnDefinition = "serial")
     private int id;
 
-    private int parent;
+    @Column(name = "name")
+    private String name;
 
-    String name;
+    @OneToMany(targetEntity = Tag.class, mappedBy = "text", cascade = CascadeType.ALL)
+    private List<Tag> tags = new ArrayList<>();
 
-    public void addTag(String tag) {
+    @OneToMany(targetEntity = Paragraph.class, mappedBy = "text", cascade = CascadeType.ALL)
+    private List<Paragraph> paragraphs = new ArrayList<>();
+
+    @ManyToOne(targetEntity = Text.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "parent_id", nullable = true)
+    private Text parent;
+
+    public void addTag(Tag tag) {
         tags.add(tag);
     }
 
@@ -31,11 +41,11 @@ public class Text {
         this.id = id;
     }
 
-    public int getParent() {
+    public Text getParent() {
         return parent;
     }
 
-    public void setParent(int parent) {
+    public void setParent(Text parent) {
         this.parent = parent;
     }
 
@@ -47,7 +57,7 @@ public class Text {
         this.name = name;
     }
 
-    public List<String> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 

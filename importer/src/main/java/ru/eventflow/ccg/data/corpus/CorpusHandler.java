@@ -6,6 +6,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import ru.eventflow.ccg.data.BaseNestedHandler;
+import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
 import ru.eventflow.ccg.datasource.model.disambig.*;
 
 public class CorpusHandler extends DefaultHandler {
@@ -28,7 +29,7 @@ public class CorpusHandler extends DefaultHandler {
             case "text":
                 TextHandler textHandler = new TextHandler(reader, this);
                 textHandler.text.setId(Integer.valueOf(attributes.getValue("id")));
-                textHandler.text.setParent(Integer.valueOf(attributes.getValue("parent")));
+                textHandler.text.setParent(collector.getText(attributes.getValue("parent")));
                 textHandler.text.setName(attributes.getValue("name"));
                 reader.setContentHandler(textHandler);
                 break;
@@ -58,7 +59,10 @@ public class CorpusHandler extends DefaultHandler {
         public void endElement(String uri, String localName, String name) throws org.xml.sax.SAXException {
             switch (name) {
                 case "tag":
-                    text.addTag(content.toString());
+                    Tag tag = new Tag();
+                    tag.setValue(content.toString());
+                    tag.setText(text);
+                    text.addTag(tag);
                     break;
                 case "text":
                     collector.addText(text);
@@ -146,7 +150,7 @@ public class CorpusHandler extends DefaultHandler {
                 case "tfr":
                     RevisionHandler revisionHandler = new RevisionHandler(reader, this);
                     revisionHandler.variant.setId(Integer.valueOf(attributes.getValue("rev_id")));
-                    revisionHandler.variant.setLemma(attributes.getValue("t"));
+//                    revisionHandler.variant.setLemma(attributes.getValue("t"));
                     reader.setContentHandler(revisionHandler);
                     break;
             }
@@ -176,13 +180,16 @@ public class CorpusHandler extends DefaultHandler {
             content.setLength(0);
             switch (name) {
                 case "l":
-                    // I have keep these values because there's no information about the dictionary version in the dump
+                    // I have to keep these values because there's no information about the dictionary version in the dump
                     // lemma_id = 0 is Out of Vocabulary
-                    variant.setLemmaId(Integer.valueOf(attributes.getValue("id"))); // XPath: //sentence/tokens/token/tfr/v/l/@id
-                    variant.setLemma(attributes.getValue("t")); // XPath: //sentence/tokens/token/tfr/v/l/@t
+//                    variant.setLemmaId(Integer.valueOf(attributes.getValue("id"))); // XPath: //sentence/tokens/token/tfr/v/l/@id
+//                    variant.setLemma(attributes.getValue("t")); // XPath: //sentence/tokens/token/tfr/v/l/@t
                     break;
                 case "g":
-                    variant.addGrammeme(attributes.getValue("v")); // XPath: //sentence/tokens/token/tfr/v/l/g/@v
+
+                    // TODO write a resolver for forms and set the form only
+//                    Grammeme grammeme = collector.
+//                    variant.addGrammeme(attributes.getValue("v")); // XPath: //sentence/tokens/token/tfr/v/l/g/@v
                     break;
             }
         }

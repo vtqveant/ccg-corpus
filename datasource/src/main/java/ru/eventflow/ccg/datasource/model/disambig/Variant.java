@@ -1,17 +1,28 @@
 package ru.eventflow.ccg.datasource.model.disambig;
 
+import ru.eventflow.ccg.datasource.model.dictionary.Form;
+import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
+import ru.eventflow.ccg.datasource.model.dictionary.Lexeme;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(schema = "corpus", name = "variant")
 public class Variant {
 
+    @Id
+    @Column(columnDefinition = "serial")
     private int id;
 
-    private String lemma;
+    @ManyToOne(targetEntity = Form.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "form_id", nullable = false)
+    private Form form;
 
-    private int lemmaId;
-
-    private List<String> grammemes = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "token_id", nullable = false)
+    private Token token;
 
     public int getId() {
         return id;
@@ -21,27 +32,19 @@ public class Variant {
         this.id = id;
     }
 
-    public String getLemma() {
-        return lemma;
+    public Token getToken() {
+        return token;
     }
 
-    public void setLemma(String lemma) {
-        this.lemma = lemma;
+    public void setToken(Token token) {
+        this.token = token;
     }
 
-    public int getLemmaId() {
-        return lemmaId;
+    public Form getForm() {
+        return form;
     }
 
-    public void setLemmaId(int lemmaId) {
-        this.lemmaId = lemmaId;
-    }
-
-    public List<String> getGrammemes() {
-        return grammemes;
-    }
-
-    public void addGrammeme(String grammeme) {
-        grammemes.add(grammeme);
+    public void setForm(Form form) {
+        this.form = form;
     }
 }

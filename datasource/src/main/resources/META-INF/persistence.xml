@@ -7,7 +7,15 @@
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 
         <!-- enhanced classes -->
-        <class>ru.eventflow.ccg.datasource.model.corpus.Document</class>
+        <!--<class>ru.eventflow.ccg.datasource.model.corpus.Document</class>-->
+
+        <class>ru.eventflow.ccg.datasource.model.disambig.Text</class>
+        <class>ru.eventflow.ccg.datasource.model.disambig.Tag</class>
+        <class>ru.eventflow.ccg.datasource.model.disambig.Paragraph</class>
+        <class>ru.eventflow.ccg.datasource.model.disambig.Sentence</class>
+        <class>ru.eventflow.ccg.datasource.model.disambig.Token</class>
+        <class>ru.eventflow.ccg.datasource.model.disambig.Variant</class>
+
         <class>ru.eventflow.ccg.datasource.model.dictionary.Form</class>
         <class>ru.eventflow.ccg.datasource.model.dictionary.Grammeme</class>
         <class>ru.eventflow.ccg.datasource.model.dictionary.Lexeme</class>

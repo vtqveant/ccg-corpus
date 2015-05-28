@@ -14,6 +14,7 @@ public class Variant {
 
     @Id
     @Column(columnDefinition = "serial")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne(targetEntity = Form.class, cascade = CascadeType.ALL)

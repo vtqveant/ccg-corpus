@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @deprecated
+ */
 @Entity
 @Table(schema = "corpus", name = "document")
 public class Document {

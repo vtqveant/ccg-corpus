@@ -2,7 +2,6 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import ru.eventflow.ccg.annotation.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.DocumentSelectedEvent;
-import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.view.TreeView;
 import ru.eventflow.ccg.datasource.DataManager;
 import ru.eventflow.ccg.datasource.model.corpus.Document;

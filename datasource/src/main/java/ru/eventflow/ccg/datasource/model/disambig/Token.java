@@ -22,11 +22,14 @@ public class Token {
     @JoinColumn(name = "sentence_id", nullable = false)
     private Sentence sentence;
 
+    @Column(name = "revision")
+    private int revision;
+
     public List<Variant> getVariants() {
         return variants;
     }
 
-    public void addRevision(Variant variant) {
+    public void addVariant(Variant variant) {
         variants.add(variant);
     }
 
@@ -56,5 +59,13 @@ public class Token {
 
     public void setSentence(Sentence sentence) {
         this.sentence = sentence;
+    }
+
+    public int getRevision() {
+        return revision;
+    }
+
+    public void setRevision(int revision) {
+        this.revision = revision;
     }
 }

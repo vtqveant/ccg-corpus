@@ -13,6 +13,7 @@ import ru.eventflow.ccg.datasource.model.dictionary.LinkType;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -46,10 +47,10 @@ public class LoaderTest {
         CorpusDataCollector collector = new CorpusDataCollector();
         CorpusParser parser = new CorpusParser(collector);
 //        parser.process(getClass().getResourceAsStream("/opcorpora/no_ambig.xml"));
-        parser.process(getClass().getResourceAsStream("/opcorpora/ambig.xml"));
+//        parser.process(getClass().getResourceAsStream("/opcorpora/ambig.xml"));
 
-//        InputStream in = new URL("file:///C:\\KOSTA\\code\\ccg-corpus\\data\\resources\\annot.opcorpora.xml").openStream();
-//        parser.process(in);
+        InputStream in = new URL("file:///home/transcend/code/NLU-RG/ccg-corpus/data/resources/annot.opcorpora.xml").openStream();
+        parser.process(in);
 
         System.out.println();
     }

@@ -11,7 +11,7 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "source")
+    @Column(name = "source", columnDefinition = "TEXT")
     private String value;
 
     @ManyToOne(cascade = CascadeType.ALL)

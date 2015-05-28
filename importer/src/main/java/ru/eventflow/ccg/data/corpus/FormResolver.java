@@ -1,29 +1,25 @@
 package ru.eventflow.ccg.data.corpus;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TODO add missing grammemes to dictionary tagset (and mark)
+ */
 public class FormResolver {
 
-    public static final String URL = "jdbc:postgresql://localhost/corpus?user=corpus&password=corpus";
-
     String lexemeId;
-    String lexeme;
     String orthography;
     List<String> grammemes = new ArrayList<>();
 
-    private static Connection conn;
+    private Connection conn;
 
-    public FormResolver() {
-        try {
-            if (conn == null) {
-                conn = DriverManager.getConnection(URL);
-                conn.setAutoCommit(false);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public FormResolver(Connection conn) {
+        this.conn = conn;
     }
 
     int resolve() {
@@ -31,18 +27,18 @@ public class FormResolver {
         try {
             StringBuilder sb = new StringBuilder();
 
-            sb.append("select form.id as form_id, g.name as grammeme ");
-            sb.append("from dictionary.form lemma, dictionary.form form, dictionary.lexeme lexeme, ");
+            sb.append("SELECT form.id AS form_id ");
+            sb.append("FROM dictionary.form lemma, dictionary.form form, dictionary.lexeme lexeme, ");
             sb.append("dictionary.form_to_grammeme fg, dictionary.grammeme g ");
-            sb.append("where g.name = fg.grammeme_id and lemma.lexeme_id = lexeme.id and ");
-            sb.append("form.lexeme_id = lexeme.id and (fg.form_id = lemma.id or fg.form_id = form.id) ");
-            sb.append("and lemma.id = lexeme.lemma_id and lexeme.id = ");
+            sb.append("WHERE g.name = fg.grammeme_id AND lemma.lexeme_id = lexeme.id AND ");
+            sb.append("form.lexeme_id = lexeme.id AND (fg.form_id = lemma.id OR fg.form_id = form.id) ");
+            sb.append("AND lemma.id = lexeme.lemma_id AND lexeme.id = ");
             sb.append(lexemeId);
-            sb.append(" and form.lemma = false ");
-            sb.append("and form.orthography = '");
+            sb.append(" AND form.lemma = false AND ");
+            sb.append("form.orthography = '");
             sb.append(orthography.replace("\'", "\'\'"));
-            sb.append("' and ");
-            sb.append("g.name in (");
+            sb.append("' AND ");
+            sb.append("g.name IN (");
 
             for (String g : grammemes) {
                 sb.append('\'');
@@ -51,16 +47,17 @@ public class FormResolver {
                 sb.append(',');
             }
             sb.deleteCharAt(sb.length() - 1);
-            sb.append(") order by form_id");
+            sb.append(") group by form.id having count(g.name) = ");
+            sb.append(grammemes.size());
+
 
             String q = sb.toString();
 //            System.out.println(q);
 
-            PreparedStatement statement = conn.prepareStatement(q);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) { // guaranteed to be a single result
-                formId = rs.getInt("form_id");
-//                System.out.println(formId);
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(q);
+            while (rs.next()) {
+                formId = rs.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,9 +65,6 @@ public class FormResolver {
 
         // reset
         grammemes.clear();
-        orthography = null;
-        lexemeId = null;
-        lexeme = null;
 
         return formId;
     }

@@ -9,28 +9,30 @@ import ru.eventflow.ccg.data.BaseNestedHandler;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.disambig.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CorpusHandler extends DefaultHandler {
 
     private XMLReader reader;
-    private CorpusDataCollector collector;
-    private FormResolver resolver = new FormResolver();
+    private DataBridge bridge;
 
-    public CorpusHandler(XMLReader reader, CorpusDataCollector collector) {
+    public CorpusHandler(XMLReader reader, DataBridge bridge) {
         this.reader = reader;
-        this.collector = collector;
+        this.bridge = bridge;
     }
 
     @Override
     public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
         switch (name) {
             case "annotation":
-                collector.revision = attributes.getValue("revision");
-                collector.version = attributes.getValue("version");
+                bridge.setRevision(attributes.getValue("revision"));
+                bridge.setVersion(attributes.getValue("version"));
                 break;
             case "text":
                 TextHandler textHandler = new TextHandler(reader, this);
                 textHandler.text.setId(Integer.valueOf(attributes.getValue("id")));
-                textHandler.text.setParent(collector.getText(attributes.getValue("parent")));
+                textHandler.text.setParent(bridge.getTextById(Integer.valueOf(attributes.getValue("parent"))));
                 textHandler.text.setName(attributes.getValue("name"));
                 reader.setContentHandler(textHandler);
                 break;
@@ -50,6 +52,7 @@ public class CorpusHandler extends DefaultHandler {
             if (name.equals("paragraph")) {
                 ParagraphHandler paragraphHandler = new ParagraphHandler(reader, this);
                 paragraphHandler.paragraph.setId(Integer.valueOf(attributes.getValue("id")));
+                paragraphHandler.paragraph.setText(text);
                 reader.setContentHandler(paragraphHandler);
             }
         }
@@ -64,7 +67,7 @@ public class CorpusHandler extends DefaultHandler {
                     text.addTag(tag);
                     break;
                 case "text":
-                    collector.addText(text);
+                    bridge.addText(text);
                     reader.setContentHandler(parent); // switch back to parent handler
                     break;
             }
@@ -84,6 +87,7 @@ public class CorpusHandler extends DefaultHandler {
             if (name.equals("sentence")) {
                 SentenceHandler sentenceHandler = new SentenceHandler(reader, this);
                 sentenceHandler.sentence.setId(Integer.valueOf(attributes.getValue("id")));
+                sentenceHandler.sentence.setParagraph(paragraph);
                 reader.setContentHandler(sentenceHandler);
             }
         }
@@ -111,6 +115,7 @@ public class CorpusHandler extends DefaultHandler {
                 TokenHandler tokenHandler = new TokenHandler(reader, this);
                 tokenHandler.token.setId(Integer.valueOf(attributes.getValue("id")));
                 tokenHandler.token.setOrthography(attributes.getValue("text"));
+                tokenHandler.token.setSentence(sentence);
                 reader.setContentHandler(tokenHandler);
             }
         }
@@ -131,6 +136,7 @@ public class CorpusHandler extends DefaultHandler {
 
     class TokenHandler extends BaseNestedHandler {
         Token token = new Token();
+        String orthography;
 
         public TokenHandler(XMLReader reader, ContentHandler parent) {
             super(reader, parent);
@@ -139,11 +145,13 @@ public class CorpusHandler extends DefaultHandler {
         @Override
         public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
             content.setLength(0);
-            if (name.equals("tfr")) {
-                RevisionHandler revisionHandler = new RevisionHandler(reader, this);
-                revisionHandler.variant.setId(Integer.valueOf(attributes.getValue("rev_id")));
-                resolver.orthography = attributes.getValue("t");
-                reader.setContentHandler(revisionHandler);
+            switch (name) {
+                case "tfr":
+                    token.setRevision(Integer.valueOf(attributes.getValue("rev_id")));
+                    orthography = attributes.getValue("t");
+                    VariantHandler variantHandler = new VariantHandler(reader, this);
+                    reader.setContentHandler(variantHandler);
+                    break;
             }
         }
 
@@ -156,10 +164,12 @@ public class CorpusHandler extends DefaultHandler {
         }
     }
 
-    class RevisionHandler extends BaseNestedHandler {
-        Variant variant = new Variant();
+    class VariantHandler extends BaseNestedHandler {
+        private Variant variant;
+        private List<String> grammemes = new ArrayList<>();
+        private String lexemeId;
 
-        public RevisionHandler(XMLReader reader, ContentHandler parent) {
+        public VariantHandler(XMLReader reader, ContentHandler parent) {
             super(reader, parent);
         }
 
@@ -168,26 +178,30 @@ public class CorpusHandler extends DefaultHandler {
             content.setLength(0);
             switch (name) {
                 case "l":
-                    // I have to keep these values because there's no information about the dictionary version in the dump
-                    // lemma_id = 0 is Out of Vocabulary, for OOV we need an explicit orthography
-                    resolver.lexemeId = attributes.getValue("id"); // XPath: //sentence/tokens/token/tfr/v/l/@id
-                    resolver.lexeme = attributes.getValue("t"); // XPath: //sentence/tokens/token/tfr/v/l/@t
+                    // lemma_id = 0 is Out of Vocabulary
+                    // TODO for OOV we need an explicit orthography
+                    lexemeId = attributes.getValue("id");
+                    variant = new Variant();
                     break;
                 case "g":
-                    resolver.grammemes.add(attributes.getValue("v")); // XPath: //sentence/tokens/token/tfr/v/l/g/@v
+                    grammemes.add(attributes.getValue("v")); // XPath: //sentence/tokens/token/tfr/v/l/g/@v
                     break;
             }
         }
 
         @Override
         public void endElement(String uri, String localName, String name) throws SAXException {
-            if (name.equals("tfr")) {
-                int formId = resolver.resolve();
-                Form dummy = new Form();
-                dummy.setId(formId);
-                variant.setForm(dummy);
-                ((TokenHandler) parent).token.addRevision(variant);
-                reader.setContentHandler(parent); // switch back to parent handler
+            switch (name) {
+                case "l":
+                    TokenHandler tokenHandler = (TokenHandler) parent;
+                    Form form = bridge.resolveForm(tokenHandler.orthography, lexemeId, grammemes);
+                    variant.setForm(form);
+                    variant.setToken(tokenHandler.token);
+                    tokenHandler.token.addVariant(variant);
+                    break;
+                case "tfr":
+                    reader.setContentHandler(parent); // switch back to parent handler
+                    break;
             }
         }
     }

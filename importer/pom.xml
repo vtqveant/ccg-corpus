@@ -25,49 +25,7 @@
     </dependencies>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>jaxb2-maven-plugin</artifactId>
-                    <version>1.6</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxb2-maven-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <id>xjc-annot</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>xjc</goal>
-                        </goals>
-                        <configuration>
-                            <schemaDirectory>${project.basedir}/src/main/resources/xsd/annot</schemaDirectory>
-                            <packageName>ru.eventflow.ccg.data.xml.annot</packageName>
-                            <clearOutputDir>false</clearOutputDir>
-                            <arguments>-no-header</arguments>
-                        </configuration>
-                    </execution>
-                    <!--<execution>-->
-                        <!--<id>xjc-dict</id>-->
-                        <!--<phase>generate-sources</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>xjc</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<schemaDirectory>${project.basedir}/src/main/resources/xsd/dict</schemaDirectory>-->
-                            <!--<packageName>ru.eventflow.ccg.data.xml.dict</packageName>-->
-                            <!--<clearOutputDir>false</clearOutputDir>-->
-                            <!--<arguments>-no-header</arguments>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>

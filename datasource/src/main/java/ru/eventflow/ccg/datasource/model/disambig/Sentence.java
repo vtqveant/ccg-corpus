@@ -12,7 +12,7 @@ public class Sentence {
     @Column(columnDefinition = "serial")
     private int id;
 
-    @Column(name = "source")
+    @Column(name = "source", columnDefinition = "TEXT")
     private String source;
 
     @OneToMany(targetEntity = Token.class, mappedBy = "sentence", cascade = CascadeType.ALL)

@@ -1,7 +1,5 @@
-package ru.eventflow.ccg.data;
+package ru.eventflow.ccg.data.dictionary;
 
-import ru.eventflow.ccg.data.dictionary.DictionaryDataCollector;
-import ru.eventflow.ccg.data.dictionary.DictionaryParser;
 import ru.eventflow.ccg.datasource.model.dictionary.*;
 
 import java.io.InputStream;

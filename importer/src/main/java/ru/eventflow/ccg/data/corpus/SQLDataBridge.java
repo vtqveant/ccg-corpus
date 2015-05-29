@@ -1,7 +1,7 @@
 package ru.eventflow.ccg.data.corpus;
 
+import ru.eventflow.ccg.datasource.model.corpus.*;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
-import ru.eventflow.ccg.datasource.model.disambig.*;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -10,10 +10,8 @@ import java.util.Map;
 
 public class SQLDataBridge implements DataBridge {
 
-    public static final String URL = "jdbc:postgresql://localhost/corpus?user=corpus&password=corpus";
-
-    private static Connection conn;
-    FormResolver resolver;
+    private Connection conn;
+    private FormResolver resolver;
 
     String version;
     String revision;
@@ -26,35 +24,25 @@ public class SQLDataBridge implements DataBridge {
     private PreparedStatement stText;
     private PreparedStatement stTag;
 
-    public SQLDataBridge() {
+    public SQLDataBridge(String connectionUrl) {
         try {
             if (conn == null) {
-                conn = DriverManager.getConnection(URL);
+                conn = DriverManager.getConnection(connectionUrl);
                 conn.setAutoCommit(false);
 
-                String qVariant = "INSERT INTO corpus.variant (token_id, form_id) VALUES (?, ?)";
-                stVariant = conn.prepareStatement(qVariant);
+                stVariant = conn.prepareStatement("INSERT INTO corpus.variant (token_id, form_id) VALUES (?, ?)");
+                stToken = conn.prepareStatement("INSERT INTO corpus.token (id, orthography, sentence_id) VALUES (?, ?, ?)");
+                stSentence = conn.prepareStatement("INSERT INTO corpus.sentence (id, source, paragraph_id) VALUES (?, ?, ?)");
+                stParagraph = conn.prepareStatement("INSERT INTO corpus.paragraph (id, text_id) VALUES (?, ?)");
+                stText = conn.prepareStatement("INSERT INTO corpus.text (id, name, parent_id) VALUES (?, ?, ?)");
+                stTag = conn.prepareStatement("INSERT INTO corpus.tag (source, text_id) VALUES (?, ?)");
 
-                String qToken = "INSERT INTO corpus.token (id, orthography, sentence_id) VALUES (?, ?, ?)";
-                stToken = conn.prepareStatement(qToken);
-
-                String qSentence = "INSERT INTO corpus.sentence (id, source, paragraph_id) VALUES (?, ?, ?)";
-                stSentence = conn.prepareStatement(qSentence);
-
-                String qParagraph = "INSERT INTO corpus.paragraph (id, text_id) VALUES (?, ?)";
-                stParagraph = conn.prepareStatement(qParagraph);
-
-                String qText = "INSERT INTO corpus.text (id, name, parent_id) VALUES (?, ?, ?)";
-                stText = conn.prepareStatement(qText);
-
-                String qTag = "INSERT INTO corpus.tag (source, text_id) VALUES (?, ?)";
-                stTag = conn.prepareStatement(qTag);
+                resolver = new FormResolver(conn);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);
         }
-        resolver = new FormResolver(conn);
     }
 
     @Override
@@ -121,6 +109,14 @@ public class SQLDataBridge implements DataBridge {
         this.version = version;
     }
 
+    /**
+     * A dummy Form instance with an id is enough for inserts
+     *
+     * @param formOrthography
+     * @param lexemeId
+     * @param grammemes
+     * @return
+     */
     @Override
     public Form resolveForm(String formOrthography, String lexemeId, List<String> grammemes) {
         resolver.orthography = formOrthography;

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO add missing grammemes to dictionary tagset (and mark)
+ * TODO add missing grammemes to the dictionary tagset (and mark)
  */
 public class FormResolver {
 

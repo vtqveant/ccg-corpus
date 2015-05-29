@@ -2,10 +2,10 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.EventBus;
-import ru.eventflow.ccg.annotation.ui.event.DocumentSelectedEvent;
-import ru.eventflow.ccg.annotation.ui.event.DocumentSelectedEventHandler;
+import ru.eventflow.ccg.annotation.ui.event.TextSelectedEvent;
+import ru.eventflow.ccg.annotation.ui.event.TextSelectedEventHandler;
 import ru.eventflow.ccg.annotation.ui.view.NavigationView;
-import ru.eventflow.ccg.datasource.model.corpus.Document;
+import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 public class NavigationPresenter implements Presenter<NavigationView> {
 
@@ -17,14 +17,15 @@ public class NavigationPresenter implements Presenter<NavigationView> {
         view.setLeftComponent(treePresenter.getView());
         view.setRightComponent(textPresenter.getView());
 
-        eventBus.addHandler(DocumentSelectedEvent.TYPE, new DocumentSelectedEventHandler() {
+        eventBus.addHandler(TextSelectedEvent.TYPE, new TextSelectedEventHandler() {
             @Override
-            public void onEvent(DocumentSelectedEvent e) {
-                Document document = e.getDocument();
-                if (document != null) {
-                    String text = e.getDocument().getText().trim();
-                    int wordCount = text.isEmpty() ? 0 : text.split("\\s+").length;
-                    view.setInfo("words: " + wordCount + ", sentences: ?, annotated: 0");
+            public void onEvent(TextSelectedEvent e) {
+                Text text = e.getText();
+                if (text != null) {
+                    // TODO fix
+                    // String t = e.getText().trim();
+                    //int wordCount = t.isEmpty() ? 0 : t.split("\\s+").length;
+                    // view.setInfo("words: " + wordCount + ", sentences: ?, annotated: 0");
                 } else {
                     view.setInfo(" ");
                 }

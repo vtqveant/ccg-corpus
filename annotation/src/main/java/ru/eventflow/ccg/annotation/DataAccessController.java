@@ -1,9 +1,7 @@
 package ru.eventflow.ccg.annotation;
 
 import com.google.inject.Inject;
-import ru.eventflow.ccg.annotation.ui.event.DocumentMarkedEvent;
 import ru.eventflow.ccg.datasource.DataManager;
-import ru.eventflow.ccg.annotation.ui.event.DocumentMarkedEventHandler;
 
 public class DataAccessController {
 
@@ -18,11 +16,11 @@ public class DataAccessController {
     }
 
     private void init() {
-        eventBus.addHandler(DocumentMarkedEvent.TYPE, new DocumentMarkedEventHandler() {
-            @Override
-            public void onEvent(DocumentMarkedEvent e) {
-                dataManager.setRelevant(e.getDocument());
-            }
-        });
+//        eventBus.addHandler(DocumentMarkedEvent.TYPE, new DocumentMarkedEventHandler() {
+//            @Override
+//            public void onEvent(DocumentMarkedEvent e) {
+//                dataManager.setRelevant(e.getDocument());
+//            }
+//        });
     }
 }

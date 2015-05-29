@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.datasource.model.disambig;
+package ru.eventflow.ccg.datasource.model.corpus;
 
 import javax.persistence.*;
 

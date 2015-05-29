@@ -50,7 +50,6 @@ public class FormResolver {
             sb.append(") group by form.id having count(g.name) = ");
             sb.append(grammemes.size());
 
-
             String q = sb.toString();
 //            System.out.println(q);
 

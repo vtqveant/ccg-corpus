@@ -6,7 +6,7 @@
     <target name="download">
         <copy todir="${download-dir}" flatten="true">
             <resources>
-                <url url="http://opencorpora.org/files/export/annot/annot.opcorpora.xml.byfile.bz2"/>
+                <url url="http://opencorpora.org/files/export/annot/annot.opcorpora.xml.bz2"/>
                 <url url="http://opencorpora.org/files/export/annot/annot.opcorpora.no_ambig.xml.bz2"/>
                 <url url="http://opencorpora.org/files/export/dict/dict.opcorpora.xml.bz2"/>
             </resources>
@@ -14,7 +14,7 @@
     </target>
 
     <target name="unpack">
-        <untar src="${download-dir}/annot.opcorpora.xml.byfile.bz2" dest="${target-dir}/annot.opcorpora.xml.byfile" compression="bzip2"/>
+        <bunzip2 src="${download-dir}/annot.opcorpora.xml.bz2" dest="${target-dir}"/>
         <bunzip2 src="${download-dir}/annot.opcorpora.no_ambig.xml.bz2" dest="${target-dir}"/>
         <bunzip2 src="${download-dir}/dict.opcorpora.xml.bz2" dest="${target-dir}"/>
     </target>

@@ -4,25 +4,22 @@ import ru.eventflow.ccg.datasource.model.corpus.*;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 
 import java.sql.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SQLDataBridge implements DataBridge {
 
+    private String version;
+    private String revision;
     private Connection conn;
     private FormResolver resolver;
-
-    String version;
-    String revision;
-
-    private Map<Integer, Text> texts = new HashMap<>();
     private PreparedStatement stVariant;
     private PreparedStatement stToken;
     private PreparedStatement stSentence;
     private PreparedStatement stParagraph;
     private PreparedStatement stText;
     private PreparedStatement stTag;
+
+    private int counter = 0;
 
     public SQLDataBridge(String connectionUrl) {
         try {
@@ -31,7 +28,7 @@ public class SQLDataBridge implements DataBridge {
                 conn.setAutoCommit(false);
 
                 stVariant = conn.prepareStatement("INSERT INTO corpus.variant (token_id, form_id) VALUES (?, ?)");
-                stToken = conn.prepareStatement("INSERT INTO corpus.token (id, orthography, sentence_id) VALUES (?, ?, ?)");
+                stToken = conn.prepareStatement("INSERT INTO corpus.token (id, orthography, revision, sentence_id) VALUES (?, ?, ?)");
                 stSentence = conn.prepareStatement("INSERT INTO corpus.sentence (id, source, paragraph_id) VALUES (?, ?, ?)");
                 stParagraph = conn.prepareStatement("INSERT INTO corpus.paragraph (id, text_id) VALUES (?, ?)");
                 stText = conn.prepareStatement("INSERT INTO corpus.text (id, name, parent_id) VALUES (?, ?, ?)");
@@ -47,8 +44,6 @@ public class SQLDataBridge implements DataBridge {
 
     @Override
     public void addText(Text text) {
-        texts.put(text.getId(), text); // this is for parent lookups
-
         try {
             for (Paragraph paragraph : text.getParagraphs()) {
                 for (Sentence sentence : paragraph.getSentences()) {
@@ -60,7 +55,8 @@ public class SQLDataBridge implements DataBridge {
                         }
                         stToken.setInt(1, token.getId());
                         stToken.setString(2, token.getOrthography());
-                        stToken.setInt(3, token.getSentence().getId());
+                        stToken.setInt(3, token.getRevision());
+                        stToken.setInt(4, token.getSentence().getId());
                         stToken.execute();
                     }
                     stSentence.setInt(1, sentence.getId());
@@ -88,15 +84,14 @@ public class SQLDataBridge implements DataBridge {
             }
 
             conn.commit();
+
+            if (++counter % 1000 == 0) {
+                System.out.println(counter);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);
         }
-    }
-
-    @Override
-    public Text getTextById(Integer id) {
-        return texts.get(id);
     }
 
     @Override

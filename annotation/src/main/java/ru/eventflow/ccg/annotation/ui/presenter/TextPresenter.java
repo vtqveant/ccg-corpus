@@ -26,6 +26,9 @@ public class TextPresenter implements Presenter<TextView> {
                 Text text = e.getText();
                 if (text != null) {
                     String t = e.getText().getName(); // TODO fix
+                    if (e.getText().getParent() != null) {
+                        t += " parent_id=" + e.getText().getParent().getId();
+                    }
                     view.setText(t);
                 } else {
                     view.setText("");

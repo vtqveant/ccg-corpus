@@ -8,8 +8,6 @@ import java.util.List;
 public interface DataBridge {
     void addText(Text text);
 
-    Text getTextById(Integer id);
-
     void setRevision(String revision);
 
     void setVersion(String version);

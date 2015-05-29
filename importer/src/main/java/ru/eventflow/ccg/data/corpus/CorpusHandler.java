@@ -32,7 +32,10 @@ public class CorpusHandler extends DefaultHandler {
             case "text":
                 TextHandler textHandler = new TextHandler(reader, this);
                 textHandler.text.setId(Integer.valueOf(attributes.getValue("id")));
-                textHandler.text.setParent(bridge.getTextById(Integer.valueOf(attributes.getValue("parent"))));
+                // dummy will do for inserts, I'll need only the id
+                Text dummyParent = new Text();
+                dummyParent.setId(Integer.valueOf(attributes.getValue("parent")));
+                textHandler.text.setParent(dummyParent);
                 textHandler.text.setName(attributes.getValue("name"));
                 reader.setContentHandler(textHandler);
                 break;
@@ -148,7 +151,7 @@ public class CorpusHandler extends DefaultHandler {
             switch (name) {
                 case "tfr":
                     token.setRevision(Integer.valueOf(attributes.getValue("rev_id")));
-                    orthography = attributes.getValue("t");
+                    orthography = attributes.getValue("t"); // it will be used in VariantHandler to resolve a form
                     VariantHandler variantHandler = new VariantHandler(reader, this);
                     reader.setContentHandler(variantHandler);
                     break;

@@ -1,34 +1,28 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
 
 public class TextView extends JPanel {
 
-    private final JTextArea textArea;
+    private JTable table = new JTable();
 
     public TextView() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(200, 150));
 
-        textArea = new JTextArea();
-        textArea.setEditable(false);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-        textArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
-        textArea.setBackground(Color.WHITE);
-        textArea.setMargin(new Insets(2, 2, 2, 2));
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        table.getTableHeader().setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        table.getTableHeader().setForeground(Color.GRAY);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane, BorderLayout.CENTER);
-
     }
 
-    public void setText(String text) {
-        textArea.setText(text);
-        textArea.setCaretPosition(0);
+    public JTable getTable() {
+        return table;
     }
-
 }

@@ -6,19 +6,22 @@ import ru.eventflow.ccg.data.corpus.CorpusParser;
 import ru.eventflow.ccg.data.corpus.DataBridge;
 import ru.eventflow.ccg.data.dictionary.DictionaryDataCollector;
 import ru.eventflow.ccg.data.dictionary.DictionaryParser;
+import ru.eventflow.ccg.datasource.model.corpus.Paragraph;
+import ru.eventflow.ccg.datasource.model.corpus.Sentence;
+import ru.eventflow.ccg.datasource.model.corpus.Text;
+import ru.eventflow.ccg.datasource.model.corpus.Token;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
 import ru.eventflow.ccg.datasource.model.dictionary.Lexeme;
 import ru.eventflow.ccg.datasource.model.dictionary.LinkType;
-import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class LoaderTest {
 
@@ -45,22 +48,34 @@ public class LoaderTest {
 
     @Test
     public void testCorpusParser() throws IOException, SAXException, ParserConfigurationException {
-        DataBridge bridge = new MockDataBridge();
+        MockDataBridge bridge = new MockDataBridge();
         CorpusParser parser = new CorpusParser(bridge);
         parser.process(getClass().getResourceAsStream("/opcorpora/ambig.xml"));
 
-        // TODO implement asserts
+        assertEquals(2, bridge.getTexts().size());
+
+        Text t = bridge.getTexts().get(1);
+        assertNotNull(t);
+        assertTrue(t.getParagraphs().size() > 1);
+
+        Paragraph p = t.getParagraphs().get(1);
+        assertNotNull(p);
+        assertTrue(p.getSentences().size() > 0);
+
+        Sentence s = p.getSentences().get(0);
+        assertNotNull(s);
+        assertTrue(s.getTokens().size() > 12);
+
+        Token token = s.getTokens().get(12);
+        assertEquals(3, token.getVariants().size());
     }
 
     private class MockDataBridge implements DataBridge {
-        @Override
-        public void addText(Text text) {
-            // TODO
-        }
+        List<Text> texts = new ArrayList<>();
 
         @Override
-        public Text getTextById(Integer id) {
-            return null;
+        public void addText(Text text) {
+            texts.add(text);
         }
 
         @Override
@@ -74,6 +89,10 @@ public class LoaderTest {
         @Override
         public Form resolveForm(String formOrthography, String lexemeId, List<String> grammemes) {
             return null;
+        }
+
+        public List<Text> getTexts() {
+            return texts;
         }
     }
 

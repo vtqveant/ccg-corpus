@@ -10,8 +10,8 @@ public class CorpusLoader {
     public static void main(String[] args) throws Exception {
         DataBridge bridge = new SQLDataBridge(CONNECTION_URL);
         CorpusParser parser = new CorpusParser(bridge);
-//        InputStream in = new URL("file:///home/transcend/code/NLU-RG/ccg-corpus/data/resources/annot.opcorpora.xml").openStream();
-        InputStream in = new URL("file:///C:\\KOSTA\\code\\ccg-corpus\\data\\resources\\annot.opcorpora.xml").openStream();
+        InputStream in = new URL("file:///home/transcend/code/NLU-RG/ccg-corpus/data/resources/annot.opcorpora.xml").openStream();
+//        InputStream in = new URL("file:///C:\\KOSTA\\code\\ccg-corpus\\data\\resources\\annot.opcorpora.xml").openStream();
         parser.process(in);
     }
 }

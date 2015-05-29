@@ -4,19 +4,17 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 import ru.eventflow.ccg.data.corpus.CorpusParser;
 import ru.eventflow.ccg.data.corpus.DataBridge;
-import ru.eventflow.ccg.data.corpus.SQLDataBridge;
 import ru.eventflow.ccg.data.dictionary.DictionaryDataCollector;
 import ru.eventflow.ccg.data.dictionary.DictionaryParser;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
 import ru.eventflow.ccg.datasource.model.dictionary.Lexeme;
 import ru.eventflow.ccg.datasource.model.dictionary.LinkType;
-import ru.eventflow.ccg.datasource.model.disambig.Text;
+import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -47,13 +45,36 @@ public class LoaderTest {
 
     @Test
     public void testCorpusParser() throws IOException, SAXException, ParserConfigurationException {
-        DataBridge bridge = new SQLDataBridge();
+        DataBridge bridge = new MockDataBridge();
         CorpusParser parser = new CorpusParser(bridge);
-//        parser.process(getClass().getResourceAsStream("/opcorpora/no_ambig.xml"));
-//        parser.process(getClass().getResourceAsStream("/opcorpora/ambig.xml"));
+        parser.process(getClass().getResourceAsStream("/opcorpora/ambig.xml"));
 
-        InputStream in = new URL("file:///home/transcend/code/NLU-RG/ccg-corpus/data/resources/annot.opcorpora.xml").openStream();
-        parser.process(in);
+        // TODO implement asserts
+    }
+
+    private class MockDataBridge implements DataBridge {
+        @Override
+        public void addText(Text text) {
+            // TODO
+        }
+
+        @Override
+        public Text getTextById(Integer id) {
+            return null;
+        }
+
+        @Override
+        public void setRevision(String revision) {
+        }
+
+        @Override
+        public void setVersion(String version) {
+        }
+
+        @Override
+        public Form resolveForm(String formOrthography, String lexemeId, List<String> grammemes) {
+            return null;
+        }
     }
 
 }

@@ -1,12 +1,8 @@
-package ru.eventflow.ccg.datasource.model.disambig;
+package ru.eventflow.ccg.datasource.model.corpus;
 
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
-import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
-import ru.eventflow.ccg.datasource.model.dictionary.Lexeme;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(schema = "corpus", name = "variant")

@@ -6,8 +6,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import ru.eventflow.ccg.data.BaseNestedHandler;
+import ru.eventflow.ccg.datasource.model.corpus.*;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
-import ru.eventflow.ccg.datasource.model.disambig.*;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,7 +7,7 @@ import org.mockito.Mockito;
 import ru.eventflow.ccg.annotation.DataAccessController;
 import ru.eventflow.ccg.annotation.ui.view.TreeView;
 import ru.eventflow.ccg.datasource.DataManager;
-import ru.eventflow.ccg.datasource.model.corpus.Document;
+import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class MockAnnotationModule extends AbstractModule {
         @Override
         public DataManager get() {
             DataManager dataManager = Mockito.mock(DataManager.class);
-            Mockito.when(dataManager.getAllDocuments()).thenReturn(new ArrayList<Document>());
+            Mockito.when(dataManager.getAllTexts()).thenReturn(new ArrayList<Text>());
             return dataManager;
         }
     }

@@ -1,10 +1,10 @@
 package ru.eventflow.ccg.annotation.ui.presenter;
 
 import ru.eventflow.ccg.annotation.EventBus;
-import ru.eventflow.ccg.annotation.ui.event.DocumentSelectedEvent;
+import ru.eventflow.ccg.annotation.ui.event.TextSelectedEvent;
 import ru.eventflow.ccg.annotation.ui.view.TreeView;
 import ru.eventflow.ccg.datasource.DataManager;
-import ru.eventflow.ccg.datasource.model.corpus.Document;
+import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 import javax.inject.Inject;
 import javax.swing.event.TreeSelectionEvent;
@@ -32,16 +32,20 @@ public class TreePresenter implements Presenter<TreeView> {
         Map<Integer, DefaultMutableTreeNode> nodes = new HashMap<Integer, DefaultMutableTreeNode>();
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) view.getTree().getModel().getRoot();
         nodes.put(0, root);
-        for (Document document : dataManager.getAllDocuments()) {
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(document);
-            nodes.put(document.getId(), node);
+        for (Text text : dataManager.getAllTexts()) {
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode(text);
+            nodes.put(text.getId(), node);
         }
-        // because there's no order on documents
+        // attach to parents -- because there's no order on documents
         for (Map.Entry<Integer, DefaultMutableTreeNode> entry : nodes.entrySet()) {
             Object o = entry.getValue().getUserObject();
-            if (o instanceof Document) {
-                Document current = (Document) o;
-                nodes.get(current.getParentId()).add(entry.getValue());
+            if (o instanceof Text) {
+                Text current = (Text) o;
+                if (current.getParent() != null) {
+                    nodes.get(current.getParent().getId()).add(entry.getValue());
+                } else {
+                    nodes.get(0).add(entry.getValue());
+                }
             }
         }
 
@@ -52,11 +56,11 @@ public class TreePresenter implements Presenter<TreeView> {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) view.getTree().getLastSelectedPathComponent();
                 if (node == null) return;
                 Object o = node.getUserObject();
-                if (o instanceof Document) {
-                    Document document = (Document) node.getUserObject();
-                    eventBus.fireEvent(new DocumentSelectedEvent(document));
+                if (o instanceof Text) {
+                    Text text = (Text) node.getUserObject();
+                    eventBus.fireEvent(new TextSelectedEvent(text));
                 } else {
-                    eventBus.fireEvent(new DocumentSelectedEvent(null));
+                    eventBus.fireEvent(new TextSelectedEvent(null));
                 }
             }
         });

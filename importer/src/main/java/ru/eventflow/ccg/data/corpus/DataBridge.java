@@ -1,7 +1,7 @@
 package ru.eventflow.ccg.data.corpus;
 
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
-import ru.eventflow.ccg.datasource.model.disambig.Text;
+import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 import java.util.List;
 

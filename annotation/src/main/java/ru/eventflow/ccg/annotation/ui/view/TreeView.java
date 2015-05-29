@@ -1,6 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
-import ru.eventflow.ccg.datasource.model.corpus.Document;
+import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 import javax.swing.*;
 import javax.swing.tree.*;
@@ -38,9 +38,9 @@ public class TreeView extends JPanel {
                                                       boolean leaf, int row, boolean hasFocus) {
             if ((value != null) && (value instanceof DefaultMutableTreeNode)) {
                 Object userObject = ((DefaultMutableTreeNode) value).getUserObject();
-                if (userObject instanceof Document) {
-                    Document doc = (Document) userObject;
-                    setText(String.format("%-4s %-20s", doc.getId(), doc.getName()));
+                if (userObject instanceof Text) {
+                    Text text = (Text) userObject;
+                    setText(String.format("%-4s %-20s", text.getId(), text.getName()));
                     setFont(new Font("Courier New", Font.PLAIN, 11));
                     setOpaque(true);
                     setBackground(selected ? Color.LIGHT_GRAY : Color.WHITE);

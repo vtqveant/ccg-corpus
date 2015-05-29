@@ -2,10 +2,10 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.EventBus;
-import ru.eventflow.ccg.annotation.ui.event.DocumentSelectedEvent;
-import ru.eventflow.ccg.annotation.ui.event.DocumentSelectedEventHandler;
+import ru.eventflow.ccg.annotation.ui.event.TextSelectedEvent;
+import ru.eventflow.ccg.annotation.ui.event.TextSelectedEventHandler;
 import ru.eventflow.ccg.annotation.ui.view.TextView;
-import ru.eventflow.ccg.datasource.model.corpus.Document;
+import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 public class TextPresenter implements Presenter<TextView> {
 
@@ -20,13 +20,13 @@ public class TextPresenter implements Presenter<TextView> {
     }
 
     private void init() {
-        this.eventBus.addHandler(DocumentSelectedEvent.TYPE, new DocumentSelectedEventHandler() {
+        this.eventBus.addHandler(TextSelectedEvent.TYPE, new TextSelectedEventHandler() {
             @Override
-            public void onEvent(DocumentSelectedEvent e) {
-                Document document = e.getDocument();
-                if (document != null) {
-                    String text = e.getDocument().getText();
-                    view.setText(text);
+            public void onEvent(TextSelectedEvent e) {
+                Text text = e.getText();
+                if (text != null) {
+                    String t = e.getText().getName(); // TODO fix
+                    view.setText(t);
                 } else {
                     view.setText("");
                 }

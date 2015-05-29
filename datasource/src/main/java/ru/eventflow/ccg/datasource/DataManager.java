@@ -1,13 +1,10 @@
 package ru.eventflow.ccg.datasource;
 
-import ru.eventflow.ccg.datasource.model.corpus.Document;
+import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 import java.util.List;
 
 public interface DataManager {
-    List<Document> getAllDocuments();
 
-    void setRelevant(Document document);
-
-    void setNonrelevant(Document document);
+    List<Text> getAllTexts();
 }

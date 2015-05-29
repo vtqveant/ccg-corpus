@@ -1,6 +1,6 @@
 package ru.eventflow.ccg.datasource;
 
-import ru.eventflow.ccg.datasource.model.corpus.Document;
+import ru.eventflow.ccg.datasource.model.corpus.Text;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
 
@@ -19,9 +19,8 @@ public class DataManagerImpl implements DataManager {
         entityManager = Persistence.createEntityManagerFactory(persistenceUnitName).createEntityManager();
     }
 
-    @Override
-    public List<Document> getAllDocuments() {
-        return entityManager.createQuery("SELECT x FROM Document x ORDER BY x.id ASC", Document.class).getResultList();
+    public List<Text> getAllTexts() {
+        return entityManager.createQuery("SELECT x FROM Text x ORDER BY x.id ASC", Text.class).getResultList();
     }
 
     public Map<Form, List<Grammeme>> getGrammemes(String form) {
@@ -38,14 +37,4 @@ public class DataManagerImpl implements DataManager {
         return result;
     }
 
-    @Override
-    public void setRelevant(Document document) {
-        // TODO
-        System.out.println(document.getId() + " set relevant");
-    }
-
-    @Override
-    public void setNonrelevant(Document document) {
-        // TODO
-    }
 }

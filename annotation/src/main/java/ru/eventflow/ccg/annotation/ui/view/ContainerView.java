@@ -3,16 +3,14 @@ package ru.eventflow.ccg.annotation.ui.view;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
 
 public class ContainerView extends JPanel {
 
+    public static final ImageIcon ICON = new ImageIcon(ClassLoader.getSystemResource("images/cross.png"));
     private final JTabbedPane tabbedPane;
     private final JLabel placeholderLabel;
-
     private int tabCount = 0;
-
-    public static final ImageIcon ICON = new ImageIcon(ClassLoader.getSystemResource("images/cross.png"));
 
     public ContainerView() {
         setLayout(new BorderLayout());
@@ -49,7 +47,10 @@ public class ContainerView extends JPanel {
             // read titles from JTabbedPane
             JLabel label = new JLabel() {
                 public String getText() {
-                    if (tabCount > 0) return tabbedPane.getTitleAt(tabCount - 1);
+                    int idx = tabbedPane.indexOfTabComponent(TabComponent.this);
+                    if (idx != -1) {
+                        return tabbedPane.getTitleAt(idx);
+                    }
                     return null;
                 }
             };
@@ -66,7 +67,13 @@ public class ContainerView extends JPanel {
             button.addActionListener(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (tabCount > 0) tabbedPane.remove(--tabCount);
+                    if (tabCount > 0) {
+                        int i = tabbedPane.indexOfTabComponent(TabComponent.this);
+                        if (i != -1) {
+                            tabbedPane.remove(i);
+                            tabCount--;
+                        }
+                    }
                     if (tabCount == 0) {
                         ContainerView.this.remove(tabbedPane);
                         ContainerView.this.add(placeholderLabel, BorderLayout.CENTER);

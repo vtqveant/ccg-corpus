@@ -7,7 +7,7 @@ public class TextSelectedEvent extends Event<TextSelectedEventHandler> {
 
     public final static Type<TextSelectedEventHandler> TYPE = new Type<TextSelectedEventHandler>();
 
-    private Text text;;
+    private Text text;
 
     public TextSelectedEvent(Text text) {
         this.text = text;

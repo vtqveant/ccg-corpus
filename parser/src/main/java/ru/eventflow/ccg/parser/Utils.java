@@ -2,7 +2,6 @@ package ru.eventflow.ccg.parser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 public class Utils {
     public static void print(List<Item> items) {

@@ -13,13 +13,10 @@ public class MainView extends JPanel {
     private final JPanel topPanel;
     private final JLabel statusLabel;
     private final JSplitPane mainSplitPane;
-
-    private final JButton annotationBtn;
-
-    private JPanel navigationPanel;
-    private JPanel dictionaryPanel;
     private final JToggleButton navigationBtn;
     private final JToggleButton dictionaryBtn;
+    private JPanel navigationPanel;
+    private JPanel dictionaryPanel;
 
     public MainView() {
         setLayout(new BorderLayout());
@@ -53,9 +50,6 @@ public class MainView extends JPanel {
         group.add(navigationBtn);
         group.add(dictionaryBtn);
 
-        // TODO remove
-        annotationBtn = new JButton("Annotation");
-
         final JPanel bottomPanel = new JPanel(new BorderLayout());
 
         final JPanel horizontalButtonsPanel = new JPanel();
@@ -64,8 +58,6 @@ public class MainView extends JPanel {
         horizontalButtonsPanel.add(navigationBtn);
         horizontalButtonsPanel.add(Box.createRigidArea(new Dimension(5, 0)));
         horizontalButtonsPanel.add(dictionaryBtn);
-        horizontalButtonsPanel.add(Box.createRigidArea(new Dimension(5, 0)));
-        horizontalButtonsPanel.add(annotationBtn);
         horizontalButtonsPanel.add(Box.createHorizontalGlue());
         bottomPanel.add(horizontalButtonsPanel, BorderLayout.CENTER);
 
@@ -79,10 +71,6 @@ public class MainView extends JPanel {
 
     public JPanel getTopPanel() {
         return topPanel;
-    }
-
-    public JButton getAnnotationBtn() {
-        return annotationBtn;
     }
 
     public JLabel getStatusLabel() {

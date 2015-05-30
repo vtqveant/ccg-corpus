@@ -8,7 +8,6 @@ import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.swing.AdvancedTableModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.GlazedListsSwing;
-import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 
 import javax.swing.*;
@@ -43,9 +42,6 @@ public class TextView extends JPanel {
         ListSelectionModel selectionModel = new DefaultEventSelectionModel<Sentence>(sentences);
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setSelectionModel(selectionModel);
-
-        // sorting
-        TableComparatorChooser.install(table, sortedSentences, TableComparatorChooser.SINGLE_COLUMN);
 
         // table adjustments
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);

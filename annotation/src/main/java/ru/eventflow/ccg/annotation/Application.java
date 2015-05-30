@@ -3,8 +3,11 @@ package ru.eventflow.ccg.annotation;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.jtattoo.plaf.fast.FastLookAndFeel;
-import ru.eventflow.ccg.annotation.ui.presenter.*;
-import ru.eventflow.ccg.annotation.ui.view.*;
+import ru.eventflow.ccg.annotation.ui.presenter.MainPresenter;
+import ru.eventflow.ccg.annotation.ui.presenter.MenuPresenter;
+import ru.eventflow.ccg.annotation.ui.presenter.Presenter;
+import ru.eventflow.ccg.annotation.ui.view.MainView;
+import ru.eventflow.ccg.annotation.ui.view.MenuView;
 
 import javax.swing.*;
 import java.awt.*;

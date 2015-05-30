@@ -3,7 +3,10 @@ package ru.eventflow.ccg.annotation.ui.view;
 import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 import javax.swing.*;
-import javax.swing.tree.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreeCellRenderer;
+import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 
 public class TreeView extends JPanel {

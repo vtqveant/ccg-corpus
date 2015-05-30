@@ -30,7 +30,7 @@ public class DictionaryView extends JPanel {
         // TODO refactor
         JPanel workareaPanel = new JPanel(new BorderLayout());
 
-        final Object[] elements = new Object[] { "Ester", "Jordi", "Jordina", "Jorge", "Sergi" };
+        final Object[] elements = new Object[]{"Ester", "Jordi", "Jordina", "Jorge", "Sergi"};
         final JComboBox comboBox = new JComboBox();
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -43,7 +43,6 @@ public class DictionaryView extends JPanel {
         workareaPanel.add(comboBox, BorderLayout.PAGE_START);
 
         workareaPanel.add(new JLabel(" "), BorderLayout.CENTER);
-
 
 
         JScrollPane scrollPane = new JScrollPane(workareaPanel);

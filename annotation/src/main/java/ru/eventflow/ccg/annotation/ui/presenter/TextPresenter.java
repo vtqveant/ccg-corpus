@@ -50,7 +50,7 @@ public class TextPresenter implements Presenter<TextView> {
                     String id = view.getTable().getValueAt(row, 0).toString();
                     eventBus.fireEvent(new StatusUpdateEvent(id));
                 } else {
-                    eventBus.fireEvent(new StatusUpdateEvent("selection lost"));
+                    eventBus.fireEvent(new StatusUpdateEvent("no selection"));
                 }
             }
         });

@@ -61,7 +61,7 @@ public class TextPresenter implements Presenter<TextView> {
                 JTable table = (JTable) e.getSource();
                 Point point = e.getPoint();
                 int row = table.rowAtPoint(point);
-                if (e.getClickCount() == 2) {
+                if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
                     int id = (int) view.getTable().getValueAt(row, 0);
                     eventBus.fireEvent(new TabEvent(id));
                 }

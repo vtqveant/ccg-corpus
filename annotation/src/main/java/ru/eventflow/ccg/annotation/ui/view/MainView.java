@@ -37,13 +37,23 @@ public class MainView extends JPanel {
         // all bottom sliding panes start in this position (pane's size has an effect, too)
         int location = mainSplitPane.getDividerLocation();
 
-        navigationBtn = new JToggleButton("Corpus");
+        navigationBtn = new JToggleButton("Navigation");
         navigationBtn.setFocusable(false);
         navigationBtn.setSelected(true);
+        ImageIcon folderIcon = new ImageIcon(ClassLoader.getSystemResource("images/corpus.png"));
+        navigationBtn.setIcon(folderIcon);
+        navigationBtn.setMaximumSize(new Dimension(60, 22));
+        navigationBtn.setMinimumSize(new Dimension(60, 22));
+        navigationBtn.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
         navigationBtn.addItemListener(new ToggleItemListener(location));
 
         dictionaryBtn = new JToggleButton("Dictionary");
         dictionaryBtn.setFocusable(false);
+        ImageIcon magnifyIcon = new ImageIcon(ClassLoader.getSystemResource("images/lookup.png"));
+        dictionaryBtn.setIcon(magnifyIcon);
+        dictionaryBtn.setMaximumSize(new Dimension(60, 22));
+        dictionaryBtn.setMinimumSize(new Dimension(60, 22));
+        dictionaryBtn.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
         dictionaryBtn.addItemListener(new ToggleItemListener(location));
 
         NoneSelectedButtonGroup group = new NoneSelectedButtonGroup();
@@ -54,15 +64,15 @@ public class MainView extends JPanel {
 
         final JPanel horizontalButtonsPanel = new JPanel();
         horizontalButtonsPanel.setLayout(new BoxLayout(horizontalButtonsPanel, BoxLayout.LINE_AXIS));
-        horizontalButtonsPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+        horizontalButtonsPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 1, 2));
         horizontalButtonsPanel.add(navigationBtn);
-        horizontalButtonsPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+        horizontalButtonsPanel.add(Box.createRigidArea(new Dimension(2, 0)));
         horizontalButtonsPanel.add(dictionaryBtn);
         horizontalButtonsPanel.add(Box.createHorizontalGlue());
         bottomPanel.add(horizontalButtonsPanel, BorderLayout.CENTER);
 
         statusLabel = new JLabel(" ");
-        statusLabel.setBorder(new EmptyBorder(2, 3, 2, 2));
+        statusLabel.setBorder(new EmptyBorder(1, 6, 2, 2));
         statusLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
         bottomPanel.add(statusLabel, BorderLayout.PAGE_END);
 

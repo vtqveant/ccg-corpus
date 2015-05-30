@@ -12,6 +12,7 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.Comparator;
 
@@ -32,7 +33,7 @@ public class TextView extends JPanel {
 
         // property names for getId() etc.
         String[] columnProperties = {"id", "source"};
-        String[] columnLabels = {"id", "source"};
+        String[] columnLabels = {"Id", "Source"};
         TableFormat<Sentence> tableFormat = GlazedLists.<Sentence>tableFormat(columnProperties, columnLabels);
 
         SortedList<Sentence> sortedSentences = new SortedList<Sentence>(sentences, new SentenceComparator());
@@ -46,11 +47,24 @@ public class TextView extends JPanel {
         // sorting
         TableComparatorChooser.install(table, sortedSentences, TableComparatorChooser.SINGLE_COLUMN);
 
+        // table adjustments
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         table.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
-        table.getTableHeader().setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
-        table.getTableHeader().setForeground(Color.GRAY);
-        table.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(50);
+        table.setShowGrid(false);
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        centerRenderer.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        centerRenderer.setForeground(Color.GRAY);
+        table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        headerRenderer.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        headerRenderer.setBackground(new Color(230, 230, 230));
+        headerRenderer.setForeground(Color.DARK_GRAY);
+        table.getTableHeader().setDefaultRenderer(headerRenderer);
+        table.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(45);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);

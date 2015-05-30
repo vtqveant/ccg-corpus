@@ -20,13 +20,17 @@ public class NavigationView extends JPanel {
         infoLabel.setFont(HEADING_FONT);
         infoLabel.setForeground(Color.DARK_GRAY);
 
-        JToggleButton lockBtn = new JToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/lock.gif")));
-        lockBtn.setToolTipText("Lock Annotated Sentences");
-        lockBtn.setFocusable(false);
+        ImageIcon lockIcon = new ImageIcon(ClassLoader.getSystemResource("images/lock.gif"));
+        JToggleButton ambiguousBtn = new JToggleButton(lockIcon);
+        ambiguousBtn.setSelected(true);
+        ambiguousBtn.setToolTipText("Display Ambiguous Sentences");
+        ambiguousBtn.setFocusable(false);
 
-        JToggleButton collapseBtn = new JToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/magnify.gif")));
-        collapseBtn.setToolTipText("Collapse Annotated Sentences");
-        collapseBtn.setFocusable(false);
+        ImageIcon magnifyIcon = new ImageIcon(ClassLoader.getSystemResource("images/magnify.gif"));
+        JToggleButton annotatedBtn = new JToggleButton(magnifyIcon);
+        annotatedBtn.setSelected(true);
+        annotatedBtn.setToolTipText("Display Annotated Sentences");
+        annotatedBtn.setFocusable(false);
 
         final JPanel headingPanel = new JPanel();
         headingPanel.setLayout(new BoxLayout(headingPanel, BoxLayout.LINE_AXIS));
@@ -35,9 +39,9 @@ public class NavigationView extends JPanel {
         headingPanel.add(Box.createHorizontalGlue());
         headingPanel.add(infoLabel);
         headingPanel.add(Box.createRigidArea(new Dimension(6, 0)));
-        headingPanel.add(collapseBtn);
+        headingPanel.add(annotatedBtn);
         headingPanel.add(Box.createRigidArea(new Dimension(1, 0)));
-        headingPanel.add(lockBtn);
+        headingPanel.add(ambiguousBtn);
         add(headingPanel, BorderLayout.PAGE_START);
 
         add(splitPane, BorderLayout.CENTER);

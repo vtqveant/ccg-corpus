@@ -1,9 +1,8 @@
 package ru.eventflow.ccg.annotation.ui.presenter;
 
+import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.EventBus;
 import ru.eventflow.ccg.annotation.ui.view.AnnotationView;
-
-import javax.inject.Inject;
 
 public class AnnotationPresenter implements Presenter<AnnotationView> {
 

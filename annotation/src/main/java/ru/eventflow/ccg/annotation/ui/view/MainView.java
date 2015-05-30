@@ -1,7 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -17,6 +16,7 @@ public class MainView extends JPanel {
     private final JToggleButton dictionaryBtn;
     private JPanel navigationPanel;
     private JPanel dictionaryPanel;
+    private final JLabel infoLabel;
 
     public MainView() {
         setLayout(new BorderLayout());
@@ -71,10 +71,20 @@ public class MainView extends JPanel {
         horizontalButtonsPanel.add(Box.createHorizontalGlue());
         bottomPanel.add(horizontalButtonsPanel, BorderLayout.CENTER);
 
+        // status line and info
         statusLabel = new JLabel(" ");
-        statusLabel.setBorder(new EmptyBorder(1, 6, 2, 2));
         statusLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
-        bottomPanel.add(statusLabel, BorderLayout.PAGE_END);
+
+        infoLabel = new JLabel(" ");
+        infoLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+
+        final JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.LINE_AXIS));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(1, 6, 2, 2));
+        infoPanel.add(statusLabel);
+        infoPanel.add(Box.createHorizontalGlue());
+        infoPanel.add(infoLabel);
+        bottomPanel.add(infoPanel, BorderLayout.PAGE_END);
 
         add(bottomPanel, BorderLayout.PAGE_END);
     }
@@ -85,6 +95,10 @@ public class MainView extends JPanel {
 
     public JLabel getStatusLabel() {
         return statusLabel;
+    }
+
+    public JLabel getInfoLabel() {
+        return infoLabel;
     }
 
     public JPanel getNavigationPanel() {

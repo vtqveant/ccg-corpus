@@ -23,7 +23,6 @@ public class AnnotationModule extends AbstractModule {
         bind(TreePresenter.class).in(Singleton.class);
         bind(TextPresenter.class).in(Singleton.class);
         bind(MenuPresenter.class).in(Singleton.class);
-        bind(AnnotationPresenter.class).in(Singleton.class);
         bind(ContainerPresenter.class).in(Singleton.class);
         bind(NavigationPresenter.class).in(Singleton.class);
     }

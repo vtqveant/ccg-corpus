@@ -8,6 +8,7 @@ import ru.eventflow.ccg.annotation.ui.event.TextSelectedEvent;
 import ru.eventflow.ccg.annotation.ui.event.TextSelectedEventHandler;
 import ru.eventflow.ccg.annotation.ui.view.TextView;
 import ru.eventflow.ccg.datasource.model.corpus.Paragraph;
+import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -15,6 +16,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class TextPresenter implements Presenter<TextView> {
 
@@ -32,12 +35,20 @@ public class TextPresenter implements Presenter<TextView> {
         this.eventBus.addHandler(TextSelectedEvent.TYPE, new TextSelectedEventHandler() {
             @Override
             public void onEvent(TextSelectedEvent e) {
-                view.getSentences().clear();
+                TextView.SentenceTableModel model = (TextView.SentenceTableModel) view.getTable().getModel();
+                model.getSentences().clear();
                 view.getTable().getSelectionModel().clearSelection();
                 if (e.getText() == null) return;  // this is the root node
                 for (Paragraph p : e.getText().getParagraphs()) {
-                    view.getSentences().addAll(p.getSentences());
+                    model.getSentences().addAll(p.getSentences());
                 }
+                Collections.sort(model.getSentences(), new Comparator<Sentence>() {
+                    @Override
+                    public int compare(Sentence o1, Sentence o2) {
+                        return o1.getId() - o2.getId();
+                    }
+                });
+                view.getTable().updateUI();
             }
         });
 
@@ -62,8 +73,10 @@ public class TextPresenter implements Presenter<TextView> {
                 Point point = e.getPoint();
                 int row = table.rowAtPoint(point);
                 if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
-                    int id = (int) view.getTable().getValueAt(row, 0);
-                    eventBus.fireEvent(new TabEvent(id));
+                    TextView.SentenceTableModel model = (TextView.SentenceTableModel) view.getTable().getModel();
+                    int idx = table.convertRowIndexToModel(row);
+                    Sentence sentence = model.getSentences().get(idx);
+                    eventBus.fireEvent(new TabEvent(sentence));
                 }
             }
         });

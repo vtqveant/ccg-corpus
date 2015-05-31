@@ -2,44 +2,50 @@ package ru.eventflow.ccg.annotation.ui.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class AnnotationView extends JPanel {
 
-    private final JButton prevBtn = new JButton("Prev");
-    private final JButton nextBtn = new JButton("Next");
-    private final JButton relevantBtn = new JButton("Relevant");
-    private final JButton nonrelevantBtn = new JButton("Nonrelevant");
+    private final JPanel topPanel;
 
     public AnnotationView() {
         setLayout(new BorderLayout());
 
-        JPanel topPanel = new JPanel();
+        topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.LINE_AXIS));
         topPanel.setBorder(BorderFactory.createEmptyBorder(1, 5, 1, 5));
-        topPanel.add(prevBtn);
-        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        topPanel.add(nextBtn);
-        topPanel.add(Box.createRigidArea(new Dimension(5, 0)));
-        topPanel.add(Box.createHorizontalGlue());
-        topPanel.add(Box.createRigidArea(new Dimension(5, 0)));
-        relevantBtn.setEnabled(false);
-        topPanel.add(relevantBtn);
-        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        nonrelevantBtn.setEnabled(false);
-        topPanel.add(nonrelevantBtn);
 
         JScrollPane scrollPane = new JScrollPane(topPanel);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        add(scrollPane, BorderLayout.PAGE_START);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        add(scrollPane, BorderLayout.PAGE_END);
     }
 
-    public JButton getRelevantBtn() {
-        return relevantBtn;
+    public void addGlosses(List<String> words, List<String> glosses) {
+        assert words.size() == glosses.size();
+        int size = words.size();
+        for (int i = 0; i < size; i++) {
+            topPanel.add(new TokenPanel(words.get(i), glosses.get(i)), 0);
+        }
+        topPanel.validate();
     }
 
-    public JButton getNonrelevantBtn() {
-        return nonrelevantBtn;
-    }
+    private class TokenPanel extends JPanel {
+        public TokenPanel(String token, String gloss) {
+            super();
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            setBorder(BorderFactory.createEmptyBorder(1, 0, 1, 3));
 
+            JLabel tokenLabel = new JLabel(token);
+            tokenLabel.setHorizontalAlignment(SwingConstants.LEFT);
+            tokenLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+            add(tokenLabel);
+
+            JLabel glossLabel = new JLabel(gloss);
+            glossLabel.setHorizontalAlignment(SwingConstants.LEFT);
+            glossLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 10));
+            add(glossLabel);
+        }
+    }
 
 }

@@ -1,19 +1,20 @@
 package ru.eventflow.ccg.annotation.ui.event;
 
 import com.pennychecker.eventbus.Event;
+import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 
 public class TabEvent extends Event<TabEventHandler> {
 
     public final static Type<TabEventHandler> TYPE = new Type<TabEventHandler>();
 
-    private int sentenceId;
+    private Sentence sentence;
 
-    public TabEvent(int sentenceId) {
-        this.sentenceId = sentenceId;
+    public TabEvent(Sentence sentence) {
+        this.sentence = sentence;
     }
 
-    public int getSentenceId() {
-        return sentenceId;
+    public Sentence getSentence() {
+        return sentence;
     }
 
     @Override

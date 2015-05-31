@@ -1,26 +1,17 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
-import ca.odell.glazedlists.BasicEventList;
-import ca.odell.glazedlists.EventList;
-import ca.odell.glazedlists.GlazedLists;
-import ca.odell.glazedlists.SortedList;
-import ca.odell.glazedlists.gui.TableFormat;
-import ca.odell.glazedlists.swing.AdvancedTableModel;
-import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
-import ca.odell.glazedlists.swing.GlazedListsSwing;
 import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
 import java.awt.*;
-import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Glazed Lists, s. http://www.glazedlists.com/
- */
 public class TextView extends JPanel {
 
-    private EventList<Sentence> sentences;
     private JTable table;
 
     public TextView() {
@@ -28,18 +19,10 @@ public class TextView extends JPanel {
         setMinimumSize(new Dimension(200, 150));
 
         // setup the model
-        sentences = new BasicEventList<Sentence>();
+        TableModel model = new SentenceTableModel();
+        table = new JTable(model);
 
-        // property names for getId() etc.
-        String[] columnProperties = {"id", "source"};
-        String[] columnLabels = {"Id", "Source"};
-        TableFormat<Sentence> tableFormat = GlazedLists.<Sentence>tableFormat(columnProperties, columnLabels);
-
-        SortedList<Sentence> sortedSentences = new SortedList<Sentence>(sentences, new SentenceComparator());
-        AdvancedTableModel<Sentence> issuesTableModel = GlazedListsSwing.eventTableModelWithThreadProxyList(sortedSentences, tableFormat);
-        table = new JTable(issuesTableModel);
-
-        ListSelectionModel selectionModel = new DefaultEventSelectionModel<Sentence>(sentences);
+        ListSelectionModel selectionModel = new DefaultListSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setSelectionModel(selectionModel);
 
@@ -48,11 +31,7 @@ public class TextView extends JPanel {
         table.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
         table.setShowGrid(false);
 
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        centerRenderer.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
-        centerRenderer.setForeground(Color.GRAY);
-        table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(0).setCellRenderer(new IdRenderer());
 
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -71,14 +50,51 @@ public class TextView extends JPanel {
         return table;
     }
 
-    public EventList<Sentence> getSentences() {
-        return sentences;
+    static class IdRenderer extends DefaultTableCellRenderer {
+        public void setValue(Object value) {
+            setText(String.valueOf(value));
+            setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+            setForeground(Color.GRAY);
+            setHorizontalAlignment(SwingConstants.CENTER);
+        }
     }
 
-    private class SentenceComparator implements Comparator<Sentence> {
+    public class SentenceTableModel extends AbstractTableModel {
+
+        private List<Sentence> sentences = new ArrayList<>();
+
         @Override
-        public int compare(Sentence o1, Sentence o2) {
-            return o1.getId() - o2.getId();
+        public int getRowCount() {
+            return sentences.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 2;
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            if (column == 0) return "Id";
+            if (column == 1) return "Source";
+            return "";
+        }
+
+        public Class getColumnClass(int c) {
+            return getValueAt(0, c).getClass();
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            if (columnIndex == 0) {
+                return sentences.get(rowIndex).getId();
+            } else {
+                return sentences.get(rowIndex).getSource();
+            }
+        }
+
+        public List<Sentence> getSentences() {
+            return sentences;
         }
     }
 }

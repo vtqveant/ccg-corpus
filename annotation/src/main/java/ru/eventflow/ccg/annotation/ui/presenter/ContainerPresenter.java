@@ -5,6 +5,7 @@ import ru.eventflow.ccg.annotation.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.TabEvent;
 import ru.eventflow.ccg.annotation.ui.event.TabEventHandler;
 import ru.eventflow.ccg.annotation.ui.view.ContainerView;
+import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 
 public class ContainerPresenter implements Presenter<ContainerView> {
 
@@ -17,8 +18,9 @@ public class ContainerPresenter implements Presenter<ContainerView> {
         eventBus.addHandler(TabEvent.TYPE, new TabEventHandler() {
             @Override
             public void onEvent(TabEvent e) {
-                AnnotationPresenter presenter = new AnnotationPresenter(eventBus);
-                String title = "Sentence #" + e.getSentenceId();
+                Sentence sentence = e.getSentence();
+                String title = "Sentence #" + sentence.getId();
+                AnnotationPresenter presenter = new AnnotationPresenter(eventBus, sentence);
                 view.addTab(title, presenter.getView());
             }
         });

@@ -36,7 +36,7 @@ public class TextView extends JPanel {
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         headerRenderer.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
-        headerRenderer.setBackground(new Color(230, 230, 230));
+        headerRenderer.setBackground(new Color(245, 245, 245));
         headerRenderer.setForeground(Color.DARK_GRAY);
         table.getTableHeader().setDefaultRenderer(headerRenderer);
         table.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(45);

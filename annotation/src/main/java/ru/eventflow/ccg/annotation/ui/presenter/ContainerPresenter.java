@@ -19,7 +19,7 @@ public class ContainerPresenter implements Presenter<ContainerView> {
             @Override
             public void onEvent(TabEvent e) {
                 Sentence sentence = e.getSentence();
-                String title = "Sentence #" + sentence.getId();
+                String title = "Sentence " + sentence.getId();
                 AnnotationPresenter presenter = new AnnotationPresenter(eventBus, sentence);
                 view.addTab(title, presenter.getView());
             }

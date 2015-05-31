@@ -29,16 +29,11 @@
             <version>1.6.11</version>
         </dependency>
         <dependency>
-            <groupId>net.java.dev.glazedlists</groupId>
-            <artifactId>glazedlists_java15</artifactId>
-            <version>1.9.1</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>3.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>

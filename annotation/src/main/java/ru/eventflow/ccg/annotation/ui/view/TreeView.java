@@ -44,7 +44,7 @@ public class TreeView extends JPanel {
                 if (userObject instanceof Text) {
                     Text text = (Text) userObject;
                     setText(String.format("%-4s %-20s", text.getId(), text.getName()));
-                    setFont(new Font("Courier New", Font.PLAIN, 11));
+                    setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
                     setOpaque(true);
                     setBackground(selected ? Color.LIGHT_GRAY : Color.WHITE);
                     return this;

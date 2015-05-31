@@ -26,7 +26,7 @@ public class AnnotationPresenter implements Presenter<AnnotationView> {
 
             Form form = token.getVariants().get(0).getForm();
             if (form == null) {
-                glosses.add("OOV");
+                glosses.add("oov");
             } else {
                 StringBuilder sb = new StringBuilder();
                 for (Grammeme grammeme : form.getGrammemes()) {

@@ -35,6 +35,7 @@ public class ContainerView extends JPanel {
         }
         tabbedPane.addTab(title, component);
         tabbedPane.setTabComponentAt(tabCount, new TabComponent());
+        tabbedPane.setSelectedIndex(tabCount);
         tabCount++;
     }
 

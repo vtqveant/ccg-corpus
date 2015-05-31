@@ -1,7 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.StyledDocument;
 import javax.swing.undo.UndoManager;
@@ -12,6 +11,7 @@ import java.util.List;
 public class AnnotationView extends JPanel {
 
     private final JPanel glossesPanel;
+    private final JTextPane textPane;
     protected UndoManager undo = new UndoManager();
     AbstractDocument doc;
     JTextArea goalsTextArea;
@@ -33,7 +33,7 @@ public class AnnotationView extends JPanel {
         add(scrollPane, BorderLayout.PAGE_START);
 
         // editor
-        JTextPane textPane = new JTextPane();
+        textPane = new JTextPane();
         textPane.setCaretPosition(0);
         textPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         textPane.setMargin(new Insets(5, 5, 5, 5));
@@ -76,6 +76,14 @@ public class AnnotationView extends JPanel {
         }
     }
 
+    public JTextArea getGoalsTextArea() {
+        return goalsTextArea;
+    }
+
+    public JTextPane getTextPane() {
+        return textPane;
+    }
+
     private class TokenPanel extends JPanel {
         public TokenPanel(String token, String gloss) {
             super();
@@ -95,5 +103,4 @@ public class AnnotationView extends JPanel {
             add(glossLabel);
         }
     }
-
 }

@@ -80,7 +80,7 @@ public class MainView extends JPanel {
 
         final JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.LINE_AXIS));
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(1, 6, 2, 2));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(1, 6, 2, 6));
         infoPanel.add(statusLabel);
         infoPanel.add(Box.createHorizontalGlue());
         infoPanel.add(infoLabel);

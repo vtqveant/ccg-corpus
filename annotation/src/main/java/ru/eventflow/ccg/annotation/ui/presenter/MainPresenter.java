@@ -2,6 +2,8 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.EventBus;
+import ru.eventflow.ccg.annotation.ui.event.EditorCaretEvent;
+import ru.eventflow.ccg.annotation.ui.event.EditorCaretEventHandler;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEventHandler;
 import ru.eventflow.ccg.annotation.ui.view.MainView;
@@ -29,6 +31,13 @@ public class MainPresenter implements Presenter<MainView> {
             @Override
             public void onEvent(StatusUpdateEvent e) {
                 view.getStatusLabel().setText(e.getMessage());
+            }
+        });
+
+        this.eventBus.addHandler(EditorCaretEvent.TYPE, new EditorCaretEventHandler() {
+            @Override
+            public void onEvent(EditorCaretEvent e) {
+                view.getInfoLabel().setText(e.getRow() + ":" + e.getColumn());
             }
         });
     }

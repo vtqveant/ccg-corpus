@@ -18,13 +18,13 @@ public class NavigationView extends JPanel {
         ImageIcon lockIcon = new ImageIcon(ClassLoader.getSystemResource("images/lock.gif"));
         JToggleButton ambiguousBtn = new JToggleButton(lockIcon);
         ambiguousBtn.setSelected(true);
-        ambiguousBtn.setToolTipText("Display Ambiguous Sentences");
+        ambiguousBtn.setToolTipText("Show Ambiguous Sentences");
         ambiguousBtn.setFocusable(false);
 
         ImageIcon magnifyIcon = new ImageIcon(ClassLoader.getSystemResource("images/magnify.gif"));
         JToggleButton annotatedBtn = new JToggleButton(magnifyIcon);
         annotatedBtn.setSelected(true);
-        annotatedBtn.setToolTipText("Display Annotated Sentences");
+        annotatedBtn.setToolTipText("Show Annotated Sentences");
         annotatedBtn.setFocusable(false);
 
         JPanel headingPanel = new JPanel();

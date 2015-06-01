@@ -4,8 +4,6 @@ import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.List;
 
 public class AnnotationView extends JPanel {
@@ -44,26 +42,29 @@ public class AnnotationView extends JPanel {
             System.err.println("Text pane's document isn't an AbstractDocument!");
             System.exit(-1);
         }
+
         JScrollPane sp1 = new JScrollPane(textPane);
+        sp1.setSize(new Dimension(600, -1));
         sp1.setBorder(BorderFactory.createEmptyBorder());
 
         // goals
         goalsTextArea = new JTextArea(1, 30);
         goalsTextArea.setEditable(false);
+        goalsTextArea.setFocusable(false);
         goalsTextArea.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 5));
-        goalsTextArea.setBackground(new Color(245, 245, 245));
-        goalsTextArea.setMinimumSize(new Dimension(200, 150));
+        goalsTextArea.setBackground(new Color(243, 243, 243));
         goalsTextArea.setText("1 goal");
+
         JScrollPane sp2 = new JScrollPane(goalsTextArea);
         sp2.setBorder(BorderFactory.createEmptyBorder());
         sp2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp1, sp2);
+        final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
         splitPane.setOneTouchExpandable(false);
-        splitPane.setDividerLocation(0.7d);
         splitPane.setResizeWeight(0.5);
-        splitPane.setContinuousLayout(true);
         splitPane.setBorder(BorderFactory.createEmptyBorder());
+        splitPane.setLeftComponent(sp1);
+        splitPane.setRightComponent(sp2);
         add(splitPane, BorderLayout.CENTER);
     }
 

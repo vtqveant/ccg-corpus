@@ -40,7 +40,7 @@ public class MainPresenter implements Presenter<MainView> {
                 int row = e.getRow();
                 int column = e.getColumn();
                 String text = (row == -1 && column == -1) ? "n/a" : (row + ":" + column);
-                view.getInfoLabel().setText(text);
+                view.getCaretPositionLabel().setText(text);
             }
         });
     }

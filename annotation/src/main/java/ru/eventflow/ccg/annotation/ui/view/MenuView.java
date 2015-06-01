@@ -10,20 +10,48 @@ public class MenuView extends JMenuBar {
     private final JMenuItem secondMenuItem;
 
     public MenuView() {
-        JMenu menu = new JMenu("File");
-        menu.setMnemonic(KeyEvent.VK_A);
-        menu.getAccessibleContext().setAccessibleDescription("The only menu in this program that has menu items");
+        setBorder(BorderFactory.createEmptyBorder());
 
-        firstMenuItem = new JMenuItem("A text-only menu item", KeyEvent.VK_T);
-        firstMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
-        firstMenuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
-        menu.add(firstMenuItem);
+        JMenu menu1 = new JMenu("File");
+        firstMenuItem = new JMenuItem("Settings  ");
+        menu1.add(firstMenuItem);
+        secondMenuItem = new JMenuItem("Exit      ");
+        menu1.add(secondMenuItem);
+        add(menu1);
 
-        secondMenuItem = new JMenuItem("Both text and icon", new ImageIcon(ClassLoader.getSystemResource("images/file-16.png")));
-        secondMenuItem.setMnemonic(KeyEvent.VK_B);
-        menu.add(secondMenuItem);
+        JMenu menu2 = new JMenu("Edit");
+        ImageIcon undoIcon = new ImageIcon(ClassLoader.getSystemResource("images/undo.png"));
+        menu2.add(new JMenuItem("Undo      ", undoIcon));
+        ImageIcon redoIcon = new ImageIcon(ClassLoader.getSystemResource("images/redo.png"));
+        menu2.add(new JMenuItem("Redo      ", redoIcon));
+        menu2.add(new JSeparator());
+        menu2.add(new JMenuItem("Cut       "));
+        menu2.add(new JMenuItem("Copy      "));
+        menu2.add(new JMenuItem("Paste     "));
+        menu2.add(new JMenuItem("Delete    "));
+        add(menu2);
 
-        add(menu);
+        // like in CoqIDE
+        JMenu menu3 = new JMenu("Navigation");
+        ImageIcon forwardIcon = new ImageIcon(ClassLoader.getSystemResource("images/forward.png"));
+        menu3.add(new JMenuItem("Forward   ", forwardIcon));
+        ImageIcon backwardIcon = new ImageIcon(ClassLoader.getSystemResource("images/backward.png"));
+        menu3.add(new JMenuItem("Backward  ", backwardIcon));
+        menu3.add(new JMenuItem("Go to     "));
+        menu3.add(new JMenuItem("Start     "));
+        menu3.add(new JMenuItem("End       "));
+        menu3.add(new JMenuItem("Interrupt "));
+        menu3.add(new JMenuItem("Hide      "));
+        add(menu3);
+
+        JMenu menu4 = new JMenu("Tactics");
+        add(menu4);
+
+        JMenu menu5 = new JMenu("Help");
+        menu5.add(new JMenuItem("Manual   "));
+        menu5.add(new JSeparator());
+        menu5.add(new JMenuItem("About    "));
+        add(menu5);
     }
 
     public JMenuItem getFirstMenuItem() {

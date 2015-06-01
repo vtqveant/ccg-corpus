@@ -37,7 +37,10 @@ public class MainPresenter implements Presenter<MainView> {
         this.eventBus.addHandler(EditorCaretEvent.TYPE, new EditorCaretEventHandler() {
             @Override
             public void onEvent(EditorCaretEvent e) {
-                view.getInfoLabel().setText(e.getRow() + ":" + e.getColumn());
+                int row = e.getRow();
+                int column = e.getColumn();
+                String text = (row == -1 && column == -1) ? "n/a" : (row + ":" + column);
+                view.getInfoLabel().setText(text);
             }
         });
     }

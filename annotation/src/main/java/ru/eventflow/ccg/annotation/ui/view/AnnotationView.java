@@ -3,19 +3,18 @@ package ru.eventflow.ccg.annotation.ui.view;
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.StyledDocument;
-import javax.swing.undo.UndoManager;
 import java.awt.*;
-import java.util.HashMap;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.List;
 
 public class AnnotationView extends JPanel {
 
     private final JPanel glossesPanel;
+    private final JTextArea goalsTextArea;
     private final JTextPane textPane;
-    protected UndoManager undo = new UndoManager();
+
     AbstractDocument doc;
-    JTextArea goalsTextArea;
-    HashMap<Object, Action> actions;
 
     public AnnotationView() {
         setLayout(new BorderLayout());

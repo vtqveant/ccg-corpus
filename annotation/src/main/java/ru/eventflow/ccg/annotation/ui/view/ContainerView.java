@@ -16,6 +16,7 @@ public class ContainerView extends JPanel {
         setLayout(new BorderLayout());
 
         tabbedPane = new JTabbedPane();
+        tabbedPane.setFocusable(false);
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
         placeholderLabel = new JLabel("No sentences are being annotated");
@@ -37,6 +38,10 @@ public class ContainerView extends JPanel {
         tabbedPane.setTabComponentAt(tabCount, new TabComponent());
         tabbedPane.setSelectedIndex(tabCount);
         tabCount++;
+    }
+
+    public JTabbedPane getTabbedPane() {
+        return tabbedPane;
     }
 
     private class TabComponent extends JPanel {
@@ -85,5 +90,4 @@ public class ContainerView extends JPanel {
             add(button);
         }
     }
-
 }

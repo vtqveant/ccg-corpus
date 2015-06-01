@@ -38,16 +38,17 @@ public class TextPresenter implements Presenter<TextView> {
                 TextView.SentenceTableModel model = (TextView.SentenceTableModel) view.getTable().getModel();
                 model.getSentences().clear();
                 view.getTable().getSelectionModel().clearSelection();
-                if (e.getText() == null) return;  // this is the root node
-                for (Paragraph p : e.getText().getParagraphs()) {
-                    model.getSentences().addAll(p.getSentences());
-                }
-                Collections.sort(model.getSentences(), new Comparator<Sentence>() {
-                    @Override
-                    public int compare(Sentence o1, Sentence o2) {
-                        return o1.getId() - o2.getId();
+                if (e.getText() != null) { // otherwise it's a root node
+                    for (Paragraph p : e.getText().getParagraphs()) {
+                        model.getSentences().addAll(p.getSentences());
                     }
-                });
+                    Collections.sort(model.getSentences(), new Comparator<Sentence>() {
+                        @Override
+                        public int compare(Sentence o1, Sentence o2) {
+                            return o1.getId() - o2.getId();
+                        }
+                    });
+                }
                 view.getTable().updateUI();
             }
         });

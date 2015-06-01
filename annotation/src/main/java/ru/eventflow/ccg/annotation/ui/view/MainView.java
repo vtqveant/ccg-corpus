@@ -16,7 +16,7 @@ public class MainView extends JPanel {
     private final JToggleButton dictionaryBtn;
     private JPanel navigationPanel;
     private JPanel dictionaryPanel;
-    private final JLabel infoLabel;
+    private final JLabel caretPositionLabel;
 
     public MainView() {
         setLayout(new BorderLayout());
@@ -75,15 +75,15 @@ public class MainView extends JPanel {
         statusLabel = new JLabel(" ");
         statusLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
 
-        infoLabel = new JLabel(" ");
-        infoLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        caretPositionLabel = new JLabel("n/a");
+        caretPositionLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
 
         final JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.LINE_AXIS));
         infoPanel.setBorder(BorderFactory.createEmptyBorder(1, 6, 2, 6));
         infoPanel.add(statusLabel);
         infoPanel.add(Box.createHorizontalGlue());
-        infoPanel.add(infoLabel);
+        infoPanel.add(caretPositionLabel);
         bottomPanel.add(infoPanel, BorderLayout.PAGE_END);
 
         add(bottomPanel, BorderLayout.PAGE_END);
@@ -97,8 +97,8 @@ public class MainView extends JPanel {
         return statusLabel;
     }
 
-    public JLabel getInfoLabel() {
-        return infoLabel;
+    public JLabel getCaretPositionLabel() {
+        return caretPositionLabel;
     }
 
     public JPanel getNavigationPanel() {

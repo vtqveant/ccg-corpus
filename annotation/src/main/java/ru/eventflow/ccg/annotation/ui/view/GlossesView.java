@@ -26,7 +26,7 @@ public class GlossesView extends JPanel {
         public TokenPanel(String token, String gloss) {
             super();
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-            setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+            setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
             setBackground(Color.WHITE);
 
             JLabel tokenLabel = new JLabel(token);

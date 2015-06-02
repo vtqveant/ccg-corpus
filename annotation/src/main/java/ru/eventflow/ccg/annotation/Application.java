@@ -16,6 +16,7 @@ import java.util.Properties;
 public class Application {
 
     private static final Injector injector = Guice.createInjector(new AnnotationModule());
+    private static final ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("images/corpus.png"));
 
     public static void main(String[] args) {
         try {
@@ -45,6 +46,7 @@ public class Application {
                     frame.setJMenuBar(menuPresenter.getView());
                     frame.setContentPane(mainPresenter.getView());
                     frame.setLocationRelativeTo(null);
+                    frame.setIconImage(icon.getImage());
                     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                     frame.pack();
                     frame.setSize(new Dimension(640, 480));

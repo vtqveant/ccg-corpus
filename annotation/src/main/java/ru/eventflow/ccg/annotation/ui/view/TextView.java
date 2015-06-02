@@ -1,5 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
+import ru.eventflow.ccg.annotation.ui.Defaults;
 import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 
 import javax.swing.*;
@@ -28,14 +29,14 @@ public class TextView extends JPanel {
 
         // table adjustments
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        table.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        table.setFont(Defaults.SMALL_FONT);
         table.setShowGrid(false);
 
         table.getColumnModel().getColumn(0).setCellRenderer(new IdRenderer());
 
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        headerRenderer.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        headerRenderer.setFont(Defaults.SMALL_FONT);
         headerRenderer.setBackground(new Color(245, 245, 245));
         headerRenderer.setForeground(Color.DARK_GRAY);
         table.getTableHeader().setDefaultRenderer(headerRenderer);
@@ -53,7 +54,7 @@ public class TextView extends JPanel {
     static class IdRenderer extends DefaultTableCellRenderer {
         public void setValue(Object value) {
             setText(String.valueOf(value));
-            setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+            setFont(Defaults.SMALL_FONT);
             setForeground(Color.GRAY);
             setHorizontalAlignment(SwingConstants.CENTER);
         }

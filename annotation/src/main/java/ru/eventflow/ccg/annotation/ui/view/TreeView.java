@@ -1,5 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
+import ru.eventflow.ccg.annotation.ui.Defaults;
 import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 import javax.swing.*;
@@ -44,7 +45,7 @@ public class TreeView extends JPanel {
                 if (userObject instanceof Text) {
                     Text text = (Text) userObject;
                     setText(String.format("%-4s %-20s", text.getId(), text.getName()));
-                    setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+                    setFont(Defaults.SMALL_FONT);
                     setOpaque(true);
                     setBackground(selected ? Color.LIGHT_GRAY : Color.WHITE);
                     return this;

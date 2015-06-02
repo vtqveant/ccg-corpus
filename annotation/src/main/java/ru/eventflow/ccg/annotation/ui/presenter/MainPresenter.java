@@ -8,8 +8,6 @@ import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEventHandler;
 import ru.eventflow.ccg.annotation.ui.view.MainView;
 
-import javax.swing.*;
-
 public class MainPresenter implements Presenter<MainView> {
 
     private final MainView view;
@@ -19,10 +17,12 @@ public class MainPresenter implements Presenter<MainView> {
     public MainPresenter(final EventBus eventBus,
                          final ContainerPresenter containerPresenter,
                          final NavigationPresenter navigationPresenter,
-                         final DictionaryPresenter dictionaryPresenter) {
+                         final DictionaryPresenter dictionaryPresenter,
+                         final EventLogPresenter eventLogPresenter) {
         this.eventBus = eventBus;
         this.view = new MainView();
         this.view.setTopPanel(containerPresenter.getView());
+        this.view.addSlidingPanel(eventLogPresenter.getView());
         this.view.addSlidingPanel(dictionaryPresenter.getView());
         this.view.addSlidingPanel(navigationPresenter.getView());
         init();

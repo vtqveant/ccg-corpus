@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Contains a workaround to dynamically adjust a scrollbar.
+ * Contains a workaround to dynamically adjust a scrollbar
  * <p>
  * s. http://stackoverflow.com/a/15712452
  */

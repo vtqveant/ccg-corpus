@@ -25,7 +25,7 @@ public class AnnotationModule extends AbstractModule {
         bind(MenuPresenter.class).in(Singleton.class);
         bind(ContainerPresenter.class).in(Singleton.class);
         bind(NavigationPresenter.class).in(Singleton.class);
-        bind(EventLogPresenter.class).in(Singleton.class);
+        bind(MessagesPresenter.class).in(Singleton.class);
     }
 
     private static class DataManagerProvider implements Provider<DataManager> {

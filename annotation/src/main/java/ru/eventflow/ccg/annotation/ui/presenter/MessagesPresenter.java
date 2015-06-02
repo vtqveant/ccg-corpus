@@ -4,15 +4,15 @@ import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEventHandler;
-import ru.eventflow.ccg.annotation.ui.view.EventLogView;
+import ru.eventflow.ccg.annotation.ui.view.MessagesView;
 
-public class EventLogPresenter implements Presenter<EventLogView> {
+public class MessagesPresenter implements Presenter<MessagesView> {
 
-    private EventLogView view;
+    private MessagesView view;
 
     @Inject
-    public EventLogPresenter(final EventBus eventBus) {
-        this.view = new EventLogView();
+    public MessagesPresenter(final EventBus eventBus) {
+        this.view = new MessagesView();
 
         eventBus.addHandler(StatusUpdateEvent.TYPE, new StatusUpdateEventHandler() {
             @Override
@@ -23,7 +23,7 @@ public class EventLogPresenter implements Presenter<EventLogView> {
     }
 
     @Override
-    public EventLogView getView() {
+    public MessagesView getView() {
         return view;
     }
 }

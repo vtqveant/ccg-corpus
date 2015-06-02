@@ -1,8 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 public class MenuView extends JMenuBar {
 
@@ -45,6 +43,9 @@ public class MenuView extends JMenuBar {
         add(menu3);
 
         JMenu menu4 = new JMenu("Tactics");
+        menu4.add(new JMenuItem("simpl      "));
+        menu4.add(new JMenuItem("reflexivity"));
+        menu4.add(new JMenuItem("admit      "));
         add(menu4);
 
         JMenu menu5 = new JMenu("Help");

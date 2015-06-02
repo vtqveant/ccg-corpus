@@ -18,11 +18,11 @@ public class MainPresenter implements Presenter<MainView> {
                          final ContainerPresenter containerPresenter,
                          final NavigationPresenter navigationPresenter,
                          final DictionaryPresenter dictionaryPresenter) {
-        this.view = new MainView();
         this.eventBus = eventBus;
+        this.view = new MainView();
         this.view.getTopPanel().add(containerPresenter.getView());
-        this.view.getNavigationPanel().add(navigationPresenter.getView());
-        this.view.getDictionaryPanel().add(dictionaryPresenter.getView());
+        this.view.setNavigationPanel(navigationPresenter.getView());
+        this.view.setDictionaryPanel(dictionaryPresenter.getView());
         init();
     }
 

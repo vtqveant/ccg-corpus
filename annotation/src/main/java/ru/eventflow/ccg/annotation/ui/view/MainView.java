@@ -10,53 +10,34 @@ import java.awt.event.ItemListener;
 public class MainView extends JPanel {
 
     public static final int DIVIDER_SIZE = 3;
-    public static final double DIVIDER_LOCATION = 0.7d;
-    private final JPanel topPanel;
-    private final JLabel statusLabel;
+    public static final double DIVIDER_LOCATION = 0.75d;
+
     private final JSplitPane mainSplitPane;
-    private final JToggleButton navigationBtn;
-    private final JToggleButton dictionaryBtn;
-    private JPanel navigationPanel;
-    private JPanel dictionaryPanel;
+
+    private final JLabel statusLabel;
     private final JLabel caretPositionLabel;
+
+    private final JPanel topPanel = new JPanel(new BorderLayout());
+    private final JPanel navigationPanel = new JPanel(new BorderLayout());
+    private final JPanel dictionaryPanel = new JPanel(new BorderLayout());
 
     public MainView() {
         setLayout(new BorderLayout());
 
-        topPanel = new JPanel(new BorderLayout());
-        navigationPanel = new JPanel(new BorderLayout());
-        dictionaryPanel = new JPanel(new BorderLayout());
-
-        // initial state is navigation panel set invisible
         mainSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, navigationPanel);
         mainSplitPane.setDividerLocation(DIVIDER_LOCATION);
-        mainSplitPane.setResizeWeight(0.5);
+        mainSplitPane.setResizeWeight(0.8);
         mainSplitPane.setDividerSize(DIVIDER_SIZE);
         mainSplitPane.setContinuousLayout(true);
         mainSplitPane.setBorder(BorderFactory.createEmptyBorder());
         add(mainSplitPane, BorderLayout.CENTER);
 
-        // all bottom sliding panes start in this position (pane's size has an effect, too)
-        int location = mainSplitPane.getDividerLocation();
-
-        navigationBtn = new JToggleButton("Navigation");
-        navigationBtn.setFocusable(false);
-        navigationBtn.setSelected(true);
         ImageIcon folderIcon = new ImageIcon(ClassLoader.getSystemResource("images/corpus.png"));
-        navigationBtn.setIcon(folderIcon);
-        navigationBtn.setMaximumSize(new Dimension(60, 22));
-        navigationBtn.setMinimumSize(new Dimension(60, 22));
-        navigationBtn.setFont(Defaults.SMALL_FONT);
-        navigationBtn.addItemListener(new ToggleItemListener(location));
+        JToggleButton navigationBtn = createToggleButton("Navigation", folderIcon, navigationPanel);
+        navigationBtn.setSelected(true);
 
-        dictionaryBtn = new JToggleButton("Dictionary");
-        dictionaryBtn.setFocusable(false);
         ImageIcon magnifyIcon = new ImageIcon(ClassLoader.getSystemResource("images/lookup.png"));
-        dictionaryBtn.setIcon(magnifyIcon);
-        dictionaryBtn.setMaximumSize(new Dimension(60, 22));
-        dictionaryBtn.setMinimumSize(new Dimension(60, 22));
-        dictionaryBtn.setFont(Defaults.SMALL_FONT);
-        dictionaryBtn.addItemListener(new ToggleItemListener(location));
+        JToggleButton dictionaryBtn = createToggleButton("Dictionary", magnifyIcon, dictionaryPanel);
 
         NoneSelectedButtonGroup group = new NoneSelectedButtonGroup();
         group.add(navigationBtn);
@@ -103,41 +84,58 @@ public class MainView extends JPanel {
         return caretPositionLabel;
     }
 
-    public JPanel getNavigationPanel() {
-        return navigationPanel;
+    public void setNavigationPanel(JPanel navigationPanel) {
+        this.navigationPanel.add(navigationPanel);
     }
 
-    public JPanel getDictionaryPanel() {
-        return dictionaryPanel;
+    public void setDictionaryPanel(JPanel dictionaryPanel) {
+        this.dictionaryPanel.add(dictionaryPanel);
     }
 
+    private JToggleButton createToggleButton(String text, ImageIcon icon, JPanel panel) {
+        JToggleButton button = new JToggleButton(text);
+        button.setFocusable(false);
+        button.setIcon(icon);
+        button.setMaximumSize(new Dimension(60, 22));
+        button.setMinimumSize(new Dimension(60, 22));
+        button.setFont(Defaults.SMALL_FONT);
+        button.addItemListener(new ToggleItemListener(panel));
+        return button;
+    }
+
+    /**
+     * holds the SliderPane visibility status
+     */
     private class ToggleItemListener implements ItemListener {
+
         private int location;
 
-        public ToggleItemListener(int location) {
-            this.location = location;
+        /**
+         * panel to track
+         */
+        private JPanel panel;
+
+        public ToggleItemListener(JPanel panel) {
+            this.location = (int) ((double) (mainSplitPane.getHeight() -
+                    mainSplitPane.getDividerSize()) * DIVIDER_LOCATION);
+            this.panel = panel;
         }
 
         @Override
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                JToggleButton button = (JToggleButton) e.getSource();
-                JPanel current = (JPanel) mainSplitPane.getBottomComponent();
-                if (button == navigationBtn && current != navigationPanel) {
-                    mainSplitPane.setBottomComponent(navigationPanel);
+                if (panel != mainSplitPane.getBottomComponent()) {
+                    mainSplitPane.setBottomComponent(panel);
                 }
-                if (button == dictionaryBtn && current != dictionaryPanel) {
-                    mainSplitPane.setBottomComponent(dictionaryPanel);
-                }
-
-                mainSplitPane.getBottomComponent().setVisible(true);
+                panel.setVisible(true);
                 mainSplitPane.setDividerLocation(location);
                 mainSplitPane.setDividerSize(DIVIDER_SIZE);
             }
+
             if (e.getStateChange() == ItemEvent.DESELECTED) {
                 location = mainSplitPane.getDividerLocation();
                 mainSplitPane.setDividerSize(0);
-                mainSplitPane.getBottomComponent().setVisible(false);
+                panel.setVisible(false);
             }
         }
     }

@@ -79,8 +79,7 @@ public class AnnotationView extends JPanel {
 
     /**
      * A nasty hack to correctly display splitPane's divider location.
-     * A normal approach doesn't work, because the splitpane is not visible when
-     * it's created.
+     * A normal approach doesn't work, because the splitpane is not visible when it's created.
      * <p>
      * s. http://stackoverflow.com/questions/2311449/jsplitpane-splitting-50-precisely
      *

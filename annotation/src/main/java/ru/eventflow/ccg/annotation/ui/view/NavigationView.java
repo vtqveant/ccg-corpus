@@ -1,6 +1,5 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
-import ru.eventflow.ccg.annotation.ui.Defaults;
 import ru.eventflow.ccg.annotation.ui.component.SlidingPanel;
 
 import javax.swing.*;
@@ -12,17 +11,7 @@ public class NavigationView extends SlidingPanel {
     private final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
 
     public NavigationView() {
-        setLayout(new BorderLayout());
-
-        final JLabel titleLabel = new JLabel(TITLE);
-        titleLabel.setFont(Defaults.SMALL_FONT);
-        titleLabel.setForeground(Color.GRAY);
-
-        ImageIcon lockIcon = new ImageIcon(ClassLoader.getSystemResource("images/lock.gif"));
-        JToggleButton ambiguousBtn = new JToggleButton(lockIcon);
-        ambiguousBtn.setSelected(true);
-        ambiguousBtn.setToolTipText("Show Ambiguous Sentences");
-        ambiguousBtn.setFocusable(false);
+        super();
 
         ImageIcon magnifyIcon = new ImageIcon(ClassLoader.getSystemResource("images/magnify.gif"));
         JToggleButton annotatedBtn = new JToggleButton(magnifyIcon);
@@ -30,15 +19,15 @@ public class NavigationView extends SlidingPanel {
         annotatedBtn.setToolTipText("Show Annotated Sentences");
         annotatedBtn.setFocusable(false);
 
-        JPanel headingPanel = new JPanel();
-        headingPanel.setLayout(new BoxLayout(headingPanel, BoxLayout.LINE_AXIS));
-        headingPanel.setBorder(BorderFactory.createEmptyBorder(0, 6, 3, 2));
-        headingPanel.add(titleLabel);
-        headingPanel.add(Box.createHorizontalGlue());
+        ImageIcon lockIcon = new ImageIcon(ClassLoader.getSystemResource("images/lock.gif"));
+        JToggleButton ambiguousBtn = new JToggleButton(lockIcon);
+        ambiguousBtn.setSelected(true);
+        ambiguousBtn.setToolTipText("Show Ambiguous Sentences");
+        ambiguousBtn.setFocusable(false);
+
         headingPanel.add(annotatedBtn);
         headingPanel.add(Box.createRigidArea(new Dimension(1, 0)));
         headingPanel.add(ambiguousBtn);
-        add(headingPanel, BorderLayout.PAGE_START);
 
         add(splitPane, BorderLayout.CENTER);
     }

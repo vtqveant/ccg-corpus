@@ -5,7 +5,7 @@ import ru.eventflow.ccg.annotation.ui.Defaults;
 import javax.swing.*;
 import java.awt.*;
 
-public class DictionaryView extends JPanel {
+public class DictionaryView extends SlidingPanel {
 
     public DictionaryView() {
         setLayout(new BorderLayout());
@@ -25,5 +25,15 @@ public class DictionaryView extends JPanel {
         headingPanel.add(Box.createHorizontalGlue());
         headingPanel.add(clipboardBtn);
         add(headingPanel, BorderLayout.PAGE_START);
+    }
+
+    @Override
+    public ImageIcon getIcon() {
+        return new ImageIcon(ClassLoader.getSystemResource("images/lookup.png"));
+    }
+
+    @Override
+    public String getTitle() {
+        return "Dictionary";
     }
 }

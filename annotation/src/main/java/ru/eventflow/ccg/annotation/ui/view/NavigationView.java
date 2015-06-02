@@ -5,7 +5,7 @@ import ru.eventflow.ccg.annotation.ui.Defaults;
 import javax.swing.*;
 import java.awt.*;
 
-public class NavigationView extends JPanel {
+public class NavigationView extends SlidingPanel {
 
     private final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
 
@@ -47,5 +47,15 @@ public class NavigationView extends JPanel {
 
     public void setRightComponent(Component component) {
         splitPane.setRightComponent(component);
+    }
+
+    @Override
+    public ImageIcon getIcon() {
+        return new ImageIcon(ClassLoader.getSystemResource("images/corpus.png"));
+    }
+
+    @Override
+    public String getTitle() {
+        return "Navigation";
     }
 }

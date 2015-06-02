@@ -1,6 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import ru.eventflow.ccg.annotation.ui.Defaults;
+import ru.eventflow.ccg.annotation.ui.component.SlidingPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,8 +26,8 @@ public class MainView extends JPanel {
 
         mainSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, null, null);
         mainSplitPane.setDividerLocation(DIVIDER_LOCATION);
-        mainSplitPane.setResizeWeight(0.8);
-        mainSplitPane.setDividerSize(DIVIDER_SIZE);
+        mainSplitPane.setResizeWeight(0.5);
+        mainSplitPane.setDividerSize(0);
         mainSplitPane.setContinuousLayout(true);
         mainSplitPane.setBorder(BorderFactory.createEmptyBorder());
         add(mainSplitPane, BorderLayout.CENTER);
@@ -93,16 +94,10 @@ public class MainView extends JPanel {
      */
     private class ToggleItemListener implements ItemListener {
 
-        private int location;
-
-        /**
-         * panel to track
-         */
+        private int location = -1;
         private JPanel panel;
 
         public ToggleItemListener(JPanel panel) {
-            this.location = (int) ((double) (mainSplitPane.getHeight() -
-                    mainSplitPane.getDividerSize()) * DIVIDER_LOCATION);
             this.panel = panel;
         }
 
@@ -113,6 +108,10 @@ public class MainView extends JPanel {
                     mainSplitPane.setBottomComponent(panel);
                 }
                 panel.setVisible(true);
+                if (location == -1) {
+                    location = (int) ((double) (mainSplitPane.getHeight() -
+                            mainSplitPane.getDividerSize()) * DIVIDER_LOCATION);
+                }
                 mainSplitPane.setDividerLocation(location);
                 mainSplitPane.setDividerSize(DIVIDER_SIZE);
             }

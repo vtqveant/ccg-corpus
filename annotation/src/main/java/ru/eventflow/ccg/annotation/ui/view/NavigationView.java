@@ -1,18 +1,20 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import ru.eventflow.ccg.annotation.ui.Defaults;
+import ru.eventflow.ccg.annotation.ui.component.SlidingPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class NavigationView extends SlidingPanel {
 
+    public static final String TITLE = "Navigation";
     private final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
 
     public NavigationView() {
         setLayout(new BorderLayout());
 
-        final JLabel titleLabel = new JLabel("Navigation");
+        final JLabel titleLabel = new JLabel(TITLE);
         titleLabel.setFont(Defaults.SMALL_FONT);
         titleLabel.setForeground(Color.GRAY);
 
@@ -56,6 +58,6 @@ public class NavigationView extends SlidingPanel {
 
     @Override
     public String getTitle() {
-        return "Navigation";
+        return TITLE;
     }
 }

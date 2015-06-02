@@ -6,11 +6,12 @@ import ru.eventflow.ccg.annotation.ui.component.SlidingPanel;
 import javax.swing.*;
 import java.awt.*;
 
-public class DictionaryView extends SlidingPanel {
+public class EventLogView extends SlidingPanel {
 
-    public static final String TITLE = "Dictionary";
+    public static final String TITLE = "Event Log";
+    private final JTextArea textArea = new JTextArea();
 
-    public DictionaryView() {
+    public EventLogView() {
         setLayout(new BorderLayout());
 
         final JLabel titleLabel = new JLabel(TITLE);
@@ -18,7 +19,6 @@ public class DictionaryView extends SlidingPanel {
         titleLabel.setForeground(Color.GRAY);
 
         JToggleButton clipboardBtn = new JToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/clipboard.gif")));
-        clipboardBtn.setToolTipText("Toggle View");
         clipboardBtn.setFocusable(false);
 
         final JPanel headingPanel = new JPanel();
@@ -28,11 +28,19 @@ public class DictionaryView extends SlidingPanel {
         headingPanel.add(Box.createHorizontalGlue());
         headingPanel.add(clipboardBtn);
         add(headingPanel, BorderLayout.PAGE_START);
+
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public void addRecord(String record) {
+        textArea.append(record + '\n');
     }
 
     @Override
     public ImageIcon getIcon() {
-        return new ImageIcon(ClassLoader.getSystemResource("images/lookup.png"));
+        return new ImageIcon(ClassLoader.getSystemResource("images/log.png"));
     }
 
     @Override

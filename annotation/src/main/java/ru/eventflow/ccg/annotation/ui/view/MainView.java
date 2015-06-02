@@ -1,5 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
+import ru.eventflow.ccg.annotation.ui.Defaults;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -44,7 +46,7 @@ public class MainView extends JPanel {
         navigationBtn.setIcon(folderIcon);
         navigationBtn.setMaximumSize(new Dimension(60, 22));
         navigationBtn.setMinimumSize(new Dimension(60, 22));
-        navigationBtn.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        navigationBtn.setFont(Defaults.SMALL_FONT);
         navigationBtn.addItemListener(new ToggleItemListener(location));
 
         dictionaryBtn = new JToggleButton("Dictionary");
@@ -53,7 +55,7 @@ public class MainView extends JPanel {
         dictionaryBtn.setIcon(magnifyIcon);
         dictionaryBtn.setMaximumSize(new Dimension(60, 22));
         dictionaryBtn.setMinimumSize(new Dimension(60, 22));
-        dictionaryBtn.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        dictionaryBtn.setFont(Defaults.SMALL_FONT);
         dictionaryBtn.addItemListener(new ToggleItemListener(location));
 
         NoneSelectedButtonGroup group = new NoneSelectedButtonGroup();
@@ -73,10 +75,10 @@ public class MainView extends JPanel {
 
         // status line and info
         statusLabel = new JLabel(" ");
-        statusLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        statusLabel.setFont(Defaults.SMALL_FONT);
 
         caretPositionLabel = new JLabel("n/a");
-        caretPositionLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        caretPositionLabel.setFont(Defaults.SMALL_FONT);
 
         final JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.LINE_AXIS));

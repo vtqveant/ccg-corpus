@@ -1,18 +1,19 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
+import ru.eventflow.ccg.annotation.ui.Defaults;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class NavigationView extends JPanel {
 
-    public static final Font HEADING_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 11);
     private final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
 
     public NavigationView() {
         setLayout(new BorderLayout());
 
         final JLabel titleLabel = new JLabel("Navigation");
-        titleLabel.setFont(HEADING_FONT);
+        titleLabel.setFont(Defaults.SMALL_FONT);
         titleLabel.setForeground(Color.GRAY);
 
         ImageIcon lockIcon = new ImageIcon(ClassLoader.getSystemResource("images/lock.gif"));

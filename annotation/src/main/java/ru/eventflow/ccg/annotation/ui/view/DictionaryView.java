@@ -1,5 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
+import ru.eventflow.ccg.annotation.ui.Defaults;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +11,7 @@ public class DictionaryView extends JPanel {
         setLayout(new BorderLayout());
 
         final JLabel titleLabel = new JLabel("Dictionary");
-        titleLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        titleLabel.setFont(Defaults.SMALL_FONT);
         titleLabel.setForeground(Color.GRAY);
 
         JToggleButton clipboardBtn = new JToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/clipboard.gif")));

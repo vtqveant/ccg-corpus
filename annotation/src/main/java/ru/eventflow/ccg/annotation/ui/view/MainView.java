@@ -1,7 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import ru.eventflow.ccg.annotation.ui.Defaults;
-import ru.eventflow.ccg.annotation.ui.component.SlidingPanel;
 
 import javax.swing.*;
 import java.awt.*;

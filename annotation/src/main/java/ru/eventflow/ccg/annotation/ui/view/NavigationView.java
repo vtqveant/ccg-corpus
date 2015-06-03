@@ -1,34 +1,19 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
-import ru.eventflow.ccg.annotation.ui.component.SlidingPanel;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class NavigationView extends SlidingPanel {
 
-    public static final String TITLE = "Navigation";
-    private final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
+    private final JSplitPane splitPane;
+    private JToggleButton annotatedBtn;
+    private JToggleButton ambiguousBtn;
 
     public NavigationView() {
         super();
-
-        ImageIcon magnifyIcon = new ImageIcon(ClassLoader.getSystemResource("images/magnify.gif"));
-        JToggleButton annotatedBtn = new JToggleButton(magnifyIcon);
-        annotatedBtn.setSelected(true);
-        annotatedBtn.setToolTipText("Show Annotated Sentences");
-        annotatedBtn.setFocusable(false);
-
-        ImageIcon lockIcon = new ImageIcon(ClassLoader.getSystemResource("images/lock.gif"));
-        JToggleButton ambiguousBtn = new JToggleButton(lockIcon);
-        ambiguousBtn.setSelected(true);
-        ambiguousBtn.setToolTipText("Show Ambiguous Sentences");
-        ambiguousBtn.setFocusable(false);
-
-        headingPanel.add(annotatedBtn);
-        headingPanel.add(Box.createRigidArea(new Dimension(1, 0)));
-        headingPanel.add(ambiguousBtn);
-
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
         add(splitPane, BorderLayout.CENTER);
     }
 
@@ -41,12 +26,41 @@ public class NavigationView extends SlidingPanel {
     }
 
     @Override
+    public String getTitle() {
+        return "Navigation";
+    }
+
+    @Override
     public ImageIcon getIcon() {
         return new ImageIcon(ClassLoader.getSystemResource("images/corpus.png"));
     }
 
     @Override
-    public String getTitle() {
-        return TITLE;
+    public List<JToggleButton> getButtons() {
+        List<JToggleButton> buttons = new ArrayList<>();
+
+        ImageIcon magnifyIcon = new ImageIcon(ClassLoader.getSystemResource("images/magnify.gif"));
+        annotatedBtn = new JToggleButton(magnifyIcon);
+        annotatedBtn.setSelected(true);
+        annotatedBtn.setToolTipText("Show Annotated Sentences");
+        annotatedBtn.setFocusable(false);
+        buttons.add(annotatedBtn);
+
+        ImageIcon lockIcon = new ImageIcon(ClassLoader.getSystemResource("images/lock.gif"));
+        ambiguousBtn = new JToggleButton(lockIcon);
+        ambiguousBtn.setSelected(true);
+        ambiguousBtn.setToolTipText("Show Ambiguous Sentences");
+        ambiguousBtn.setFocusable(false);
+        buttons.add(ambiguousBtn);
+
+        return buttons;
+    }
+
+    public JToggleButton getAnnotatedBtn() {
+        return annotatedBtn;
+    }
+
+    public JToggleButton getAmbiguousBtn() {
+        return ambiguousBtn;
     }
 }

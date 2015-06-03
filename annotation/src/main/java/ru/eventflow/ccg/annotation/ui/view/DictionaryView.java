@@ -1,21 +1,17 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
-import ru.eventflow.ccg.annotation.ui.component.SlidingPanel;
-
 import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DictionaryView extends SlidingPanel {
-
-    public static final String TITLE = "Dictionary";
 
     public DictionaryView() {
         super();
 
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("images/clipboard.gif"));
-        JToggleButton clipboardBtn = new JToggleButton(icon);
-        clipboardBtn.setToolTipText("Toggle View");
-        clipboardBtn.setFocusable(false);
-        headingPanel.add(clipboardBtn);
+        JLabel label = new JLabel("dummy");
+        add(label, BorderLayout.CENTER);
     }
 
     @Override
@@ -25,6 +21,19 @@ public class DictionaryView extends SlidingPanel {
 
     @Override
     public String getTitle() {
-        return TITLE;
+        return "Dictionary";
+    }
+
+    @Override
+    public List<JToggleButton> getButtons() {
+        List<JToggleButton> buttons = new ArrayList<>();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("images/clipboard.gif"));
+        JToggleButton clipboardBtn = new JToggleButton(icon);
+        clipboardBtn.setToolTipText("Toggle View");
+        clipboardBtn.setFocusable(false);
+        buttons.add(clipboardBtn);
+
+        return buttons;
     }
 }

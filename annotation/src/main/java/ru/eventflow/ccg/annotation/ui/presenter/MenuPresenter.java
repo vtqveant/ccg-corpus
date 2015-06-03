@@ -2,7 +2,6 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
-import ru.eventflow.ccg.annotation.ui.event.Setting;
 import ru.eventflow.ccg.annotation.ui.event.SettingsEvent;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.view.MenuView;
@@ -37,8 +36,8 @@ public class MenuPresenter implements Presenter<MenuView> {
             }
         });
 
-        this.view.getGlossesMenuItem().addActionListener(new SettingActionListener(Setting.GLOSSES));
-        this.view.getStatusBarMenuItem().addActionListener(new SettingActionListener(Setting.STATUSBAR));
+        this.view.getGlossesMenuItem().addActionListener(new SettingActionListener());
+        this.view.getStatusBarMenuItem().addActionListener(new SettingActionListener());
     }
 
     @Override
@@ -46,19 +45,17 @@ public class MenuPresenter implements Presenter<MenuView> {
         return view;
     }
 
+    /**
+     * This has a drawback of manually checking the menu item,
+     * but has an advantage of predictable behaviour with respect to events ordering
+     */
     private class SettingActionListener implements ActionListener {
-        private Setting setting;
-
-        public SettingActionListener(Setting setting) {
-            this.setting = setting;
-        }
-
         @Override
         public void actionPerformed(ActionEvent e) {
             MenuView.SettingMenuItem source = (MenuView.SettingMenuItem) e.getSource();
-            boolean previous = source.isChecked();
-            source.setChecked(!previous);
-            eventBus.fireEvent(new SettingsEvent(setting, !previous));
+            boolean newValue = !source.isChecked();
+            source.setChecked(newValue);
+            eventBus.fireEvent(new SettingsEvent(source.getSetting(), newValue));
         }
     }
 }

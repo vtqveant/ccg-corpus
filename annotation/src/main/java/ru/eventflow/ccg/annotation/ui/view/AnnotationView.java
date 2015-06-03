@@ -1,7 +1,5 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
-import ru.eventflow.ccg.annotation.ui.component.AdjustableScrollPane;
-
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.StyledDocument;

@@ -20,10 +20,14 @@ public abstract class SlidingPanel extends JPanel {
         headingPanel.setBorder(BorderFactory.createEmptyBorder(0, 6, 3, 2));
         headingPanel.add(titleLabel);
         headingPanel.add(Box.createHorizontalGlue());
+        headingPanel.add(Box.createRigidArea(new Dimension(0, 18)));
 
-        for (JToggleButton button : getButtons()) {
-            headingPanel.add(button);
-            headingPanel.add(Box.createRigidArea(new Dimension(1, 0)));
+        List<JToggleButton> buttons = getButtons();
+        if (buttons != null) {
+            for (JToggleButton button : buttons) {
+                headingPanel.add(button);
+                headingPanel.add(Box.createRigidArea(new Dimension(1, 0)));
+            }
         }
 
         add(headingPanel, BorderLayout.PAGE_START);

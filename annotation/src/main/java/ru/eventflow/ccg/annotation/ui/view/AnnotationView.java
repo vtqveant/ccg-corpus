@@ -75,6 +75,11 @@ public class AnnotationView extends JPanel {
         glossesScrollPane.setViewportView(glosses);
     }
 
+    public void setGlossesVisible(boolean visible) {
+        glossesScrollPane.setVisible(visible);
+        updateUI();
+    }
+
     /**
      * A nasty hack to correctly display splitPane's divider location.
      * A normal approach doesn't work, because the splitpane is not visible when it's created.

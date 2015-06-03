@@ -1,8 +1,9 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
+import ru.eventflow.ccg.annotation.ui.Defaults;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MessagesView extends SlidingPanel {
@@ -13,6 +14,8 @@ public class MessagesView extends SlidingPanel {
         super();
 
         textArea.setEditable(false);
+        textArea.setMargin(new Insets(2, 5, 2, 5));
+        textArea.setFont(Defaults.SMALL_FONT);
         JScrollPane scrollPane = new JScrollPane(textArea);
         add(scrollPane, BorderLayout.CENTER);
     }
@@ -33,14 +36,6 @@ public class MessagesView extends SlidingPanel {
 
     @Override
     public List<JToggleButton> getButtons() {
-        List<JToggleButton> buttons = new ArrayList<>();
-
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("images/clipboard.gif"));
-        JToggleButton clipboardBtn = new JToggleButton(icon);
-        clipboardBtn.setToolTipText("Toggle View");
-        clipboardBtn.setFocusable(false);
-        buttons.add(clipboardBtn);
-
-        return buttons;
+        return null;
     }
 }

@@ -19,6 +19,7 @@ public class MainView extends JPanel {
 
     private final NoneSelectedButtonGroup group = new NoneSelectedButtonGroup();
     private final JPanel horizontalButtonsPanel = new JPanel();
+    private final JPanel statusBarPanel;
 
     public MainView() {
         setLayout(new BorderLayout());
@@ -45,13 +46,13 @@ public class MainView extends JPanel {
         caretPositionLabel = new JLabel("n/a");
         caretPositionLabel.setFont(Defaults.SMALL_FONT);
 
-        final JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.LINE_AXIS));
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(1, 6, 2, 6));
-        infoPanel.add(statusLabel);
-        infoPanel.add(Box.createHorizontalGlue());
-        infoPanel.add(caretPositionLabel);
-        bottomPanel.add(infoPanel, BorderLayout.PAGE_END);
+        statusBarPanel = new JPanel();
+        statusBarPanel.setLayout(new BoxLayout(statusBarPanel, BoxLayout.LINE_AXIS));
+        statusBarPanel.setBorder(BorderFactory.createEmptyBorder(1, 6, 2, 6));
+        statusBarPanel.add(statusLabel);
+        statusBarPanel.add(Box.createHorizontalGlue());
+        statusBarPanel.add(caretPositionLabel);
+        bottomPanel.add(statusBarPanel, BorderLayout.PAGE_END);
 
         add(bottomPanel, BorderLayout.PAGE_END);
     }
@@ -62,6 +63,10 @@ public class MainView extends JPanel {
 
     public JLabel getCaretPositionLabel() {
         return caretPositionLabel;
+    }
+
+    public void setStatusBarVisible(boolean visible) {
+        statusBarPanel.setVisible(visible);
     }
 
     public void setTopPanel(JPanel panel) {

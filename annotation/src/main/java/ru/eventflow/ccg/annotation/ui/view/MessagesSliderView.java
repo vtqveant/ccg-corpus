@@ -6,11 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class MessagesView extends SliderPanel {
+public class MessagesSliderView extends SliderPanel {
 
     private final JTextArea textArea = new JTextArea();
 
-    public MessagesView() {
+    public MessagesSliderView() {
         super();
 
         textArea.setEditable(false);

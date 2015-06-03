@@ -21,12 +21,12 @@ public class AnnotationModule extends AbstractModule {
         bind(DataAccessController.class).in(Singleton.class);
 
         bind(MainPresenter.class).in(Singleton.class);
-        bind(TreePresenter.class).in(Singleton.class);
+        bind(CorpusTreePresenter.class).in(Singleton.class);
         bind(TextPresenter.class).in(Singleton.class);
         bind(MenuPresenter.class).in(Singleton.class);
         bind(ContainerPresenter.class).in(Singleton.class);
-        bind(NavigationPresenter.class).in(Singleton.class);
-        bind(MessagesPresenter.class).in(Singleton.class);
+        bind(NavigationSliderPresenter.class).in(Singleton.class);
+        bind(MessagesSliderPresenter.class).in(Singleton.class);
     }
 
     private static class DataManagerProvider implements Provider<DataManager> {

@@ -2,7 +2,7 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.TextSelectedEvent;
-import ru.eventflow.ccg.annotation.ui.view.TreeView;
+import ru.eventflow.ccg.annotation.ui.view.CorpusTreeView;
 import ru.eventflow.ccg.datasource.DataManager;
 import ru.eventflow.ccg.datasource.model.corpus.Text;
 
@@ -13,15 +13,15 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TreePresenter implements Presenter<TreeView> {
+public class CorpusTreePresenter implements Presenter<CorpusTreeView> {
 
-    private TreeView view;
+    private CorpusTreeView view;
     private EventBus eventBus;
     private DataManager dataManager;
 
     @Inject
-    public TreePresenter(final EventBus eventBus, final DataManager dataManager) {
-        this.view = new TreeView();
+    public CorpusTreePresenter(final EventBus eventBus, final DataManager dataManager) {
+        this.view = new CorpusTreeView();
         this.eventBus = eventBus;
         this.dataManager = dataManager;
         init();
@@ -67,7 +67,7 @@ public class TreePresenter implements Presenter<TreeView> {
     }
 
     @Override
-    public TreeView getView() {
+    public CorpusTreeView getView() {
         return view;
     }
 }

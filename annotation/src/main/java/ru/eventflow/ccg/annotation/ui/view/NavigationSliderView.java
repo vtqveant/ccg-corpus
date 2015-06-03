@@ -5,13 +5,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationView extends SliderPanel {
+public class NavigationSliderView extends SliderPanel {
 
     private final JSplitPane splitPane;
     private JToggleButton annotatedBtn;
     private JToggleButton ambiguousBtn;
 
-    public NavigationView() {
+    public NavigationSliderView() {
         super();
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
         add(splitPane, BorderLayout.CENTER);

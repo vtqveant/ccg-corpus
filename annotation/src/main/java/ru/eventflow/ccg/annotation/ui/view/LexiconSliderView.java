@@ -5,13 +5,23 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LexiconView extends SliderPanel {
+public class LexiconSliderView extends SliderPanel {
 
-    public LexiconView() {
+    private final JSplitPane splitPane;
+
+    public LexiconSliderView() {
         super();
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
+        splitPane.setDividerLocation(0.5);
+        add(splitPane, BorderLayout.CENTER);
+    }
 
-        JLabel label = new JLabel("dummy");
-        add(label, BorderLayout.CENTER);
+    public void setLeftComponent(Component component) {
+        splitPane.setLeftComponent(component);
+    }
+
+    public void setRightComponent(Component component) {
+        splitPane.setRightComponent(component);
     }
 
     @Override

@@ -1,27 +1,22 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import ru.eventflow.ccg.annotation.ui.Defaults;
-import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class TextView extends JPanel {
+public class ConcordanceView extends JPanel {
 
-    private JTable table;
-
-    public TextView() {
+    public ConcordanceView() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(200, 150));
 
         // setup the model
-        TableModel model = new SentenceTableModel();
-        table = new JTable(model);
+        TableModel model = new ContextTableModel();
+        JTable table = new JTable(model);
 
         ListSelectionModel selectionModel = new DefaultListSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -33,6 +28,7 @@ public class TextView extends JPanel {
         table.setShowGrid(false);
 
         table.getColumnModel().getColumn(0).setCellRenderer(new IdRenderer());
+        table.getColumnModel().getColumn(2).setCellRenderer(new IdRenderer());
 
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -41,33 +37,30 @@ public class TextView extends JPanel {
         headerRenderer.setForeground(Color.DARK_GRAY);
         table.getTableHeader().setDefaultRenderer(headerRenderer);
         table.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(45);
+        table.getTableHeader().getColumnModel().getColumn(2).setMaxWidth(45);
 
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    public JTable getTable() {
-        return table;
-    }
-
-    public class SentenceTableModel extends AbstractTableModel {
-
-        private List<Sentence> sentences = new ArrayList<>();
-
+    // TODO implement context model
+    public class ContextTableModel extends AbstractTableModel {
         @Override
         public int getRowCount() {
-            return sentences.size();
-        }
-
-        @Override
-        public int getColumnCount() {
             return 2;
         }
 
         @Override
+        public int getColumnCount() {
+            return 3;
+        }
+
+        @Override
         public String getColumnName(int column) {
-            if (column == 0) return "Id";
-            if (column == 1) return "Source";
+            if (column == 0) return "Hit";
+            if (column == 1) return "Context";
+            if (column == 2) return "Text Id";
             return "";
         }
 
@@ -77,15 +70,12 @@ public class TextView extends JPanel {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            if (columnIndex == 0) {
-                return sentences.get(rowIndex).getId();
-            } else {
-                return sentences.get(rowIndex).getSource();
-            }
-        }
-
-        public List<Sentence> getSentences() {
-            return sentences;
+            if (columnIndex == 0) return "123";
+            if (columnIndex == 1) return "На пятой пресс-конференции было аккредитовано";
+            if (columnIndex == 2) return "23645";
+            return null;
+            // TODO implement
         }
     }
+
 }

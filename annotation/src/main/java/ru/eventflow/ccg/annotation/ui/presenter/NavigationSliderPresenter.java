@@ -3,21 +3,21 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
-import ru.eventflow.ccg.annotation.ui.view.NavigationView;
+import ru.eventflow.ccg.annotation.ui.view.NavigationSliderView;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-public class NavigationPresenter implements Presenter<NavigationView> {
+public class NavigationSliderPresenter implements Presenter<NavigationSliderView> {
 
-    private final NavigationView view;
+    private final NavigationSliderView view;
 
     @Inject
-    public NavigationPresenter(final EventBus eventBus,
-                               final TreePresenter treePresenter,
-                               final TextPresenter textPresenter) {
-        view = new NavigationView();
-        view.setLeftComponent(treePresenter.getView());
+    public NavigationSliderPresenter(final EventBus eventBus,
+                                     final CorpusTreePresenter corpusTreePresenter,
+                                     final TextPresenter textPresenter) {
+        view = new NavigationSliderView();
+        view.setLeftComponent(corpusTreePresenter.getView());
         view.setRightComponent(textPresenter.getView());
 
         view.getAmbiguousBtn().addItemListener(new ItemListener() {
@@ -38,7 +38,7 @@ public class NavigationPresenter implements Presenter<NavigationView> {
     }
 
     @Override
-    public NavigationView getView() {
+    public NavigationSliderView getView() {
         return view;
     }
 }

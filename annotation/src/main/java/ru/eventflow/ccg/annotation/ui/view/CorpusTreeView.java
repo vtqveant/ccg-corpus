@@ -10,11 +10,11 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 
-public class TreeView extends JPanel {
+public class CorpusTreeView extends JPanel {
 
     private final JTree tree;
 
-    public TreeView() {
+    public CorpusTreeView() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(200, 150));
 

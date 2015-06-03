@@ -4,15 +4,15 @@ import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEventHandler;
-import ru.eventflow.ccg.annotation.ui.view.MessagesView;
+import ru.eventflow.ccg.annotation.ui.view.MessagesSliderView;
 
-public class MessagesPresenter implements Presenter<MessagesView> {
+public class MessagesSliderPresenter implements Presenter<MessagesSliderView> {
 
-    private MessagesView view;
+    private MessagesSliderView view;
 
     @Inject
-    public MessagesPresenter(final EventBus eventBus) {
-        this.view = new MessagesView();
+    public MessagesSliderPresenter(final EventBus eventBus) {
+        this.view = new MessagesSliderView();
 
         eventBus.addHandler(StatusUpdateEvent.TYPE, new StatusUpdateEventHandler() {
             @Override
@@ -23,7 +23,7 @@ public class MessagesPresenter implements Presenter<MessagesView> {
     }
 
     @Override
-    public MessagesView getView() {
+    public MessagesSliderView getView() {
         return view;
     }
 }

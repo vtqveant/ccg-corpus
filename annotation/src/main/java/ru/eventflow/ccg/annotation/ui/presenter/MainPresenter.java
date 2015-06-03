@@ -13,9 +13,9 @@ public class MainPresenter implements Presenter<MainView> {
     @Inject
     public MainPresenter(final EventBus eventBus,
                          final ContainerPresenter containerPresenter,
-                         final NavigationPresenter navigationPresenter,
-                         final LexiconPresenter lexiconPresenter,
-                         final MessagesPresenter messagesPresenter) {
+                         final NavigationSliderPresenter navigationPresenter,
+                         final LexiconSliderPresenter lexiconPresenter,
+                         final MessagesSliderPresenter messagesPresenter) {
         this.eventBus = eventBus;
         this.view = new MainView();
         this.view.setTopPanel(containerPresenter.getView());

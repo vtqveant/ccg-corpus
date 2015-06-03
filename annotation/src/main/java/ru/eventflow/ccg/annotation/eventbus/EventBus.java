@@ -1,6 +1,4 @@
-package ru.eventflow.ccg.annotation;
-
-import com.pennychecker.eventbus.HandlerManager;
+package ru.eventflow.ccg.annotation.eventbus;
 
 public class EventBus extends HandlerManager {
     public EventBus() {

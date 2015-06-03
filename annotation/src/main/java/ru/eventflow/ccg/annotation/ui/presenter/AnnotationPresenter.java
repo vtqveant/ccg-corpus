@@ -1,6 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.presenter;
 
-import ru.eventflow.ccg.annotation.EventBus;
+import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.EditorCaretEvent;
 import ru.eventflow.ccg.annotation.ui.view.AnnotationView;
 import ru.eventflow.ccg.datasource.model.corpus.Sentence;

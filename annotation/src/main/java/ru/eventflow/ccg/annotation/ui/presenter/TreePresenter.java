@@ -1,6 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.presenter;
 
-import ru.eventflow.ccg.annotation.EventBus;
+import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.TextSelectedEvent;
 import ru.eventflow.ccg.annotation.ui.view.TreeView;
 import ru.eventflow.ccg.datasource.DataManager;

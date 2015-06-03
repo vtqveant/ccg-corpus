@@ -1,6 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.event;
 
-import com.pennychecker.eventbus.Event;
+import ru.eventflow.ccg.annotation.eventbus.Event;
 import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 public class TextSelectedEvent extends Event<TextSelectedEventHandler> {

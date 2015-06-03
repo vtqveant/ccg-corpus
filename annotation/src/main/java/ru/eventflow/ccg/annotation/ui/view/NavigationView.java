@@ -2,7 +2,7 @@ package ru.eventflow.ccg.annotation.ui.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NavigationView extends SlidingPanel {

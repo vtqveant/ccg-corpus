@@ -1,5 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
+import ru.eventflow.ccg.annotation.ui.event.Setting;
+
 import javax.swing.*;
 
 public class MenuView extends JMenuBar {
@@ -35,9 +37,9 @@ public class MenuView extends JMenuBar {
         add(editMenu);
 
         JMenu viewMenu = new JMenu("View");
-        glossesMenuItem = new SettingMenuItem("Glosses           ", true);
+        glossesMenuItem = new SettingMenuItem("Glosses           ", true, Setting.GLOSSES);
         viewMenu.add(glossesMenuItem);
-        statusBarMenuItem = new SettingMenuItem("Status Bar        ", true);
+        statusBarMenuItem = new SettingMenuItem("Status Bar        ", true, Setting.STATUSBAR);
         viewMenu.add(statusBarMenuItem);
         add(viewMenu);
 
@@ -88,10 +90,16 @@ public class MenuView extends JMenuBar {
      */
     public class SettingMenuItem extends JMenuItem {
         private boolean checked;
+        private Setting setting;
 
-        public SettingMenuItem(String text, boolean checked) {
+        public SettingMenuItem(String text, boolean checked, Setting setting) {
             super(text);
+            this.setting = setting;
             setChecked(checked);
+        }
+
+        public Setting getSetting() {
+            return setting;
         }
 
         public boolean isChecked() {

@@ -27,7 +27,6 @@ public class AnnotationPresenter implements Presenter<AnnotationView>, FocusList
 
         this.view.getTextPane().addCaretListener(this);
         this.view.getTextPane().addFocusListener(this);
-
     }
 
     @Override

@@ -4,55 +4,67 @@ import javax.swing.*;
 
 public class MenuView extends JMenuBar {
 
+    private static final ImageIcon TICK_ICON = new ImageIcon(ClassLoader.getSystemResource("images/tick.gif"));
+    private static final ImageIcon PLACEHOLDER_ICON = new ImageIcon(ClassLoader.getSystemResource("images/placeholder.png"));
     private final JMenuItem firstMenuItem;
     private final JMenuItem secondMenuItem;
+    private final SettingMenuItem glossesMenuItem;
+    private final SettingMenuItem statusBarMenuItem;
+
 
     public MenuView() {
         setBorder(BorderFactory.createEmptyBorder());
 
-        JMenu menu1 = new JMenu("File");
-        firstMenuItem = new JMenuItem("Settings  ");
-        menu1.add(firstMenuItem);
-        secondMenuItem = new JMenuItem("Exit      ");
-        menu1.add(secondMenuItem);
-        add(menu1);
+        JMenu fileMenu = new JMenu("File");
+        firstMenuItem = new JMenuItem("Settings          ", PLACEHOLDER_ICON);
+        fileMenu.add(firstMenuItem);
+        secondMenuItem = new JMenuItem("Exit              ", PLACEHOLDER_ICON);
+        fileMenu.add(secondMenuItem);
+        add(fileMenu);
 
-        JMenu menu2 = new JMenu("Edit");
+        JMenu editMenu = new JMenu("Edit");
         ImageIcon undoIcon = new ImageIcon(ClassLoader.getSystemResource("images/undo.png"));
-        menu2.add(new JMenuItem("Undo      ", undoIcon));
+        editMenu.add(new JMenuItem("Undo              ", undoIcon));
         ImageIcon redoIcon = new ImageIcon(ClassLoader.getSystemResource("images/redo.png"));
-        menu2.add(new JMenuItem("Redo      ", redoIcon));
-        menu2.add(new JSeparator());
-        menu2.add(new JMenuItem("Cut       "));
-        menu2.add(new JMenuItem("Copy      "));
-        menu2.add(new JMenuItem("Paste     "));
-        menu2.add(new JMenuItem("Delete    "));
-        add(menu2);
+        editMenu.add(new JMenuItem("Redo              ", redoIcon));
+        editMenu.add(new JSeparator());
+        editMenu.add(new JMenuItem("Cut               ", PLACEHOLDER_ICON));
+        editMenu.add(new JMenuItem("Copy              ", PLACEHOLDER_ICON));
+        editMenu.add(new JMenuItem("Paste             ", PLACEHOLDER_ICON));
+        editMenu.add(new JMenuItem("Delete            ", PLACEHOLDER_ICON));
+        add(editMenu);
+
+        JMenu viewMenu = new JMenu("View");
+        glossesMenuItem = new SettingMenuItem("Glosses           ", true);
+        viewMenu.add(glossesMenuItem);
+        statusBarMenuItem = new SettingMenuItem("Status Bar        ", true);
+        viewMenu.add(statusBarMenuItem);
+        add(viewMenu);
 
         // like in CoqIDE
-        JMenu menu3 = new JMenu("Navigation");
+        JMenu navigationMenu = new JMenu("Navigation");
         ImageIcon forwardIcon = new ImageIcon(ClassLoader.getSystemResource("images/forward.png"));
-        menu3.add(new JMenuItem("Forward   ", forwardIcon));
+        navigationMenu.add(new JMenuItem("Forward           ", forwardIcon));
         ImageIcon backwardIcon = new ImageIcon(ClassLoader.getSystemResource("images/backward.png"));
-        menu3.add(new JMenuItem("Backward  ", backwardIcon));
-        menu3.add(new JMenuItem("Go to     "));
-        menu3.add(new JMenuItem("Start     "));
-        menu3.add(new JMenuItem("End       "));
-        menu3.add(new JMenuItem("Interrupt "));
-        menu3.add(new JMenuItem("Hide      "));
-        add(menu3);
+        navigationMenu.add(new JMenuItem("Backward          ", backwardIcon));
+        navigationMenu.add(new JMenuItem("Go to             ", PLACEHOLDER_ICON));
+        navigationMenu.add(new JMenuItem("Start             ", PLACEHOLDER_ICON));
+        navigationMenu.add(new JMenuItem("End               ", PLACEHOLDER_ICON));
+        navigationMenu.add(new JMenuItem("Interrupt         ", PLACEHOLDER_ICON));
+        navigationMenu.add(new JMenuItem("Hide              ", PLACEHOLDER_ICON));
+        add(navigationMenu);
 
-        JMenu menu4 = new JMenu("Tactics");
-        menu4.add(new JMenuItem("simpl      "));
-        menu4.add(new JMenuItem("reflexivity"));
-        menu4.add(new JMenuItem("admit      "));
-        add(menu4);
+        JMenu tacticsMenu = new JMenu("Tactics");
+        tacticsMenu.add(new JMenuItem("simpl             ", PLACEHOLDER_ICON));
+        tacticsMenu.add(new JMenuItem("reflexivity       ", PLACEHOLDER_ICON));
+        tacticsMenu.add(new JMenuItem("admit             ", PLACEHOLDER_ICON));
+        add(tacticsMenu);
 
-        JMenu menu5 = new JMenu("Help");
-        menu5.add(new JMenuItem("Manual   "));
-        menu5.add(new JSeparator());
-        menu5.add(new JMenuItem("About    "));
-        add(menu5);
+        JMenu helpMenu = new JMenu("Help");
+        helpMenu.add(new JMenuItem("Manual            ", PLACEHOLDER_ICON));
+        helpMenu.add(new JSeparator());
+        helpMenu.add(new JMenuItem("About             ", PLACEHOLDER_ICON));
+        add(helpMenu);
     }
 
     public JMenuItem getFirstMenuItem() {
@@ -61,5 +73,34 @@ public class MenuView extends JMenuBar {
 
     public JMenuItem getSecondMenuItem() {
         return secondMenuItem;
+    }
+
+    public SettingMenuItem getGlossesMenuItem() {
+        return glossesMenuItem;
+    }
+
+    public SettingMenuItem getStatusBarMenuItem() {
+        return statusBarMenuItem;
+    }
+
+    /**
+     * to emulate behaviour of the ugly JCheckBoxMenuItem
+     */
+    public class SettingMenuItem extends JMenuItem {
+        private boolean checked;
+
+        public SettingMenuItem(String text, boolean checked) {
+            super(text);
+            setChecked(checked);
+        }
+
+        public boolean isChecked() {
+            return checked;
+        }
+
+        public void setChecked(boolean checked) {
+            this.checked = checked;
+            setIcon(checked ? TICK_ICON : PLACEHOLDER_ICON);
+        }
     }
 }

@@ -2,10 +2,7 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
-import ru.eventflow.ccg.annotation.ui.event.EditorCaretEvent;
-import ru.eventflow.ccg.annotation.ui.event.EditorCaretEventHandler;
-import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
-import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEventHandler;
+import ru.eventflow.ccg.annotation.ui.event.*;
 import ru.eventflow.ccg.annotation.ui.view.MainView;
 
 public class MainPresenter implements Presenter<MainView> {
@@ -43,6 +40,15 @@ public class MainPresenter implements Presenter<MainView> {
                 int column = e.getColumn();
                 String text = (row == -1 && column == -1) ? "n/a" : (row + ":" + column);
                 view.getCaretPositionLabel().setText(text);
+            }
+        });
+
+        this.eventBus.addHandler(SettingsEvent.TYPE, new SettingsEventHandler() {
+            @Override
+            public void onEvent(SettingsEvent e) {
+                if (e.getSetting() == Setting.STATUSBAR) {
+                    view.setStatusBarVisible(e.isEnabled());
+                }
             }
         });
     }

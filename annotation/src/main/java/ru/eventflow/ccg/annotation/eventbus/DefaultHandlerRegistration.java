@@ -13,15 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.pennychecker.eventbus;
-
-import com.pennychecker.eventbus.Event.Type;
+package ru.eventflow.ccg.annotation.eventbus;
 
 public class DefaultHandlerRegistration implements HandlerRegistration {
 
 	private final HandlerManager manager;
 	private final EventHandler handler;
-	private final Type<?> type;
+	private final Event.Type<?> type;
 
 	/**
 	 * Creates a new handler registration.
@@ -31,7 +29,7 @@ public class DefaultHandlerRegistration implements HandlerRegistration {
 	 * @param type the event type
 	 * @param handler the handler
 	 */
-	protected <H extends EventHandler> DefaultHandlerRegistration(HandlerManager manager, Type<H> type, H handler) {
+	protected <H extends EventHandler> DefaultHandlerRegistration(HandlerManager manager, Event.Type<H> type, H handler) {
 		this.manager = manager;
 		this.handler = handler;
 		this.type = type;
@@ -46,7 +44,7 @@ public class DefaultHandlerRegistration implements HandlerRegistration {
 	 */
 	@SuppressWarnings("unchecked")
 	public void removeHandler() {
-		manager.removeHandler((Type<EventHandler>) type, handler);
+		manager.removeHandler((Event.Type<EventHandler>) type, handler);
 	}
 
 }

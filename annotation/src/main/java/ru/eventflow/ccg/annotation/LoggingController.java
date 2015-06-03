@@ -1,6 +1,7 @@
 package ru.eventflow.ccg.annotation;
 
 import com.google.inject.Inject;
+import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEventHandler;
 

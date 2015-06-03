@@ -1,7 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
-import ru.eventflow.ccg.annotation.EventBus;
+import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.event.TabEvent;
 import ru.eventflow.ccg.annotation.ui.event.TextSelectedEvent;

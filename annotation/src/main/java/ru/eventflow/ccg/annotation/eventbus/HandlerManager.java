@@ -13,9 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.pennychecker.eventbus;
+package ru.eventflow.ccg.annotation.eventbus;
 
-import com.pennychecker.eventbus.Event.Type;
+import ru.eventflow.ccg.annotation.eventbus.Event.Type;
 
 import java.util.ArrayList;
 import java.util.HashMap;

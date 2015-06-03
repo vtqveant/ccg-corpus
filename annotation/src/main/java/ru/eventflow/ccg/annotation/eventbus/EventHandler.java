@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.pennychecker.eventbus;
+package ru.eventflow.ccg.annotation.eventbus;
 
 public interface EventHandler {
 }

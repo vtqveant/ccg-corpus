@@ -3,6 +3,7 @@ package ru.eventflow.ccg.annotation;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
+import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.presenter.*;
 import ru.eventflow.ccg.datasource.DataManager;
 import ru.eventflow.ccg.datasource.DataManagerImpl;

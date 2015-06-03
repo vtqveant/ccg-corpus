@@ -1,6 +1,7 @@
 package ru.eventflow.ccg.annotation;
 
 import com.google.inject.Inject;
+import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.datasource.DataManager;
 
 public class DataAccessController {

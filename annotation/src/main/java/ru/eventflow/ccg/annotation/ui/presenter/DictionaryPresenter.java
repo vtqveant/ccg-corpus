@@ -1,7 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
-import ru.eventflow.ccg.annotation.EventBus;
+import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.view.DictionaryView;
 
 public class DictionaryPresenter implements Presenter<DictionaryView> {

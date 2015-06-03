@@ -3,7 +3,7 @@ package ru.eventflow.ccg.annotation.ui;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.Before;
-import ru.eventflow.ccg.annotation.EventBus;
+import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.presenter.TreePresenter;
 
 public class TreePresenterTest {

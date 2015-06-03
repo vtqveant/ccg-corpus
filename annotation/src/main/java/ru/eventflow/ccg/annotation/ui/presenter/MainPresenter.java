@@ -14,14 +14,14 @@ public class MainPresenter implements Presenter<MainView> {
     public MainPresenter(final EventBus eventBus,
                          final ContainerPresenter containerPresenter,
                          final NavigationPresenter navigationPresenter,
-                         final DictionaryPresenter dictionaryPresenter,
+                         final LexiconPresenter lexiconPresenter,
                          final MessagesPresenter messagesPresenter) {
         this.eventBus = eventBus;
         this.view = new MainView();
         this.view.setTopPanel(containerPresenter.getView());
-        this.view.addSlidingPanel(messagesPresenter.getView());
-        this.view.addSlidingPanel(dictionaryPresenter.getView());
-        this.view.addSlidingPanel(navigationPresenter.getView());
+        this.view.addSliderPanel(messagesPresenter.getView());
+        this.view.addSliderPanel(lexiconPresenter.getView());
+        this.view.addSliderPanel(navigationPresenter.getView());
         init();
     }
 

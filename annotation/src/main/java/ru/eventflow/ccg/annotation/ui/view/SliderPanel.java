@@ -6,9 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public abstract class SlidingPanel extends JPanel {
+public abstract class SliderPanel extends JPanel {
 
-    public SlidingPanel() {
+    public SliderPanel() {
         setLayout(new BorderLayout());
 
         JLabel titleLabel = new JLabel(getTitle());
@@ -44,8 +44,8 @@ public abstract class SlidingPanel extends JPanel {
     abstract public String getTitle();
 
     /**
-     * This is called in the constructor
+     * These buttons are displayed on the right of the slider panel header.
+     * This is called in the constructor.
      */
     abstract public List<JToggleButton> getButtons();
-
 }

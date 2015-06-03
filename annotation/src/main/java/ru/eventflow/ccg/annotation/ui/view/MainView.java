@@ -73,7 +73,7 @@ public class MainView extends JPanel {
         mainSplitPane.setTopComponent(panel);
     }
 
-    public void addSlidingPanel(SlidingPanel panel) {
+    public void addSliderPanel(SliderPanel panel) {
         JToggleButton button = new JToggleButton(panel.getTitle());
         button.setFocusable(false);
         button.setIcon(panel.getIcon());

@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class MessagesView extends SlidingPanel {
+public class MessagesView extends SliderPanel {
 
     private final JTextArea textArea = new JTextArea();
 

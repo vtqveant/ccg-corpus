@@ -5,9 +5,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DictionaryView extends SlidingPanel {
+public class LexiconView extends SliderPanel {
 
-    public DictionaryView() {
+    public LexiconView() {
         super();
 
         JLabel label = new JLabel("dummy");
@@ -21,7 +21,7 @@ public class DictionaryView extends SlidingPanel {
 
     @Override
     public String getTitle() {
-        return "Dictionary";
+        return "Lexicon";
     }
 
     @Override

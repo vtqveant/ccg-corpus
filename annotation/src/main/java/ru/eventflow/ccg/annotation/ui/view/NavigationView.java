@@ -5,7 +5,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationView extends SlidingPanel {
+public class NavigationView extends SliderPanel {
 
     private final JSplitPane splitPane;
     private JToggleButton annotatedBtn;

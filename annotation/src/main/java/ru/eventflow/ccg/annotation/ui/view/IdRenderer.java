@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
 public class IdRenderer extends DefaultTableCellRenderer {
+    @Override
     public void setValue(Object value) {
         setText(String.valueOf(value));
         setFont(Defaults.SMALL_FONT);

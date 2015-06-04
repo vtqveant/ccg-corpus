@@ -28,7 +28,7 @@ public class SQLDataBridge implements DataBridge {
                 conn.setAutoCommit(false);
 
                 stVariant = conn.prepareStatement("INSERT INTO corpus.variant (token_id, form_id) VALUES (?, ?)");
-                stToken = conn.prepareStatement("INSERT INTO corpus.token (id, orthography, revision, sentence_id) VALUES (?, ?, ?)");
+                stToken = conn.prepareStatement("INSERT INTO corpus.token (id, orthography, revision, sentence_id) VALUES (?, ?, ?, ?)");
                 stSentence = conn.prepareStatement("INSERT INTO corpus.sentence (id, source, paragraph_id) VALUES (?, ?, ?)");
                 stParagraph = conn.prepareStatement("INSERT INTO corpus.paragraph (id, text_id) VALUES (?, ?)");
                 stText = conn.prepareStatement("INSERT INTO corpus.text (id, name, parent_id) VALUES (?, ?, ?)");

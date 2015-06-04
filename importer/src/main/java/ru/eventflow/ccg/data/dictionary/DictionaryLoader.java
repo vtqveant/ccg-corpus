@@ -12,8 +12,8 @@ import java.sql.*;
 public class DictionaryLoader {
 
     public static final String URL = "jdbc:postgresql://localhost/corpus?user=corpus&password=corpus";
-//    public static final String RESOURSE_LOCATION = "file:///home/transcend/code/NLU-RG/ccg-corpus/data/resources/dict.opcorpora.xml";
-    public static final String RESOURSE_LOCATION = "file:///C:\\KOSTA\\code\\ccg-corpus\\data\\resources\\dict.opcorpora.xml";
+    public static final String RESOURSE_LOCATION = "file:///home/transcend/code/NLU-RG/ccg-corpus/data/resources/dict.opcorpora.xml";
+//    public static final String RESOURSE_LOCATION = "file:///C:\\KOSTA\\code\\ccg-corpus\\data\\resources\\dict.opcorpora.xml";
 
     public static final int CHUNK_SIZE = 5000;
 

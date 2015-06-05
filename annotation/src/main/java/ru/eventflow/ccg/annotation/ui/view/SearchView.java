@@ -1,51 +1,40 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import org.jdesktop.swingx.JXTreeTable;
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
-import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 import ru.eventflow.ccg.annotation.ui.Defaults;
+import ru.eventflow.ccg.annotation.ui.model.LexiconTreeTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-/**
- * SwingX https://www.informit.com/guides/content.aspx?g=java&seqNum=528
- */
 public class SearchView extends JPanel {
 
     private static final SecondaryTableCellRenderer secondaryCellRenderer = new SecondaryTableCellRenderer();
-    private static final String[] WARMUP = new String[]{
-            "", "a", "б", "в", "г", "д", "е", "ё", "ж", "з", "и", "й", "к", "л", "м", "н", "о",
-            "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я",
-            "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"
-    };
-    private final JComboBox<String> combo;
-    private final DefaultComboBoxModel<String> comboBoxModel;
+    private final JTextField searchTextField;
+    private final JButton searchBtn;
+    private final JXTreeTable treeTable;
 
     public SearchView() {
         setLayout(new BorderLayout());
-        setMinimumSize(new Dimension(200, 150));
+        setMinimumSize(new Dimension(300, 150));
 
-        // TODO prefetch?
-        comboBoxModel = new DefaultComboBoxModel<String>();
-        for (String s : WARMUP) {
-            comboBoxModel.addElement(s);
-        }
+        JPanel searchPanel = new JPanel(new BorderLayout());
+        searchTextField = new JTextField();
+        searchTextField.setEditable(true);
+        searchTextField.setFont(Defaults.SMALL_FONT);
+        searchPanel.add(searchTextField, BorderLayout.CENTER);
 
-        combo = new JComboBox<String>();
-        combo.setEditable(true);
-        combo.setFont(Defaults.SMALL_FONT);
-        combo.setModel(comboBoxModel);
-        AutoCompleteDecorator.decorate(combo);
-        add(combo, BorderLayout.PAGE_START);
+        ImageIcon searchIcon = new ImageIcon(ClassLoader.getSystemResource("images/magnify.gif"));
+        searchBtn = new JButton(searchIcon);
+        searchBtn.setFocusable(false);
+        searchBtn.setSize(16, 16);
+        searchPanel.add(searchBtn, BorderLayout.EAST);
+        add(searchPanel, BorderLayout.PAGE_START);
 
         LexiconTreeTableModel treeTableModel = new LexiconTreeTableModel();
-        JXTreeTable treeTable = new JXTreeTable(treeTableModel);
+        treeTable = new JXTreeTable(treeTableModel);
         treeTable.setFont(Defaults.SMALL_FONT);
         treeTable.getColumnModel().getColumn(1).setCellRenderer(secondaryCellRenderer);
         treeTable.getColumnModel().getColumn(2).setCellRenderer(secondaryCellRenderer);
@@ -57,23 +46,27 @@ public class SearchView extends JPanel {
         headerRenderer.setBackground(new Color(245, 245, 245));
         headerRenderer.setForeground(Color.DARK_GRAY);
         treeTable.getTableHeader().setDefaultRenderer(headerRenderer);
-        treeTable.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(80);
-        treeTable.getTableHeader().getColumnModel().getColumn(2).setMaxWidth(80);
+        treeTable.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(100);
+        treeTable.getTableHeader().getColumnModel().getColumn(2).setMaxWidth(100);
         treeTable.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(45);
 
         treeTable.setTreeCellRenderer(new LexiconTreeCellRenderer());
 
         JScrollPane scrollPane = new JScrollPane(treeTable);
-        scrollPane.setPreferredSize(new Dimension(200, 300));
+        scrollPane.setPreferredSize(new Dimension(300, 300));
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    public JComboBox getCombo() {
-        return combo;
+    public JTextField getSearchField() {
+        return searchTextField;
     }
 
-    public DefaultComboBoxModel<String> getComboBoxModel() {
-        return comboBoxModel;
+    public JButton getSearchBtn() {
+        return searchBtn;
+    }
+
+    public JXTreeTable getTreeTable() {
+        return treeTable;
     }
 
     private class LexiconTreeCellRenderer extends DefaultTreeCellRenderer {
@@ -84,161 +77,4 @@ public class SearchView extends JPanel {
         }
     }
 
-    class LexiconTreeNode {
-        protected String form;
-        protected String lemma;
-        protected int count;
-        protected java.util.List<String> grammemes = new ArrayList<>();
-        protected java.util.List<LexiconTreeNode> children = new ArrayList<>();
-
-        public LexiconTreeNode() {
-        }
-
-        public LexiconTreeNode(String form, String lemma, java.util.List<String> grammemes, int count) {
-            this.count = count;
-            this.form = form;
-            this.lemma = lemma;
-            this.grammemes.addAll(grammemes);
-        }
-
-        public String getForm() {
-            return form;
-        }
-
-        public String getLemma() {
-            return lemma;
-        }
-
-        public List<LexiconTreeNode> getChildren() {
-            return children;
-        }
-
-        public int getCount() {
-            return count;
-        }
-
-        public List<String> getGrammemes() {
-            return grammemes;
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            for (String grammeme : grammemes) {
-                sb.append(grammeme);
-                sb.append(", ");
-            }
-            if (grammemes.size() > 0) sb.delete(sb.length() - 2, sb.length() - 1);
-            return sb.toString();
-        }
-    }
-
-    private class SyntacticCategoryTreeNode extends LexiconTreeNode {
-
-        private String category;
-
-        public SyntacticCategoryTreeNode(String category, int count) {
-            this.category = category;
-            this.count = count;
-        }
-
-        @Override
-        public String getForm() {
-            return "";
-        }
-
-        @Override
-        public String getLemma() {
-            return "";
-        }
-
-        @Override
-        public String toString() {
-            return category;
-        }
-    }
-
-    private class LexiconTreeTableModel extends AbstractTreeTableModel {
-        private LexiconTreeNode root;
-
-        public LexiconTreeTableModel() {
-            root = new LexiconTreeNode(null, null, new ArrayList<String>(), -1);
-
-            LexiconTreeNode form1 = new LexiconTreeNode("ноги", "нога", Arrays.asList("sg", "gen", "f"), 10);
-            form1.getChildren().add(new SyntacticCategoryTreeNode("n", 5));
-            form1.getChildren().add(new SyntacticCategoryTreeNode("n/n", 3));
-            form1.getChildren().add(new SyntacticCategoryTreeNode("np", 2));
-            root.getChildren().add(form1);
-
-            LexiconTreeNode form2 = new LexiconTreeNode("ноги", "нога", Arrays.asList("pl", "nom", "f"), 15);
-            form2.getChildren().add(new SyntacticCategoryTreeNode("n", 10));
-            form2.getChildren().add(new SyntacticCategoryTreeNode("n/n", 5));
-            root.getChildren().add(form2);
-        }
-
-        @Override
-        public int getColumnCount() {
-            return 4;
-        }
-
-        @Override
-        public String getColumnName(int column) {
-            switch (column) {
-                case 0:
-                    return "Syntactic Category";
-                case 1:
-                    return "Form";
-                case 2:
-                    return "Lemma";
-                case 3:
-                    return "Count";
-                default:
-                    return "Unknown";
-            }
-        }
-
-        @Override
-        public Object getValueAt(Object node, int column) {
-            LexiconTreeNode n = (LexiconTreeNode) node;
-            if (column == 0) return n.toString();
-            if (column == 1) return n.getForm();
-            if (column == 2) return n.getLemma();
-            if (column == 3) return n.getCount();
-            return null;
-        }
-
-        @Override
-        public Object getChild(Object node, int index) {
-            LexiconTreeNode treenode = (LexiconTreeNode) node;
-            return treenode.getChildren().get(index);
-        }
-
-        @Override
-        public int getChildCount(Object parent) {
-            LexiconTreeNode treenode = (LexiconTreeNode) parent;
-            return treenode.getChildren().size();
-        }
-
-        @Override
-        public int getIndexOfChild(Object parent, Object child) {
-            LexiconTreeNode treenode = (LexiconTreeNode) parent;
-            for (int i = 0; i > treenode.getChildren().size(); i++) {
-                if (treenode.getChildren().get(i) == child) {
-                    return i;
-                }
-            }
-            return 0;
-        }
-
-        @Override
-        public boolean isLeaf(Object node) {
-            LexiconTreeNode treenode = (LexiconTreeNode) node;
-            return treenode.getChildren().size() == 0;
-        }
-
-        @Override
-        public Object getRoot() {
-            return root;
-        }
-    }
 }

@@ -31,6 +31,7 @@ public class DataManagerImpl implements DataManager {
         return query.getResultList();
     }
 
+    // TODO здесь баг, grammemes.addAll компрометирует управляемый объект
     public Map<Form, List<Grammeme>> getGrammemes(String form) {
         TypedQuery<Form> query = entityManager.createQuery("SELECT x FROM Form x WHERE x.orthography = :orthography", Form.class);
         query.setParameter("orthography", form);

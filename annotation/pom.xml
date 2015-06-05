@@ -24,9 +24,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.swinglabs</groupId>
-            <artifactId>swingx</artifactId>
-            <version>1.6.1</version>
+            <groupId>org.swinglabs.swingx</groupId>
+            <artifactId>swingx-core</artifactId>
+            <version>1.6.5-1</version>
         </dependency>
         <dependency>
             <groupId>com.jtattoo</groupId>

@@ -6,7 +6,6 @@ import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +29,15 @@ public class BootstrapDBTest {
             for (Grammeme g : entry.getValue()) {
                 System.out.println('\t' + g.getName() + " - " + g.getDescription());
             }
+        }
+    }
+
+    @Test
+    public void testFormAutocomplete() {
+        DataManagerImpl dataManager = new DataManagerImpl(DataSource.DEFAULT);
+        List<String> results = dataManager.getOrthographies("ног");
+        for (String orthography : results) {
+            System.out.println(orthography);
         }
     }
 

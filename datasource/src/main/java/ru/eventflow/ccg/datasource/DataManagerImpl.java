@@ -23,6 +23,14 @@ public class DataManagerImpl implements DataManager {
         return entityManager.createQuery("SELECT x FROM Text x ORDER BY x.id ASC", Text.class).getResultList();
     }
 
+    public List<String> getOrthographies(String prefix) {
+        String q = "SELECT DISTINCT x.orthography FROM Form x WHERE x.lemma = FALSE AND x.orthography LIKE :pattern ORDER BY x.orthography ASC";
+        TypedQuery<String> query = entityManager.createQuery(q, String.class);
+        query.setMaxResults(50);
+        query.setParameter("pattern", prefix + '%');
+        return query.getResultList();
+    }
+
     public Map<Form, List<Grammeme>> getGrammemes(String form) {
         TypedQuery<Form> query = entityManager.createQuery("SELECT x FROM Form x WHERE x.orthography = :orthography", Form.class);
         query.setParameter("orthography", form);

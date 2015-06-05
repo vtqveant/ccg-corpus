@@ -7,6 +7,7 @@ import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,16 +32,23 @@ public class DataManagerImpl implements DataManager {
         return query.getResultList();
     }
 
-    // TODO здесь баг, grammemes.addAll компрометирует управляемый объект
-    public Map<Form, List<Grammeme>> getGrammemes(String form) {
+    public Map<Form, List<String>> getGrammemes(String form) {
         TypedQuery<Form> query = entityManager.createQuery("SELECT x FROM Form x WHERE x.orthography = :orthography", Form.class);
         query.setParameter("orthography", form);
         List<Form> forms = query.getResultList();
-        Map<Form, List<Grammeme>> result = new HashMap<>();
+        Map<Form, List<String>> result = new HashMap<>();
         for (Form f : forms) {
-            if (f.isLemma()) continue;
-            List<Grammeme> grammemes = f.getGrammemes();
-            grammemes.addAll(f.getLexeme().getLemma().getGrammemes());  // add common grammemes
+            if (f.isLemma()) {
+                continue;
+            }
+            List<String> grammemes = new ArrayList<>();
+            for (Grammeme g : f.getGrammemes()) {
+                grammemes.add(g.getName());
+            }
+            // add common grammemes
+            for (Grammeme g : f.getLexeme().getLemma().getGrammemes()) {
+                grammemes.add(g.getName());
+            }
             result.put(f, grammemes);
         }
         return result;

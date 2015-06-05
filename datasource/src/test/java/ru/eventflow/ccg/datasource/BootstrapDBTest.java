@@ -21,13 +21,13 @@ public class BootstrapDBTest {
     @Test
     public void testDictionaryQueries() {
         DataManagerImpl dataManager = new DataManagerImpl(DataSource.DEFAULT);
-        Map<Form, List<Grammeme>> results = dataManager.getGrammemes("были");
+        Map<Form, List<String>> results = dataManager.getGrammemes("были");
 
-        for (Map.Entry<Form, List<Grammeme>> entry : results.entrySet()) {
+        for (Map.Entry<Form, List<String>> entry : results.entrySet()) {
             Form f = entry.getKey();
             System.out.println(f.getOrthography() + " (" + f.getLexeme().getLemma().getOrthography() + ")");
-            for (Grammeme g : entry.getValue()) {
-                System.out.println('\t' + g.getName() + " - " + g.getDescription());
+            for (String g : entry.getValue()) {
+                System.out.println('\t' + g);
             }
         }
     }

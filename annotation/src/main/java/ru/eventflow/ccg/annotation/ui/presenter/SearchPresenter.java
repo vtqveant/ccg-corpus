@@ -50,16 +50,12 @@ public class SearchPresenter implements Presenter<SearchView>, ActionListener {
         LexiconTreeNode root = (LexiconTreeNode) model.getRoot();
         root.getChildren().clear();
 
-        Map<Form, List<Grammeme>> grammemes = dataManager.getGrammemes(text);
-        for (Map.Entry<Form, List<Grammeme>> entry : grammemes.entrySet()) {
+        Map<Form, List<String>> grammemes = dataManager.getGrammemes(text);
+        for (Map.Entry<Form, List<String>> entry : grammemes.entrySet()) {
             Form f = entry.getKey();
             String orthography = f.getOrthography();
             String lemma = f.getLexeme().getLemma().getOrthography();
-            List<String> list = new ArrayList<>();
-            for (Grammeme grammeme : entry.getValue()) {
-                list.add(grammeme.getName());
-            }
-            LexiconTreeNode form = new LexiconTreeNode(orthography, lemma, list, 0);
+            LexiconTreeNode form = new LexiconTreeNode(orthography, lemma, entry.getValue(), 0);
             form.setLeaf(false);
             root.getChildren().add(form);
         }

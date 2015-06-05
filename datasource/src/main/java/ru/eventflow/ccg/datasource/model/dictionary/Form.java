@@ -1,5 +1,7 @@
 package ru.eventflow.ccg.datasource.model.dictionary;
 
+import org.apache.openjpa.persistence.jdbc.Index;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class Form {
     private List<Grammeme> grammemes = new ArrayList<Grammeme>();
 
     @Column(name = "orthography")
+    @Index
     private String orthography;
 
     @Column(name = "lemma")

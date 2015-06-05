@@ -12,4 +12,6 @@ public interface DataManager {
     List<Text> getAllTexts();
 
     Map<Form, List<Grammeme>> getGrammemes(String form);
+
+    List<String> getOrthographies(String prefix);
 }

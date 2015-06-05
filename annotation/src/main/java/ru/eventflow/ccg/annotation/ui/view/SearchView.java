@@ -1,6 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import org.jdesktop.swingx.JXTreeTable;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 import ru.eventflow.ccg.annotation.ui.Defaults;
 
@@ -12,16 +13,38 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-// TODO SwingX https://www.informit.com/guides/content.aspx?g=java&seqNum=528
+/**
+ * SwingX https://www.informit.com/guides/content.aspx?g=java&seqNum=528
+ */
 public class SearchView extends JPanel {
 
     private static final SecondaryTableCellRenderer secondaryCellRenderer = new SecondaryTableCellRenderer();
+    private static final String[] WARMUP = new String[]{
+            "", "a", "б", "в", "г", "д", "е", "ё", "ж", "з", "и", "й", "к", "л", "м", "н", "о",
+            "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я",
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"
+    };
+    private final JComboBox<String> combo;
+    private final DefaultComboBoxModel<String> comboBoxModel;
 
     public SearchView() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(200, 150));
 
-        MyTreeTableModel treeTableModel = new MyTreeTableModel();
+        // TODO prefetch?
+        comboBoxModel = new DefaultComboBoxModel<String>();
+        for (String s : WARMUP) {
+            comboBoxModel.addElement(s);
+        }
+
+        combo = new JComboBox<String>();
+        combo.setEditable(true);
+        combo.setFont(Defaults.SMALL_FONT);
+        combo.setModel(comboBoxModel);
+        AutoCompleteDecorator.decorate(combo);
+        add(combo, BorderLayout.PAGE_START);
+
+        LexiconTreeTableModel treeTableModel = new LexiconTreeTableModel();
         JXTreeTable treeTable = new JXTreeTable(treeTableModel);
         treeTable.setFont(Defaults.SMALL_FONT);
         treeTable.getColumnModel().getColumn(1).setCellRenderer(secondaryCellRenderer);
@@ -43,6 +66,14 @@ public class SearchView extends JPanel {
         JScrollPane scrollPane = new JScrollPane(treeTable);
         scrollPane.setPreferredSize(new Dimension(200, 300));
         add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public JComboBox getCombo() {
+        return combo;
+    }
+
+    public DefaultComboBoxModel<String> getComboBoxModel() {
+        return comboBoxModel;
     }
 
     private class LexiconTreeCellRenderer extends DefaultTreeCellRenderer {
@@ -127,10 +158,10 @@ public class SearchView extends JPanel {
         }
     }
 
-    private class MyTreeTableModel extends AbstractTreeTableModel {
+    private class LexiconTreeTableModel extends AbstractTreeTableModel {
         private LexiconTreeNode root;
 
-        public MyTreeTableModel() {
+        public LexiconTreeTableModel() {
             root = new LexiconTreeNode(null, null, new ArrayList<String>(), -1);
 
             LexiconTreeNode form1 = new LexiconTreeNode("ноги", "нога", Arrays.asList("sg", "gen", "f"), 10);
@@ -196,8 +227,6 @@ public class SearchView extends JPanel {
                     return i;
                 }
             }
-
-            // TODO Auto-generated method stub
             return 0;
         }
 

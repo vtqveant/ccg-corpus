@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
-public class IdRenderer extends DefaultTableCellRenderer {
+public class SecondaryTableCellRenderer extends DefaultTableCellRenderer {
     @Override
     public void setValue(Object value) {
         setText(String.valueOf(value));

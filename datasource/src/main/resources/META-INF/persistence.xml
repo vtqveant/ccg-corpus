@@ -20,6 +20,8 @@
         <class>ru.eventflow.ccg.datasource.model.dictionary.LinkType</class>
         <class>ru.eventflow.ccg.datasource.model.dictionary.Link</class>
 
+        <class>ru.eventflow.ccg.datasource.model.syntax.Category</class>
+
         <properties>
             <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/corpus"/>
             <property name="openjpa.ConnectionUserName" value="corpus"/>

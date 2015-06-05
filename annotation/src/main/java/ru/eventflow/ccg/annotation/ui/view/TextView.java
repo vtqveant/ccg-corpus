@@ -32,7 +32,7 @@ public class TextView extends JPanel {
         table.setFont(Defaults.SMALL_FONT);
         table.setShowGrid(false);
 
-        table.getColumnModel().getColumn(0).setCellRenderer(new IdRenderer());
+        table.getColumnModel().getColumn(0).setCellRenderer(new SecondaryTableCellRenderer());
 
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);

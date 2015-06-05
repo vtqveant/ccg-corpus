@@ -2,12 +2,15 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
+import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.view.SearchView;
 import ru.eventflow.ccg.datasource.DataManager;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.List;
 
 /**
@@ -38,6 +41,7 @@ public class SearchPresenter implements Presenter<SearchView> {
                     }
                 }
                 // TODO use prefix tree instead
+                // s. http://igoro.com/archive/efficient-auto-complete-with-a-ternary-search-tree/
                 List<String> orthographies = dataManager.getOrthographies(s.toLowerCase());
                 for (String orthography : orthographies) {
                     if (view.getComboBoxModel().getIndexOf(orthographies) == -1) {
@@ -45,6 +49,15 @@ public class SearchPresenter implements Presenter<SearchView> {
                     }
                 }
                 view.getCombo().showPopup();
+            }
+        });
+
+        // detect Enter key pressed
+        view.getCombo().getEditor().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String value = view.getCombo().getSelectedItem().toString();
+                eventBus.fireEvent(new StatusUpdateEvent(value));
             }
         });
     }

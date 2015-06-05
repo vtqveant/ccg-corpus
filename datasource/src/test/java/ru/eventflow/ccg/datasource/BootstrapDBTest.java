@@ -3,6 +3,7 @@ package ru.eventflow.ccg.datasource;
 import org.junit.Test;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
+import ru.eventflow.ccg.datasource.model.syntax.Category;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;

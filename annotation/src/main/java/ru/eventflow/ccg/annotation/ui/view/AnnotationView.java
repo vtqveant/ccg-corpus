@@ -22,6 +22,12 @@ public class AnnotationView extends JPanel {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder());
 
+        // glosses at the top
+        glossesScrollPane = new AdjustableScrollPane();
+        glossesScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        glossesScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        add(glossesScrollPane, BorderLayout.PAGE_START);
+
         // editor
         textPane = new JTextPane();
         textPane.setCaretPosition(0);
@@ -59,12 +65,6 @@ public class AnnotationView extends JPanel {
         splitPane.setLeftComponent(sp1);
         splitPane.setRightComponent(sp2);
         add(splitPane, BorderLayout.CENTER);
-
-        // glosses at the bottom
-        glossesScrollPane = new AdjustableScrollPane();
-        glossesScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        glossesScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        add(glossesScrollPane, BorderLayout.PAGE_END);
     }
 
     public JTextPane getTextPane() {

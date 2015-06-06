@@ -6,6 +6,7 @@ import ru.eventflow.ccg.annotation.ui.model.LexiconTreeTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.*;
 
@@ -45,10 +46,13 @@ public class SearchView extends JPanel {
         headerRenderer.setFont(Defaults.SMALL_FONT);
         headerRenderer.setBackground(new Color(245, 245, 245));
         headerRenderer.setForeground(Color.DARK_GRAY);
-        treeTable.getTableHeader().setDefaultRenderer(headerRenderer);
-        treeTable.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(100);
-        treeTable.getTableHeader().getColumnModel().getColumn(2).setMaxWidth(100);
-        treeTable.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(45);
+
+        JTableHeader tableHeader = treeTable.getTableHeader();
+        tableHeader.setReorderingAllowed(false);
+        tableHeader.setDefaultRenderer(headerRenderer);
+        tableHeader.getColumnModel().getColumn(1).setMaxWidth(100);
+        tableHeader.getColumnModel().getColumn(2).setMaxWidth(100);
+        tableHeader.getColumnModel().getColumn(3).setMaxWidth(45);
 
         treeTable.setTreeCellRenderer(new LexiconTreeCellRenderer());
 

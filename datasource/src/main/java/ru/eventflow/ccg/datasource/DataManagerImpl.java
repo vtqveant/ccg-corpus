@@ -1,12 +1,13 @@
 package ru.eventflow.ccg.datasource;
 
+import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 import ru.eventflow.ccg.datasource.model.corpus.Text;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
-import ru.eventflow.ccg.datasource.model.syntax.Category;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,12 +26,25 @@ public class DataManagerImpl implements DataManager {
         return entityManager.createQuery("SELECT x FROM Text x ORDER BY x.id ASC", Text.class).getResultList();
     }
 
+    public Form getFormById(int id) {
+        TypedQuery<Form> query = entityManager.createQuery("SELECT x FROM Form x WHERE x.id = :id", Form.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
+    }
+
     public List<String> getOrthographies(String prefix) {
         String q = "SELECT DISTINCT x.orthography FROM Form x WHERE x.lemma = FALSE AND x.orthography LIKE :pattern ORDER BY x.orthography ASC";
         TypedQuery<String> query = entityManager.createQuery(q, String.class);
         query.setMaxResults(50);
         query.setParameter("pattern", prefix + '%');
         return query.getResultList();
+    }
+
+    public List<Sentence> getSentencesByFormOccurence(Form form) {
+        String q = "SELECT s.* FROM corpus.token t, corpus.variant v, corpus.sentence s " +
+                "WHERE v.form_id = " + form.getId() + " and t.id = v.token_id and t.sentence_id = s.id";
+        Query query = entityManager.createNativeQuery(q, Sentence.class);
+        return (List<Sentence>) query.getResultList();
     }
 
     public Map<Form, List<String>> getGrammemes(String form) {

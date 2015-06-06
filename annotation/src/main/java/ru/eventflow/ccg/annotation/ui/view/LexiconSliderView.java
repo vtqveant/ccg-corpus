@@ -36,14 +36,6 @@ public class LexiconSliderView extends SliderPanel {
 
     @Override
     public List<JToggleButton> getButtons() {
-        List<JToggleButton> buttons = new ArrayList<>();
-
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("images/clipboard.gif"));
-        JToggleButton clipboardBtn = new JToggleButton(icon);
-        clipboardBtn.setToolTipText("Toggle View");
-        clipboardBtn.setFocusable(false);
-        buttons.add(clipboardBtn);
-
-        return buttons;
+        return null;
     }
 }

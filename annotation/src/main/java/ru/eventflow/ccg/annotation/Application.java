@@ -34,7 +34,6 @@ public class Application {
             UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");
 
             final LoggingController loggingController = injector.getInstance(LoggingController.class);
-            final DataAccessController dataAccessController = injector.getInstance(DataAccessController.class);
 
             final Presenter<MainView> mainPresenter = injector.getInstance(MainPresenter.class);
             final Presenter<MenuView> menuPresenter = injector.getInstance(MenuPresenter.class);

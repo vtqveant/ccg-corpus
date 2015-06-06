@@ -1,44 +1,44 @@
 package ru.eventflow.ccg.annotation.ui.model;
 
+import ru.eventflow.ccg.datasource.model.dictionary.Form;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class LexiconTreeNode {
-    protected String form;
-    protected String lemma;
+    protected Form form;
     protected int count;
-    protected java.util.List<String> grammemes = new ArrayList<>();
-    protected java.util.List<LexiconTreeNode> children = new ArrayList<>();
+    protected List<String> grammemes = new ArrayList<>();
+    protected List<LexiconTreeNode> children = new ArrayList<>();
     protected boolean leaf = false;
 
     public LexiconTreeNode() {
     }
 
-    public LexiconTreeNode(String form, String lemma, java.util.List<String> grammemes, int count) {
+    public LexiconTreeNode(Form form, List<String> grammemes, int count) {
         this.count = count;
         this.form = form;
-        this.lemma = lemma;
         this.grammemes.addAll(grammemes);
     }
 
-    public String getForm() {
+    public Form getForm() {
         return form;
     }
 
     public String getLemma() {
-        return lemma;
+        return form.getLexeme().getLemma().getOrthography();
     }
 
     public List<LexiconTreeNode> getChildren() {
         return children;
     }
 
-    public void setLeaf(boolean leaf) {
-        this.leaf = leaf;
-    }
-
     public boolean isLeaf() {
         return children.size() == 0 && leaf;
+    }
+
+    public void setLeaf(boolean leaf) {
+        this.leaf = leaf;
     }
 
     public int getCount() {

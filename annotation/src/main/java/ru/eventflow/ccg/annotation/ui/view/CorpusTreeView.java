@@ -16,7 +16,7 @@ public class CorpusTreeView extends JPanel {
 
     public CorpusTreeView() {
         setLayout(new BorderLayout());
-        setMinimumSize(new Dimension(200, 150));
+        setMinimumSize(new Dimension(300, 150));
 
         DefaultMutableTreeNode top = new DefaultMutableTreeNode("OpenCorpora");
         tree = new JTree(top);
@@ -26,7 +26,7 @@ public class CorpusTreeView extends JPanel {
         tree.setCellRenderer(new DocumentTreeCellRenderer());
 
         JScrollPane scrollPane = new JScrollPane(tree);
-        scrollPane.setPreferredSize(new Dimension(200, 300));
+        scrollPane.setPreferredSize(new Dimension(300, 300));
         add(scrollPane);
     }
 

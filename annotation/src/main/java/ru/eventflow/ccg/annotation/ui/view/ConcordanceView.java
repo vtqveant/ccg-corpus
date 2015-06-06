@@ -8,14 +8,16 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
 public class ConcordanceView extends JPanel {
 
+    private static final String[] columns = new String[]{"", "Context", "Sentence", "Approved"};
+
     private final JTextField filterField;
+    private final JTable table;
     private TableRowSorter<ContextTableModel> sorter;
+
 
     public ConcordanceView() {
         setLayout(new BorderLayout());
@@ -27,13 +29,8 @@ public class ConcordanceView extends JPanel {
         add(filterField, BorderLayout.PAGE_START);
 
         // setup the model
-        List<Context> data = new ArrayList<>();
-        data.add(new Context("итак, она", "звалась", "Татяьна", 234, false));
-        data.add(new Context("Увы, она", "звалась", "Петровна", 354, true));
-        data.add(new Context("Но она", "звалась", "Доминик", 1634, false));
-
-        ContextTableModel model = new ContextTableModel(data);
-        JTable table = new JTable(model);
+        ContextTableModel model = new ContextTableModel(columns, 0);
+        table = new JTable(model);
 
         sorter = new TableRowSorter<ContextTableModel>(model);
         sorter.setSortable(0, false); // disable manual sorting for context, because it's behaviour is unclear
@@ -46,6 +43,8 @@ public class ConcordanceView extends JPanel {
 
         // table adjustments
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.setAutoCreateColumnsFromModel(false);
+        table.setAutoCreateRowSorter(false);
         table.setDragEnabled(false);
         table.setFont(Defaults.SMALL_FONT);
         table.setShowGrid(false);
@@ -85,8 +84,27 @@ public class ConcordanceView extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    private static class LeftAlignHeaderRenderer implements TableCellRenderer {
+    /**
+     * complete rebuild of a model with many consequences, which have to be dealt with
+     */
+    public void setData(java.util.List<Context> contexts) {
+        filterField.setText("");
+        table.clearSelection();
+        ContextTableModel model = (ContextTableModel) table.getModel();
+        int size = contexts.size();
+        Object[][] rows = new Object[size][columns.length];
+        for (int i = 0; i < size; i++) {
+            Context context = contexts.get(i);
+            rows[i][0] = context.getLeft() + "  ";
+            rows[i][1] = context.getOccurence() + "  " + context.getRight();
+            rows[i][2] = context.getSentenceId();
+            rows[i][3] = context.isApproved();
+        }
+        model.setDataVector(rows, columns);
+        model.setRowCount(size);
+    }
 
+    private static class LeftAlignHeaderRenderer implements TableCellRenderer {
         DefaultTableCellRenderer renderer;
 
         public LeftAlignHeaderRenderer(JTable table) {
@@ -118,9 +136,9 @@ public class ConcordanceView extends JPanel {
         }
 
         private void resetFilter() {
-            RowFilter<ContextTableModel, Object> filter;
+            RowFilter<DefaultTableModel, Object> filter;
             try {
-                filter = RowFilter.regexFilter(filterField.getText());
+                filter = RowFilter.regexFilter(filterField.getText(), 0, 1, 2);
             } catch (PatternSyntaxException e) {
                 return;
             }
@@ -128,17 +146,15 @@ public class ConcordanceView extends JPanel {
         }
     }
 
-    public class ContextTableModel extends AbstractTableModel {
-        private final String[] columns = new String[]{"", "Context", "Sentence", "Approved"};
-        private List<Context> data = new ArrayList<Context>();
+    private class ContextTableModel extends DefaultTableModel {
 
-        public ContextTableModel(List<Context> data) {
-            this.data = data;
+        public ContextTableModel(Object[] columnNames, int rowCount) {
+            super(columnNames, rowCount);
         }
 
         @Override
-        public int getRowCount() {
-            return data.size();
+        public String getColumnName(int column) {
+            return columns[column];
         }
 
         @Override
@@ -147,26 +163,20 @@ public class ConcordanceView extends JPanel {
         }
 
         @Override
-        public String getColumnName(int column) {
-            return columns[column];
-        }
-
-        public Class getColumnClass(int c) {
-            return getValueAt(0, c).getClass();
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+                case 2:
+                    return Integer.class;
+                case 3:
+                    return Boolean.class;
+                default:
+                    return String.class;
+            }
         }
 
         @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            Context entry = data.get(rowIndex);
-            if (columnIndex == 0) return entry.getLeft() + "  ";
-            if (columnIndex == 1) return entry.getOccurence() + "  " + entry.getRight();
-            if (columnIndex == 2) return entry.getSentenceId();
-            if (columnIndex == 3) return entry.isApproved();
-            return null;
-        }
-
-        public java.util.List<Context> getData() {
-            return data;
+        public boolean isCellEditable(int row, int column) {
+            return false;
         }
     }
 

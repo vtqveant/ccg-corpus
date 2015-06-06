@@ -1,6 +1,7 @@
 package ru.eventflow.ccg.datasource;
 
 import org.junit.Test;
+import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
 import ru.eventflow.ccg.datasource.model.syntax.Category;
@@ -40,6 +41,18 @@ public class BootstrapDBTest {
         for (String orthography : results) {
             System.out.println(orthography);
         }
+    }
+
+    @Test
+    public void testGetOccurences() {
+        DataManagerImpl dataManager = new DataManagerImpl(DataSource.DEFAULT);
+        Form form = dataManager.getFormById(1562247); // злословия
+
+        List<Sentence> results = dataManager.getSentencesByFormOccurence(form);
+        for (Sentence sentence : results) {
+            System.out.println(sentence);
+        }
+
     }
 
 }

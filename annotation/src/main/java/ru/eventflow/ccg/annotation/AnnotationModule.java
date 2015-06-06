@@ -18,7 +18,6 @@ public class AnnotationModule extends AbstractModule {
         bind(EventBus.class).in(Singleton.class);
 
         bind(LoggingController.class).in(Singleton.class);
-        bind(DataAccessController.class).in(Singleton.class);
 
         bind(MainPresenter.class).in(Singleton.class);
         bind(CorpusTreePresenter.class).in(Singleton.class);

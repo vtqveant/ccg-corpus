@@ -4,7 +4,6 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import org.mockito.Mockito;
-import ru.eventflow.ccg.annotation.DataAccessController;
 import ru.eventflow.ccg.annotation.ui.view.CorpusTreeView;
 import ru.eventflow.ccg.datasource.DataManager;
 import ru.eventflow.ccg.datasource.model.corpus.Text;
@@ -16,7 +15,6 @@ public class MockAnnotationModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(DataManager.class).toProvider(DataManagerProvider.class).in(Singleton.class);
-        bind(DataAccessController.class).in(Singleton.class);
         bind(CorpusTreeView.class).in(Singleton.class);
     }
 

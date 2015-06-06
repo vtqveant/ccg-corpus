@@ -8,7 +8,7 @@ public class LexiconTreeTableModel extends AbstractTreeTableModel {
     private LexiconTreeNode root;
 
     public LexiconTreeTableModel() {
-        root = new LexiconTreeNode(null, null, new ArrayList<String>(), -1);
+        root = new LexiconTreeNode(null, new ArrayList<String>(), -1);
 
             /*
             LexiconTreeNode form1 = new LexiconTreeNode("ноги", "нога", Arrays.asList("sg", "gen", "f"), 10);
@@ -49,7 +49,7 @@ public class LexiconTreeTableModel extends AbstractTreeTableModel {
     public Object getValueAt(Object node, int column) {
         LexiconTreeNode n = (LexiconTreeNode) node;
         if (column == 0) return n.toString();
-        if (column == 1) return n.getForm();
+        if (column == 1) return n.getForm().getOrthography();
         if (column == 2) return n.getLemma();
         if (column == 3) return n.getCount();
         return null;

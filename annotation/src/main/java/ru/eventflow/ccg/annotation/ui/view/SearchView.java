@@ -37,6 +37,7 @@ public class SearchView extends JPanel {
         LexiconTreeTableModel treeTableModel = new LexiconTreeTableModel();
         treeTable = new JXTreeTable(treeTableModel);
         treeTable.setFont(Defaults.SMALL_FONT);
+        treeTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         treeTable.getColumnModel().getColumn(1).setCellRenderer(secondaryCellRenderer);
         treeTable.getColumnModel().getColumn(2).setCellRenderer(secondaryCellRenderer);
         treeTable.getColumnModel().getColumn(3).setCellRenderer(secondaryCellRenderer);

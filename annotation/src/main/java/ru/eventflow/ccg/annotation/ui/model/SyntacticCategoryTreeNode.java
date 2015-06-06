@@ -1,5 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.model;
 
+import ru.eventflow.ccg.datasource.model.dictionary.Form;
+
 public class SyntacticCategoryTreeNode extends LexiconTreeNode {
 
     private String category;
@@ -10,8 +12,8 @@ public class SyntacticCategoryTreeNode extends LexiconTreeNode {
     }
 
     @Override
-    public String getForm() {
-        return "";
+    public Form getForm() {
+        return null;
     }
 
     @Override

@@ -6,7 +6,7 @@ import ru.eventflow.ccg.annotation.ui.event.*;
 import ru.eventflow.ccg.annotation.ui.view.MainView;
 
 public class MainPresenter implements Presenter<MainView>, StatusUpdateEventHandler,
-        EditorCaretEventHandler, SettingsEventHandler {
+        EditorCaretEventHandler, SettingsEventHandler, DialogEventHandler {
 
     private final MainView view;
     private final EventBus eventBus;
@@ -30,6 +30,7 @@ public class MainPresenter implements Presenter<MainView>, StatusUpdateEventHand
         this.eventBus.addHandler(StatusUpdateEvent.TYPE, this);
         this.eventBus.addHandler(EditorCaretEvent.TYPE, this);
         this.eventBus.addHandler(SettingsEvent.TYPE, this);
+        this.eventBus.addHandler(DialogEvent.TYPE, this);
     }
 
     @Override
@@ -55,5 +56,10 @@ public class MainPresenter implements Presenter<MainView>, StatusUpdateEventHand
         if (e.getSetting() == Setting.STATUSBAR) {
             view.setStatusBarVisible(e.isEnabled());
         }
+    }
+
+    @Override
+    public void onEvent(DialogEvent e) {
+        view.getAboutDialog().setVisible(true);
     }
 }

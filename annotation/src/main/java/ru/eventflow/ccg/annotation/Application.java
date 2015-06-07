@@ -3,7 +3,6 @@ package ru.eventflow.ccg.annotation;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.jtattoo.plaf.fast.FastLookAndFeel;
-import ru.eventflow.ccg.annotation.ui.presenter.AboutDialogPresenter;
 import ru.eventflow.ccg.annotation.ui.presenter.MainPresenter;
 import ru.eventflow.ccg.annotation.ui.presenter.MenuPresenter;
 import ru.eventflow.ccg.annotation.ui.presenter.Presenter;
@@ -35,9 +34,6 @@ public class Application {
             UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");
 
             final LoggingController loggingController = injector.getInstance(LoggingController.class);
-
-            // modal windows
-            final AboutDialogPresenter aboutDialogPresenter = injector.getInstance(AboutDialogPresenter.class);
 
             final Presenter<MainView> mainPresenter = injector.getInstance(MainPresenter.class);
             final Presenter<MenuView> menuPresenter = injector.getInstance(MenuPresenter.class);

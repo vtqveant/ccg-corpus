@@ -12,6 +12,7 @@ public class MenuView extends JMenuBar {
     private final JMenuItem secondMenuItem;
     private final SettingMenuItem glossesMenuItem;
     private final SettingMenuItem statusBarMenuItem;
+    private final JMenuItem aboutMenuItem;
 
 
     public MenuView() {
@@ -65,7 +66,8 @@ public class MenuView extends JMenuBar {
         JMenu helpMenu = new JMenu("Help");
         helpMenu.add(new JMenuItem("Manual            ", PLACEHOLDER_ICON));
         helpMenu.add(new JSeparator());
-        helpMenu.add(new JMenuItem("About             ", PLACEHOLDER_ICON));
+        aboutMenuItem = new JMenuItem("About             ", PLACEHOLDER_ICON);
+        helpMenu.add(aboutMenuItem);
         add(helpMenu);
     }
 
@@ -83,6 +85,10 @@ public class MenuView extends JMenuBar {
 
     public SettingMenuItem getStatusBarMenuItem() {
         return statusBarMenuItem;
+    }
+
+    public JMenuItem getAboutMenuItem() {
+        return aboutMenuItem;
     }
 
     /**

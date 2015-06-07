@@ -43,6 +43,7 @@ public class TextView extends JPanel {
         table.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(45);
 
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.getViewport().setBackground(Color.WHITE);
         add(scrollPane, BorderLayout.CENTER);
     }
 

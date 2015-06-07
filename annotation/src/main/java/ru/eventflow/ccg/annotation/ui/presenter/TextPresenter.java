@@ -19,7 +19,7 @@ import java.awt.event.MouseEvent;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class TextPresenter implements Presenter<TextView> {
+public class TextPresenter implements Presenter<TextView>, TextSelectedEventHandler {
 
     private TextView view;
     private EventBus eventBus;
@@ -32,26 +32,7 @@ public class TextPresenter implements Presenter<TextView> {
     }
 
     private void init() {
-        this.eventBus.addHandler(TextSelectedEvent.TYPE, new TextSelectedEventHandler() {
-            @Override
-            public void onEvent(TextSelectedEvent e) {
-                TextView.SentenceTableModel model = (TextView.SentenceTableModel) view.getTable().getModel();
-                model.getSentences().clear();
-                view.getTable().getSelectionModel().clearSelection();
-                if (e.getText() != null) { // otherwise it's a root node
-                    for (Paragraph p : e.getText().getParagraphs()) {
-                        model.getSentences().addAll(p.getSentences());
-                    }
-                    Collections.sort(model.getSentences(), new Comparator<Sentence>() {
-                        @Override
-                        public int compare(Sentence o1, Sentence o2) {
-                            return o1.getId() - o2.getId();
-                        }
-                    });
-                }
-                view.getTable().updateUI();
-            }
-        });
+        this.eventBus.addHandler(TextSelectedEvent.TYPE, this);
 
         this.view.getTable().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -86,5 +67,24 @@ public class TextPresenter implements Presenter<TextView> {
     @Override
     public TextView getView() {
         return view;
+    }
+
+    @Override
+    public void onEvent(TextSelectedEvent e) {
+        TextView.SentenceTableModel model = (TextView.SentenceTableModel) view.getTable().getModel();
+        model.getSentences().clear();
+        view.getTable().getSelectionModel().clearSelection();
+        if (e.getText() != null) { // otherwise it's a root node
+            for (Paragraph p : e.getText().getParagraphs()) {
+                model.getSentences().addAll(p.getSentences());
+            }
+            Collections.sort(model.getSentences(), new Comparator<Sentence>() {
+                @Override
+                public int compare(Sentence o1, Sentence o2) {
+                    return o1.getId() - o2.getId();
+                }
+            });
+        }
+        view.getTable().updateUI();
     }
 }

@@ -5,7 +5,8 @@ import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.*;
 import ru.eventflow.ccg.annotation.ui.view.MainView;
 
-public class MainPresenter implements Presenter<MainView> {
+public class MainPresenter implements Presenter<MainView>, StatusUpdateEventHandler,
+        EditorCaretEventHandler, SettingsEventHandler {
 
     private final MainView view;
     private final EventBus eventBus;
@@ -26,35 +27,33 @@ public class MainPresenter implements Presenter<MainView> {
     }
 
     private void init() {
-        this.eventBus.addHandler(StatusUpdateEvent.TYPE, new StatusUpdateEventHandler() {
-            @Override
-            public void onEvent(StatusUpdateEvent e) {
-                view.getStatusLabel().setText(e.getMessage());
-            }
-        });
-
-        this.eventBus.addHandler(EditorCaretEvent.TYPE, new EditorCaretEventHandler() {
-            @Override
-            public void onEvent(EditorCaretEvent e) {
-                int row = e.getRow();
-                int column = e.getColumn();
-                String text = (row == -1 && column == -1) ? "n/a" : (row + ":" + column);
-                view.getCaretPositionLabel().setText(text);
-            }
-        });
-
-        this.eventBus.addHandler(SettingsEvent.TYPE, new SettingsEventHandler() {
-            @Override
-            public void onEvent(SettingsEvent e) {
-                if (e.getSetting() == Setting.STATUSBAR) {
-                    view.setStatusBarVisible(e.isEnabled());
-                }
-            }
-        });
+        this.eventBus.addHandler(StatusUpdateEvent.TYPE, this);
+        this.eventBus.addHandler(EditorCaretEvent.TYPE, this);
+        this.eventBus.addHandler(SettingsEvent.TYPE, this);
     }
 
     @Override
     public MainView getView() {
         return view;
+    }
+
+    @Override
+    public void onEvent(StatusUpdateEvent e) {
+        view.getStatusLabel().setText(e.getMessage());
+    }
+
+    @Override
+    public void onEvent(EditorCaretEvent e) {
+        int row = e.getRow();
+        int column = e.getColumn();
+        String text = (row == -1 && column == -1) ? "n/a" : (row + ":" + column);
+        view.getCaretPositionLabel().setText(text);
+    }
+
+    @Override
+    public void onEvent(SettingsEvent e) {
+        if (e.getSetting() == Setting.STATUSBAR) {
+            view.setStatusBarVisible(e.isEnabled());
+        }
     }
 }

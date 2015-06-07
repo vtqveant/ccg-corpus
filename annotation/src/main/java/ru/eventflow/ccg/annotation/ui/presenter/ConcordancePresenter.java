@@ -8,6 +8,8 @@ import ru.eventflow.ccg.annotation.ui.event.TabEvent;
 import ru.eventflow.ccg.annotation.ui.model.Context;
 import ru.eventflow.ccg.annotation.ui.view.ConcordanceView;
 import ru.eventflow.ccg.datasource.DataManager;
+import ru.eventflow.ccg.datasource.DataManagerImpl;
+import ru.eventflow.ccg.datasource.DataSource;
 import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 import ru.eventflow.ccg.datasource.model.corpus.Token;
 import ru.eventflow.ccg.datasource.model.corpus.Variant;
@@ -19,19 +21,21 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSelectedEventHandler {
 
     public static final int WINDOW_SIZE = 5;
     private ConcordanceView view;
     private EventBus eventBus;
-    private DataManager dataManager;
+
+    /**
+     * We allow only one instance of DataLoaderWorker running
+     */
+    private DataLoaderWorker worker;
 
     @Inject
     public ConcordancePresenter(final EventBus eventBus, final DataManager dataManager) {
         this.eventBus = eventBus;
-        this.dataManager = dataManager;
         this.view = new ConcordanceView();
 
         this.eventBus.addHandler(FormSelectedEvent.TYPE, this);
@@ -57,7 +61,10 @@ public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSel
     public void onEvent(FormSelectedEvent event) {
         Form form = event.getForm();
         if (form != null) {
-            DataLoaderWorker worker = new DataLoaderWorker(form);
+            if (worker != null) {
+                worker.cancel(true);
+            }
+            worker = new DataLoaderWorker(form);
             worker.execute();
         } else {
             view.setData(new ArrayList<Context>()); // clear concordancer table
@@ -71,68 +78,75 @@ public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSel
     }
 
     // TODO refactor!  s. http://stackoverflow.com/questions/17383799/delayed-response-to-jtable-row-selection-event-under-a-huge-data-load/17384208#17384208
-    // do this: publish(data); Thread.yield();
-    private class DataLoaderWorker extends SwingWorker<List<Sentence>, Void> {
+    private class DataLoaderWorker extends SwingWorker<Integer, Context> {
 
         private final Form form;
+        private final List<Context> contexts = new ArrayList<>();
+        private final DataManager dataManager;
 
         public DataLoaderWorker(Form form) {
             this.form = form;
+            this.dataManager = new DataManagerImpl(DataSource.DEFAULT);
         }
 
         @Override
-        protected List<Sentence> doInBackground() throws Exception {
-            return dataManager.getSentencesByFormOccurence(form);
+        protected Integer doInBackground() throws Exception {
+            List<Sentence> sentences = dataManager.getSentencesByFormOccurence(form);
+            for (Sentence sentence : sentences) {
+                if (isCancelled()) {  // check if thread was cancelled
+                    break;
+                }
+
+                Collections.sort(sentence.getTokens(), new Comparator<Token>() {
+                    @Override
+                    public int compare(Token o1, Token o2) {
+                        return o1.getId() - o2.getId();
+                    }
+                });
+
+                LimitedQueue<String> left = new LimitedQueue<String>(WINDOW_SIZE);
+                List<String> right = new LinkedList<String>();
+                boolean found = false;
+                byte counter = 0;
+                for (Token token : sentence.getTokens()) {
+                    if (!found) {
+                        for (Variant variant : token.getVariants()) {
+                            if (variant.getForm() == null) continue;
+                            if (variant.getForm().getId() == form.getId()) {
+                                found = true;
+                            }
+                        }
+                        if (!found) {
+                            left.add(token.getOrthography());
+                        }
+                    } else {
+                        if (counter < WINDOW_SIZE) {
+                            right.add(token.getOrthography());
+                            counter++;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
+                String leftCtx = buildContextString(left);
+                String rightCtx = buildContextString(right);
+                Context context = new Context(leftCtx, form.getOrthography(), rightCtx, sentence.getId(), false);
+
+                publish(context);
+                Thread.yield();
+            }
+            return sentences.size();
+        }
+
+        @Override
+        protected void process(List<Context> chunks) {
+            contexts.addAll(chunks);
         }
 
         @Override
         protected void done() {
-            List<Sentence> sentences;
-            try {
-                List<Context> contexts = new ArrayList<Context>();
-                sentences = get();
-                for (Sentence sentence : sentences) {
-                    LimitedQueue<String> left = new LimitedQueue<String>(WINDOW_SIZE);
-                    List<String> right = new LinkedList<String>();
-                    boolean found = false;
-                    byte counter = 0;
-                    List<Token> tokens = sentence.getTokens();
-                    Collections.sort(tokens, new Comparator<Token>() {
-                        @Override
-                        public int compare(Token o1, Token o2) {
-                            return o1.getId() - o2.getId();
-                        }
-                    });
-                    for (Token token : tokens) {
-                        if (!found) {
-                            for (Variant variant : token.getVariants()) {
-                                if (variant.getForm() == null) continue;
-                                if (variant.getForm().getId() == form.getId()) {
-                                    found = true;
-                                }
-                            }
-                            if (!found) {
-                                left.add(token.getOrthography());
-                            }
-                        } else {
-                            if (counter < WINDOW_SIZE) {
-                                right.add(token.getOrthography());
-                                counter++;
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-
-                    String leftCtx = buildContextString(left);
-                    String rightCtx = buildContextString(right);
-                    Context context = new Context(leftCtx, form.getOrthography(), rightCtx, sentence.getId(), false);
-                    contexts.add(context);
-                }
-                view.setData(contexts);
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+            view.setData(contexts);
         }
 
         private String buildContextString(List<String> queue) {

@@ -109,14 +109,14 @@ public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSel
                 }
                 view.setData(contexts);
             } catch (InterruptedException | ExecutionException e) {
-                // ignore
+                e.printStackTrace();
             }
         }
 
         private String buildContextString(List<String> queue) {
             StringBuilder sb = new StringBuilder();
-            for (Iterator it = queue.iterator(); it.hasNext(); ) {
-                sb.append(it.next());
+            for (String s : queue) {
+                sb.append(s);
                 sb.append(' ');
             }
             if (sb.length() > 0) sb.deleteCharAt(sb.length() - 1);

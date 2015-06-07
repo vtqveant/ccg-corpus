@@ -29,87 +29,15 @@ import java.util.Map;
 public class HandlerManager {
 
     /**
-     * Interface for queued add/remove operations.
+     * source of the event.
      */
-    private interface AddOrRemoveCommand {
-        void execute();
-    }
-
-    /**
-     * Inner class used to actually contain the handlers.
-     */
-    private static class HandlerRegistry {
-
-        private final HashMap<Event.Type<?>, ArrayList<?>> map = new HashMap<Event.Type<?>, ArrayList<?>>();
-
-        private <H extends EventHandler> void addHandler(Type<H> type, H handler) {
-            ArrayList<H> l = get(type);
-            if (l == null) {
-                l = new ArrayList<H>();
-                map.put(type, l);
-            }
-            l.add(handler);
-        }
-
-        private <H extends EventHandler> void fireEvent(Event<H> event, boolean isReverseOrder) {
-            Type<H> type = event.getAssociatedType();
-            int count = getHandlerCount(type);
-            if (isReverseOrder) {
-                for (int i = count - 1; i >= 0; i--) {
-                    H handler = this.<H>getHandler(type, i);
-                    event.dispatch(handler);
-                }
-            } else {
-                for (int i = 0; i < count; i++) {
-                    H handler = this.<H>getHandler(type, i);
-                    event.dispatch(handler);
-                }
-            }
-        }
-
-        @SuppressWarnings("unchecked")
-        private <H> ArrayList<H> get(Event.Type<H> type) {
-            // This cast is safe because we control the puts.
-            return (ArrayList<H>) map.get(type);
-        }
-
-        private <H extends EventHandler> H getHandler(Event.Type<H> eventKey, int index) {
-            ArrayList<H> l = get(eventKey);
-            return l.get(index);
-        }
-
-        private int getHandlerCount(Event.Type<?> eventKey) {
-            ArrayList<?> l = map.get(eventKey);
-            return l == null ? 0 : l.size();
-        }
-
-        private boolean isEventHandled(Event.Type<?> eventKey) {
-            return map.containsKey(eventKey);
-        }
-
-        private <H> void removeHandler(Event.Type<H> eventKey, H handler) {
-            ArrayList<H> l = get(eventKey);
-            boolean result = (l == null) ? false : l.remove(handler);
-            if (result && l.size() == 0) {
-                map.remove(eventKey);
-            }
-            assert result : "Tried to remove unknown handler: " + handler + " from " + eventKey;
-        }
-    }
-
+    private final Object source;
     private int firingDepth = 0;
     private boolean isReverseOrder;
-
     /**
      * map storing the actual handlers
      */
     private HandlerRegistry registry;
-
-    /**
-     * source of the event.
-     */
-    private final Object source;
-
     /**
      * Add and remove operations received during dispatch.
      */
@@ -161,7 +89,7 @@ public class HandlerManager {
 
     /**
      * Fires the given event to the handlers listening to the event's type.
-     * <p/>
+     * <p>
      * Note, any subclass should be very careful about overriding this method,
      * as adds/removes of handlers will not be safe except within this
      * implementation.
@@ -296,6 +224,75 @@ public class HandlerManager {
             } finally {
                 deferredDeltas = null;
             }
+        }
+    }
+
+    /**
+     * Interface for queued add/remove operations.
+     */
+    private interface AddOrRemoveCommand {
+        void execute();
+    }
+
+    /**
+     * Inner class used to actually contain the handlers.
+     */
+    private static class HandlerRegistry {
+
+        private final HashMap<Event.Type<?>, ArrayList<?>> map = new HashMap<Event.Type<?>, ArrayList<?>>();
+
+        private <H extends EventHandler> void addHandler(Type<H> type, H handler) {
+            ArrayList<H> l = get(type);
+            if (l == null) {
+                l = new ArrayList<H>();
+                map.put(type, l);
+            }
+            l.add(handler);
+        }
+
+        private <H extends EventHandler> void fireEvent(Event<H> event, boolean isReverseOrder) {
+            Type<H> type = event.getAssociatedType();
+            int count = getHandlerCount(type);
+            if (isReverseOrder) {
+                for (int i = count - 1; i >= 0; i--) {
+                    H handler = this.<H>getHandler(type, i);
+                    event.dispatch(handler);
+                }
+            } else {
+                for (int i = 0; i < count; i++) {
+                    H handler = this.<H>getHandler(type, i);
+                    event.dispatch(handler);
+                }
+            }
+        }
+
+        @SuppressWarnings("unchecked")
+        private <H> ArrayList<H> get(Event.Type<H> type) {
+            // This cast is safe because we control the puts.
+            return (ArrayList<H>) map.get(type);
+        }
+
+        private <H extends EventHandler> H getHandler(Event.Type<H> eventKey, int index) {
+            ArrayList<H> l = get(eventKey);
+            return l.get(index);
+        }
+
+        private int getHandlerCount(Event.Type<?> eventKey) {
+            ArrayList<?> l = map.get(eventKey);
+            return l == null ? 0 : l.size();
+        }
+
+        private boolean isEventHandled(Event.Type<?> eventKey) {
+            return map.containsKey(eventKey);
+        }
+
+        private <H> void removeHandler(Event.Type<H> eventKey, H handler) {
+            ArrayList<H> l = get(eventKey);
+            boolean result = (l == null) ? false : l.remove(handler);
+            if (result && l.size() == 0) {
+                map.remove(eventKey);
+            }
+            assert result : "Tried to remove unknown handler: " + handler + " from " + eventKey;
         }
     }
 }

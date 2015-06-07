@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 
 public class MainView extends JPanel {
 
@@ -22,7 +20,6 @@ public class MainView extends JPanel {
     private final NoneSelectedButtonGroup group = new NoneSelectedButtonGroup();
     private final JPanel horizontalButtonsPanel = new JPanel();
     private final JPanel statusBarPanel;
-    private final AboutDialog aboutDialog;
 
     public MainView() {
         setLayout(new BorderLayout());
@@ -58,8 +55,6 @@ public class MainView extends JPanel {
         bottomPanel.add(statusBarPanel, BorderLayout.PAGE_END);
 
         add(bottomPanel, BorderLayout.PAGE_END);
-
-        aboutDialog = new AboutDialog((JFrame) SwingUtilities.getWindowAncestor(this));
     }
 
     public JLabel getStatusLabel() {
@@ -70,8 +65,9 @@ public class MainView extends JPanel {
         return caretPositionLabel;
     }
 
-    public AboutDialog getAboutDialog() {
-        return aboutDialog;
+    public void displayAboutDialog() {
+        AboutDialog dialog = new AboutDialog((JFrame) SwingUtilities.getWindowAncestor(this));
+        dialog.setVisible(true);
     }
 
     public void setStatusBarVisible(boolean visible) {
@@ -150,52 +146,4 @@ public class MainView extends JPanel {
             }
         }
     }
-
-    public class AboutDialog extends JDialog implements WindowFocusListener {
-
-        private static final int WIDTH = 360;
-        private static final int HEIGHT = 200;
-
-        private static final String HTML = "<html>" +
-                "<div height=\"110\">" +
-                "Categorial Grammar Annotation for OpenCorpora<br/>" +
-                "<div align=\"right\"><font size=\"-2\"><i>Inspired by Mathlingvo</i></font></div>" +
-                "</div>" +
-                "<div align=\"right\"><font size=\"-2\">by Kosta Sokolov (vtqveant@gmail.com)</font></div></html>";
-
-        public AboutDialog(JFrame owner) {
-            super(owner, ModalityType.MODELESS);
-
-            setSize(WIDTH, HEIGHT);
-            final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            int x = (screenSize.width / 2) - (WIDTH / 2);
-            int y = (screenSize.height / 2) - (HEIGHT / 2);
-            setLocation(x, y);
-
-            setUndecorated(true);
-            setAlwaysOnTop(true);
-            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            addWindowFocusListener(this);
-
-            JLabel label = new JLabel();
-            label.setBackground(Color.LIGHT_GRAY);
-            label.setText(HTML);
-
-            JPanel panel = new JPanel(new GridBagLayout());
-            panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-            panel.add(label);
-            setContentPane(panel);
-        }
-
-        @Override
-        public void windowGainedFocus(WindowEvent e) {
-            // nothing
-        }
-
-        @Override
-        public void windowLostFocus(WindowEvent e) {
-            AboutDialog.this.setVisible(false);
-        }
-    }
-
 }

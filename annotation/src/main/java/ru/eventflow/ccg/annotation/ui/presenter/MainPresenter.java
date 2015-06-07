@@ -60,6 +60,6 @@ public class MainPresenter implements Presenter<MainView>, StatusUpdateEventHand
 
     @Override
     public void onEvent(DialogEvent e) {
-        view.getAboutDialog().setVisible(true);
+        view.displayAboutDialog();
     }
 }

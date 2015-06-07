@@ -13,7 +13,7 @@ public class AnnotationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(DataManager.class).toProvider(DataManagerProvider.class).in(Singleton.class);
+        bind(DataManager.class).toProvider(DataManagerProvider.class);
 
         bind(EventBus.class).in(Singleton.class);
 

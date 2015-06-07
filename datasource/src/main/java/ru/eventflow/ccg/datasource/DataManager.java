@@ -17,4 +17,6 @@ public interface DataManager {
     List<String> getOrthographies(String prefix);
 
     List<Sentence> getSentencesByFormOccurence(Form form);
+
+    Sentence getSentenceById(int id);
 }

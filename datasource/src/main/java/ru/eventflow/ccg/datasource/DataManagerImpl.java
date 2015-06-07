@@ -40,6 +40,12 @@ public class DataManagerImpl implements DataManager {
         return query.getResultList();
     }
 
+    public Sentence getSentenceById(int id) {
+        TypedQuery<Sentence> query = entityManager.createQuery("SELECT x FROM Sentence x WHERE x.id = :id", Sentence.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
+    }
+
     public List<Sentence> getSentencesByFormOccurence(Form form) {
         String q = "SELECT s.* FROM corpus.token t, corpus.variant v, corpus.sentence s " +
                 "WHERE v.form_id = " + form.getId() + " and t.id = v.token_id and t.sentence_id = s.id";

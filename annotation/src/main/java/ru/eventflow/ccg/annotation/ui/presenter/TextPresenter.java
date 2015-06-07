@@ -78,12 +78,6 @@ public class TextPresenter implements Presenter<TextView>, TextSelectedEventHand
             for (Paragraph p : e.getText().getParagraphs()) {
                 model.getSentences().addAll(p.getSentences());
             }
-            Collections.sort(model.getSentences(), new Comparator<Sentence>() {
-                @Override
-                public int compare(Sentence o1, Sentence o2) {
-                    return o1.getId() - o2.getId();
-                }
-            });
         }
         view.getTable().updateUI();
     }

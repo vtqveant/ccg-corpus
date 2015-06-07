@@ -2,11 +2,11 @@ package ru.eventflow.ccg.annotation.ui.model;
 
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 
-public class SyntacticCategoryTreeNode extends LexiconTreeNode {
+public class CategoryTreeNode extends LexiconTreeNode {
 
     private String category;
 
-    public SyntacticCategoryTreeNode(String category, int count) {
+    public CategoryTreeNode(String category, int count) {
         this.category = category;
         this.count = count;
     }

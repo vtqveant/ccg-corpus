@@ -16,6 +16,7 @@ public class Sentence {
     private String source;
 
     @OneToMany(targetEntity = Token.class, mappedBy = "sentence", cascade = CascadeType.ALL)
+    @OrderBy("id ASC")
     private List<Token> tokens = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.ALL)

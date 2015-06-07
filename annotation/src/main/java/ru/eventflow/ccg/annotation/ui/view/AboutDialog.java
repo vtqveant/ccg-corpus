@@ -15,7 +15,7 @@ public class AboutDialog extends JDialog implements WindowFocusListener {
             "Categorial Grammar Annotation for OpenCorpora<br/>" +
             "<div align=\"right\"><font size=\"-2\"><i>Inspired by Mathlingvo</i></font></div>" +
             "</div>" +
-            "<div align=\"right\"><font size=\"-2\">by Kosta Sokolov (vtqveant@gmail.com)</font></div></html>";
+            "<div align=\"right\"><font size=\"-2\">by Kosta Sokolov<br/>vtqveant@gmail.com</font></div></html>";
 
     public AboutDialog(JFrame owner) {
         super(owner);

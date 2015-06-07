@@ -6,10 +6,10 @@ import javax.swing.*;
 
 public class MenuView extends JMenuBar {
 
-    private static final ImageIcon TICK_ICON = new ImageIcon(ClassLoader.getSystemResource("images/tick.gif"));
-    private static final ImageIcon PLACEHOLDER_ICON = new ImageIcon(ClassLoader.getSystemResource("images/placeholder.png"));
-    private final JMenuItem firstMenuItem;
-    private final JMenuItem secondMenuItem;
+    public static final String ITEM_FORMAT = "%-20s";
+    private static final ImageIcon TICK_ICON = icon("tick.gif");
+    private static final ImageIcon PLACEHOLDER_ICON = icon("placeholder.png");
+    private final JMenuItem exitMenuItem;
     private final SettingMenuItem glossesMenuItem;
     private final SettingMenuItem statusBarMenuItem;
     private final JMenuItem aboutMenuItem;
@@ -19,64 +19,76 @@ public class MenuView extends JMenuBar {
         setBorder(BorderFactory.createEmptyBorder());
 
         JMenu fileMenu = new JMenu("File");
-        firstMenuItem = new JMenuItem("Settings          ", PLACEHOLDER_ICON);
-        fileMenu.add(firstMenuItem);
-        secondMenuItem = new JMenuItem("Exit              ", PLACEHOLDER_ICON);
-        fileMenu.add(secondMenuItem);
+        addDisabledMenuItem(fileMenu, "Settings");
+        exitMenuItem = addMenuItem(fileMenu, "Exit");
         add(fileMenu);
 
         JMenu editMenu = new JMenu("Edit");
-        ImageIcon undoIcon = new ImageIcon(ClassLoader.getSystemResource("images/undo.png"));
-        editMenu.add(new JMenuItem("Undo              ", undoIcon));
-        ImageIcon redoIcon = new ImageIcon(ClassLoader.getSystemResource("images/redo.png"));
-        editMenu.add(new JMenuItem("Redo              ", redoIcon));
+        addDisabledMenuItem(editMenu, "Undo", icon("undo.png"));
+        addDisabledMenuItem(editMenu, "Undo", icon("redo.png"));
         editMenu.add(new JSeparator());
-        editMenu.add(new JMenuItem("Cut               ", PLACEHOLDER_ICON));
-        editMenu.add(new JMenuItem("Copy              ", PLACEHOLDER_ICON));
-        editMenu.add(new JMenuItem("Paste             ", PLACEHOLDER_ICON));
-        editMenu.add(new JMenuItem("Delete            ", PLACEHOLDER_ICON));
+        addDisabledMenuItem(editMenu, "Cut");
+        addDisabledMenuItem(editMenu, "Copy");
+        addDisabledMenuItem(editMenu, "Paste");
+        addDisabledMenuItem(editMenu, "Delete");
         add(editMenu);
 
         JMenu viewMenu = new JMenu("View");
-        glossesMenuItem = new SettingMenuItem("Glosses           ", true, Setting.GLOSSES);
+        glossesMenuItem = new SettingMenuItem("Glosses", true, Setting.GLOSSES);
         viewMenu.add(glossesMenuItem);
-        statusBarMenuItem = new SettingMenuItem("Status Bar        ", true, Setting.STATUSBAR);
+        statusBarMenuItem = new SettingMenuItem("Status Bar", true, Setting.STATUSBAR);
         viewMenu.add(statusBarMenuItem);
         add(viewMenu);
 
         // like in CoqIDE
         JMenu navigationMenu = new JMenu("Navigation");
-        ImageIcon forwardIcon = new ImageIcon(ClassLoader.getSystemResource("images/forward.png"));
-        navigationMenu.add(new JMenuItem("Forward           ", forwardIcon));
-        ImageIcon backwardIcon = new ImageIcon(ClassLoader.getSystemResource("images/backward.png"));
-        navigationMenu.add(new JMenuItem("Backward          ", backwardIcon));
-        navigationMenu.add(new JMenuItem("Go to             ", PLACEHOLDER_ICON));
-        navigationMenu.add(new JMenuItem("Start             ", PLACEHOLDER_ICON));
-        navigationMenu.add(new JMenuItem("End               ", PLACEHOLDER_ICON));
-        navigationMenu.add(new JMenuItem("Interrupt         ", PLACEHOLDER_ICON));
-        navigationMenu.add(new JMenuItem("Hide              ", PLACEHOLDER_ICON));
+        addDisabledMenuItem(navigationMenu, "Forward", icon("forward.png"));
+        addDisabledMenuItem(navigationMenu, "Backward", icon("backward.png"));
+        addDisabledMenuItem(navigationMenu, "Go to");
+        addDisabledMenuItem(navigationMenu, "Start");
+        addDisabledMenuItem(navigationMenu, "End");
+        addDisabledMenuItem(navigationMenu, "Interrupt");
+        addDisabledMenuItem(navigationMenu, "Hide");
         add(navigationMenu);
 
         JMenu tacticsMenu = new JMenu("Tactics");
-        tacticsMenu.add(new JMenuItem("simpl             ", PLACEHOLDER_ICON));
-        tacticsMenu.add(new JMenuItem("reflexivity       ", PLACEHOLDER_ICON));
-        tacticsMenu.add(new JMenuItem("admit             ", PLACEHOLDER_ICON));
+        addDisabledMenuItem(tacticsMenu, "simpl");
+        addDisabledMenuItem(tacticsMenu, "reflexivity");
+        addDisabledMenuItem(tacticsMenu, "admit");
         add(tacticsMenu);
 
         JMenu helpMenu = new JMenu("Help");
-        helpMenu.add(new JMenuItem("Manual            ", PLACEHOLDER_ICON));
+        addDisabledMenuItem(helpMenu, "Manual");
         helpMenu.add(new JSeparator());
-        aboutMenuItem = new JMenuItem("About             ", PLACEHOLDER_ICON);
-        helpMenu.add(aboutMenuItem);
+        aboutMenuItem = addMenuItem(helpMenu, "About");
         add(helpMenu);
     }
 
-    public JMenuItem getFirstMenuItem() {
-        return firstMenuItem;
+    private static JMenuItem addMenuItem(JMenu menu, String title, ImageIcon imageIcon, boolean enabled) {
+        JMenuItem menuItem = new JMenuItem(String.format(ITEM_FORMAT, title), imageIcon);
+        menuItem.setEnabled(enabled);
+        menu.add(menuItem);
+        return menuItem;
     }
 
-    public JMenuItem getSecondMenuItem() {
-        return secondMenuItem;
+    private static ImageIcon icon(String name) {
+        return new ImageIcon(ClassLoader.getSystemResource("images/" + name));
+    }
+
+    private static JMenuItem addMenuItem(JMenu menu, String title) {
+        return addMenuItem(menu, title, PLACEHOLDER_ICON, true);
+    }
+
+    private static JMenuItem addDisabledMenuItem(JMenu menu, String title) {
+        return addMenuItem(menu, title, PLACEHOLDER_ICON, false);
+    }
+
+    private static JMenuItem addDisabledMenuItem(JMenu menu, String title, ImageIcon imageIcon) {
+        return addMenuItem(menu, title, imageIcon, false);
+    }
+
+    public JMenuItem getExitMenuItem() {
+        return exitMenuItem;
     }
 
     public SettingMenuItem getGlossesMenuItem() {
@@ -92,14 +104,14 @@ public class MenuView extends JMenuBar {
     }
 
     /**
-     * to emulate behaviour of the ugly JCheckBoxMenuItem
+     * to emulate the behaviour of the ugly JCheckBoxMenuItem
      */
     public class SettingMenuItem extends JMenuItem {
         private boolean checked;
         private Setting setting;
 
         public SettingMenuItem(String text, boolean checked, Setting setting) {
-            super(text);
+            super(String.format(ITEM_FORMAT, text));
             this.setting = setting;
             setChecked(checked);
         }

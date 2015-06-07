@@ -12,6 +12,7 @@ import ru.eventflow.ccg.datasource.model.dictionary.Form;
 
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -41,10 +42,19 @@ public class SearchPresenter implements Presenter<SearchView>, ActionListener, T
 
     @Override
     public void valueChanged(TreeSelectionEvent e) {
-        LexiconTreeNode node = (LexiconTreeNode) e.getPath().getLastPathComponent();
-        eventBus.fireEvent(new FormSelectedEvent(node.getForm()));
+        TreePath path = e.getNewLeadSelectionPath();
+        if (path == null) {
+            // no selection, let concordance view clear it's table
+            eventBus.fireEvent(new FormSelectedEvent(null));
+        } else {
+            LexiconTreeNode node = (LexiconTreeNode) path.getLastPathComponent();
+            eventBus.fireEvent(new FormSelectedEvent(node.getForm()));
+        }
     }
 
+    /**
+     * rebuild tree view with new data, tree selection will change and fire on it's own
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String text = view.getSearchField().getText();
@@ -63,6 +73,5 @@ public class SearchPresenter implements Presenter<SearchView>, ActionListener, T
         }
         view.getTreeTable().getSelectionModel().clearSelection();
         view.getTreeTable().updateUI();
-        eventBus.fireEvent(new FormSelectedEvent(null)); // let concordance view update, too (in fact, clear)
     }
 }

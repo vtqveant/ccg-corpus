@@ -35,7 +35,7 @@ public class LexiconSliderView extends SliderPanel {
     }
 
     @Override
-    public List<JToggleButton> getButtons() {
+    public List<AbstractButton> getButtons() {
         return null;
     }
 }

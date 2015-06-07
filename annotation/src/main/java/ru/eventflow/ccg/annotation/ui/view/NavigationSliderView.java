@@ -36,8 +36,8 @@ public class NavigationSliderView extends SliderPanel {
     }
 
     @Override
-    public List<JToggleButton> getButtons() {
-        List<JToggleButton> buttons = new ArrayList<>();
+    public List<AbstractButton> getButtons() {
+        List<AbstractButton> buttons = new ArrayList<>();
 
         ImageIcon magnifyIcon = new ImageIcon(ClassLoader.getSystemResource("images/magnify.gif"));
         annotatedBtn = new JToggleButton(magnifyIcon);

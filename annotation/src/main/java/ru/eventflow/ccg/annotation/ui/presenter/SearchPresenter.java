@@ -5,7 +5,6 @@ import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.FormSelectedEvent;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.model.LexiconTreeNode;
-import ru.eventflow.ccg.annotation.ui.model.LexiconTreeTableModel;
 import ru.eventflow.ccg.annotation.ui.view.SearchView;
 import ru.eventflow.ccg.datasource.DataManager;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
@@ -61,7 +60,7 @@ public class SearchPresenter implements Presenter<SearchView>, ActionListener, T
         eventBus.fireEvent(new StatusUpdateEvent(text));
 
         // TODO refactor
-        LexiconTreeTableModel model = (LexiconTreeTableModel) view.getTreeTable().getTreeTableModel();
+        SearchView.LexiconTreeTableModel model = (SearchView.LexiconTreeTableModel) view.getTreeTable().getTreeTableModel();
         LexiconTreeNode root = (LexiconTreeNode) model.getRoot();
         root.getChildren().clear();
 

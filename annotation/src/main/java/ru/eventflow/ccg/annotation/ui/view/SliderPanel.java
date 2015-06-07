@@ -22,9 +22,9 @@ public abstract class SliderPanel extends JPanel {
         headingPanel.add(Box.createHorizontalGlue());
         headingPanel.add(Box.createRigidArea(new Dimension(0, 18)));
 
-        List<JToggleButton> buttons = getButtons();
+        List<AbstractButton> buttons = getButtons();
         if (buttons != null) {
-            for (JToggleButton button : buttons) {
+            for (AbstractButton button : buttons) {
                 headingPanel.add(button);
                 headingPanel.add(Box.createRigidArea(new Dimension(1, 0)));
             }
@@ -47,5 +47,5 @@ public abstract class SliderPanel extends JPanel {
      * These buttons are displayed on the right of the slider panel header.
      * This is called in the constructor.
      */
-    abstract public List<JToggleButton> getButtons();
+    abstract public List<AbstractButton> getButtons();
 }

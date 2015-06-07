@@ -1,14 +1,16 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import org.jdesktop.swingx.JXTreeTable;
+import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 import ru.eventflow.ccg.annotation.ui.Defaults;
-import ru.eventflow.ccg.annotation.ui.model.LexiconTreeTableModel;
+import ru.eventflow.ccg.annotation.ui.model.LexiconTreeNode;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class SearchView extends JPanel {
 
@@ -79,6 +81,68 @@ public class SearchView extends JPanel {
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
             setFont(Defaults.SMALL_FONT);
             return super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+        }
+    }
+
+    public class LexiconTreeTableModel extends AbstractTreeTableModel {
+        private final String[] columns = new String[]{"Category", "Form", "Lemma", "Count"};
+        private LexiconTreeNode root;
+
+        public LexiconTreeTableModel() {
+            root = new LexiconTreeNode(null, new ArrayList<String>(), -1);
+        }
+
+        @Override
+        public int getColumnCount() {
+            return columns.length;
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            return columns[column];
+        }
+
+        @Override
+        public Object getValueAt(Object node, int column) {
+            LexiconTreeNode n = (LexiconTreeNode) node;
+            if (column == 0) return n.toString();
+            if (column == 1) return n.getForm().getOrthography();
+            if (column == 2) return n.getLemma();
+            if (column == 3) return n.getCount();
+            return null;
+        }
+
+        @Override
+        public Object getChild(Object node, int index) {
+            LexiconTreeNode treenode = (LexiconTreeNode) node;
+            return treenode.getChildren().get(index);
+        }
+
+        @Override
+        public int getChildCount(Object parent) {
+            LexiconTreeNode treenode = (LexiconTreeNode) parent;
+            return treenode.getChildren().size();
+        }
+
+        @Override
+        public int getIndexOfChild(Object parent, Object child) {
+            LexiconTreeNode treenode = (LexiconTreeNode) parent;
+            for (int i = 0; i > treenode.getChildren().size(); i++) {
+                if (treenode.getChildren().get(i) == child) {
+                    return i;
+                }
+            }
+            return 0;
+        }
+
+        @Override
+        public boolean isLeaf(Object node) {
+            return ((LexiconTreeNode) node).isLeaf();
+        }
+
+        @Override
+        public Object getRoot() {
+            return root;
         }
     }
 

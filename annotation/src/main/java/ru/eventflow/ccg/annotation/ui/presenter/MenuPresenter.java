@@ -2,6 +2,7 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
+import ru.eventflow.ccg.annotation.ui.event.DialogEvent;
 import ru.eventflow.ccg.annotation.ui.event.SettingsEvent;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.view.MenuView;
@@ -33,6 +34,13 @@ public class MenuPresenter implements Presenter<MenuView> {
             @Override
             public void actionPerformed(ActionEvent e) {
                 eventBus.fireEvent(new StatusUpdateEvent("second menu item"));
+            }
+        });
+
+        this.view.getAboutMenuItem().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eventBus.fireEvent(new DialogEvent());
             }
         });
 

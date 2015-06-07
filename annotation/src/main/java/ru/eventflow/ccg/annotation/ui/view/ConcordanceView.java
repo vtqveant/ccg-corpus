@@ -85,6 +85,10 @@ public class ConcordanceView extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
+    public JTable getTable() {
+        return table;
+    }
+
     /**
      * complete rebuild of a model with many consequences, which have to be dealt with
      */
@@ -165,14 +169,9 @@ public class ConcordanceView extends JPanel {
 
         @Override
         public Class<?> getColumnClass(int columnIndex) {
-            switch (columnIndex) {
-                case 2:
-                    return Integer.class;
-                case 3:
-                    return Boolean.class;
-                default:
-                    return String.class;
-            }
+            if (columnIndex == 2) return Integer.class;
+            if (columnIndex == 3) return Boolean.class;
+            return String.class;
         }
 
         @Override

@@ -13,6 +13,7 @@ public class Paragraph {
     private int id;
 
     @OneToMany(targetEntity = Sentence.class, mappedBy = "paragraph", cascade = CascadeType.ALL)
+    @OrderBy("id ASC")
     private List<Sentence> sentences = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.ALL)

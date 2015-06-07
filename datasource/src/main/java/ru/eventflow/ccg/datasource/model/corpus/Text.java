@@ -19,6 +19,7 @@ public class Text {
     private List<Tag> tags = new ArrayList<>();
 
     @OneToMany(targetEntity = Paragraph.class, mappedBy = "text", cascade = CascadeType.ALL)
+    @OrderBy("id ASC")
     private List<Paragraph> paragraphs = new ArrayList<>();
 
     @ManyToOne(targetEntity = Text.class, cascade = CascadeType.ALL)

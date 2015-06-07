@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.FormSelectedEvent;
 import ru.eventflow.ccg.annotation.ui.event.FormSelectedEventHandler;
+import ru.eventflow.ccg.annotation.ui.event.TabEvent;
 import ru.eventflow.ccg.annotation.ui.model.Context;
 import ru.eventflow.ccg.annotation.ui.view.ConcordanceView;
 import ru.eventflow.ccg.datasource.DataManager;
@@ -13,7 +14,12 @@ import ru.eventflow.ccg.datasource.model.corpus.Variant;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSelectedEventHandler {
@@ -30,6 +36,22 @@ public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSel
         this.view = new ConcordanceView();
 
         this.eventBus.addHandler(FormSelectedEvent.TYPE, this);
+
+        // open tab with sentence on double click
+        this.view.getTable().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                JTable table = (JTable) e.getSource();
+                if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
+                    Point point = e.getPoint();
+                    int idx = table.rowAtPoint(point);
+                    int modelIdx = table.convertRowIndexToModel(idx);
+                    int sentenceId = (int) table.getModel().getValueAt(modelIdx, 2);
+                    Sentence sentence = dataManager.getSentenceById(sentenceId);
+                    eventBus.fireEvent(new TabEvent(sentence));
+                }
+            }
+        });
     }
 
     @Override
@@ -42,6 +64,7 @@ public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSel
             view.setData(new ArrayList<Context>()); // clear concordancer table
         }
     }
+
 
     @Override
     public ConcordanceView getView() {

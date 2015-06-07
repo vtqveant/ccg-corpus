@@ -32,7 +32,7 @@ public class TextView extends JPanel {
         table.setFont(Defaults.SMALL_FONT);
         table.setShowGrid(false);
 
-        table.getColumnModel().getColumn(0).setCellRenderer(new SecondaryTableCellRenderer());
+        table.getColumnModel().getColumn(1).setCellRenderer(new SecondaryTableCellRenderer());
 
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -40,7 +40,7 @@ public class TextView extends JPanel {
         headerRenderer.setBackground(new Color(245, 245, 245));
         headerRenderer.setForeground(Color.DARK_GRAY);
         table.getTableHeader().setDefaultRenderer(headerRenderer);
-        table.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(45);
+        table.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(60);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.getViewport().setBackground(Color.WHITE);
@@ -67,8 +67,8 @@ public class TextView extends JPanel {
 
         @Override
         public String getColumnName(int column) {
-            if (column == 0) return "Id";
-            if (column == 1) return "Source";
+            if (column == 0) return "Source";
+            if (column == 1) return "Sentence";
             return "";
         }
 
@@ -79,9 +79,9 @@ public class TextView extends JPanel {
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             if (columnIndex == 0) {
-                return sentences.get(rowIndex).getId();
+                return " " + sentences.get(rowIndex).getSource();
             } else {
-                return sentences.get(rowIndex).getSource();
+                return sentences.get(rowIndex).getId();
             }
         }
 

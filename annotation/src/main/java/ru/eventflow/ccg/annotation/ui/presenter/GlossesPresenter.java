@@ -7,6 +7,8 @@ import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class GlossesPresenter implements Presenter<GlossesView> {
@@ -18,6 +20,14 @@ public class GlossesPresenter implements Presenter<GlossesView> {
 
         List<String> tokens = new ArrayList<>();
         List<String> glosses = new ArrayList<>();
+
+        Collections.sort(sentence.getTokens(), new Comparator<Token>() {
+            @Override
+            public int compare(Token o1, Token o2) {
+                return o2.getId() - o1.getId();
+            }
+        });
+
         for (Token token : sentence.getTokens()) {
             tokens.add(token.getOrthography());
 

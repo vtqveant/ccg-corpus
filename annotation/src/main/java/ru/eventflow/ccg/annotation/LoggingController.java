@@ -7,24 +7,17 @@ import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEventHandler;
 
 import java.util.logging.Logger;
 
-public class LoggingController {
+public class LoggingController implements StatusUpdateEventHandler {
 
     private static final Logger logger = Logger.getLogger(LoggingController.class.getName());
 
-    private EventBus eventBus;
-
     @Inject
-    public LoggingController(EventBus eventBus) {
-        this.eventBus = eventBus;
-        init();
+    public LoggingController(final EventBus eventBus) {
+        eventBus.addHandler(StatusUpdateEvent.TYPE, this);
     }
 
-    private void init() {
-        eventBus.addHandler(StatusUpdateEvent.TYPE, new StatusUpdateEventHandler() {
-            @Override
-            public void onEvent(StatusUpdateEvent e) {
-                logger.info(e.getMessage());
-            }
-        });
+    @Override
+    public void onEvent(StatusUpdateEvent e) {
+        logger.info(e.getMessage());
     }
 }

@@ -16,8 +16,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class TextPresenter implements Presenter<TextView>, TextSelectedEventHandler {
 

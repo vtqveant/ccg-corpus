@@ -17,34 +17,34 @@ package ru.eventflow.ccg.annotation.eventbus;
 
 public class DefaultHandlerRegistration implements HandlerRegistration {
 
-	private final HandlerManager manager;
-	private final EventHandler handler;
-	private final Event.Type<?> type;
+    private final HandlerManager manager;
+    private final EventHandler handler;
+    private final Event.Type<?> type;
 
-	/**
-	 * Creates a new handler registration.
-	 * 
-	 * @param <H> Handler type
-	 * @param manager the handler manager
-	 * @param type the event type
-	 * @param handler the handler
-	 */
-	protected <H extends EventHandler> DefaultHandlerRegistration(HandlerManager manager, Event.Type<H> type, H handler) {
-		this.manager = manager;
-		this.handler = handler;
-		this.type = type;
-	}
+    /**
+     * Creates a new handler registration.
+     *
+     * @param <H>     Handler type
+     * @param manager the handler manager
+     * @param type    the event type
+     * @param handler the handler
+     */
+    protected <H extends EventHandler> DefaultHandlerRegistration(HandlerManager manager, Event.Type<H> type, H handler) {
+        this.manager = manager;
+        this.handler = handler;
+        this.type = type;
+    }
 
-	EventHandler getHandler() {
-		return handler;
-	}
+    EventHandler getHandler() {
+        return handler;
+    }
 
-	/**
-	 * Removes the given handler from its manager.
-	 */
-	@SuppressWarnings("unchecked")
-	public void removeHandler() {
-		manager.removeHandler((Event.Type<EventHandler>) type, handler);
-	}
+    /**
+     * Removes the given handler from its manager.
+     */
+    @SuppressWarnings("unchecked")
+    public void removeHandler() {
+        manager.removeHandler((Event.Type<EventHandler>) type, handler);
+    }
 
 }

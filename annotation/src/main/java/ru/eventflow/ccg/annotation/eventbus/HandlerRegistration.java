@@ -20,7 +20,7 @@ package ru.eventflow.ccg.annotation.eventbus;
  * {@link HandlerManager#addHandler(com.babeng.event.shared.GwtEvent.Type, EventHandler)}
  * . Use the handler registration to remove handlers when they are no longer
  * needed.
- * <p/>
+ * <p>
  * Note, this interface is under the control of the {@link HandlerManager} class
  * and may be expanded over time, so extend {@link DefaultHandlerRegistration}
  * if you do not wish to get compiler errors if we extend the handler registry

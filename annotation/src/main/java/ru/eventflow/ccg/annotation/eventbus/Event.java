@@ -16,42 +16,8 @@
 package ru.eventflow.ccg.annotation.eventbus;
 
 public abstract class Event<H extends EventHandler> {
-    /**
-     * Type class used to register events with the {@link HandlerManager}.
-     * <p>
-     * Type is parameterized by the handler type in order to make the addHandler
-     * method type safe.
-     * </p>
-     *
-     * @param <H> handler type
-     */
-    public static class Type<H> {
-
-        private static int nextHashCode;
-        private final int index;
-
-        /**
-         * Constructor.
-         */
-        public Type() {
-            index = ++nextHashCode;
-        }
-
-        // We override hash code to make it as efficient as possible.
-        @Override
-        public final int hashCode() {
-            return index;
-        }
-
-        @Override
-        public String toString() {
-            return "Event type";
-        }
-    }
-
     private boolean dead;
     private Object source;
-
     /**
      * Constructor.
      */
@@ -74,6 +40,16 @@ public abstract class Event<H extends EventHandler> {
     public Object getSource() {
         assertLive();
         return source;
+    }
+
+    /**
+     * Set the source that triggered this event.
+     *
+     * @param source the source of this event, should only be set by a
+     *               {@link HandlerManager}
+     */
+    void setSource(Object source) {
+        this.source = source;
     }
 
     /**
@@ -145,12 +121,35 @@ public abstract class Event<H extends EventHandler> {
     }
 
     /**
-     * Set the source that triggered this event.
+     * Type class used to register events with the {@link HandlerManager}.
+     * <p>
+     * Type is parameterized by the handler type in order to make the addHandler
+     * method type safe.
+     * </p>
      *
-     * @param source the source of this event, should only be set by a
-     *               {@link HandlerManager}
+     * @param <H> handler type
      */
-    void setSource(Object source) {
-        this.source = source;
+    public static class Type<H> {
+
+        private static int nextHashCode;
+        private final int index;
+
+        /**
+         * Constructor.
+         */
+        public Type() {
+            index = ++nextHashCode;
+        }
+
+        // We override hash code to make it as efficient as possible.
+        @Override
+        public final int hashCode() {
+            return index;
+        }
+
+        @Override
+        public String toString() {
+            return "Event type";
+        }
     }
 }

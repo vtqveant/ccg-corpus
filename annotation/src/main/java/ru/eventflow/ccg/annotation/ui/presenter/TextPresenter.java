@@ -38,7 +38,7 @@ public class TextPresenter implements Presenter<TextView>, TextSelectedEventHand
                 ListSelectionModel selectionModel = (ListSelectionModel) e.getSource();
                 int row = selectionModel.getMinSelectionIndex();
                 if (row != -1) {
-                    String id = view.getTable().getValueAt(row, 0).toString();
+                    String id = view.getTable().getValueAt(row, 1).toString();
                     eventBus.fireEvent(new StatusUpdateEvent(id));
                 } else {
                     eventBus.fireEvent(new StatusUpdateEvent("no selection"));

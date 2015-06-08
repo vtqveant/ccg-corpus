@@ -48,7 +48,7 @@ public class MainView extends JPanel {
 
         statusBarPanel = new JPanel();
         statusBarPanel.setLayout(new BoxLayout(statusBarPanel, BoxLayout.LINE_AXIS));
-        statusBarPanel.setBorder(BorderFactory.createEmptyBorder(1, 6, 2, 6));
+        statusBarPanel.setBorder(BorderFactory.createEmptyBorder(0, 6, 2, 6));
         statusBarPanel.add(statusLabel);
         statusBarPanel.add(Box.createHorizontalGlue());
         statusBarPanel.add(caretPositionLabel);

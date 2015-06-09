@@ -1,6 +1,5 @@
 package ru.eventflow.ccg.annotation.ui.presenter;
 
-import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.SearchEvent;
 import ru.eventflow.ccg.annotation.ui.view.SearchView;

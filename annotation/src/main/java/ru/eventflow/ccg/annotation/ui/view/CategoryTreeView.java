@@ -8,7 +8,6 @@ import ru.eventflow.ccg.annotation.ui.model.LexiconTreeNode;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -42,7 +41,7 @@ public class CategoryTreeView extends JPanel implements SearchEnabled {
         tableHeader.getColumnModel().getColumn(2).setMaxWidth(100);
         tableHeader.getColumnModel().getColumn(3).setMaxWidth(45);
 
-        treeTable.setTreeCellRenderer(new LexiconTreeCellRenderer());
+        treeTable.setTreeCellRenderer(new CustomTreeCellRenderer());
 
         JScrollPane scrollPane = new JScrollPane(treeTable);
         scrollPane.setPreferredSize(new Dimension(300, 300));
@@ -58,17 +57,8 @@ public class CategoryTreeView extends JPanel implements SearchEnabled {
         return treeTable;
     }
 
-    private class LexiconTreeCellRenderer extends DefaultTreeCellRenderer {
-        @Override
-        public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-            setFont(Defaults.SMALL_FONT);
-            return super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
-        }
-    }
-
     public class LexiconTreeTableModel extends AbstractTreeTableModel {
         private final String[] columns = new String[]{"Category", "Form", "Lemma", "Count"};
-        private LexiconTreeNode root;
 
         public LexiconTreeTableModel() {
             root = new LexiconTreeNode(null, new ArrayList<String>(), -1);
@@ -120,11 +110,6 @@ public class CategoryTreeView extends JPanel implements SearchEnabled {
         @Override
         public boolean isLeaf(Object node) {
             return ((LexiconTreeNode) node).isLeaf();
-        }
-
-        @Override
-        public Object getRoot() {
-            return root;
         }
     }
 

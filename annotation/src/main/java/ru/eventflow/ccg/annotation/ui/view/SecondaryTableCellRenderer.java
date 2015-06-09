@@ -12,6 +12,6 @@ public class SecondaryTableCellRenderer extends DefaultTableCellRenderer {
         setText(String.valueOf(value));
         setFont(Defaults.SMALL_FONT);
         setForeground(Color.GRAY);
-        setHorizontalAlignment(SwingConstants.CENTER);
+        setHorizontalAlignment(SwingConstants.LEFT);
     }
 }

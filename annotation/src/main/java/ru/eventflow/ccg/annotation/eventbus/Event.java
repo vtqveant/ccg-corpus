@@ -18,6 +18,7 @@ package ru.eventflow.ccg.annotation.eventbus;
 public abstract class Event<H extends EventHandler> {
     private boolean dead;
     private Object source;
+
     /**
      * Constructor.
      */

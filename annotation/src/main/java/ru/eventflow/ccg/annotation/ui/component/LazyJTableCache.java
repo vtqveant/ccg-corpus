@@ -7,7 +7,7 @@ package ru.eventflow.ccg.annotation.ui.component;
  * @author Jeremy Dickson, 2003.
  */
 
-public class LazyTableCache {
+public class LazyJTableCache {
 
     // actual number of rows in the backing table
     private int rowCount;
@@ -24,7 +24,7 @@ public class LazyTableCache {
     //THE MAX CACHE SIZE IT GOES BACK TO ZERO
     private int writePositionIndex = 0;
 
-    private LazyTableDataSource tableDataSource = null;
+    private LazyJTableDataSource tableDataSource = null;
 
     //THE LAST INDEX THAT WAS REQUIRED WHEN A FETCH OCCURRED. DETERMINES WHETHER THE USER IS ASCENDING
     //OR DESCENDING THE TABLE
@@ -33,7 +33,7 @@ public class LazyTableCache {
     //THE LAST ARRAY INDEX OF THE CACHE TO BE INDEXED
     private int lastRowAccess = 0;
 
-    public LazyTableCache(int rowCount, LazyTableDataSource tableDataSource) {
+    public LazyJTableCache(int rowCount, LazyJTableDataSource tableDataSource) {
         this(rowCount, tableDataSource, 50, 1000);
     }
 
@@ -44,7 +44,7 @@ public class LazyTableCache {
      * @param maximumCacheSize The maximum number of rows that will be cached. When this number is exceeded
      *                         by new data that has been fetched, the oldest data is overwritten.
      */
-    private LazyTableCache(int rowCount, LazyTableDataSource tableDataSource, int chunkSize, int maximumCacheSize) {
+    private LazyJTableCache(int rowCount, LazyJTableDataSource tableDataSource, int chunkSize, int maximumCacheSize) {
         this.rowCount = rowCount;
         this.tableDataSource = tableDataSource;
 
@@ -176,6 +176,5 @@ public class LazyTableCache {
         }
         return -1;
     }
-
 
 }

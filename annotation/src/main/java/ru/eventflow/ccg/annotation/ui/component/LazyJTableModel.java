@@ -3,14 +3,14 @@ package ru.eventflow.ccg.annotation.ui.component;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-public class LazyTableModel implements TableModel {
+public class LazyJTableModel implements TableModel {
 
-    private LazyTableCache cache;
+    private LazyJTableCache cache;
     private String[] columnNames;
     private Class[] columnClasses;
     private int rowCount;
 
-    public LazyTableModel(String[] columnNames, Class[] columnClasses, int rowCount) {
+    public LazyJTableModel(String[] columnNames, Class[] columnClasses, int rowCount) {
         this.columnNames = columnNames;
         this.columnClasses = columnClasses;
         this.rowCount = rowCount;
@@ -64,7 +64,8 @@ public class LazyTableModel implements TableModel {
     public void removeTableModelListener(TableModelListener l) {
     }
 
-    public void setTableDataSource(LazyTableDataSource tableDataSource) {
-        this.cache = new LazyTableCache(rowCount, tableDataSource);
+    public void setTableDataSource(LazyJTableDataSource tableDataSource) {
+        this.cache = new LazyJTableCache(rowCount, tableDataSource);
     }
+
 }

@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class ConcordanceView extends JPanel implements SearchEnabled {
 
-    public static final String[] COLUMN_NAMES = new String[]{"", "Context", "Sentence", "Approved"};
+    public static final String[] COLUMN_NAMES = new String[]{"", "Context", "Sent.", "Approved"};
     public static final Class[] COLUMN_CLASSES = new Class[]{String.class, String.class, Integer.class, Boolean.class};
 
     private final JTable table;
@@ -23,7 +23,7 @@ public class ConcordanceView extends JPanel implements SearchEnabled {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(200, 150));
 
-      //  add(searchPanel, BorderLayout.PAGE_START);
+        //  add(searchPanel, BorderLayout.PAGE_START);
 
         // setup the model
         emptyModel = new LazyJTableModel(COLUMN_NAMES, COLUMN_CLASSES, 0);

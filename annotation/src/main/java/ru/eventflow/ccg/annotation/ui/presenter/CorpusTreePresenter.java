@@ -2,6 +2,7 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.TextSelectedEvent;
+import ru.eventflow.ccg.annotation.ui.model.CorpusTreeTableModel;
 import ru.eventflow.ccg.annotation.ui.view.CorpusTreeView;
 import ru.eventflow.ccg.datasource.DataManager;
 import ru.eventflow.ccg.datasource.model.corpus.Text;
@@ -10,27 +11,23 @@ import javax.inject.Inject;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CorpusTreePresenter implements Presenter<CorpusTreeView> {
+public class CorpusTreePresenter implements Presenter<CorpusTreeView>, TreeSelectionListener {
 
     private CorpusTreeView view;
     private EventBus eventBus;
-    private DataManager dataManager;
 
     @Inject
     public CorpusTreePresenter(final EventBus eventBus, final DataManager dataManager) {
-        this.view = new CorpusTreeView();
         this.eventBus = eventBus;
-        this.dataManager = dataManager;
-        init();
-    }
 
-    private void init() {
-        // init tree model
+        // init tree table model
         Map<Integer, DefaultMutableTreeNode> nodes = new HashMap<Integer, DefaultMutableTreeNode>();
-        DefaultMutableTreeNode root = (DefaultMutableTreeNode) view.getTree().getModel().getRoot();
+        CorpusTreeTableModel model = new CorpusTreeTableModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
         nodes.put(0, root);
         for (Text text : dataManager.getAllTexts()) {
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(text);
@@ -49,21 +46,21 @@ public class CorpusTreePresenter implements Presenter<CorpusTreeView> {
             }
         }
 
-        // delegates the selected document to whom it may concern
-        view.getTree().getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) view.getTree().getLastSelectedPathComponent();
-                if (node == null) return;
-                Object o = node.getUserObject();
-                if (o instanceof Text) {
-                    Text text = (Text) node.getUserObject();
-                    eventBus.fireEvent(new TextSelectedEvent(text));
-                } else {
-                    eventBus.fireEvent(new TextSelectedEvent(null));
-                }
-            }
-        });
+        view = new CorpusTreeView(model);
+        view.getTreeTable().addTreeSelectionListener(this);
+    }
+
+    @Override
+    public void valueChanged(TreeSelectionEvent e) {
+        TreePath path = e.getNewLeadSelectionPath();
+        TextSelectedEvent event;
+        if (path == null) {
+            event = new TextSelectedEvent(null);
+        } else {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
+            event = new TextSelectedEvent((Text) node.getUserObject());
+        }
+        eventBus.fireEvent(event);
     }
 
     @Override

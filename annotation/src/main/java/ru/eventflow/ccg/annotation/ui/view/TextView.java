@@ -68,7 +68,7 @@ public class TextView extends JPanel {
         @Override
         public String getColumnName(int column) {
             if (column == 0) return "Source";
-            if (column == 1) return "Sentence";
+            if (column == 1) return "Sent.";
             return "";
         }
 

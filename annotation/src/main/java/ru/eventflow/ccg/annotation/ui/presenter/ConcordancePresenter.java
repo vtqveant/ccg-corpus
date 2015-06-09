@@ -19,8 +19,8 @@ public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSel
 
     private final EventBus eventBus;
     private final DataManager dataManager;
-    private ConcordanceView view;
     private final SearchPresenter searchPresenter;
+    private ConcordanceView view;
 
     @Inject
     public ConcordancePresenter(final EventBus eventBus, final DataManager dataManager) {

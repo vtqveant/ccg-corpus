@@ -1,9 +1,8 @@
 package ru.eventflow.ccg.annotation.ui.component;
 
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.table.AbstractTableModel;
 
-public class LazyJTableModel implements TableModel {
+public class LazyJTableModel extends AbstractTableModel {
 
     private LazyJTableCache cache;
     private String[] columnNames;
@@ -45,23 +44,6 @@ public class LazyJTableModel implements TableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         return cache.retrieveRowFromCache(rowIndex)[columnIndex];
-    }
-
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return false;
-    }
-
-    @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-    }
-
-    @Override
-    public void addTableModelListener(TableModelListener l) {
-    }
-
-    @Override
-    public void removeTableModelListener(TableModelListener l) {
     }
 
     public void setTableDataSource(LazyJTableDataSource tableDataSource) {

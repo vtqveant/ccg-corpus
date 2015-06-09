@@ -26,8 +26,8 @@ public class ConcordanceLazyTableDataSource implements LazyJTableDataSource {
         Object[][] results = new Object[size][4];
         for (int i = 0; i < size; i++) {
             Context context = contexts.get(i);
-            results[i][0] = context.getLeft();
-            results[i][1] = context.getOccurence() + " " + context.getRight();
+            results[i][0] = context.getLeft() + " ";
+            results[i][1] = context.getOccurence() + "  " + context.getRight();
             results[i][2] = context.getSentenceId();
             results[i][3] = context.isApproved();
         }

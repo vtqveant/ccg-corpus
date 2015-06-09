@@ -32,5 +32,4 @@ public class SettingsEvent extends Event<SettingsEventHandler> {
         handler.onEvent(this);
     }
 
-
 }

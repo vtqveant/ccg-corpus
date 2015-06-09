@@ -1,6 +1,8 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import ru.eventflow.ccg.annotation.ui.Defaults;
+import ru.eventflow.ccg.annotation.ui.component.LazyTableModel;
+import ru.eventflow.ccg.annotation.ui.component.MyLazyTableDataSource;
 import ru.eventflow.ccg.annotation.ui.model.Context;
 
 import javax.swing.*;
@@ -12,11 +14,12 @@ import java.util.regex.PatternSyntaxException;
 
 public class ConcordanceView extends JPanel {
 
-    private static final String[] columns = new String[]{"", "Context", "Sentence", "Approved"};
+    public static final String[] COLUMN_NAMES = new String[]{"", "Context", "Sentence", "Approved"};
+    public static final Class[] COLUMN_CLASSES = new Class[]{String.class, String.class, Integer.class, Boolean.class};
 
     private final JTextField filterField;
     private final JTable table;
-    private TableRowSorter<ContextTableModel> sorter;
+    private TableRowSorter<LazyTableModel> sorter;
 
 
     public ConcordanceView() {
@@ -29,13 +32,9 @@ public class ConcordanceView extends JPanel {
         add(filterField, BorderLayout.PAGE_START);
 
         // setup the model
-        ContextTableModel model = new ContextTableModel(columns, 0);
+        LazyTableModel model = new LazyTableModel(COLUMN_NAMES, COLUMN_CLASSES, 0);
         table = new JTable(model);
 
-        sorter = new TableRowSorter<ContextTableModel>(model);
-        sorter.setSortable(0, false); // disable manual sorting for context, because it's behaviour is unclear
-        sorter.setSortable(1, false);
-        table.setRowSorter(sorter);
 
         ListSelectionModel selectionModel = new DefaultListSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -95,18 +94,15 @@ public class ConcordanceView extends JPanel {
     public void setData(java.util.List<Context> contexts) {
         filterField.setText("");
         table.clearSelection();
-        ContextTableModel model = (ContextTableModel) table.getModel();
-        int size = contexts.size();
-        Object[][] rows = new Object[size][columns.length];
-        for (int i = 0; i < size; i++) {
-            Context context = contexts.get(i);
-            rows[i][0] = context.getLeft() + "  ";
-            rows[i][1] = context.getOccurence() + "  " + context.getRight();
-            rows[i][2] = context.getSentenceId();
-            rows[i][3] = context.isApproved();
-        }
-        model.setDataVector(rows, columns);
-        model.setRowCount(size);
+        LazyTableModel model = new LazyTableModel(COLUMN_NAMES, COLUMN_CLASSES, contexts.size());
+        model.setTableDataSource(new MyLazyTableDataSource(contexts));
+        table.setModel(model);
+
+        // reset filters
+        sorter = new TableRowSorter<LazyTableModel>(model);
+        sorter.setSortable(0, false); // disable manual sorting for context, because it's behaviour is unclear
+        sorter.setSortable(1, false);
+        table.setRowSorter(sorter);
     }
 
     private static class LeftAlignHeaderRenderer implements TableCellRenderer {
@@ -141,42 +137,13 @@ public class ConcordanceView extends JPanel {
         }
 
         private void resetFilter() {
-            RowFilter<DefaultTableModel, Object> filter;
+            RowFilter<LazyTableModel, Object> filter;
             try {
                 filter = RowFilter.regexFilter(filterField.getText(), 0, 1, 2);
             } catch (PatternSyntaxException e) {
                 return;
             }
             sorter.setRowFilter(filter);
-        }
-    }
-
-    private class ContextTableModel extends DefaultTableModel {
-
-        public ContextTableModel(Object[] columnNames, int rowCount) {
-            super(columnNames, rowCount);
-        }
-
-        @Override
-        public String getColumnName(int column) {
-            return columns[column];
-        }
-
-        @Override
-        public int getColumnCount() {
-            return columns.length;
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            if (columnIndex == 2) return Integer.class;
-            if (columnIndex == 3) return Boolean.class;
-            return String.class;
-        }
-
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
         }
     }
 

@@ -46,11 +46,16 @@ public class DataManagerImpl implements DataManager {
         return query.getSingleResult();
     }
 
-    public List<Sentence> getSentencesByFormOccurence(Form form) {
+    public List<Sentence> getSentencesByFormId(int formId) {
         String q = "SELECT s.* FROM corpus.token t, corpus.variant v, corpus.sentence s " +
-                "WHERE v.form_id = " + form.getId() + " and t.id = v.token_id and t.sentence_id = s.id";
+                "WHERE v.form_id = " + formId + " and t.id = v.token_id and t.sentence_id = s.id ORDER BY s.id ASC";
         Query query = entityManager.createNativeQuery(q, Sentence.class);
         return (List<Sentence>) query.getResultList();
+    }
+
+    @Deprecated
+    public List<Sentence> getSentencesByFormOccurence(Form form) {
+        return getSentencesByFormId(form.getId());
     }
 
     public Map<Form, List<String>> getGrammemes(String form) {

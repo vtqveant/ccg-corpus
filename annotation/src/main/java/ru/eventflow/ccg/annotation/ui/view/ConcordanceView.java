@@ -1,9 +1,8 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import ru.eventflow.ccg.annotation.ui.Defaults;
-import ru.eventflow.ccg.annotation.ui.component.LazyTableModel;
-import ru.eventflow.ccg.annotation.ui.component.MyLazyTableDataSource;
-import ru.eventflow.ccg.annotation.ui.model.Context;
+import ru.eventflow.ccg.annotation.ui.component.LazyJTableDataSource;
+import ru.eventflow.ccg.annotation.ui.component.LazyJTableModel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -19,8 +18,8 @@ public class ConcordanceView extends JPanel {
 
     private final JTextField filterField;
     private final JTable table;
-    private TableRowSorter<LazyTableModel> sorter;
-
+    private final LazyJTableModel emptyModel;
+    private TableRowSorter<LazyJTableModel> sorter;
 
     public ConcordanceView() {
         setLayout(new BorderLayout());
@@ -32,9 +31,8 @@ public class ConcordanceView extends JPanel {
         add(filterField, BorderLayout.PAGE_START);
 
         // setup the model
-        LazyTableModel model = new LazyTableModel(COLUMN_NAMES, COLUMN_CLASSES, 0);
-        table = new JTable(model);
-
+        emptyModel = new LazyJTableModel(COLUMN_NAMES, COLUMN_CLASSES, 0);
+        table = new JTable(emptyModel);
 
         ListSelectionModel selectionModel = new DefaultListSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -91,18 +89,25 @@ public class ConcordanceView extends JPanel {
     /**
      * complete rebuild of a model with many consequences, which have to be dealt with
      */
-    public void setData(java.util.List<Context> contexts) {
+    public void setDataSource(LazyJTableDataSource dataSource) {
         filterField.setText("");
         table.clearSelection();
-        LazyTableModel model = new LazyTableModel(COLUMN_NAMES, COLUMN_CLASSES, contexts.size());
-        model.setTableDataSource(new MyLazyTableDataSource(contexts));
+        LazyJTableModel model;
+        if (dataSource != null) {
+            model = new LazyJTableModel(COLUMN_NAMES, COLUMN_CLASSES, dataSource.getTotalRowCount());
+            model.setTableDataSource(dataSource);
+        } else {
+            model = emptyModel;
+        }
         table.setModel(model);
 
         // reset filters
-        sorter = new TableRowSorter<LazyTableModel>(model);
+        sorter = new TableRowSorter<LazyJTableModel>(model);
         sorter.setSortable(0, false); // disable manual sorting for context, because it's behaviour is unclear
         sorter.setSortable(1, false);
         table.setRowSorter(sorter);
+
+        table.repaint();
     }
 
     private static class LeftAlignHeaderRenderer implements TableCellRenderer {
@@ -137,7 +142,7 @@ public class ConcordanceView extends JPanel {
         }
 
         private void resetFilter() {
-            RowFilter<LazyTableModel, Object> filter;
+            RowFilter<LazyJTableModel, Object> filter;
             try {
                 filter = RowFilter.regexFilter(filterField.getText(), 0, 1, 2);
             } catch (PatternSyntaxException e) {

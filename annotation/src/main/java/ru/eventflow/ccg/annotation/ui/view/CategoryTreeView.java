@@ -16,7 +16,6 @@ public class CategoryTreeView extends JPanel implements SearchEnabled {
 
     private static final SecondaryTableCellRenderer secondaryCellRenderer = new SecondaryTableCellRenderer();
     private final JXTreeTable treeTable;
-    private JPanel searchPanel;
 
     public CategoryTreeView() {
         setLayout(new BorderLayout());

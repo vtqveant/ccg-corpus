@@ -3,20 +3,20 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
-import ru.eventflow.ccg.annotation.ui.view.NavigationSliderView;
+import ru.eventflow.ccg.annotation.ui.view.CorpusSliderView;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-public class NavigationSliderPresenter implements Presenter<NavigationSliderView> {
+public class CorpusSliderPresenter implements Presenter<CorpusSliderView> {
 
-    private final NavigationSliderView view;
+    private final CorpusSliderView view;
 
     @Inject
-    public NavigationSliderPresenter(final EventBus eventBus,
-                                     final CorpusTreePresenter corpusTreePresenter,
-                                     final TextPresenter textPresenter) {
-        view = new NavigationSliderView();
+    public CorpusSliderPresenter(final EventBus eventBus,
+                                 final CorpusTreePresenter corpusTreePresenter,
+                                 final TextPresenter textPresenter) {
+        view = new CorpusSliderView();
         view.setLeftComponent(corpusTreePresenter.getView());
         view.setRightComponent(textPresenter.getView());
 
@@ -38,7 +38,7 @@ public class NavigationSliderPresenter implements Presenter<NavigationSliderView
     }
 
     @Override
-    public NavigationSliderView getView() {
+    public CorpusSliderView getView() {
         return view;
     }
 }

@@ -14,7 +14,7 @@ public class MainPresenter implements Presenter<MainView>, StatusUpdateEventHand
     @Inject
     public MainPresenter(final EventBus eventBus,
                          final ContainerPresenter containerPresenter,
-                         final NavigationSliderPresenter navigationPresenter,
+                         final CorpusSliderPresenter navigationPresenter,
                          final LexiconSliderPresenter lexiconPresenter,
                          final MessagesSliderPresenter messagesPresenter) {
         this.eventBus = eventBus;

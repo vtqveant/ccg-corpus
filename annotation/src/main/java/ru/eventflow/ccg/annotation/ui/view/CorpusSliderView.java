@@ -5,13 +5,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationSliderView extends SliderPanel {
+public class CorpusSliderView extends SliderPanel {
 
     private final JSplitPane splitPane;
     private JToggleButton annotatedBtn;
     private JToggleButton ambiguousBtn;
 
-    public NavigationSliderView() {
+    public CorpusSliderView() {
         super();
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
         add(splitPane, BorderLayout.CENTER);
@@ -27,7 +27,7 @@ public class NavigationSliderView extends SliderPanel {
 
     @Override
     public String getTitle() {
-        return "Navigation";
+        return "Corpus";
     }
 
     @Override

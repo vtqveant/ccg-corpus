@@ -35,7 +35,7 @@ public class SearchPresenter implements Presenter<SearchView>, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.eventBus.fireEvent(new SearchEvent(target, view.getSearchTextField().getText()));
+        eventBus.fireEvent(new SearchEvent(target, view.getSearchTextField().getText()));
     }
 
 }

@@ -34,4 +34,13 @@ public class Context {
     public boolean isApproved() {
         return approved;
     }
+
+    public Object[] toArray() {
+        Object[] fields = new Object[4];
+        fields[0] = left;
+        fields[1] = occurence + " " + right;
+        fields[2] = sentenceId;
+        fields[3] = approved;
+        return fields;
+    }
 }

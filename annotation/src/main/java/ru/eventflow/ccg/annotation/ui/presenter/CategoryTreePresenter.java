@@ -31,8 +31,8 @@ public class CategoryTreePresenter implements Presenter<CategoryTreeView>, TreeS
 
         // wiring up the search panel
         SearchPresenter searchPresenter = new SearchPresenter(eventBus, this);
-        this.eventBus.addHandler(SearchEvent.TYPE, this);
         this.view.addSearchPanel(searchPresenter.getView());
+        this.eventBus.addHandler(SearchEvent.TYPE, this);
 
         // subscribe to events in the tree table
         view.getTreeTable().addTreeSelectionListener(this);

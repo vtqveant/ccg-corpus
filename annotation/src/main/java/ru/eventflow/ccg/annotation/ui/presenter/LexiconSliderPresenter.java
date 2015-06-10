@@ -10,10 +10,10 @@ public class LexiconSliderPresenter implements Presenter<LexiconSliderView> {
 
     @Inject
     public LexiconSliderPresenter(final EventBus eventBus,
-                                  final CategoryTreePresenter categoryTreePresenter,
+                                  final LexiconTreePresenter lexiconTreePresenter,
                                   final ConcordancePresenter concordancePresenter) {
         this.view = new LexiconSliderView();
-        this.view.setLeftComponent(categoryTreePresenter.getView());
+        this.view.setLeftComponent(lexiconTreePresenter.getView());
         this.view.setRightComponent(concordancePresenter.getView());
     }
 

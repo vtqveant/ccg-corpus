@@ -19,10 +19,11 @@ public class CorpusTreeView extends JPanel {
     private static final SecondaryTableCellRenderer secondaryCellRenderer = new SecondaryTableCellRenderer();
     private final JXTreeTable treeTable;
 
-    public CorpusTreeView(CorpusTreeTableModel model) {
+    public CorpusTreeView() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(300, 150));
 
+        CorpusTreeTableModel model = new CorpusTreeTableModel();
         treeTable = new JXTreeTable(model);
         treeTable.setRootVisible(false);
         treeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);

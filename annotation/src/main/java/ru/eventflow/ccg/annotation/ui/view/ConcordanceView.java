@@ -3,6 +3,7 @@ package ru.eventflow.ccg.annotation.ui.view;
 import ru.eventflow.ccg.annotation.ui.Defaults;
 import ru.eventflow.ccg.annotation.ui.component.LazyJTableDataSource;
 import ru.eventflow.ccg.annotation.ui.component.LazyJTableModel;
+import ru.eventflow.ccg.annotation.ui.component.LeftCellEllipsisRenderer;
 import ru.eventflow.ccg.annotation.ui.component.SecondaryTableCellRenderer;
 
 import javax.swing.*;
@@ -43,13 +44,11 @@ public class ConcordanceView extends JPanel implements SearchEnabled {
         DefaultTableCellRenderer leftTableCellRenderer = new DefaultTableCellRenderer();
         leftTableCellRenderer.setHorizontalAlignment(DefaultTableCellRenderer.LEFT);
 
-        DefaultTableCellRenderer rightTableCellRenderer = new DefaultTableCellRenderer();
-        rightTableCellRenderer.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
-
         SecondaryTableCellRenderer secondaryTableCellRenderer = new SecondaryTableCellRenderer();
+        LeftCellEllipsisRenderer leftCellEllipsisRenderer = new LeftCellEllipsisRenderer();
 
         TableColumnModel columnModel = table.getColumnModel();
-        columnModel.getColumn(0).setCellRenderer(rightTableCellRenderer);
+        columnModel.getColumn(0).setCellRenderer(leftCellEllipsisRenderer);
         columnModel.getColumn(1).setCellRenderer(leftTableCellRenderer);
         columnModel.getColumn(2).setCellRenderer(secondaryTableCellRenderer);
 

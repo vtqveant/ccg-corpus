@@ -41,7 +41,8 @@ public class TextView extends JPanel {
         headerRenderer.setBackground(new Color(245, 245, 245));
         headerRenderer.setForeground(Color.DARK_GRAY);
         table.getTableHeader().setDefaultRenderer(headerRenderer);
-        table.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(60);
+        table.getTableHeader().getColumnModel().getColumn(1).setMinWidth(45);
+        table.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(45);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.getViewport().setBackground(Color.WHITE);
@@ -53,8 +54,7 @@ public class TextView extends JPanel {
     }
 
     public class SentenceTableModel extends AbstractTableModel {
-
-        private final String[] columns = new String[]{" Source", "Sent."};
+        private final String[] columns = new String[]{" Source", "Id"};
         private List<Sentence> sentences = new ArrayList<>();
 
         @Override

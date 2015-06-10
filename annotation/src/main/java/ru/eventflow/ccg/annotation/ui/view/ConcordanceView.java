@@ -3,11 +3,11 @@ package ru.eventflow.ccg.annotation.ui.view;
 import ru.eventflow.ccg.annotation.ui.Defaults;
 import ru.eventflow.ccg.annotation.ui.component.LazyJTableDataSource;
 import ru.eventflow.ccg.annotation.ui.component.LazyJTableModel;
+import ru.eventflow.ccg.annotation.ui.component.SecondaryTableCellRenderer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
 
@@ -22,8 +22,6 @@ public class ConcordanceView extends JPanel implements SearchEnabled {
     public ConcordanceView() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(200, 150));
-
-        //  add(searchPanel, BorderLayout.PAGE_START);
 
         // setup the model
         emptyModel = new LazyJTableModel(COLUMN_NAMES, COLUMN_CLASSES, 0);
@@ -57,7 +55,7 @@ public class ConcordanceView extends JPanel implements SearchEnabled {
 
         // setup header
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        headerRenderer.setHorizontalAlignment(SwingConstants.LEFT);
         headerRenderer.setFont(Defaults.SMALL_FONT);
         headerRenderer.setBackground(new Color(245, 245, 245));
         headerRenderer.setForeground(Color.DARK_GRAY);
@@ -65,7 +63,6 @@ public class ConcordanceView extends JPanel implements SearchEnabled {
         JTableHeader header = table.getTableHeader();
         header.setDefaultRenderer(headerRenderer);
         header.setReorderingAllowed(false);
-        header.getColumnModel().getColumn(1).setHeaderRenderer(new LeftAlignHeaderRenderer(table));
         header.getColumnModel().getColumn(2).setMaxWidth(60);
         header.getColumnModel().getColumn(2).setMinWidth(60);
         header.getColumnModel().getColumn(3).setMaxWidth(60);
@@ -102,18 +99,4 @@ public class ConcordanceView extends JPanel implements SearchEnabled {
         table.repaint();
     }
 
-    private static class LeftAlignHeaderRenderer implements TableCellRenderer {
-        DefaultTableCellRenderer renderer;
-
-        public LeftAlignHeaderRenderer(JTable table) {
-            renderer = (DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer();
-            renderer.setHorizontalAlignment(JLabel.LEFT);
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                                                       boolean hasFocus, int row, int col) {
-            return renderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-        }
-    }
 }

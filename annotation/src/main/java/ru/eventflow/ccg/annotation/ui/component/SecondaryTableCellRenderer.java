@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.annotation.ui.view;
+package ru.eventflow.ccg.annotation.ui.component;
 
 import ru.eventflow.ccg.annotation.ui.Defaults;
 

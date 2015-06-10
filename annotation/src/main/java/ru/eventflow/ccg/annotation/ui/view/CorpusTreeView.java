@@ -4,6 +4,8 @@ import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.renderer.DefaultTreeRenderer;
 import org.jdesktop.swingx.renderer.StringValue;
 import ru.eventflow.ccg.annotation.ui.Defaults;
+import ru.eventflow.ccg.annotation.ui.component.CustomTreeCellRenderer;
+import ru.eventflow.ccg.annotation.ui.component.SecondaryTableCellRenderer;
 import ru.eventflow.ccg.annotation.ui.model.CorpusTreeTableModel;
 import ru.eventflow.ccg.datasource.model.corpus.Text;
 

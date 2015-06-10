@@ -1,6 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import ru.eventflow.ccg.annotation.ui.Defaults;
+import ru.eventflow.ccg.annotation.ui.component.SecondaryTableCellRenderer;
 import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 
 import javax.swing.*;
@@ -35,7 +36,7 @@ public class TextView extends JPanel {
         table.getColumnModel().getColumn(1).setCellRenderer(new SecondaryTableCellRenderer());
 
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        headerRenderer.setHorizontalAlignment(SwingConstants.LEFT);
         headerRenderer.setFont(Defaults.SMALL_FONT);
         headerRenderer.setBackground(new Color(245, 245, 245));
         headerRenderer.setForeground(Color.DARK_GRAY);
@@ -53,6 +54,7 @@ public class TextView extends JPanel {
 
     public class SentenceTableModel extends AbstractTableModel {
 
+        private final String[] columns = new String[]{" Source", "Sent."};
         private List<Sentence> sentences = new ArrayList<>();
 
         @Override
@@ -62,14 +64,12 @@ public class TextView extends JPanel {
 
         @Override
         public int getColumnCount() {
-            return 2;
+            return columns.length;
         }
 
         @Override
         public String getColumnName(int column) {
-            if (column == 0) return "Source";
-            if (column == 1) return "Sent.";
-            return "";
+            return columns[column];
         }
 
         public Class getColumnClass(int c) {

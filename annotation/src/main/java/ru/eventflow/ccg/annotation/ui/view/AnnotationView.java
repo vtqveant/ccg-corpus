@@ -1,5 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
+import ru.eventflow.ccg.annotation.ui.component.AdjustableScrollPane;
+
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.StyledDocument;
@@ -7,7 +9,7 @@ import java.awt.*;
 
 /**
  * In this class I have a workaround for setting a divider location
- * (tricky because we create and remove an annotation views dynamically)
+ * (tricky because we create and remove annotation views dynamically)
  */
 public class AnnotationView extends JPanel {
 

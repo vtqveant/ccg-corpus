@@ -3,6 +3,7 @@ package ru.eventflow.ccg.annotation.ui.model;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LexiconTreeNode {
@@ -19,6 +20,7 @@ public class LexiconTreeNode {
         this.count = count;
         this.form = form;
         this.grammemes.addAll(grammemes);
+        Collections.sort(this.grammemes); // TODO
     }
 
     public Form getForm() {

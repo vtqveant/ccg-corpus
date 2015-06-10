@@ -1,8 +1,11 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import org.jdesktop.swingx.JXTreeTable;
+import org.jdesktop.swingx.renderer.DefaultTreeRenderer;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 import ru.eventflow.ccg.annotation.ui.Defaults;
+import ru.eventflow.ccg.annotation.ui.component.CustomTreeCellRenderer;
+import ru.eventflow.ccg.annotation.ui.component.SecondaryTableCellRenderer;
 import ru.eventflow.ccg.annotation.ui.model.LexiconTreeNode;
 
 import javax.swing.*;
@@ -28,8 +31,11 @@ public class CategoryTreeView extends JPanel implements SearchEnabled {
         treeTable.getColumnModel().getColumn(2).setCellRenderer(secondaryCellRenderer);
         treeTable.getColumnModel().getColumn(3).setCellRenderer(secondaryCellRenderer);
 
+        DefaultTreeRenderer treeCellRenderer = new CustomTreeCellRenderer();
+        treeTable.setTreeCellRenderer(treeCellRenderer);
+
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        headerRenderer.setHorizontalAlignment(SwingConstants.LEFT);
         headerRenderer.setFont(Defaults.SMALL_FONT);
         headerRenderer.setBackground(new Color(245, 245, 245));
         headerRenderer.setForeground(Color.DARK_GRAY);
@@ -40,8 +46,6 @@ public class CategoryTreeView extends JPanel implements SearchEnabled {
         tableHeader.getColumnModel().getColumn(1).setMaxWidth(100);
         tableHeader.getColumnModel().getColumn(2).setMaxWidth(100);
         tableHeader.getColumnModel().getColumn(3).setMaxWidth(45);
-
-        treeTable.setTreeCellRenderer(new CustomTreeCellRenderer());
 
         JScrollPane scrollPane = new JScrollPane(treeTable);
         scrollPane.setPreferredSize(new Dimension(300, 300));
@@ -58,7 +62,7 @@ public class CategoryTreeView extends JPanel implements SearchEnabled {
     }
 
     public class LexiconTreeTableModel extends AbstractTreeTableModel {
-        private final String[] columns = new String[]{"Category", "Form", "Lemma", "Count"};
+        private final String[] columns = new String[]{" Category", "Form", "Lemma", "Count"};
 
         public LexiconTreeTableModel() {
             root = new LexiconTreeNode(null, new ArrayList<String>(), -1);
@@ -77,7 +81,6 @@ public class CategoryTreeView extends JPanel implements SearchEnabled {
         @Override
         public Object getValueAt(Object node, int column) {
             LexiconTreeNode n = (LexiconTreeNode) node;
-            if (column == 0) return n.toString();
             if (column == 1) return n.getForm().getOrthography();
             if (column == 2) return n.getLemma();
             if (column == 3) return n.getCount();

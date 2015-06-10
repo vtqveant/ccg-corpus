@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.annotation.ui.view;
+package ru.eventflow.ccg.annotation.ui.component;
 
 import org.jdesktop.swingx.renderer.DefaultTreeRenderer;
 import org.jdesktop.swingx.renderer.StringValue;
@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * This is an extension of DefaultTreeRenderer from SwingX library, to be used with JXTreeTable
+ * This is an extension of DefaultTreeRenderer from SwingX library to be used with JXTreeTable
  */
 public class CustomTreeCellRenderer extends DefaultTreeRenderer {
     public CustomTreeCellRenderer() {

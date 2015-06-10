@@ -1,5 +1,6 @@
 package ru.eventflow.ccg.annotation.ui.presenter;
 
+import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.TextSelectedEvent;
 import ru.eventflow.ccg.annotation.ui.model.CorpusTreeTableModel;
@@ -10,7 +11,6 @@ import ru.eventflow.ccg.datasource.model.corpus.Text;
 import javax.inject.Inject;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,18 +23,19 @@ public class CorpusTreePresenter implements Presenter<CorpusTreeView>, TreeSelec
     @Inject
     public CorpusTreePresenter(final EventBus eventBus, final DataManager dataManager) {
         this.eventBus = eventBus;
+        this.view = new CorpusTreeView();
 
         // init tree table model
-        Map<Integer, DefaultMutableTreeNode> nodes = new HashMap<Integer, DefaultMutableTreeNode>();
-        CorpusTreeTableModel model = new CorpusTreeTableModel();
-        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+        DefaultMutableTreeTableNode root = new DefaultMutableTreeTableNode();
+
+        Map<Integer, DefaultMutableTreeTableNode> nodes = new HashMap<>();
         nodes.put(0, root);
         for (Text text : dataManager.getAllTexts()) {
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(text);
+            DefaultMutableTreeTableNode node = new DefaultMutableTreeTableNode(text);
             nodes.put(text.getId(), node);
         }
         // attach to parents -- because there's no order on documents
-        for (Map.Entry<Integer, DefaultMutableTreeNode> entry : nodes.entrySet()) {
+        for (Map.Entry<Integer, DefaultMutableTreeTableNode> entry : nodes.entrySet()) {
             Object o = entry.getValue().getUserObject();
             if (o instanceof Text) {
                 Text current = (Text) o;
@@ -45,8 +46,9 @@ public class CorpusTreePresenter implements Presenter<CorpusTreeView>, TreeSelec
                 }
             }
         }
+        CorpusTreeTableModel model = (CorpusTreeTableModel) view.getTreeTable().getTreeTableModel();
+        model.setRoot(root);
 
-        view = new CorpusTreeView(model);
         view.getTreeTable().addTreeSelectionListener(this);
     }
 
@@ -57,7 +59,7 @@ public class CorpusTreePresenter implements Presenter<CorpusTreeView>, TreeSelec
         if (path == null) {
             event = new TextSelectedEvent(null);
         } else {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
+            DefaultMutableTreeTableNode node = (DefaultMutableTreeTableNode) path.getLastPathComponent();
             event = new TextSelectedEvent((Text) node.getUserObject());
         }
         eventBus.fireEvent(event);

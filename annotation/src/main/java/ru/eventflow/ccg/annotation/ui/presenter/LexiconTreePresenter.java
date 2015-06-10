@@ -1,13 +1,17 @@
 package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
+import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
+import org.jdesktop.swingx.treetable.MutableTreeTableNode;
+import org.jdesktop.swingx.treetable.TreeTableNode;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.FormSelectedEvent;
 import ru.eventflow.ccg.annotation.ui.event.SearchEvent;
 import ru.eventflow.ccg.annotation.ui.event.SearchEventHandler;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
-import ru.eventflow.ccg.annotation.ui.model.LexiconTreeNode;
-import ru.eventflow.ccg.annotation.ui.view.CategoryTreeView;
+import ru.eventflow.ccg.annotation.ui.model.LexiconEntry;
+import ru.eventflow.ccg.annotation.ui.model.LexiconTreeTableModel;
+import ru.eventflow.ccg.annotation.ui.view.LexiconTreeView;
 import ru.eventflow.ccg.datasource.DataManager;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 
@@ -17,17 +21,17 @@ import javax.swing.tree.TreePath;
 import java.util.List;
 import java.util.Map;
 
-public class CategoryTreePresenter implements Presenter<CategoryTreeView>, TreeSelectionListener, SearchEventHandler {
+public class LexiconTreePresenter implements Presenter<LexiconTreeView>, TreeSelectionListener, SearchEventHandler {
 
-    private CategoryTreeView view;
+    private LexiconTreeView view;
     private EventBus eventBus;
     private DataManager dataManager;
 
     @Inject
-    public CategoryTreePresenter(final EventBus eventBus, final DataManager dataManager) {
+    public LexiconTreePresenter(final EventBus eventBus, final DataManager dataManager) {
         this.eventBus = eventBus;
         this.dataManager = dataManager;
-        this.view = new CategoryTreeView();
+        this.view = new LexiconTreeView();
 
         // wiring up the search panel
         SearchPresenter searchPresenter = new SearchPresenter(eventBus, this);
@@ -39,7 +43,7 @@ public class CategoryTreePresenter implements Presenter<CategoryTreeView>, TreeS
     }
 
     @Override
-    public CategoryTreeView getView() {
+    public LexiconTreeView getView() {
         return view;
     }
 
@@ -53,19 +57,15 @@ public class CategoryTreePresenter implements Presenter<CategoryTreeView>, TreeS
         String text = e.getInput();
         eventBus.fireEvent(new StatusUpdateEvent(text));
 
-        // TODO refactor
-        CategoryTreeView.LexiconTreeTableModel model = (CategoryTreeView.LexiconTreeTableModel) view.getTreeTable().getTreeTableModel();
-        LexiconTreeNode root = (LexiconTreeNode) model.getRoot();
-        root.getChildren().clear();
-
+        LexiconTreeTableModel model = (LexiconTreeTableModel) view.getTreeTable().getTreeTableModel();
+        DefaultMutableTreeTableNode root = new DefaultMutableTreeTableNode();
         Map<Form, List<String>> grammemes = dataManager.getGrammemes(text);
         for (Map.Entry<Form, List<String>> entry : grammemes.entrySet()) {
-            LexiconTreeNode form = new LexiconTreeNode(entry.getKey(), entry.getValue(), 0);
-            form.setLeaf(false);
-            root.getChildren().add(form);
+            LexiconEntry form = new LexiconEntry(entry.getKey(), entry.getValue(), 0);
+            MutableTreeTableNode node = new DefaultMutableTreeTableNode(form);
+            root.add(node);
         }
-        view.getTreeTable().getSelectionModel().clearSelection();
-        view.getTreeTable().updateUI();
+        model.setRoot(root);
     }
 
     @Override
@@ -75,8 +75,9 @@ public class CategoryTreePresenter implements Presenter<CategoryTreeView>, TreeS
             // no selection, let concordance view clear it's table
             eventBus.fireEvent(new FormSelectedEvent(null));
         } else {
-            LexiconTreeNode node = (LexiconTreeNode) path.getLastPathComponent();
-            eventBus.fireEvent(new FormSelectedEvent(node.getForm()));
+            TreeTableNode node = (TreeTableNode) path.getLastPathComponent();
+            LexiconEntry entry = (LexiconEntry) node.getUserObject();
+            eventBus.fireEvent(new FormSelectedEvent(entry.getForm()));
         }
     }
 }

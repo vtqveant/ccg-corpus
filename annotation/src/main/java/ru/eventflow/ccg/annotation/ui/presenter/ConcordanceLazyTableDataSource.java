@@ -1,7 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.presenter;
 
 import ru.eventflow.ccg.annotation.ui.component.LazyJTableDataSource;
-import ru.eventflow.ccg.annotation.ui.model.Context;
+import ru.eventflow.ccg.annotation.ui.model.ContextEntry;
 import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 import ru.eventflow.ccg.datasource.model.corpus.Token;
 import ru.eventflow.ccg.datasource.model.corpus.Variant;
@@ -21,15 +21,15 @@ public class ConcordanceLazyTableDataSource implements LazyJTableDataSource {
         this.form = form;
     }
 
-    private static Object[][] toArray(List<Context> contexts) {
-        int size = contexts.size();
+    private static Object[][] toArray(List<ContextEntry> contextEntries) {
+        int size = contextEntries.size();
         Object[][] results = new Object[size][4];
         for (int i = 0; i < size; i++) {
-            Context context = contexts.get(i);
-            results[i][0] = context.getLeft() + " ";
-            results[i][1] = context.getOccurence() + "  " + context.getRight();
-            results[i][2] = context.getSentenceId();
-            results[i][3] = context.isApproved();
+            ContextEntry contextEntry = contextEntries.get(i);
+            results[i][0] = contextEntry.getLeft() + " ";
+            results[i][1] = contextEntry.getOccurence() + "  " + contextEntry.getRight();
+            results[i][2] = contextEntry.getSentenceId();
+            results[i][3] = contextEntry.isApproved();
         }
         return results;
     }
@@ -40,7 +40,7 @@ public class ConcordanceLazyTableDataSource implements LazyJTableDataSource {
 
     @Override
     public Object[][] retrieveRows(int from, int to) {
-        final List<Context> contexts = new ArrayList<>();
+        final List<ContextEntry> contextEntries = new ArrayList<>();
         for (Sentence sentence : sentences.subList(from, to)) {
             Collections.sort(sentence.getTokens(), new Comparator<Token>() {
                 @Override
@@ -76,10 +76,10 @@ public class ConcordanceLazyTableDataSource implements LazyJTableDataSource {
 
             String leftCtx = buildContextString(left);
             String rightCtx = buildContextString(right);
-            Context context = new Context(leftCtx, form.getOrthography(), rightCtx, sentence.getId(), false);
-            contexts.add(context);
+            ContextEntry contextEntry = new ContextEntry(leftCtx, form.getOrthography(), rightCtx, sentence.getId(), false);
+            contextEntries.add(contextEntry);
         }
-        return toArray(contexts);
+        return toArray(contextEntries);
     }
 
     private String buildContextString(List<String> queue) {

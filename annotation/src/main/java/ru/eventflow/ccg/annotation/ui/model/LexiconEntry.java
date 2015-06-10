@@ -6,17 +6,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class LexiconTreeNode {
+public class LexiconEntry {
     protected Form form;
     protected int count;
     protected List<String> grammemes = new ArrayList<>();
-    protected List<LexiconTreeNode> children = new ArrayList<>();
-    protected boolean leaf = false;
 
-    public LexiconTreeNode() {
+    public LexiconEntry() {
     }
 
-    public LexiconTreeNode(Form form, List<String> grammemes, int count) {
+    public LexiconEntry(Form form, List<String> grammemes, int count) {
         this.count = count;
         this.form = form;
         this.grammemes.addAll(grammemes);
@@ -29,18 +27,6 @@ public class LexiconTreeNode {
 
     public String getLemma() {
         return form.getLexeme().getLemma().getOrthography();
-    }
-
-    public List<LexiconTreeNode> getChildren() {
-        return children;
-    }
-
-    public boolean isLeaf() {
-        return children.size() == 0 && leaf;
-    }
-
-    public void setLeaf(boolean leaf) {
-        this.leaf = leaf;
     }
 
     public int getCount() {

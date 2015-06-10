@@ -1,13 +1,13 @@
 package ru.eventflow.ccg.annotation.ui.model;
 
-public class Context {
+public class ContextEntry {
     private String left;
     private String occurence;
     private String right;
     private int sentenceId;
     private boolean approved;
 
-    public Context(String left, String occurence, String right, int sentenceId, boolean approved) {
+    public ContextEntry(String left, String occurence, String right, int sentenceId, boolean approved) {
         this.left = left;
         this.occurence = occurence;
         this.right = right;
@@ -35,12 +35,4 @@ public class Context {
         return approved;
     }
 
-    public Object[] toArray() {
-        Object[] fields = new Object[4];
-        fields[0] = left;
-        fields[1] = occurence + " " + right;
-        fields[2] = sentenceId;
-        fields[3] = approved;
-        return fields;
-    }
 }

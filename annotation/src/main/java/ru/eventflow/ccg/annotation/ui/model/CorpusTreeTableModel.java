@@ -1,17 +1,16 @@
 package ru.eventflow.ccg.annotation.ui.model;
 
-import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
+import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
+import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
+import org.jdesktop.swingx.treetable.TreeTableNode;
 import ru.eventflow.ccg.datasource.model.corpus.Text;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
-
-public class CorpusTreeTableModel extends AbstractTreeTableModel {
+public class CorpusTreeTableModel extends DefaultTreeTableModel {
     private final String[] columns = new String[]{"", "Id", "Sent.", "Words"};
     private final Class[] classes = new Class[]{Object.class, Integer.class, Integer.class, Integer.class};
 
     public CorpusTreeTableModel() {
-        root = new DefaultMutableTreeNode("OpenCorpora");
+        root = new DefaultMutableTreeTableNode();
     }
 
     @Override
@@ -32,30 +31,11 @@ public class CorpusTreeTableModel extends AbstractTreeTableModel {
     // JXTreeTable ignores the value at column = 0, because it is rendered with TreeCellRenderer
     @Override
     public Object getValueAt(Object node, int column) {
-        DefaultMutableTreeNode n = (DefaultMutableTreeNode) node;
-        Text text = (Text) n.getUserObject();
+        Text text = (Text) ((TreeTableNode) node).getUserObject();
         if (column == 1) return text.getId();
         if (column == 2) return 0;
         if (column == 3) return 0;
         return null;
-    }
-
-    @Override
-    public Object getChild(Object node, int index) {
-        DefaultMutableTreeNode n = (DefaultMutableTreeNode) node;
-        return n.getChildAt(index);
-    }
-
-    @Override
-    public int getChildCount(Object parent) {
-        DefaultMutableTreeNode n = (DefaultMutableTreeNode) parent;
-        return n.getChildCount();
-    }
-
-    @Override
-    public int getIndexOfChild(Object parent, Object child) {
-        DefaultMutableTreeNode n = (DefaultMutableTreeNode) parent;
-        return n.getIndex((TreeNode) child);
     }
 
 }

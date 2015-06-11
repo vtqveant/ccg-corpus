@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MessagesSliderView extends SliderPanel {
 
-    private static final int LIMIT = 3000;
+    private static final int LIMIT = 1000;
 
     private final JTextArea textArea;
     private final Element root;
@@ -70,6 +70,7 @@ public class MessagesSliderView extends SliderPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textArea.setText("");
+                count = 0;
             }
         });
         buttons.add(clearBtn);

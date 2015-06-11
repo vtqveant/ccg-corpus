@@ -79,11 +79,9 @@ public class TextView extends JPanel {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            if (columnIndex == 0) {
-                return " " + sentences.get(rowIndex).getSource();
-            } else {
-                return sentences.get(rowIndex).getId();
-            }
+            if (columnIndex == 0) return " " + sentences.get(rowIndex).getSource();
+            if (columnIndex == 1) return sentences.get(rowIndex).getId();
+            return null;
         }
 
         public List<Sentence> getSentences() {

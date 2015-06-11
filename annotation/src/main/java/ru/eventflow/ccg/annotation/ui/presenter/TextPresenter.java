@@ -73,6 +73,9 @@ public class TextPresenter extends MouseAdapter implements Presenter<TextView>,
                 model.getSentences().addAll(p.getSentences());
             }
         }
+        // scroll to top
+        Rectangle rect = view.getTable().getCellRect(0, 0, true);
+        view.getTable().scrollRectToVisible(rect);
         view.getTable().updateUI();
     }
 }

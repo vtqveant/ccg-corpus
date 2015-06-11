@@ -1,10 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import ru.eventflow.ccg.annotation.ui.Defaults;
-import ru.eventflow.ccg.annotation.ui.component.LazyJTableDataSource;
-import ru.eventflow.ccg.annotation.ui.component.LazyJTableModel;
-import ru.eventflow.ccg.annotation.ui.component.LeftCellEllipsisRenderer;
-import ru.eventflow.ccg.annotation.ui.component.SecondaryTableCellRenderer;
+import ru.eventflow.ccg.annotation.ui.component.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -39,18 +36,13 @@ public class ConcordanceView extends JPanel implements SearchEnabled {
         table.setDragEnabled(false);
         table.setFont(Defaults.SMALL_FONT);
         table.setShowGrid(false);
+        table.setIntercellSpacing(new Dimension(0, 0));
 
         // setup column renderers
-        DefaultTableCellRenderer leftTableCellRenderer = new DefaultTableCellRenderer();
-        leftTableCellRenderer.setHorizontalAlignment(DefaultTableCellRenderer.LEFT);
-
-        SecondaryTableCellRenderer secondaryTableCellRenderer = new SecondaryTableCellRenderer();
-        LeftCellEllipsisRenderer leftCellEllipsisRenderer = new LeftCellEllipsisRenderer();
-
         TableColumnModel columnModel = table.getColumnModel();
-        columnModel.getColumn(0).setCellRenderer(leftCellEllipsisRenderer);
-        columnModel.getColumn(1).setCellRenderer(leftTableCellRenderer);
-        columnModel.getColumn(2).setCellRenderer(secondaryTableCellRenderer);
+        columnModel.getColumn(0).setCellRenderer(new LeftCellEllipsisRenderer());
+        columnModel.getColumn(1).setCellRenderer(new NoBorderTableCellRenderer());
+        columnModel.getColumn(2).setCellRenderer(new SecondaryTableCellRenderer());
 
         // setup header
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();

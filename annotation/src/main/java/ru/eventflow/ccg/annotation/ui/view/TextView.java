@@ -1,6 +1,7 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
 import ru.eventflow.ccg.annotation.ui.Defaults;
+import ru.eventflow.ccg.annotation.ui.component.NoBorderTableCellRenderer;
 import ru.eventflow.ccg.annotation.ui.component.SecondaryTableCellRenderer;
 import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 
@@ -28,16 +29,18 @@ public class TextView extends JPanel {
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setSelectionModel(selectionModel);
 
+
         // table adjustments
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         table.setFont(Defaults.SMALL_FONT);
         table.setShowGrid(false);
+        table.setIntercellSpacing(new Dimension(0, 0));
+        table.setDefaultRenderer(Object.class, new NoBorderTableCellRenderer());
 
         table.getColumnModel().getColumn(1).setCellRenderer(new SecondaryTableCellRenderer());
 
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        DefaultTableCellRenderer headerRenderer = new NoBorderTableCellRenderer();
         headerRenderer.setHorizontalAlignment(SwingConstants.LEFT);
-        headerRenderer.setFont(Defaults.SMALL_FONT);
         headerRenderer.setBackground(new Color(245, 245, 245));
         headerRenderer.setForeground(Color.DARK_GRAY);
         table.getTableHeader().setDefaultRenderer(headerRenderer);

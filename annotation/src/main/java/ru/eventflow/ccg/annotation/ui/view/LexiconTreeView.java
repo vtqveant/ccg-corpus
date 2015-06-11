@@ -23,9 +23,11 @@ public class LexiconTreeView extends JPanel implements SearchEnabled {
 
         LexiconTreeTableModel treeTableModel = new LexiconTreeTableModel();
         treeTable = new JXTreeTable(treeTableModel);
+        treeTable.setEditable(false);
         treeTable.setAutoCreateColumnsFromModel(false);
         treeTable.setAutoCreateRowSorter(false);
         treeTable.setDragEnabled(false);
+        treeTable.setColumnMargin(0);
         treeTable.setFont(Defaults.SMALL_FONT);
         treeTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         treeTable.getColumnModel().getColumn(1).setCellRenderer(secondaryCellRenderer);

@@ -26,6 +26,8 @@ public class CorpusTreeView extends JPanel {
         CorpusTreeTableModel model = new CorpusTreeTableModel();
         treeTable = new JXTreeTable(model);
         treeTable.setRootVisible(false);
+        treeTable.setEditable(false);
+        treeTable.setColumnMargin(0);
         treeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         treeTable.setAutoCreateColumnsFromModel(false);
         treeTable.setAutoCreateRowSorter(false);

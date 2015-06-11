@@ -28,7 +28,6 @@ public class CorpusTreeTableModel extends DefaultTreeTableModel {
         return classes[column];
     }
 
-    // JXTreeTable ignores the value at column = 0, because it is rendered with TreeCellRenderer
     @Override
     public Object getValueAt(Object node, int column) {
         Text text = (Text) ((TreeTableNode) node).getUserObject();

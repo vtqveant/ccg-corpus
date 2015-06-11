@@ -29,7 +29,6 @@ public class TextView extends JPanel {
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setSelectionModel(selectionModel);
 
-
         // table adjustments
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         table.setFont(Defaults.SMALL_FONT);
@@ -40,7 +39,6 @@ public class TextView extends JPanel {
         table.getColumnModel().getColumn(1).setCellRenderer(new SecondaryTableCellRenderer());
 
         DefaultTableCellRenderer headerRenderer = new NoBorderTableCellRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.LEFT);
         headerRenderer.setBackground(new Color(245, 245, 245));
         headerRenderer.setForeground(Color.DARK_GRAY);
         table.getTableHeader().setDefaultRenderer(headerRenderer);

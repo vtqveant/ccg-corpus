@@ -11,6 +11,7 @@ import java.awt.*;
  * This is an extension of DefaultTreeRenderer from SwingX library to be used with JXTreeTable
  */
 public class CustomTreeCellRenderer extends DefaultTreeRenderer {
+
     public CustomTreeCellRenderer() {
     }
 

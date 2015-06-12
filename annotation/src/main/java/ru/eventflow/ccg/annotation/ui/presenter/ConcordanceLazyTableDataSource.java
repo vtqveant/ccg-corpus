@@ -11,7 +11,7 @@ import java.util.*;
 
 public class ConcordanceLazyTableDataSource implements LazyJTableDataSource {
 
-    public static final int WINDOW_SIZE = 5;
+    public static final int WINDOW_SIZE = 8;
 
     private List<Sentence> sentences;
     private Form form;

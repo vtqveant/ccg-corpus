@@ -24,7 +24,7 @@ public class GlossesPresenter implements Presenter<GlossesView> {
         Collections.sort(sentence.getTokens(), new Comparator<Token>() {
             @Override
             public int compare(Token o1, Token o2) {
-                return o2.getId() - o1.getId();
+                return o2.getPosition() - o1.getPosition();
             }
         });
 

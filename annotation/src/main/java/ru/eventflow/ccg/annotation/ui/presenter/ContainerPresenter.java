@@ -2,6 +2,7 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
+import ru.eventflow.ccg.annotation.ui.Settings;
 import ru.eventflow.ccg.annotation.ui.event.*;
 import ru.eventflow.ccg.annotation.ui.view.AnnotationView;
 import ru.eventflow.ccg.annotation.ui.view.ContainerView;
@@ -59,7 +60,7 @@ public class ContainerPresenter implements Presenter<ContainerView>, TabEventHan
 
     @Override
     public void onEvent(SettingsEvent e) {
-        if (e.getSetting() == Setting.GLOSSES) {
+        if (e.getSetting() == Settings.GLOSSES) {
             glossesVisible = e.isEnabled();
             int tabCount = view.getTabbedPane().getTabCount();
             for (int i = 0; i < tabCount; i++) {

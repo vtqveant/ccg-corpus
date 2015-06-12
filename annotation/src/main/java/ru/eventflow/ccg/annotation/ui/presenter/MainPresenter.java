@@ -2,6 +2,7 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
+import ru.eventflow.ccg.annotation.ui.Settings;
 import ru.eventflow.ccg.annotation.ui.event.*;
 import ru.eventflow.ccg.annotation.ui.view.MainView;
 
@@ -53,7 +54,7 @@ public class MainPresenter implements Presenter<MainView>, StatusUpdateEventHand
 
     @Override
     public void onEvent(SettingsEvent e) {
-        if (e.getSetting() == Setting.STATUSBAR) {
+        if (e.getSetting() == Settings.STATUSBAR) {
             view.setStatusBarVisible(e.isEnabled());
         }
     }

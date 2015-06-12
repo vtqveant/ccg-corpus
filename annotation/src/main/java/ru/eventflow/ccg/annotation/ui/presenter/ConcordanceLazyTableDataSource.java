@@ -45,7 +45,7 @@ public class ConcordanceLazyTableDataSource implements LazyJTableDataSource {
             Collections.sort(sentence.getTokens(), new Comparator<Token>() {
                 @Override
                 public int compare(Token o1, Token o2) {
-                    return o1.getId() - o2.getId();
+                    return o1.getPosition() - o2.getPosition();
                 }
             });
 

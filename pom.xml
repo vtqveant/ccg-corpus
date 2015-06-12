@@ -18,10 +18,10 @@
     </properties>
 
     <modules>
-        <module>annotation</module>
-        <module>parser</module>
         <module>importer</module>
         <module>datasource</module>
+        <module>parser</module>
+        <module>annotation</module>
     </modules>
 
     <dependencies>

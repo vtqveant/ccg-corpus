@@ -25,6 +25,9 @@ public class Token {
     @Column(name = "revision")
     private int revision;
 
+    @Column(name = "pos")
+    private int position;
+
     public List<Variant> getVariants() {
         return variants;
     }
@@ -67,5 +70,13 @@ public class Token {
 
     public void setRevision(int revision) {
         this.revision = revision;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

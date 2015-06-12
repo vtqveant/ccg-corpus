@@ -28,9 +28,9 @@ public class SQLDataBridge implements DataBridge {
                 conn.setAutoCommit(false);
 
                 stVariant = conn.prepareStatement("INSERT INTO corpus.variant (token_id, form_id) VALUES (?, ?)");
-                stToken = conn.prepareStatement("INSERT INTO corpus.token (id, orthography, revision, sentence_id) VALUES (?, ?, ?, ?)");
-                stSentence = conn.prepareStatement("INSERT INTO corpus.sentence (id, source, paragraph_id) VALUES (?, ?, ?)");
-                stParagraph = conn.prepareStatement("INSERT INTO corpus.paragraph (id, text_id) VALUES (?, ?)");
+                stToken = conn.prepareStatement("INSERT INTO corpus.token (id, orthography, revision, sentence_id, pos) VALUES (?, ?, ?, ?, ?)");
+                stSentence = conn.prepareStatement("INSERT INTO corpus.sentence (id, source, paragraph_id, pos) VALUES (?, ?, ?, ?)");
+                stParagraph = conn.prepareStatement("INSERT INTO corpus.paragraph (id, text_id, pos) VALUES (?, ?, ?)");
                 stText = conn.prepareStatement("INSERT INTO corpus.text (id, name, parent_id) VALUES (?, ?, ?)");
                 stTag = conn.prepareStatement("INSERT INTO corpus.tag (source, text_id) VALUES (?, ?)");
 
@@ -57,15 +57,18 @@ public class SQLDataBridge implements DataBridge {
                         stToken.setString(2, token.getOrthography());
                         stToken.setInt(3, token.getRevision());
                         stToken.setInt(4, token.getSentence().getId());
+                        stToken.setInt(5, token.getPosition());
                         stToken.execute();
                     }
                     stSentence.setInt(1, sentence.getId());
                     stSentence.setString(2, sentence.getSource());
                     stSentence.setInt(3, sentence.getParagraph().getId());
+                    stSentence.setInt(4, sentence.getPosition());
                     stSentence.execute();
                 }
                 stParagraph.setInt(1, paragraph.getId());
                 stParagraph.setInt(2, paragraph.getText().getId());
+                stParagraph.setInt(3, paragraph.getPosition());
                 stParagraph.execute();
             }
             stText.setInt(1, text.getId());

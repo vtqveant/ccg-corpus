@@ -23,6 +23,9 @@ public class Sentence {
     @JoinColumn(name = "paragraph_id", nullable = false)
     private Paragraph paragraph;
 
+    @Column(name = "pos")
+    private int position;
+
     public String getSource() {
         return source;
     }
@@ -57,5 +60,13 @@ public class Sentence {
 
     public void setParagraph(Paragraph paragraph) {
         this.paragraph = paragraph;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

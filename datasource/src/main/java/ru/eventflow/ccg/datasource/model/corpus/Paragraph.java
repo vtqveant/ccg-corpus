@@ -20,6 +20,9 @@ public class Paragraph {
     @JoinColumn(name = "text_id", nullable = false)
     private Text text;
 
+    @Column(name = "pos")
+    private int position;
+
     public int getId() {
         return id;
     }
@@ -42,5 +45,13 @@ public class Paragraph {
 
     public void setText(Text text) {
         this.text = text;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

@@ -44,6 +44,7 @@ public class CorpusHandler extends DefaultHandler {
 
     class TextHandler extends BaseNestedHandler {
         Text text = new Text();
+        private int paragraphPosition = 0;
 
         protected TextHandler(XMLReader reader, ContentHandler parent) {
             super(reader, parent);
@@ -56,6 +57,8 @@ public class CorpusHandler extends DefaultHandler {
                 ParagraphHandler paragraphHandler = new ParagraphHandler(reader, this);
                 paragraphHandler.paragraph.setId(Integer.valueOf(attributes.getValue("id")));
                 paragraphHandler.paragraph.setText(text);
+                paragraphHandler.paragraph.setPosition(paragraphPosition);
+                paragraphPosition++;
                 reader.setContentHandler(paragraphHandler);
             }
         }
@@ -79,6 +82,7 @@ public class CorpusHandler extends DefaultHandler {
 
     class ParagraphHandler extends BaseNestedHandler {
         Paragraph paragraph = new Paragraph();
+        private int sentencePosition = 0;
 
         public ParagraphHandler(XMLReader reader, ContentHandler parent) {
             super(reader, parent);
@@ -91,6 +95,8 @@ public class CorpusHandler extends DefaultHandler {
                 SentenceHandler sentenceHandler = new SentenceHandler(reader, this);
                 sentenceHandler.sentence.setId(Integer.valueOf(attributes.getValue("id")));
                 sentenceHandler.sentence.setParagraph(paragraph);
+                sentenceHandler.sentence.setPosition(sentencePosition);
+                sentencePosition++;
                 reader.setContentHandler(sentenceHandler);
             }
         }
@@ -106,6 +112,7 @@ public class CorpusHandler extends DefaultHandler {
 
     class SentenceHandler extends BaseNestedHandler {
         Sentence sentence = new Sentence();
+        private int tokenPosition = 0;
 
         public SentenceHandler(XMLReader reader, ContentHandler parent) {
             super(reader, parent);
@@ -119,6 +126,8 @@ public class CorpusHandler extends DefaultHandler {
                 tokenHandler.token.setId(Integer.valueOf(attributes.getValue("id")));
                 tokenHandler.token.setOrthography(attributes.getValue("text"));
                 tokenHandler.token.setSentence(sentence);
+                tokenHandler.token.setPosition(tokenPosition);
+                tokenPosition++;
                 reader.setContentHandler(tokenHandler);
             }
         }

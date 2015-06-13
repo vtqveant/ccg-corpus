@@ -1,0 +1,159 @@
+\chapter{Введение}
+
+\section{Синтаксический разбор как логический вывод}
+
+Начала подхода заложены Ламбеком в работе \parencite{lambek1958mathematics}, термин введен в \parencite{pereira1983parsing}. В работе \parencite{konig1989parsing} рассматривается система натуральной дедукции для исчисления Ламбека без произведений. Также \parencite{moot2012logic}.
+
+Задачи: алгоритм синтаксического анализа; изучение свойств формализма: разрешимость, вычислительная сложность, неоднозначность, корректность и полнота, существование нормальной формы и эффективной процедуры нормализации и пр.
+
+Исчисление: формальный язык, множество аксиом (возможно, пустое), правила вывода, определение корректного вывода.
+
+\section{Синтаксический разбор контекстно-свободных грамматик как вывод в системе гильбертовского типа}
+
+Предложен в работе \parencite{pereira1983parsing}. В системе гильбертовского типа используется понятие линейного вывода.
+
+Пример линейного вывода для логики высказываний.
+
+Формальная система задается 
+формальным языком
+множеством аксиом
+правилами вывода
+определением вывода
+
+В системе гильбертовского типа 
+множество аксиом непусто,
+правило вывода одно -- \textit{modus ponenes}
+
+\begin{prooftree}
+  \AxiomC{$A$}
+  \AxiomC{$A \to B$}
+  \RightLabel{{\small $MP$}}
+  \BinaryInfC{$B$}
+\end{prooftree}
+
+Понятие вывода -- линейный вывод.
+
+$\Gamma$ -- произвольное конечное множество формул
+вывод из множества формул $\Gamma$ в исчислении $C$ -- это конечная последовательность формул $F_1, \dots, F_n$ такая, что $F_i$ -- либо аксиома, либо формула из $\Gamma$, либо является следствием каких-либо двух формул, предшествующих $\Gamma_i$ в этом списке, по правилу \textit{modus ponens}.
+
+Если последняя формула в списке -- $F$, то весь этот список называется \textit{выводом} $F$. Если вывод $F$ из $\Gamma$ существует, говорят, что $F$ \textit{выводима из} $\Gamma$ и пишут $\Gamma \vdash F$. Если $\Gamma = \varnothing$ и $F$ выводима, пишут $\vdash F$.
+
+Пример: исчисление высказываний гильбертовского типа 
+
+\begin{enumerate}
+    \item формальный язык -- язык логики высказываний 
+    \item аксиомы задаются следующими схемами
+        \begin{itemize}
+            \item[] $A_1: A \to (B \to A)$
+            \item[] $A_2: (A \to (B \to C)) \to ((A \to B) \to (A \to C))$
+            \item[] $A_3: (A \wedge B) \to A$
+            \item[] $A_4: (A \wedge B) \to B$
+            \item[] $A_5: A \to (B \to (A \wedge B))$
+            \item[] $A_6: A \to (A \vee B)$
+            \item[] $A_7: B \to (A \vee B)$
+            \item[] $A_8: (A \to C) \to ((B \to C) \to ((A \vee B) \to C))$
+            \item[] $A_9: (A \to B) \to ((A \to \neg B) \to \neg A)$
+            \item[] $A_{10}: A \to (\neg A \to B)$
+        \end{itemize}
+    \item правило вывода -- \textit{modus ponens}
+    \item линейный вывод
+\end{enumerate}
+
+Доказательство в исчислении гильбертовского типа мы будем изображать с помощью таблицы, в которой в первом столбце указываются номера строк для дальнейших ссылок, во втором столбце указывается выражение формального языка, включаемое в вывод, в третьем столбце указывается либо обозначение схемы аксиом, в соответствии с которой было получено выражение в данной строке, либо, если выражение получено по правилу modus ponens, указываются номера использованных для его получения выражений.
+
+Пример: доказать $\vdash A \to A$
+
+\[
+\Jproof{
+    \proofline{A \to ((A \to A) \to A)}{A_1}
+    \proofline{A \to ((A \to A) \to A)) \to ((A \to (A \to A)) \to (A \to A))}{A_2}
+    \proofline{(A \to (A \to A)) \to (A \to A)}{modus ponens 1,2}
+    \proofline{A \to (A \to A)}{A_1}
+    \proofline{A \to A}{modus ponens 3,4}
+}
+\]
+
+
+Пример синтаксического разбора по \parencite{kallmeyer2010parsing}
+
+Чтобы применить аналогичную технику к синтаксическому анализу выражений контекстно-свободных языков, потребуются некоторые уточнения. Наша цель -- формализовать процедуру синтаксического анализа с помощью алгоритма Кока-Янгера-Касами в виде линейного вывода. Данный алгоритм требует, чтобы контекстно-свободная грамматика была в нормальной форме Хомского, т.е. продукционные правила могут быть всего двух видов: $A \to BC$ и $A \to a$, где $A, B, C$ -- нетерминалы, $a$ -- терминал.
+Формальный язык будет включать выражения вида $[A, i, j]$, где $A$ -- нетерминал, $i$ и $j$ -- индексы начала и конца подстроки в строке. 
+
+Правила вывода:
+
+\begin{itemize}
+    \item[scan]
+        \begin{prooftree}
+          \AxiomC{ }
+          \RightLabel{{\small $A \to w_i \in P$}}
+          \UnaryInfC{$[A, i-1, i]$}
+        \end{prooftree}
+    \item[complete]
+        \begin{prooftree}
+          \AxiomC{$[B, i, j]$}
+          \AxiomC{$[C, j, k]$}
+          \RightLabel{{\small $A \to BC \in P$}}
+          \BinaryInfC{$[A, i, k]$}
+        \end{prooftree}
+\end{itemize}
+
+\section{Исчисление Ламбека как секвенциальная система}
+
+Предложена в работе \parencite{lambek1958mathematics}, см. тж. \parencite{moot2012logic}.
+
+Правила вывода:
+
+
+\begin{prooftree}
+  \AxiomC{$\Gamma, B, \Gamma' \vdash C$}
+  \AxiomC{$\Delta \vdash A$}
+  \RightLabel{{\small $\textbackslash_h$}}
+  \BinaryInfC{$\Gamma, A, A \textbackslash B, \Gamma' \vdash C$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$A, \Gamma \vdash C$}
+  \RightLabel{{\small $\textbackslash_i, \Gamma \neq \epsilon$}}
+  \UnaryInfC{$\Gamma \vdash A \textbackslash C$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\Gamma, B, \Gamma' \vdash C$}
+  \AxiomC{$\Delta \vdash A$}
+  \RightLabel{{\small $/_h$}}
+  \BinaryInfC{$\Gamma, B/A, \Delta, \Gamma' \vdash C$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\Gamma, A \vdash C$}
+  \RightLabel{{\small $/_i, \Gamma \neq \epsilon$}}
+  \UnaryInfC{$\Gamma \vdash C/A$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\Gamma, A, B, \Gamma' \vdash C$}
+  \RightLabel{{\small $\bullet_h$}}
+  \UnaryInfC{$\Gamma, A \bullet B, \Gamma' \vdash C$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\Delta \vdash A$}
+  \AxiomC{$\Gamma \vdash B$}
+  \RightLabel{{\small $\bullet_i$}}
+  \BinaryInfC{$\Delta, \Gamma \vdash A \bullet B$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\Gamma \vdash A$}
+  \AxiomC{$\Delta_1, A, \Delta_2 \vdash B$}
+  \RightLabel{{\small \textit{сечение}}}
+  \BinaryInfC{$\Delta_1, \Gamma, \Delta_2 \vdash B$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{}
+  \RightLabel{{\small \textit{аксиома}}}
+  \UnaryInfC{$A \vdash A$}
+\end{prooftree}
+
+Замечание: \parencite{moot2012logic} пишут $B \textbackslash A$ там, где (Steedman et al.) пишут $A \textbackslash B$.

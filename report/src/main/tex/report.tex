@@ -88,6 +88,9 @@
 %% graphics
 \graphicspath{{images/}}
 
+%% Nat­u­ral de­duc­tion proofs in styles used by Jaśkowski and Kal­ish and Mon­tague
+\usepackage{natded}
+
 %% Gentzen style natural deduction proof trees
 \usepackage{bussproofs}
 \usepackage{latexsym}
@@ -116,87 +119,9 @@
 \begin{document}
 
 \maketitle
-\tableofcontents    
+\tableofcontents 
 
-\chapter{Введение}
-
-\section{Синтаксический разбор как логический вывод}
-
-Начала подхода заложены Ламбеком в работе \parencite{lambek1958mathematics}, термин введен в \parencite{pereira1983parsing}. В работе \parencite{konig1989parsing} рассматривается система натуральной дедукции для исчисления Ламбека без произведений. Также \parencite{moot2012logic}.
-
-Задачи: алгоритм синтаксического анализа; изучение свойств формализма: разрешимость, вычислительная сложность, неоднозначность, корректность и полнота, существование нормальной формы и эффективной процедуры нормализации и пр.
-
-Исчисление: формальный язык, множество аксиом (возможно, пустое), правила вывода, определение корректного вывода.
-
-\section{Синтаксический разбор контекстно-свободных грамматик как вывод в системе гильбертовского типа}
-
-Предложен в работе \parencite{pereira1983parsing}. В системе гильбертовского типа используется понятие линейного вывода.
-
-Пример линейного вывода для логики высказываний.
-Пример синтаксического разбора по \parencite{kallmeyer2010parsing}
-
-\section{Исчисление Ламбека как секвенциальная система}
-
-Предложена в работе \parencite{lambek1958mathematics}, см. тж. \parencite{moot2012logic}.
-
-Правила вывода:
-
-
-\begin{prooftree}
-  \AxiomC{$\Gamma, B, \Gamma' \vdash C$}
-  \AxiomC{$\Delta \vdash A$}
-  \RightLabel{{\small $\textbackslash_h$}}
-  \BinaryInfC{$\Gamma, A, A \textbackslash B, \Gamma' \vdash C$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{$A, \Gamma \vdash C$}
-  \RightLabel{{\small $\textbackslash_i, \Gamma \neq \epsilon$}}
-  \UnaryInfC{$\Gamma \vdash A \textbackslash C$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{$\Gamma, B, \Gamma' \vdash C$}
-  \AxiomC{$\Delta \vdash A$}
-  \RightLabel{{\small $/_h$}}
-  \BinaryInfC{$\Gamma, B/A, \Delta, \Gamma' \vdash C$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{$\Gamma, A \vdash C$}
-  \RightLabel{{\small $/_i, \Gamma \neq \epsilon$}}
-  \UnaryInfC{$\Gamma \vdash C/A$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{$\Gamma, A, B, \Gamma' \vdash C$}
-  \RightLabel{{\small $\bullet_h$}}
-  \UnaryInfC{$\Gamma, A \bullet B, \Gamma' \vdash C$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{$\Delta \vdash A$}
-  \AxiomC{$\Gamma \vdash B$}
-  \RightLabel{{\small $\bullet_i$}}
-  \BinaryInfC{$\Delta, \Gamma \vdash A \bullet B$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{$\Gamma \vdash A$}
-  \AxiomC{$\Delta_1, A, \Delta_2 \vdash B$}
-  \RightLabel{{\small \textit{сечение}}}
-  \BinaryInfC{$\Delta_1, \Gamma, \Delta_2 \vdash B$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{}
-  \RightLabel{{\small \textit{аксиома}}}
-  \UnaryInfC{$A \vdash A$}
-\end{prooftree}
-
-Замечание: \parencite{moot2012logic} пишут $B \textbackslash A$ там, где (Steedman et al.) пишут $A \textbackslash B$.
-
-
+\include{chapter}   
 
 \nocite{*}
 \printbibliography[resetnumbers=true]

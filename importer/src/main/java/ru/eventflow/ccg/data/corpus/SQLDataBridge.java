@@ -11,7 +11,7 @@ public class SQLDataBridge implements DataBridge {
     private String version;
     private String revision;
     private Connection conn;
-    private FormResolver resolver;
+    private BitSetFormResolver resolver;
     private PreparedStatement stVariant;
     private PreparedStatement stToken;
     private PreparedStatement stSentence;
@@ -34,7 +34,7 @@ public class SQLDataBridge implements DataBridge {
                 stText = conn.prepareStatement("INSERT INTO corpus.text (id, name, parent_id) VALUES (?, ?, ?)");
                 stTag = conn.prepareStatement("INSERT INTO corpus.tag (source, text_id) VALUES (?, ?)");
 
-                resolver = new FormResolver(conn);
+                resolver = new BitSetFormResolver(conn);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,10 +117,7 @@ public class SQLDataBridge implements DataBridge {
      */
     @Override
     public Form resolveForm(String formOrthography, String lexemeId, List<String> grammemes) {
-        resolver.orthography = formOrthography;
-        resolver.lexemeId = lexemeId;
-        resolver.grammemes = grammemes;
-        int id = resolver.resolve();
+        int id = resolver.resolve(formOrthography, Integer.valueOf(lexemeId), grammemes);
         Form dummy = new Form();
         dummy.setId(id);
         return dummy;

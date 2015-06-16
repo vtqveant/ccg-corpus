@@ -9,7 +9,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english,russian]{babel}
 
-\usepackage{amssymb,amsfonts,amsmath,mathtext,amscd}
+\usepackage{amssymb,amsfonts,amsmath,amsthm,amscd,mathtext}
 
 \usepackage{cmap}   % чтобы работал поиск по pdf
 \usepackage{graphicx}
@@ -87,6 +87,21 @@
 
 %% graphics
 \graphicspath{{images/}}
+
+%% math environments
+\newtheoremstyle{example-style}% name
+{5pt}  % space above 
+{5pt}  % space below 
+{}     % body font
+{\parindent}  % indent 
+{\bfseries}  % theorem head font
+{.}  % punctuation after theorem head
+{.5em}  % space after theorem head 
+{}  % theorem head spec (can be left empty, meaning 'normal')
+
+\theoremstyle{example-style}
+\newtheorem{example}{Пример}
+
 
 %% Nat­u­ral de­duc­tion proofs in styles used by Jaśkowski and Kal­ish and Mon­tague
 \usepackage{natded}

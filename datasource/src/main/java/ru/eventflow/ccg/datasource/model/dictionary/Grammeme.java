@@ -20,6 +20,9 @@ public class Grammeme {
     @JoinColumn(name = "parent_id", nullable = true)
     private Grammeme parent;
 
+    @Column(name = "flags")
+    private byte[] flags;
+
     public String getName() {
         return name;
     }
@@ -52,4 +55,11 @@ public class Grammeme {
         this.parent = parent;
     }
 
+    public byte[] getFlags() {
+        return flags;
+    }
+
+    public void setFlags(byte[] flags) {
+        this.flags = flags;
+    }
 }

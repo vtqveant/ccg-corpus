@@ -1,6 +1,5 @@
 package ru.eventflow.ccg.data.corpus;
 
-import org.apache.openjpa.util.InvalidStateException;
 import ru.eventflow.ccg.datasource.model.corpus.*;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 

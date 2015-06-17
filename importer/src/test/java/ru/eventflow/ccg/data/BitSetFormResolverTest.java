@@ -1,10 +1,17 @@
 package ru.eventflow.ccg.data;
 
 import org.junit.Test;
+import ru.eventflow.ccg.data.corpus.BitSetFormResolver;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class BitSetFormResolverTest {
 
@@ -29,6 +36,19 @@ public class BitSetFormResolverTest {
         System.out.println(bitset1);
 
         // assertTrue(bitset1.equals(bitset2));
+    }
+
+    @Test
+    public void testResolver() throws SQLException {
+        final String url = "jdbc:postgresql://localhost/corpus?user=corpus&password=corpus";
+        Connection conn = DriverManager.getConnection(url);
+        BitSetFormResolver resolver = new BitSetFormResolver(conn);
+        List<String> grammemes = new ArrayList<>();
+        grammemes.add("NUMR");
+        grammemes.add("accs");
+        int id = resolver.resolve(79531, grammemes); // "девять"
+        assertTrue(id != -1);
+        System.out.println(id);
     }
 }
 

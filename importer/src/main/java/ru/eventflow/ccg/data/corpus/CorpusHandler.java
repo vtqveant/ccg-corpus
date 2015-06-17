@@ -161,6 +161,8 @@ public class CorpusHandler extends DefaultHandler {
                 case "tfr":
                     token.setRevision(Integer.valueOf(attributes.getValue("rev_id")));
                     orthography = attributes.getValue("t"); // it will be used in VariantHandler to resolve a form
+                    break;
+                case "v":
                     VariantHandler variantHandler = new VariantHandler(reader, this);
                     reader.setContentHandler(variantHandler);
                     break;
@@ -177,7 +179,7 @@ public class CorpusHandler extends DefaultHandler {
     }
 
     class VariantHandler extends BaseNestedHandler {
-        private Variant variant;
+        private Variant variant = new Variant();
         private List<String> grammemes = new ArrayList<>();
         private String lexemeId;
 
@@ -191,9 +193,7 @@ public class CorpusHandler extends DefaultHandler {
             switch (name) {
                 case "l":
                     // lemma_id = 0 is Out of Vocabulary
-                    // TODO for OOV we need an explicit orthography
                     lexemeId = attributes.getValue("id");
-                    variant = new Variant();
                     break;
                 case "g":
                     grammemes.add(attributes.getValue("v")); // XPath: //sentence/tokens/token/tfr/v/l/g/@v
@@ -204,14 +204,12 @@ public class CorpusHandler extends DefaultHandler {
         @Override
         public void endElement(String uri, String localName, String name) throws SAXException {
             switch (name) {
-                case "l":
+                case "v":
                     TokenHandler tokenHandler = (TokenHandler) parent;
                     Form form = bridge.resolveForm(tokenHandler.orthography, lexemeId, grammemes);
                     variant.setForm(form);
                     variant.setToken(tokenHandler.token);
                     tokenHandler.token.addVariant(variant);
-                    break;
-                case "tfr":
                     reader.setContentHandler(parent); // switch back to parent handler
                     break;
             }

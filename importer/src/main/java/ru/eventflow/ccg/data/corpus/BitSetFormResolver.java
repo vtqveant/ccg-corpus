@@ -6,13 +6,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BitSetFormResolver {
 
-    private final Map<String, ExportableBitSet> grammemeFlags = new HashMap<>();  // grammeme name -> single grammeme bitset
+    private final Map<String, BitSet> grammemeFlags = new HashMap<>();  // grammeme name -> single grammeme bitset
 
     private PreparedStatement formDetailsStatement;
     private PreparedStatement formFlagsStatement;
@@ -36,12 +37,11 @@ public class BitSetFormResolver {
      */
     public int resolve(int lexemeId, List<String> grammemes) {
         // build a bitset for comparison
-        ExportableBitSet grammemesBitSet = new ExportableBitSet();
+        BitSet grammemesBitSet = new BitSet();
         for (String grammeme : grammemes) {
-            ExportableBitSet flag = grammemeFlags.get(grammeme);
-            if (flag != null) {
-                grammemesBitSet.or(flag);
-            }
+            BitSet flag = grammemeFlags.get(grammeme);
+            if (flag == null) return -1; // unknown grammeme TODO fix OOV gramemes
+            grammemesBitSet.or(flag);
         }
 
         try {
@@ -54,7 +54,7 @@ public class BitSetFormResolver {
                 ResultSet rs = formFlagsStatement.executeQuery();
                 rs.next();
                 byte[] bytes = rs.getBytes("flags");
-                ExportableBitSet flags = new ExportableBitSet(bytes);
+                BitSet flags = new ExportableBitSet(bytes);
 
                 if (flags.equals(grammemesBitSet)) {
                     return formId;

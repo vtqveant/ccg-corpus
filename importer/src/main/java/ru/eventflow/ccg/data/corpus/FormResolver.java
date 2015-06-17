@@ -9,6 +9,8 @@ import java.util.List;
 
 /**
  * TODO add missing grammemes to the dictionary tagset (and mark)
+ *
+ * @deprecated
  */
 public class FormResolver {
 

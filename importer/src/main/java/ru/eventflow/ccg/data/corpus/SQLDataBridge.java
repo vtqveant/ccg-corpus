@@ -1,5 +1,6 @@
 package ru.eventflow.ccg.data.corpus;
 
+import org.apache.openjpa.util.InvalidStateException;
 import ru.eventflow.ccg.datasource.model.corpus.*;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 
@@ -88,7 +89,7 @@ public class SQLDataBridge implements DataBridge {
 
             conn.commit();
 
-            if (++counter % 1000 == 0) {
+            if (++counter % 100 == 0) {
                 System.out.println(counter);
             }
         } catch (SQLException e) {
@@ -117,10 +118,7 @@ public class SQLDataBridge implements DataBridge {
      */
     @Override
     public Form resolveForm(String formOrthography, String lexemeId, List<String> grammemes) {
-        if (grammemes == null) {
-            return null;
-        }
-        int id = resolver.resolve(formOrthography, Integer.valueOf(lexemeId), grammemes);
+        int id = resolver.resolve(Integer.valueOf(lexemeId), grammemes);
         Form dummy = new Form();
         dummy.setId(id);
         return dummy;

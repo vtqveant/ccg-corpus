@@ -12,7 +12,6 @@ import java.util.List;
 public class Lexeme {
 
     @Id
-    @Column(columnDefinition = "serial")
     private int id;
 
     @OneToOne(targetEntity = Form.class, cascade = CascadeType.ALL)

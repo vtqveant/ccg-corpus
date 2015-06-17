@@ -8,6 +8,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.BitSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,18 +17,28 @@ import java.util.Map;
 public class DictionaryLoader {
 
     public static final String URL = "jdbc:postgresql://localhost/corpus?user=corpus&password=corpus";
-    public static final String RESOURSE_LOCATION = "file:///home/transcend/code/NLU-RG/ccg-corpus/data/resources/dict.opcorpora.xml";
-//    public static final String RESOURSE_LOCATION = "file:///C:\\KOSTA\\code\\ccg-corpus\\data\\resources\\dict.opcorpora.xml";
 
     public static final int CHUNK_SIZE = 5000;
 
-    private static final int BITSET_SIZE = 113; // number of grammemes
+    public static final String PNCT = "PNCT";
+    public static final String UNKN = "UNKN";
 
-    private final Map<String, BitSet> grammemeFlags = new HashMap<>();      // grammeme name -> single grammeme bitset
-    private PreparedStatement grammemesByFormIdStatement;
+    private final Map<String, BitSet> grammemeFlags = new HashMap<>(); // grammeme name -> single grammeme bitset
 
 
     public DictionaryLoader() {
+    }
+
+    public static void main(String[] args) throws Exception {
+        if (args.length == 0 || args.length % 2 != 0 || !args[0].equals("--resource")) {
+            System.out.println("Usage:");
+            System.out.println("\t--resource\tOpenCorpora dictionary dump file (XML)");
+            System.exit(-1);
+        }
+        String resourceLocation = args[1];
+
+        DictionaryLoader loader = new DictionaryLoader();
+        loader.load(URL, resourceLocation);
     }
 
     public void load(final String url, final String resourceLocation) throws Exception {
@@ -47,14 +58,30 @@ public class DictionaryLoader {
         // grammemes
         PreparedStatement grammemeSt = conn.prepareStatement("INSERT INTO dictionary.grammeme(name, alias, description, parent_id, flags) VALUES (?, ?, ?, ?, ?)");
         int i = 0;
-        for (Grammeme grammeme : collector.getGrammemes()) {
+
+        // grammemes missing in the dictionary
+        List<Grammeme> grammemes = collector.getGrammemes();
+        Grammeme unknGrammeme = new Grammeme();
+        unknGrammeme.setName(UNKN);
+        unknGrammeme.setAlias("неизв");
+        unknGrammeme.setDescription("отсутствует в словаре");
+        grammemes.add(unknGrammeme);
+
+        Grammeme pnctGrammeme = new Grammeme();
+        pnctGrammeme.setName(PNCT);
+        pnctGrammeme.setAlias("пункт");
+        pnctGrammeme.setDescription("пунктуация");
+        grammemes.add(pnctGrammeme);
+
+        int bitsetSize = grammemes.size();
+        for (Grammeme grammeme : grammemes) {
             grammemeSt.setString(1, grammeme.getName());
             grammemeSt.setString(2, grammeme.getAlias());
             grammemeSt.setString(3, grammeme.getDescription());
             String parentId = grammeme.getParent() == null ? null : grammeme.getParent().getName();
             grammemeSt.setString(4, parentId);
 
-            ExportableBitSet flag = new ExportableBitSet(BITSET_SIZE);
+            ExportableBitSet flag = new ExportableBitSet(bitsetSize);
             flag.set(i);
             i++;
             grammemeSt.setBytes(5, flag.toByteArray());
@@ -163,18 +190,6 @@ public class DictionaryLoader {
             formGrammemeSt.executeUpdate();
         }
         return id;
-    }
-
-    public static void main(String[] args) throws Exception {
-        if (args.length == 0 || args.length % 2 != 0 || !args[0].equals("--resource")) {
-            System.out.println("Usage:");
-            System.out.println("\t--resource\tOpenCorpora dictionary dump file (XML)");
-            System.exit(-1);
-        }
-        String resourceLocation = args[1];
-
-        DictionaryLoader loader = new DictionaryLoader();
-        loader.load(URL, resourceLocation);
     }
 
 }

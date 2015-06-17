@@ -34,7 +34,10 @@ public class BitSetFormResolver {
         // build a bitset for comparison
         BitSet grammemesBitSet = new BitSet(BITSET_SIZE);
         for (String grammeme : grammemes) {
-            grammemesBitSet.or(grammemeFlags.get(grammeme));
+            BitSet flag = grammemeFlags.get(grammeme);
+            if (flag != null) {
+                grammemesBitSet.or(flag);
+            }
         }
 
         try {

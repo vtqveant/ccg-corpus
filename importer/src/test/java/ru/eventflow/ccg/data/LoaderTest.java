@@ -10,7 +10,6 @@ import ru.eventflow.ccg.datasource.model.corpus.Paragraph;
 import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 import ru.eventflow.ccg.datasource.model.corpus.Text;
 import ru.eventflow.ccg.datasource.model.corpus.Token;
-import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
 import ru.eventflow.ccg.datasource.model.dictionary.Lexeme;
 import ru.eventflow.ccg.datasource.model.dictionary.LinkType;
@@ -87,8 +86,13 @@ public class LoaderTest {
         }
 
         @Override
-        public Form resolveForm(String formOrthography, String lexemeId, List<String> grammemes) {
-            return null;
+        public int resolve(int lexemeId, List<String> grammemes) {
+            return 0;
+        }
+
+        @Override
+        public int addForm(String orthography, List<String> grammemes) {
+            return 0;
         }
 
         public List<Text> getTexts() {

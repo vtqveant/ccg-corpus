@@ -181,7 +181,7 @@ public class CorpusHandler extends DefaultHandler {
     class VariantHandler extends BaseNestedHandler {
         private Variant variant = new Variant();
         private List<String> grammemes = new ArrayList<>();
-        private String lexemeId;
+        private int lexemeId;
 
         public VariantHandler(XMLReader reader, ContentHandler parent) {
             super(reader, parent);
@@ -192,8 +192,7 @@ public class CorpusHandler extends DefaultHandler {
             content.setLength(0);
             switch (name) {
                 case "l":
-                    // lemma_id = 0 is Out of Vocabulary
-                    lexemeId = attributes.getValue("id");
+                    lexemeId = Integer.valueOf(attributes.getValue("id"));
                     break;
                 case "g":
                     grammemes.add(attributes.getValue("v")); // XPath: //sentence/tokens/token/tfr/v/l/g/@v
@@ -206,11 +205,21 @@ public class CorpusHandler extends DefaultHandler {
             switch (name) {
                 case "v":
                     TokenHandler tokenHandler = (TokenHandler) parent;
-                    Form form = bridge.resolveForm(tokenHandler.orthography, lexemeId, grammemes);
+
+                    int formId;
+                    if (lexemeId == 0) { // out of vocabulary token
+                        formId = bridge.addForm(tokenHandler.token.getOrthography(), grammemes);
+                    } else {
+                        formId = bridge.resolve(lexemeId, grammemes);
+                    }
+
+                    Form form = new Form(); // dummy
+                    form.setId(formId);
                     variant.setForm(form);
+
                     variant.setToken(tokenHandler.token);
                     tokenHandler.token.addVariant(variant);
-                    reader.setContentHandler(parent); // switch back to parent handler
+                    reader.setContentHandler(tokenHandler);
                     break;
             }
         }

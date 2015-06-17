@@ -36,6 +36,10 @@ public class GlossesPresenter implements Presenter<GlossesView> {
                 glosses.add("oov");
             } else {
                 StringBuilder sb = new StringBuilder();
+                for (Grammeme grammeme : form.getLexeme().getLemma().getGrammemes()) {
+                    sb.append(grammeme.getName());
+                    sb.append('.');
+                }
                 for (Grammeme grammeme : form.getGrammemes()) {
                     sb.append(grammeme.getName());
                     sb.append('.');

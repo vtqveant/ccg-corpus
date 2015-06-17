@@ -1,6 +1,5 @@
 package ru.eventflow.ccg.data.corpus;
 
-import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.corpus.Text;
 
 import java.util.List;
@@ -12,5 +11,7 @@ public interface DataBridge {
 
     void setVersion(String version);
 
-    Form resolveForm(String formOrthography, String lexemeId, List<String> grammemes);
+    int resolve(int lexemeId, List<String> grammemes);
+
+    int addForm(String orthography, List<String> grammemes);
 }

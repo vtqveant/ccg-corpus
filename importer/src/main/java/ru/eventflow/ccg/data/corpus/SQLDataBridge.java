@@ -117,6 +117,9 @@ public class SQLDataBridge implements DataBridge {
      */
     @Override
     public Form resolveForm(String formOrthography, String lexemeId, List<String> grammemes) {
+        if (grammemes == null) {
+            return null;
+        }
         int id = resolver.resolve(formOrthography, Integer.valueOf(lexemeId), grammemes);
         Form dummy = new Form();
         dummy.setId(id);

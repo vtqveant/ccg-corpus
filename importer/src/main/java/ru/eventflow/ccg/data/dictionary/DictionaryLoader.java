@@ -1,10 +1,14 @@
 package ru.eventflow.ccg.data.dictionary;
 
+import ru.eventflow.ccg.data.ExportableBitSet;
 import ru.eventflow.ccg.datasource.model.dictionary.*;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.*;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Dirty, unsafe and fast. Requires 1.5G of heap to run.
@@ -16,6 +20,12 @@ public class DictionaryLoader {
 //    public static final String RESOURSE_LOCATION = "file:///C:\\KOSTA\\code\\ccg-corpus\\data\\resources\\dict.opcorpora.xml";
 
     public static final int CHUNK_SIZE = 5000;
+
+    private static final int BITSET_SIZE = 113; // number of grammemes
+
+    private final Map<String, BitSet> grammemeFlags = new HashMap<>();      // grammeme name -> single grammeme bitset
+    private PreparedStatement grammemesByFormIdStatement;
+
 
     public DictionaryLoader() {
     }
@@ -108,8 +118,85 @@ public class DictionaryLoader {
         conn.commit();
         System.out.println("lexemes done");
 
+        System.out.println("Updating flags");
+        updateGrammemeFlags(conn);
+
         conn.close();
     }
+
+    private void updateGrammemeFlags(Connection conn) throws SQLException {
+        // prepare grammeme names for bitsets
+        PreparedStatement updateGrammemeFlags = conn.prepareStatement("UPDATE dictionary.grammeme SET flags = ? " +
+                "WHERE name = ?");
+        PreparedStatement grammemesStatement = conn.prepareStatement("SELECT \"name\" " +
+                "FROM dictionary.grammeme");
+        ResultSet grRs = grammemesStatement.executeQuery();
+        int i = 0;
+        while (grRs.next()) {
+            ExportableBitSet flag = new ExportableBitSet(BITSET_SIZE);
+            flag.set(i);
+            i++;
+
+            updateGrammemeFlags.setBytes(1, flag.toByteArray());
+            updateGrammemeFlags.setString(2, grRs.getString("name"));
+            updateGrammemeFlags.execute();
+
+            // cache
+            grammemeFlags.put(grRs.getString("name"), flag);
+        }
+
+        System.out.println("Grammemes ready");
+
+        // prepare forms to lemmata mapping
+        final Map<Integer, Integer> lemmata = new HashMap<>(); // form id -> lemma id
+        PreparedStatement formsLexemesStatement = conn.prepareStatement("SELECT f.id, l.lemma_id " +
+                "FROM dictionary.form f, dictionary.lexeme l " +
+                "WHERE (NOT f.lemma) AND f.lexeme_id = l.id");
+        ResultSet rs2 = formsLexemesStatement.executeQuery();
+        while (rs2.next()) {
+            lemmata.put(rs2.getInt("id"), rs2.getInt("lemma_id"));
+        }
+
+        System.out.println("forms -> lemmata ready");
+
+
+        // TODO join in the memory (currently it takes approx. 20 minutes)
+        PreparedStatement updateFormFlags = conn.prepareStatement("UPDATE dictionary.form SET flags = ? WHERE id= ?");
+        // prepare get grammemes by form id
+        grammemesByFormIdStatement = conn.prepareStatement("SELECT fg.grammeme_id AS name " +
+                "FROM dictionary.form f, dictionary.form_to_grammeme fg " +
+                "WHERE f.id = fg.form_id AND f.id = ?");
+
+        // compute grammeme bitsets for each form id
+        int j = 0;
+        for (int formId : lemmata.keySet()) {
+            ExportableBitSet flags = getGrammemesBitSet(formId);
+            flags.or(getGrammemesBitSet(lemmata.get(formId)));
+            // forms.put(formId, flags);
+            updateFormFlags.setBytes(1, flags.toByteArray());
+            updateFormFlags.setInt(2, formId);
+            updateFormFlags.execute();
+
+            if (j % 10000 == 0) {
+                System.out.println(j + " bitsets done");
+            }
+            j++;
+        }
+
+        System.out.println("flags done.");
+    }
+
+    private ExportableBitSet getGrammemesBitSet(int formId) throws SQLException {
+        ExportableBitSet flags = new ExportableBitSet(BITSET_SIZE);
+        grammemesByFormIdStatement.setInt(1, formId);
+        ResultSet rs1 = grammemesByFormIdStatement.executeQuery();
+        while (rs1.next()) {
+            String grammemeName = rs1.getString("name");
+            flags.or(grammemeFlags.get(grammemeName));
+        }
+        return flags;
+    }
+
 
     /**
      * forms are the only objects that do not have an id in the OpenCorpora export xml, so we have to keep track of owr own one

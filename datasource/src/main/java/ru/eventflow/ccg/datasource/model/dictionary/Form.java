@@ -34,6 +34,9 @@ public class Form {
     @Column(name = "lemma")
     private boolean lemma;
 
+    @Column(name = "flags")
+    private byte[] flags;
+
     public int getId() {
         return id;
     }
@@ -72,5 +75,13 @@ public class Form {
 
     public void setLemma(boolean lemma) {
         this.lemma = lemma;
+    }
+
+    public byte[] getFlags() {
+        return flags;
+    }
+
+    public void setFlags(byte[] flags) {
+        this.flags = flags;
     }
 }

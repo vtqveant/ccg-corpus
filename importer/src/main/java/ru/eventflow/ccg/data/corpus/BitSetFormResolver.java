@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class BitSetFormResolver {
 
+    private static final int BITSET_SIZE = 113; // number of grammemes
+
     private final Map<Integer, BitSet> forms = new HashMap<>();    // form id -> grammemes bitset
     private final Map<String, BitSet> bits = new HashMap<>();      // grammeme name -> single grammeme bitset
 
@@ -24,7 +26,7 @@ public class BitSetFormResolver {
             ResultSet grRs = grammemesStatement.executeQuery();
             int i = 0;
             while (grRs.next()) {
-                BitSet flag = new BitSet();
+                BitSet flag = new BitSet(BITSET_SIZE);
                 flag.set(i);
                 bits.put(grRs.getString("name"), flag);
                 i++;
@@ -38,12 +40,12 @@ public class BitSetFormResolver {
                     "WHERE (NOT f.lemma) AND f.lexeme_id = l.id");
             ResultSet rs2 = formsLexemesStatement.executeQuery();
             while (rs2.next()) {
-                int formId = rs2.getInt("id");
-                lemmata.put(formId, rs2.getInt("lemma_id"));
+                lemmata.put(rs2.getInt("id"), rs2.getInt("lemma_id"));
             }
 
             System.out.println("forms -> lemmata ready");
 
+            // TODO join in the memory (currently it takes approx. 20 minutes)
             // prepare get grammemes by form id
             grammemesByFormIdStatement = conn.prepareStatement("SELECT g.name AS name FROM dictionary.form f, dictionary.grammeme g, dictionary.form_to_grammeme fg " +
                     "WHERE f.id = fg.form_id AND g.name = fg.grammeme_id AND f.id = ?");
@@ -51,12 +53,11 @@ public class BitSetFormResolver {
             // compute grammeme bitsets for each form id
             int j = 0;
             for (int formId : lemmata.keySet()) {
-                BitSet flags = new BitSet();
-                flags.or(getGrammemesBitSet(formId));
+                BitSet flags = getGrammemesBitSet(formId);
                 flags.or(getGrammemesBitSet(lemmata.get(formId)));
                 forms.put(formId, flags);
 
-                if (j % 1000 == 0) {
+                if (j % 10000 == 0) {
                     System.out.println(j + " bitsets done");
                 }
                 j++;
@@ -90,7 +91,7 @@ public class BitSetFormResolver {
     }
 
     private BitSet getGrammemesBitSet(int formId) throws SQLException {
-        BitSet flags = new BitSet();
+        BitSet flags = new BitSet(BITSET_SIZE);
         grammemesByFormIdStatement.setInt(1, formId);
         ResultSet rs1 = grammemesByFormIdStatement.executeQuery();
         while (rs1.next()) {
@@ -106,7 +107,7 @@ public class BitSetFormResolver {
      */
     public int resolve(String orthography, int lexemeId, List<String> grammemes) {
         // build a bitset for comparison
-        BitSet grammemesBitSet = new BitSet();
+        BitSet grammemesBitSet = new BitSet(BITSET_SIZE);
         for (String grammeme : grammemes) {
             grammemesBitSet.or(bits.get(grammeme));
         }

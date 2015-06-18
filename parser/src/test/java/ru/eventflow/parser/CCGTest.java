@@ -1,10 +1,10 @@
 package ru.eventflow.parser;
 
 import org.junit.Test;
-import ru.eventflow.ccg.parser.*;
-import ru.eventflow.ccg.parser.rules.BackwardApplication;
-import ru.eventflow.ccg.parser.rules.ForwardApplication;
-import ru.eventflow.ccg.parser.rules.Rule;
+import ru.eventflow.ccg.parser.cyk.*;
+import ru.eventflow.ccg.parser.cyk.rules.BackwardApplication;
+import ru.eventflow.ccg.parser.cyk.rules.ForwardApplication;
+import ru.eventflow.ccg.parser.cyk.rules.Rule;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -47,9 +47,9 @@ public class CCGTest {
     public void testCGGParser() {
         String sentence = "John loves Mary";
 
-        List<Token> tokens = new ArrayList<Token>();
+        List<T> tokens = new ArrayList<T>();
         for (String s : sentence.split("\\s+")) {
-            tokens.add(new Token(s.toLowerCase()));
+            tokens.add(new T(s.toLowerCase()));
         }
 
         Set<Entry> lexicon = new HashSet<Entry>();

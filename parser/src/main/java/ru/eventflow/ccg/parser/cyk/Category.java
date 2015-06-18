@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.parser;
+package ru.eventflow.ccg.parser.cyk;
 
 public class Category {
 

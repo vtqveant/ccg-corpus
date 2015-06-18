@@ -1,7 +1,7 @@
-package ru.eventflow.ccg.parser.rules;
+package ru.eventflow.ccg.parser.cyk.rules;
 
-import ru.eventflow.ccg.parser.Category;
-import ru.eventflow.ccg.parser.CategoryBuilder;
+import ru.eventflow.ccg.parser.cyk.Category;
+import ru.eventflow.ccg.parser.cyk.CategoryBuilder;
 
 /**
  * (>T)  X  ->  T/(T\X)

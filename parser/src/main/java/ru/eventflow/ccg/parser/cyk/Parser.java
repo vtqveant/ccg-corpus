@@ -1,6 +1,6 @@
-package ru.eventflow.ccg.parser;
+package ru.eventflow.ccg.parser.cyk;
 
-import ru.eventflow.ccg.parser.rules.*;
+import ru.eventflow.ccg.parser.cyk.rules.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +31,7 @@ public class Parser {
         this.lexicon = lexicon;
     }
 
-    public List<Item> parse(List<Token> tokens) {
+    public List<Item> parse(List<T> tokens) {
 
         // create chart
         int n = tokens.size();
@@ -45,7 +45,7 @@ public class Parser {
 
         // scan phase
         for (int idx = 0; idx < n; idx++) {
-            Token token = tokens.get(idx);
+            T token = tokens.get(idx);
             for (Entry entry : lexicon) {
                 if (entry.getOrthography().equals(token.getValue())) {
                     chart.get(idx).get(0).add(new Item(entry.getCategory(), idx, idx + 1));

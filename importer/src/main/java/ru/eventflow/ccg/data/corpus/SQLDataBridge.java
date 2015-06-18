@@ -166,6 +166,14 @@ public class SQLDataBridge implements DataBridge {
     @Override
     public int addForm(String orthography, List<String> grammemes) {
         try {
+            // check if there is such form already
+            PreparedStatement stFindForm = conn.prepareStatement("SELECT f.id FROM dictionary.form f WHERE f.orthography = ? AND NOT f.lemma LIMIT 1");
+            stFindForm.setString(1, orthography);
+            ResultSet findFormResultSet = stFindForm.executeQuery();
+            if (findFormResultSet.next()) {
+                return findFormResultSet.getInt("id");
+            }
+
             PreparedStatement stForm = conn.prepareStatement("INSERT INTO dictionary.form (lemma, orthography, lexeme_id, flags) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             PreparedStatement stLexeme = conn.prepareStatement("INSERT INTO dictionary.lexeme (id, rev, lemma_id) VALUES (?, ?, ?)");
             PreparedStatement stFormGrammeme = conn.prepareStatement("INSERT INTO dictionary.form_to_grammeme (form_id, grammeme_id) VALUES (?, ?)");

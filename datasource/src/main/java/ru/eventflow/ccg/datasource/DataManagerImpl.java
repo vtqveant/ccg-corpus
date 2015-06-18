@@ -59,14 +59,11 @@ public class DataManagerImpl implements DataManager {
     }
 
     public Map<Form, List<String>> getGrammemes(String form) {
-        TypedQuery<Form> query = entityManager.createQuery("SELECT x FROM Form x WHERE x.orthography = :orthography", Form.class);
+        TypedQuery<Form> query = entityManager.createQuery("SELECT x FROM Form x WHERE x.lemma = FALSE AND x.orthography = :orthography", Form.class);
         query.setParameter("orthography", form);
         List<Form> forms = query.getResultList();
         Map<Form, List<String>> result = new HashMap<>();
         for (Form f : forms) {
-            if (f.isLemma()) {
-                continue;
-            }
             List<String> grammemes = new ArrayList<>();
             for (Grammeme g : f.getGrammemes()) {
                 grammemes.add(g.getName());

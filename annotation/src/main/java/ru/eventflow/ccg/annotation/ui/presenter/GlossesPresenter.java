@@ -35,13 +35,23 @@ public class GlossesPresenter implements Presenter<GlossesView> {
             if (form == null) {
                 glosses.add("oov");
             } else {
-                StringBuilder sb = new StringBuilder();
+                // TODO refac
+                List<String> grammemes = new ArrayList<>();
                 for (Grammeme grammeme : form.getLexeme().getLemma().getGrammemes()) {
-                    sb.append(grammeme.getName());
-                    sb.append('.');
+                    if (!grammemes.contains(grammeme.getName())) {
+                        grammemes.add(grammeme.getName());
+                    }
                 }
                 for (Grammeme grammeme : form.getGrammemes()) {
-                    sb.append(grammeme.getName());
+                    if (!grammemes.contains(grammeme.getName())) {
+                        grammemes.add(grammeme.getName());
+                    }
+                }
+                Collections.sort(grammemes);
+
+                StringBuilder sb = new StringBuilder();
+                for (String name : grammemes) {
+                    sb.append(name);
                     sb.append('.');
                 }
                 if (sb.length() > 0) {

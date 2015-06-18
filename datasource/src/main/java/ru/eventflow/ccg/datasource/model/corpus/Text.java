@@ -9,7 +9,6 @@ import java.util.List;
 public class Text {
 
     @Id
-    @Column(columnDefinition = "serial")
     private int id;
 
     @Column(name = "name")

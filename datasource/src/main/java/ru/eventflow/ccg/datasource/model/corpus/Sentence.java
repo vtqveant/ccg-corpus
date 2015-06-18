@@ -9,7 +9,6 @@ import java.util.List;
 public class Sentence {
 
     @Id
-    @Column(columnDefinition = "serial")
     private int id;
 
     @Column(name = "source", columnDefinition = "TEXT")

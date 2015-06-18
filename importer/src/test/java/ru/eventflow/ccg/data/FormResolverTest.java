@@ -5,6 +5,7 @@ import ru.eventflow.ccg.data.corpus.SQLDataBridge;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -14,13 +15,13 @@ public class FormResolverTest {
 
     @Test
     public void testSmth() {
-        ExportableBitSet bitset1 = new ExportableBitSet(5);
+        BitSet bitset1 = new BitSet(5);
         bitset1.set(0);
         bitset1.set(10);
         bitset1.set(12);
         bitset1.set(27);
         byte[] bytes = bitset1.toByteArray();
-        ExportableBitSet bs2 = new ExportableBitSet(bytes);
+        BitSet bs2 = BitSet.valueOf(bytes);
         System.out.println(bs2.toString());
 
         assertEquals(bs2, bitset1);

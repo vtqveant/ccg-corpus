@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.parser;
+package ru.eventflow.ccg.parser.cyk;
 
 /**
  * a lexicon entry

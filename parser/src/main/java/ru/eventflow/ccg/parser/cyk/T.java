@@ -1,9 +1,9 @@
-package ru.eventflow.ccg.parser;
+package ru.eventflow.ccg.parser.cyk;
 
-public class Token {
+public class T {
     private String value;
 
-    public Token(String value) {
+    public T(String value) {
         this.value = value;
     }
 

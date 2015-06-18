@@ -1,6 +1,6 @@
-package ru.eventflow.ccg.parser;
+package ru.eventflow.ccg.parser.cyk;
 
-import ru.eventflow.ccg.parser.rules.Rule;
+import ru.eventflow.ccg.parser.cyk.rules.Rule;
 
 public class Item {
     Category category;

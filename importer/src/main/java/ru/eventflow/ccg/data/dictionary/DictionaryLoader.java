@@ -19,10 +19,6 @@ public class DictionaryLoader {
 
     public static final int CHUNK_SIZE = 5000;
 
-    public static final String PNCT = "PNCT";
-    public static final String UNKN = "UNKN";
-    public static final String NUMB = "NUMB";
-
     private final Map<String, BitSet> grammemeFlags = new HashMap<>(); // grammeme name -> single grammeme bitset
 
 
@@ -61,23 +57,11 @@ public class DictionaryLoader {
 
         // grammemes missing in the dictionary
         List<Grammeme> grammemes = collector.getGrammemes();
-        Grammeme unknGrammeme = new Grammeme();
-        unknGrammeme.setName(UNKN);
-        unknGrammeme.setAlias("неизв");
-        unknGrammeme.setDescription("отсутствует в словаре");
-        grammemes.add(unknGrammeme);
-
-        Grammeme pnctGrammeme = new Grammeme();
-        pnctGrammeme.setName(PNCT);
-        pnctGrammeme.setAlias("пункт");
-        pnctGrammeme.setDescription("пунктуация");
-        grammemes.add(pnctGrammeme);
-
-        Grammeme numbGrammeme = new Grammeme();
-        numbGrammeme.setName(NUMB);
-        numbGrammeme.setAlias("цифра");
-        numbGrammeme.setDescription("цифра");
-        grammemes.add(numbGrammeme);
+        grammemes.add(buildGrammeme("UNKN", "неизв.", "отсутствует в словаре"));
+        grammemes.add(buildGrammeme("PNCT", "пункт.", "пунктуация" ));
+        grammemes.add(buildGrammeme("NUMB", "цифры" , "арабские цифры"));
+        grammemes.add(buildGrammeme("ROMN", "римск.", "римские цифры"));
+        grammemes.add(buildGrammeme("LATN", "лат.", "латинский"));
 
         int bitsetSize = grammemes.size();
         for (Grammeme grammeme : grammemes) {
@@ -163,6 +147,14 @@ public class DictionaryLoader {
         System.out.println("lexemes done");
 
         conn.close();
+    }
+
+    private static Grammeme buildGrammeme(String name, String alias, String description) {
+        Grammeme g = new Grammeme();
+        g.setName(name);
+        g.setAlias(alias);
+        g.setDescription(description);
+        return g;
     }
 
     /**

@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.parser;
+package ru.eventflow.ccg.parser.cyk;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,10 @@ public class Utils {
         System.out.println();
     }
 
-    public static List<Token> tokenize(String sentence) {
-        List<Token> tokens = new ArrayList<Token>();
+    public static List<T> tokenize(String sentence) {
+        List<T> tokens = new ArrayList<T>();
         for (String part : sentence.toLowerCase().split("\\s+")) {
-            tokens.add(new Token(part));
+            tokens.add(new T(part));
         }
         return tokens;
     }

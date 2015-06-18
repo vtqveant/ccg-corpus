@@ -9,7 +9,6 @@ import java.util.List;
 public class Token {
 
     @Id
-    @Column(columnDefinition = "serial")
     private int id;
 
     @OneToMany(targetEntity = Variant.class, mappedBy = "token", cascade = CascadeType.ALL)

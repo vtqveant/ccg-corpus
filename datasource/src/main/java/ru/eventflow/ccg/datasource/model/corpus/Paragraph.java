@@ -9,7 +9,6 @@ import java.util.List;
 public class Paragraph {
 
     @Id
-    @Column(columnDefinition = "serial")
     private int id;
 
     @OneToMany(targetEntity = Sentence.class, mappedBy = "paragraph", cascade = CascadeType.ALL)

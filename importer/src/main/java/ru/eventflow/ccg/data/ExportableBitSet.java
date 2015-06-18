@@ -25,6 +25,7 @@ public class ExportableBitSet extends BitSet {
         }
     }
 
+    @Override
     public byte[] toByteArray() {
         if (size() == 0) return new byte[0];
 

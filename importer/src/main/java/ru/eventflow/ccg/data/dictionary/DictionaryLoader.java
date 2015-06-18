@@ -1,6 +1,5 @@
 package ru.eventflow.ccg.data.dictionary;
 
-import ru.eventflow.ccg.data.ExportableBitSet;
 import ru.eventflow.ccg.datasource.model.dictionary.*;
 
 import java.io.InputStream;
@@ -22,6 +21,7 @@ public class DictionaryLoader {
 
     public static final String PNCT = "PNCT";
     public static final String UNKN = "UNKN";
+    public static final String NUMB = "NUMB";
 
     private final Map<String, BitSet> grammemeFlags = new HashMap<>(); // grammeme name -> single grammeme bitset
 
@@ -73,6 +73,12 @@ public class DictionaryLoader {
         pnctGrammeme.setDescription("пунктуация");
         grammemes.add(pnctGrammeme);
 
+        Grammeme numbGrammeme = new Grammeme();
+        numbGrammeme.setName(NUMB);
+        numbGrammeme.setAlias("цифра");
+        numbGrammeme.setDescription("цифра");
+        grammemes.add(numbGrammeme);
+
         int bitsetSize = grammemes.size();
         for (Grammeme grammeme : grammemes) {
             grammemeSt.setString(1, grammeme.getName());
@@ -81,7 +87,7 @@ public class DictionaryLoader {
             String parentId = grammeme.getParent() == null ? null : grammeme.getParent().getName();
             grammemeSt.setString(4, parentId);
 
-            ExportableBitSet flag = new ExportableBitSet(bitsetSize);
+            BitSet flag = new BitSet(bitsetSize);
             flag.set(i);
             i++;
             grammemeSt.setBytes(5, flag.toByteArray());
@@ -167,7 +173,7 @@ public class DictionaryLoader {
         formSt.setString(2, form.getOrthography());
         formSt.setInt(3, form.getLexeme().getId());
 
-        ExportableBitSet flags = new ExportableBitSet();
+        BitSet flags = new BitSet();
         for (Grammeme grammeme : form.getGrammemes()) {
             flags.or(grammemeFlags.get(grammeme.getName()));
         }

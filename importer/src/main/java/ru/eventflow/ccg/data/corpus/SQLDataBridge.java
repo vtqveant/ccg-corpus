@@ -1,6 +1,5 @@
 package ru.eventflow.ccg.data.corpus;
 
-import ru.eventflow.ccg.data.ExportableBitSet;
 import ru.eventflow.ccg.datasource.model.corpus.*;
 
 import java.sql.*;
@@ -22,7 +21,9 @@ public class SQLDataBridge implements DataBridge {
     private PreparedStatement stText;
     private PreparedStatement stTag;
     private PreparedStatement stFormDetails;
-    private PreparedStatement stFormFlags;
+    private PreparedStatement stForm;
+    private PreparedStatement stLexeme;
+    private PreparedStatement stFormGrammeme;
     private int counter = 0;
 
     public SQLDataBridge(String connectionUrl) {
@@ -38,16 +39,19 @@ public class SQLDataBridge implements DataBridge {
                 stText = conn.prepareStatement("INSERT INTO corpus.text (id, name, parent_id) VALUES (?, ?, ?)");
                 stTag = conn.prepareStatement("INSERT INTO corpus.tag (source, text_id) VALUES (?, ?)");
 
+                stForm = conn.prepareStatement("INSERT INTO dictionary.form (lemma, orthography, lexeme_id, flags) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                stLexeme = conn.prepareStatement("INSERT INTO dictionary.lexeme (id, rev, lemma_id) VALUES (?, ?, ?)");
+                stFormGrammeme = conn.prepareStatement("INSERT INTO dictionary.form_to_grammeme (form_id, grammeme_id) VALUES (?, ?)");
+
                 // form resolver
                 PreparedStatement st = conn.prepareStatement("SELECT name, flags FROM dictionary.grammeme");
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
-                    ExportableBitSet bs = new ExportableBitSet(rs.getBytes("flags"));
+                    BitSet bs = BitSet.valueOf(rs.getBytes("flags"));
                     grammemeFlags.put(rs.getString("name"), bs);
                 }
 
-                stFormDetails = conn.prepareStatement("SELECT id, lexeme_id FROM dictionary.form f WHERE lexeme_id = ?");
-                stFormFlags = conn.prepareStatement("SELECT flags FROM dictionary.form WHERE id = ?");
+                stFormDetails = conn.prepareStatement("SELECT id, lexeme_id, flags FROM dictionary.form f WHERE lexeme_id = ?");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -127,19 +131,12 @@ public class SQLDataBridge implements DataBridge {
     public int resolve(int lexemeId, List<String> grammemes) {
         try {
             stFormDetails.setInt(1, lexemeId);
-            ResultSet rs4 = stFormDetails.executeQuery();
-
-            while (rs4.next()) {
-                int formId = rs4.getInt("id");
-                stFormFlags.setInt(1, formId);
-                ResultSet rs = stFormFlags.executeQuery();
-                rs.next();
-                byte[] bytes = rs.getBytes("flags");
-                BitSet flags = new ExportableBitSet(bytes);
-
+            ResultSet rs = stFormDetails.executeQuery();
+            while (rs.next()) {
+                BitSet flags = BitSet.valueOf(rs.getBytes("flags"));
                 BitSet formFlags = buildFlags(grammemes);
                 if (flags.equals(formFlags)) {
-                    return formId;
+                    return rs.getInt("id");
                 }
             }
         } catch (SQLException e) {
@@ -148,8 +145,8 @@ public class SQLDataBridge implements DataBridge {
         return -1;
     }
 
-    private ExportableBitSet buildFlags(List<String> grammemes) {
-        ExportableBitSet formFlags = new ExportableBitSet();
+    private BitSet buildFlags(List<String> grammemes) {
+        BitSet formFlags = new BitSet();
         for (String grammeme : grammemes) {
             BitSet flag = grammemeFlags.get(grammeme);
             if (flag == null) {  // fix OOV gramemes
@@ -173,10 +170,6 @@ public class SQLDataBridge implements DataBridge {
             if (findFormResultSet.next()) {
                 return findFormResultSet.getInt("id");
             }
-
-            PreparedStatement stForm = conn.prepareStatement("INSERT INTO dictionary.form (lemma, orthography, lexeme_id, flags) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-            PreparedStatement stLexeme = conn.prepareStatement("INSERT INTO dictionary.lexeme (id, rev, lemma_id) VALUES (?, ?, ?)");
-            PreparedStatement stFormGrammeme = conn.prepareStatement("INSERT INTO dictionary.form_to_grammeme (form_id, grammeme_id) VALUES (?, ?)");
 
             // id in 'dictionary.lexeme' is manual
             PreparedStatement stNextLexemeId = conn.prepareStatement("SELECT max(id) FROM dictionary.lexeme");
@@ -217,13 +210,7 @@ public class SQLDataBridge implements DataBridge {
                 stFormGrammeme.executeUpdate();
             }
 
-//            conn.commit();
-            stForm.close();
-            stLexeme.close();
-            stFormGrammeme.close();
-
             return formId;
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -10,7 +10,10 @@ import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
 import ru.eventflow.ccg.parser.cyk.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class BridgedRunner {
 
@@ -51,24 +54,28 @@ public class BridgedRunner {
 
         List<String> cats = new ArrayList<>();
         if (grammemes.contains("NOUN")) {
-            cats.add("n");
+            cats.add("n");         // школа
         }
         if (grammemes.contains("NOUN") && grammemes.contains("gent")) {
-            cats.add("n\\n");
+            cats.add("n\\n");      // (школа) злословия
         }
-        if (grammemes.contains("ADJV")) {
-            cats.add("np/np");
+        if (grammemes.contains("ADJF")) {
+            cats.add("n/n");
         }
         if (grammemes.contains("VERB") && grammemes.contains("tran")) {
-            cats.add("(s\\n)/np");
-            cats.add("(s\\n)/s"); // infn object
+            cats.add("(s\\n)/np"); // (мальчик) читает (книгу)
+            cats.add("(s\\n)/s");  // учит (прикусить язык)
         }
         if (grammemes.contains("INFN")) {
             cats.add("s/n");
         }
         if (grammemes.contains("PNCT")) {
-            cats.add("n/n");
-            cats.add("n\\n");
+            cats.add("n/n");       // << школа
+            cats.add("n\\n");      // школа_злословия >>
+            cats.add("(n\\n)/n");  // шпаги , деньги
+        }
+        if (grammemes.contains("CONJ")) {
+            cats.add("(n\\n)/n");  // шпаги и деньги
         }
 
         List<Entry> entries = new ArrayList<>();

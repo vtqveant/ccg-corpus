@@ -42,9 +42,9 @@ public class LexiconEntry {
         StringBuilder sb = new StringBuilder();
         for (String grammeme : grammemes) {
             sb.append(grammeme);
-            sb.append(", ");
+            sb.append(".");
         }
-        if (grammemes.size() > 0) sb.delete(sb.length() - 2, sb.length() - 1);
+        if (sb.length() > 0) sb.deleteCharAt(sb.length() -1);
         return sb.toString();
     }
 }

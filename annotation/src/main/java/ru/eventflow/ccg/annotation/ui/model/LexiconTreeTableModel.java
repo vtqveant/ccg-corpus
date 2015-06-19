@@ -5,7 +5,7 @@ import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 import org.jdesktop.swingx.treetable.TreeTableNode;
 
 public class LexiconTreeTableModel extends DefaultTreeTableModel {
-    private static final String[] columns = new String[]{" Category", "Form", "Lemma", "Count"};
+    private static final String[] columns = new String[]{" Category", "Lemma", "Count"};
     private static final Class[] classes = new Class[]{Object.class, String.class, String.class, Integer.class};
 
     public LexiconTreeTableModel() {
@@ -29,12 +29,10 @@ public class LexiconTreeTableModel extends DefaultTreeTableModel {
 
     @Override
     public Object getValueAt(Object node, int column) {
-        LexiconEntry entry = (LexiconEntry) ((TreeTableNode) node).getUserObject();
-        if (column == 1 && !(entry instanceof SyntacticCategoryEntry)) {
-            return entry.getForm().getOrthography();
-        }
-        if (column == 2) return entry.getLemma();
-        if (column == 3) return entry.getCount();
+        TreeTableNode treeTableNode = (TreeTableNode) node;
+        LexiconEntry entry = (LexiconEntry) treeTableNode.getUserObject();
+        if (column == 1) return entry.getLemma();
+        if (column == 2) return entry.getCount();
         return "";
     }
 }

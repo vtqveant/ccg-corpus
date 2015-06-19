@@ -8,6 +8,7 @@ import ru.eventflow.ccg.annotation.ui.view.ConcordanceView;
 import ru.eventflow.ccg.datasource.DataManager;
 import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
+import ru.eventflow.ccg.datasource.model.syntax.Category;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,8 +55,9 @@ public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSel
     @Override
     public void onEvent(FormSelectedEvent event) {
         Form form = event.getForm();
-        if (form != null) {
-            List<Sentence> sentences = dataManager.getSentencesByFormId(form.getId());
+        Category category = event.getCategory();
+        if (form != null && category != null) {
+            List<Sentence> sentences = dataManager.getSentencesByFormAndCategory(form.getId(), category.getName());
             LazyJTableDataSource dataSource = new ConcordanceLazyTableDataSource(sentences, form);
             view.setDataSource(dataSource);
         } else {

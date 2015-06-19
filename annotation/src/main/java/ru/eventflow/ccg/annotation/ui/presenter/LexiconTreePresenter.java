@@ -62,17 +62,16 @@ public class LexiconTreePresenter implements Presenter<LexiconTreeView>, TreeSel
         DefaultMutableTreeTableNode root = new DefaultMutableTreeTableNode();
         Map<Form, List<String>> grammemes = dataManager.getGrammemes(text);
         for (Map.Entry<Form, List<String>> entry : grammemes.entrySet()) {
-            LexiconEntry form = new LexiconEntry(entry.getKey(), entry.getValue(), 0);
-            DefaultMutableTreeTableNode node = new DefaultMutableTreeTableNode(form);
+            LexiconEntry formEntry = new LexiconEntry(entry.getKey(), entry.getValue(), 0);
+            DefaultMutableTreeTableNode node = new DefaultMutableTreeTableNode(formEntry);
 
             // subcategorization
             for (Category category : entry.getKey().getCategories()) {
-                SyntacticCategoryEntry syntacticCategoryEntry = new SyntacticCategoryEntry(category.getName(), 0);
-                DefaultMutableTreeTableNode catNode = new DefaultMutableTreeTableNode(syntacticCategoryEntry);
+                SyntacticCategoryEntry synCatEntry = new SyntacticCategoryEntry(entry.getKey(), entry.getValue(), category, 0);
+                DefaultMutableTreeTableNode catNode = new DefaultMutableTreeTableNode(synCatEntry);
                 catNode.setAllowsChildren(false);
                 node.add(catNode);
             }
-
             root.add(node);
         }
         model.setRoot(root);
@@ -81,13 +80,16 @@ public class LexiconTreePresenter implements Presenter<LexiconTreeView>, TreeSel
     @Override
     public void valueChanged(TreeSelectionEvent e) {
         TreePath path = e.getNewLeadSelectionPath();
-        if (path == null) {
-            // no selection, let concordance view clear it's table
-            eventBus.fireEvent(new FormSelectedEvent(null));
-        } else {
+        if (path != null) {
             TreeTableNode node = (TreeTableNode) path.getLastPathComponent();
-            LexiconEntry entry = (LexiconEntry) node.getUserObject();
-            eventBus.fireEvent(new FormSelectedEvent(entry.getForm()));
+            Object object = node.getUserObject();
+            if (object instanceof SyntacticCategoryEntry) {
+                SyntacticCategoryEntry synCatEntry = (SyntacticCategoryEntry) object;
+                eventBus.fireEvent(new FormSelectedEvent(synCatEntry.getForm(), synCatEntry.getCategory()));
+                return;
+            }
         }
+        // let concordance view clear it's table (no selection or not a leaf)
+        eventBus.fireEvent(new FormSelectedEvent(null, null));
     }
 }

@@ -16,7 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSelectedEventHandler, SearchEventHandler {
+public class ConcordancePresenter implements Presenter<ConcordanceView>, LexiconEntrySelectedEventHandler, SearchEventHandler {
 
     private final EventBus eventBus;
     private final DataManager dataManager;
@@ -33,7 +33,7 @@ public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSel
         this.view.addSearchPanel(searchPresenter.getView());
         this.eventBus.addHandler(SearchEvent.TYPE, this);
 
-        this.eventBus.addHandler(FormSelectedEvent.TYPE, this);
+        this.eventBus.addHandler(LexiconEntrySelectedEvent.TYPE, this);
 
         // open tab with sentence on double click
         this.view.getTable().addMouseListener(new MouseAdapter() {
@@ -53,7 +53,7 @@ public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSel
     }
 
     @Override
-    public void onEvent(FormSelectedEvent event) {
+    public void onEvent(LexiconEntrySelectedEvent event) {
         Form form = event.getForm();
         Category category = event.getCategory();
         LazyJTableDataSource dataSource;

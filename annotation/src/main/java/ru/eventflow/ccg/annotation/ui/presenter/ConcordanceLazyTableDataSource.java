@@ -49,6 +49,7 @@ public class ConcordanceLazyTableDataSource implements LazyJTableDataSource {
                 }
             });
 
+            String occurence = null;
             LimitedQueue<String> left = new LimitedQueue<String>(WINDOW_SIZE);
             List<String> right = new LinkedList<String>();
             boolean found = false;
@@ -59,6 +60,7 @@ public class ConcordanceLazyTableDataSource implements LazyJTableDataSource {
                         if (variant.getForm() == null) continue;
                         if (variant.getForm().getId() == form.getId()) {
                             found = true;
+                            occurence = variant.getToken().getOrthography();
                         }
                     }
                     if (!found) {
@@ -76,7 +78,7 @@ public class ConcordanceLazyTableDataSource implements LazyJTableDataSource {
 
             String leftCtx = buildContextString(left);
             String rightCtx = buildContextString(right);
-            ContextEntry contextEntry = new ContextEntry(leftCtx, form.getOrthography(), rightCtx, sentence.getId(), false);
+            ContextEntry contextEntry = new ContextEntry(leftCtx, occurence, rightCtx, sentence.getId(), false);
             contextEntries.add(contextEntry);
         }
         return toArray(contextEntries);

@@ -4,14 +4,14 @@ import ru.eventflow.ccg.annotation.eventbus.Event;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.syntax.Category;
 
-public class FormSelectedEvent extends Event<FormSelectedEventHandler> {
+public class LexiconEntrySelectedEvent extends Event<LexiconEntrySelectedEventHandler> {
 
-    public final static Type<FormSelectedEventHandler> TYPE = new Type<FormSelectedEventHandler>();
+    public final static Type<LexiconEntrySelectedEventHandler> TYPE = new Type<LexiconEntrySelectedEventHandler>();
 
     private Form form;
     private Category category;
 
-    public FormSelectedEvent(Form form, Category category) {
+    public LexiconEntrySelectedEvent(Form form, Category category) {
         this.form = form;
         this.category = category;
     }
@@ -25,12 +25,12 @@ public class FormSelectedEvent extends Event<FormSelectedEventHandler> {
     }
 
     @Override
-    public Type<FormSelectedEventHandler> getAssociatedType() {
+    public Type<LexiconEntrySelectedEventHandler> getAssociatedType() {
         return TYPE;
     }
 
     @Override
-    protected void dispatch(FormSelectedEventHandler handler) {
+    protected void dispatch(LexiconEntrySelectedEventHandler handler) {
         handler.onEvent(this);
     }
 }

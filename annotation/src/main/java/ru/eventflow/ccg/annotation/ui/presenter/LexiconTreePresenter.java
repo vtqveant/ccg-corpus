@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.treetable.TreeTableNode;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
-import ru.eventflow.ccg.annotation.ui.event.FormSelectedEvent;
+import ru.eventflow.ccg.annotation.ui.event.LexiconEntrySelectedEvent;
 import ru.eventflow.ccg.annotation.ui.event.SearchEvent;
 import ru.eventflow.ccg.annotation.ui.event.SearchEventHandler;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
@@ -85,10 +85,10 @@ public class LexiconTreePresenter implements Presenter<LexiconTreeView>, TreeSel
         if (path != null) {
             TreeTableNode node = (TreeTableNode) path.getLastPathComponent();
             AbstractLexiconEntry synCatEntry = (AbstractLexiconEntry) node.getUserObject();
-            eventBus.fireEvent(new FormSelectedEvent(synCatEntry.getForm(), synCatEntry.getCategory()));
+            eventBus.fireEvent(new LexiconEntrySelectedEvent(synCatEntry.getForm(), synCatEntry.getCategory()));
         } else {
-            // let concordance view clear it's table (either no selection or not a leaf)
-            eventBus.fireEvent(new FormSelectedEvent(null, null));
+            // let concordance view clear it's table (no selection)
+            eventBus.fireEvent(new LexiconEntrySelectedEvent(null, null));
         }
     }
 }

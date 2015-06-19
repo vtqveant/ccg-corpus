@@ -56,13 +56,19 @@ public class ConcordancePresenter implements Presenter<ConcordanceView>, FormSel
     public void onEvent(FormSelectedEvent event) {
         Form form = event.getForm();
         Category category = event.getCategory();
-        if (form != null && category != null) {
-            List<Sentence> sentences = dataManager.getSentencesByFormAndCategory(form.getId(), category.getName());
-            LazyJTableDataSource dataSource = new ConcordanceLazyTableDataSource(sentences, form);
-            view.setDataSource(dataSource);
+        LazyJTableDataSource dataSource;
+        if (form == null) {
+            dataSource = null; // clears the concordance table
         } else {
-            view.setDataSource(null); // clears the concordance table
+            List<Sentence> sentences;
+            if (category == null) {  // TODO fetch sentences not assigned to any category
+                sentences = dataManager.getSentencesByFormId(form.getId());
+            } else {
+                sentences = dataManager.getSentencesByFormAndCategory(form.getId(), category.getName());
+            }
+            dataSource = new ConcordanceLazyTableDataSource(sentences, form);
         }
+        view.setDataSource(dataSource);
         searchPresenter.clear(); // clears the search panel
     }
 

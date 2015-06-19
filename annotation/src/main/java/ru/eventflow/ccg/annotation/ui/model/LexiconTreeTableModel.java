@@ -30,7 +30,7 @@ public class LexiconTreeTableModel extends DefaultTreeTableModel {
     @Override
     public Object getValueAt(Object node, int column) {
         TreeTableNode treeTableNode = (TreeTableNode) node;
-        LexiconEntry entry = (LexiconEntry) treeTableNode.getUserObject();
+        AbstractLexiconEntry entry = (AbstractLexiconEntry) treeTableNode.getUserObject();
         if (column == 1) return entry.getLemma();
         if (column == 2) return entry.getCount();
         return "";

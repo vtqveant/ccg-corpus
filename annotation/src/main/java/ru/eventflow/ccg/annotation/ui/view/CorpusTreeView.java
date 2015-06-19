@@ -3,8 +3,6 @@ package ru.eventflow.ccg.annotation.ui.view;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.renderer.DefaultTreeRenderer;
 import org.jdesktop.swingx.renderer.StringValue;
-import org.jdesktop.swingx.renderer.WrappingIconPanel;
-import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import ru.eventflow.ccg.annotation.ui.Defaults;
 import ru.eventflow.ccg.annotation.ui.component.CustomTreeCellRenderer;
 import ru.eventflow.ccg.annotation.ui.component.SecondaryTableCellRenderer;

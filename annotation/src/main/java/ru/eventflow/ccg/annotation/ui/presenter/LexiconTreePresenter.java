@@ -8,9 +8,10 @@ import ru.eventflow.ccg.annotation.ui.event.FormSelectedEvent;
 import ru.eventflow.ccg.annotation.ui.event.SearchEvent;
 import ru.eventflow.ccg.annotation.ui.event.SearchEventHandler;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
+import ru.eventflow.ccg.annotation.ui.model.AbstractLexiconEntry;
+import ru.eventflow.ccg.annotation.ui.model.CategoryEntry;
 import ru.eventflow.ccg.annotation.ui.model.LexiconEntry;
 import ru.eventflow.ccg.annotation.ui.model.LexiconTreeTableModel;
-import ru.eventflow.ccg.annotation.ui.model.SyntacticCategoryEntry;
 import ru.eventflow.ccg.annotation.ui.view.LexiconTreeView;
 import ru.eventflow.ccg.datasource.DataManager;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
@@ -55,20 +56,21 @@ public class LexiconTreePresenter implements Presenter<LexiconTreeView>, TreeSel
     public void onEvent(SearchEvent e) {
         if (e.getTarget() != this) return;
 
-        String text = e.getInput();
-        eventBus.fireEvent(new StatusUpdateEvent(text));
+        String input = e.getInput();
+        eventBus.fireEvent(new StatusUpdateEvent(input));
 
         LexiconTreeTableModel model = (LexiconTreeTableModel) view.getTreeTable().getTreeTableModel();
         DefaultMutableTreeTableNode root = new DefaultMutableTreeTableNode();
-        Map<Form, List<String>> grammemes = dataManager.getGrammemes(text);
-        for (Map.Entry<Form, List<String>> entry : grammemes.entrySet()) {
-            LexiconEntry formEntry = new LexiconEntry(entry.getKey(), entry.getValue(), 0);
-            DefaultMutableTreeTableNode node = new DefaultMutableTreeTableNode(formEntry);
+        Map<Form, List<String>> map = dataManager.getGrammemes(input);
+
+        for (Map.Entry<Form, List<String>> grammemesList : map.entrySet()) {
+            LexiconEntry lexEntry = new LexiconEntry(grammemesList.getKey(), grammemesList.getValue(), 0);
+            DefaultMutableTreeTableNode node = new DefaultMutableTreeTableNode(lexEntry);
 
             // subcategorization
-            for (Category category : entry.getKey().getCategories()) {
-                SyntacticCategoryEntry synCatEntry = new SyntacticCategoryEntry(entry.getKey(), entry.getValue(), category, 0);
-                DefaultMutableTreeTableNode catNode = new DefaultMutableTreeTableNode(synCatEntry);
+            for (Category category : grammemesList.getKey().getCategories()) {
+                CategoryEntry catEntry = new CategoryEntry(grammemesList.getKey(), grammemesList.getValue(), category, 0);
+                DefaultMutableTreeTableNode catNode = new DefaultMutableTreeTableNode(catEntry);
                 catNode.setAllowsChildren(false);
                 node.add(catNode);
             }
@@ -82,14 +84,11 @@ public class LexiconTreePresenter implements Presenter<LexiconTreeView>, TreeSel
         TreePath path = e.getNewLeadSelectionPath();
         if (path != null) {
             TreeTableNode node = (TreeTableNode) path.getLastPathComponent();
-            Object object = node.getUserObject();
-            if (object instanceof SyntacticCategoryEntry) {
-                SyntacticCategoryEntry synCatEntry = (SyntacticCategoryEntry) object;
-                eventBus.fireEvent(new FormSelectedEvent(synCatEntry.getForm(), synCatEntry.getCategory()));
-                return;
-            }
+            AbstractLexiconEntry synCatEntry = (AbstractLexiconEntry) node.getUserObject();
+            eventBus.fireEvent(new FormSelectedEvent(synCatEntry.getForm(), synCatEntry.getCategory()));
+        } else {
+            // let concordance view clear it's table (either no selection or not a leaf)
+            eventBus.fireEvent(new FormSelectedEvent(null, null));
         }
-        // let concordance view clear it's table (no selection or not a leaf)
-        eventBus.fireEvent(new FormSelectedEvent(null, null));
     }
 }

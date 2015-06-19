@@ -5,22 +5,21 @@ import ru.eventflow.ccg.datasource.model.syntax.Category;
 
 import java.util.List;
 
-public class SyntacticCategoryEntry extends LexiconEntry {
+/**
+ * A model for lexicon tree table representing a syntactic category
+ */
+public class CategoryEntry extends AbstractLexiconEntry {
 
     private Category category;
 
-    public SyntacticCategoryEntry(Form form, List<String> grammemes, Category category, int count) {
+    public CategoryEntry(Form form, List<String> grammemes, Category category, int count) {
         super(form, grammemes, count);
         this.category = category;
     }
 
+    @Override
     public Category getCategory() {
         return category;
-    }
-
-    @Override
-    public String getLemma() {
-        return "";
     }
 
     @Override

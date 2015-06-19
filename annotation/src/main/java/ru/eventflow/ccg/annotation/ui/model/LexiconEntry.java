@@ -1,40 +1,18 @@
 package ru.eventflow.ccg.annotation.ui.model;
 
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
+import ru.eventflow.ccg.datasource.model.syntax.Category;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class LexiconEntry {
-    protected Form form;
-    protected int count;
-    protected List<String> grammemes = new ArrayList<>();
-
-    public LexiconEntry() {
-    }
+/**
+ * A model for lexicon tree table representing a morphological form
+ * (i.e. all categories plus unassigned)
+ */
+public class LexiconEntry extends AbstractLexiconEntry {
 
     public LexiconEntry(Form form, List<String> grammemes, int count) {
-        this.count = count;
-        this.form = form;
-        this.grammemes.addAll(grammemes);
-        Collections.sort(this.grammemes); // TODO
-    }
-
-    public Form getForm() {
-        return form;
-    }
-
-    public String getLemma() {
-        return form.getLexeme().getLemma().getOrthography();
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public List<String> getGrammemes() {
-        return grammemes;
+        super(form, grammemes, count);
     }
 
     @Override
@@ -44,7 +22,12 @@ public class LexiconEntry {
             sb.append(grammeme);
             sb.append(".");
         }
-        if (sb.length() > 0) sb.deleteCharAt(sb.length() -1);
+        if (sb.length() > 0) sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
+    }
+
+    @Override
+    public Category getCategory() {
+        return null;
     }
 }

@@ -1,6 +1,6 @@
-package ru.eventflow.ccg.parser.cyk.rules;
+package ru.eventflow.ccg.parser.rules;
 
-import ru.eventflow.ccg.parser.cyk.Category;
+import ru.eventflow.ccg.parser.SynCat;
 
 /**
  * (>)  X/Y  Y  ->  X
@@ -19,7 +19,7 @@ public class ForwardApplication extends Rule {
     }
 
     @Override
-    public Category apply() {
+    public SynCat apply() {
         if (left.getRight() != null && left.isForward() && left.getRight().equals(right)) {
             return left.getLeft();
         }

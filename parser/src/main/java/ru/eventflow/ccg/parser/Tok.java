@@ -1,9 +1,9 @@
-package ru.eventflow.ccg.parser.cyk;
+package ru.eventflow.ccg.parser;
 
-public class T {
+public class Tok {
     private String value;
 
-    public T(String value) {
+    public Tok(String value) {
         this.value = value;
     }
 

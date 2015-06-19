@@ -4,6 +4,7 @@ import ru.eventflow.ccg.datasource.model.corpus.Sentence;
 import ru.eventflow.ccg.datasource.model.corpus.Text;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 import ru.eventflow.ccg.datasource.model.dictionary.Grammeme;
+import ru.eventflow.ccg.datasource.model.syntax.Category;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;

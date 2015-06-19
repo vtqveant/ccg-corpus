@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.parser.cyk;
+package ru.eventflow.ccg.parser;
 
 import java.util.List;
 import java.util.Set;
@@ -15,7 +15,7 @@ public class Runner {
 
     public static void main(String[] args) {
         for (String sentence : sentences) {
-            List<T> tokens = Utils.tokenize(sentence);
+            List<Tok> tokens = Utils.tokenize(sentence);
             Set<Entry> lexicon = LexiconBuilder.getLexicon();
             List<Item> parses = new Parser(lexicon).parse(tokens);
 

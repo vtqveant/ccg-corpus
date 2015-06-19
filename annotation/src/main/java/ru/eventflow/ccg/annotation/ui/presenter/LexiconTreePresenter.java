@@ -2,7 +2,6 @@ package ru.eventflow.ccg.annotation.ui.presenter;
 
 import com.google.inject.Inject;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
-import org.jdesktop.swingx.treetable.MutableTreeTableNode;
 import org.jdesktop.swingx.treetable.TreeTableNode;
 import ru.eventflow.ccg.annotation.eventbus.EventBus;
 import ru.eventflow.ccg.annotation.ui.event.FormSelectedEvent;
@@ -11,9 +10,11 @@ import ru.eventflow.ccg.annotation.ui.event.SearchEventHandler;
 import ru.eventflow.ccg.annotation.ui.event.StatusUpdateEvent;
 import ru.eventflow.ccg.annotation.ui.model.LexiconEntry;
 import ru.eventflow.ccg.annotation.ui.model.LexiconTreeTableModel;
+import ru.eventflow.ccg.annotation.ui.model.SyntacticCategoryEntry;
 import ru.eventflow.ccg.annotation.ui.view.LexiconTreeView;
 import ru.eventflow.ccg.datasource.DataManager;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
+import ru.eventflow.ccg.datasource.model.syntax.Category;
 
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -62,7 +63,16 @@ public class LexiconTreePresenter implements Presenter<LexiconTreeView>, TreeSel
         Map<Form, List<String>> grammemes = dataManager.getGrammemes(text);
         for (Map.Entry<Form, List<String>> entry : grammemes.entrySet()) {
             LexiconEntry form = new LexiconEntry(entry.getKey(), entry.getValue(), 0);
-            MutableTreeTableNode node = new DefaultMutableTreeTableNode(form);
+            DefaultMutableTreeTableNode node = new DefaultMutableTreeTableNode(form);
+
+            // subcategorization
+            for (Category category : entry.getKey().getCategories()) {
+                SyntacticCategoryEntry syntacticCategoryEntry = new SyntacticCategoryEntry(category.getName(), 0);
+                DefaultMutableTreeTableNode catNode = new DefaultMutableTreeTableNode(syntacticCategoryEntry);
+                catNode.setAllowsChildren(false);
+                node.add(catNode);
+            }
+
             root.add(node);
         }
         model.setRoot(root);

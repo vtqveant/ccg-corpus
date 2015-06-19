@@ -42,7 +42,7 @@ public class CorpusTreePresenter implements Presenter<CorpusTreeView>, TreeSelec
                 if (current.getParent() != null) {
                     nodes.get(current.getParent().getId()).add(entry.getValue());
                 } else {
-                    nodes.get(0).add(entry.getValue());
+                    root.add(entry.getValue());
                 }
             }
         }

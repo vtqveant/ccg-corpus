@@ -30,14 +30,11 @@ public class LexiconTreeTableModel extends DefaultTreeTableModel {
     @Override
     public Object getValueAt(Object node, int column) {
         LexiconEntry entry = (LexiconEntry) ((TreeTableNode) node).getUserObject();
-        if (column == 1) return entry.getForm().getOrthography();
+        if (column == 1 && !(entry instanceof SyntacticCategoryEntry)) {
+            return entry.getForm().getOrthography();
+        }
         if (column == 2) return entry.getLemma();
         if (column == 3) return entry.getCount();
-        return null;
-    }
-
-    @Override
-    public boolean isLeaf(Object node) {
-        return (node instanceof CategoryEntry);
+        return "";
     }
 }

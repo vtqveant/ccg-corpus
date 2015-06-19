@@ -1,10 +1,10 @@
 package ru.eventflow.parser;
 
 import org.junit.Test;
-import ru.eventflow.ccg.parser.cyk.*;
-import ru.eventflow.ccg.parser.cyk.rules.BackwardApplication;
-import ru.eventflow.ccg.parser.cyk.rules.ForwardApplication;
-import ru.eventflow.ccg.parser.cyk.rules.Rule;
+import ru.eventflow.ccg.parser.*;
+import ru.eventflow.ccg.parser.rules.BackwardApplication;
+import ru.eventflow.ccg.parser.rules.ForwardApplication;
+import ru.eventflow.ccg.parser.rules.Rule;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,7 +17,7 @@ public class CCGTest {
 
     @Test
     public void testRules() {
-        Category s = CategoryBuilder.build("S");
+        SynCat s = CategoryBuilder.build("S");
 
         Rule rule = ForwardApplication.getInstance();
         rule.setLeft(CategoryBuilder.build("s/np"));
@@ -38,8 +38,8 @@ public class CCGTest {
     @Test
     public void testLexicon() {
         Set<Entry> lexicon = new HashSet<Entry>();
-        lexicon.add(new Entry("john", new Category("np")));
-        lexicon.add(new Entry("mary", new Category("np")));
+        lexicon.add(new Entry("john", new SynCat("np")));
+        lexicon.add(new Entry("mary", new SynCat("np")));
         lexicon.add(new Entry("loves", CategoryBuilder.build("(s\\np)/np")));
     }
 
@@ -47,13 +47,13 @@ public class CCGTest {
     public void testCGGParser() {
         String sentence = "John loves Mary";
 
-        List<T> tokens = new ArrayList<T>();
+        List<Tok> tokens = new ArrayList<Tok>();
         for (String s : sentence.split("\\s+")) {
-            tokens.add(new T(s.toLowerCase()));
+            tokens.add(new Tok(s.toLowerCase()));
         }
 
         Set<Entry> lexicon = new HashSet<Entry>();
-        Category np = CategoryBuilder.build("np");
+        SynCat np = CategoryBuilder.build("np");
         lexicon.add(new Entry("john", np));
         lexicon.add(new Entry("mary", np));
         lexicon.add(new Entry("loves", CategoryBuilder.build("(s\\np)/np")));
@@ -65,11 +65,11 @@ public class CCGTest {
 
     @Test
     public void testCompareItems() {
-        Category s = new Category("S");
-        Category n = new Category("n");
+        SynCat s = new SynCat("S");
+        SynCat n = new SynCat("n");
 
-        Category manual = CategoryBuilder.normalize(new Category(s, new Category(s, n, true), false));
-        Category auto = CategoryBuilder.build("s\\(s/n)");
+        SynCat manual = CategoryBuilder.normalize(new SynCat(s, new SynCat(s, n, true), false));
+        SynCat auto = CategoryBuilder.build("s\\(s/n)");
 
         assertEquals(manual, auto);
     }

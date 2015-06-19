@@ -54,6 +54,20 @@ public class DataManagerImpl implements DataManager {
         return (List<Sentence>) query.getResultList();
     }
 
+    public List<Sentence> getSentencesByFormAndCategory(int formId, String category) {
+        String q = "SELECT s.* " +
+                "FROM corpus.token AS t, corpus.variant AS v, corpus.sentence AS s, " +
+                "     syntax.category_to_form AS cf, syntax.category AS c " +
+                "WHERE v.form_id = " + formId +
+                "  AND t.id = v.token_id " +
+                "  AND t.sentence_id = s.id " +
+                "  AND cf.form_id = v.form_id" +
+                "  AND cf.category_id = c.id" +
+                "  AND c.name = '" + category + "' ORDER BY s.id ASC";
+        Query query = entityManager.createNativeQuery(q, Sentence.class);
+        return (List<Sentence>) query.getResultList();
+    }
+
     @Deprecated
     public List<Sentence> getSentencesByFormOccurence(Form form) {
         return getSentencesByFormId(form.getId());

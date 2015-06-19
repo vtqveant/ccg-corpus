@@ -20,4 +20,6 @@ public interface DataManager {
     List<Sentence> getSentencesByFormId(int formId);
 
     List<Sentence> getSentencesByFormOccurence(Form form);
+
+    List<Sentence> getSentencesByFormAndCategory(int formId, String category);
 }

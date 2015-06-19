@@ -32,7 +32,6 @@ public class LexiconTreeView extends JPanel implements SearchEnabled {
         treeTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         treeTable.getColumnModel().getColumn(1).setCellRenderer(secondaryCellRenderer);
         treeTable.getColumnModel().getColumn(2).setCellRenderer(secondaryCellRenderer);
-        treeTable.getColumnModel().getColumn(3).setCellRenderer(secondaryCellRenderer);
 
         DefaultTreeRenderer treeCellRenderer = new CustomTreeCellRenderer();
         treeTable.setTreeCellRenderer(treeCellRenderer);
@@ -47,8 +46,7 @@ public class LexiconTreeView extends JPanel implements SearchEnabled {
         tableHeader.setReorderingAllowed(false);
         tableHeader.setDefaultRenderer(headerRenderer);
         tableHeader.getColumnModel().getColumn(1).setMaxWidth(100);
-        tableHeader.getColumnModel().getColumn(2).setMaxWidth(100);
-        tableHeader.getColumnModel().getColumn(3).setMaxWidth(45);
+        tableHeader.getColumnModel().getColumn(2).setMaxWidth(45);
 
         JScrollPane scrollPane = new JScrollPane(treeTable);
         scrollPane.setPreferredSize(new Dimension(300, 300));

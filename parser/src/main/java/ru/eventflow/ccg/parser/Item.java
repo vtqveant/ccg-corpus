@@ -1,9 +1,9 @@
-package ru.eventflow.ccg.parser.cyk;
+package ru.eventflow.ccg.parser;
 
-import ru.eventflow.ccg.parser.cyk.rules.Rule;
+import ru.eventflow.ccg.parser.rules.Rule;
 
 public class Item {
-    Category category;
+    SynCat synCat;
     int start;
     int end;
     Item left;
@@ -15,14 +15,14 @@ public class Item {
      */
     private Rule.Type type;
 
-    public Item(Category category, int start, int end) {
-        this.category = category;
+    public Item(SynCat synCat, int start, int end) {
+        this.synCat = synCat;
         this.start = start;
         this.end = end;
     }
 
-    public Item(Category category, int start, int end, Item left, Item right, Rule.Type type) {
-        this.category = category;
+    public Item(SynCat synCat, int start, int end, Item left, Item right, Rule.Type type) {
+        this.synCat = synCat;
         this.start = start;
         this.end = end;
         this.left = left;
@@ -39,7 +39,7 @@ public class Item {
 
         if (end != item.end) return false;
         if (start != item.start) return false;
-        if (category != null ? !category.equals(item.category) : item.category != null) return false;
+        if (synCat != null ? !synCat.equals(item.synCat) : item.synCat != null) return false;
         if (left != null ? !left.equals(item.left) : item.left != null) return false;
         if (right != null ? !right.equals(item.right) : item.right != null) return false;
 
@@ -48,7 +48,7 @@ public class Item {
 
     @Override
     public int hashCode() {
-        int result = category != null ? category.hashCode() : 0;
+        int result = synCat != null ? synCat.hashCode() : 0;
         result = 31 * result + start;
         result = 31 * result + end;
         result = 31 * result + (left != null ? left.hashCode() : 0);

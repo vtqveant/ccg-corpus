@@ -1,6 +1,5 @@
 package ru.eventflow.ccg.datasource.model.syntax;
 
-import ru.eventflow.ccg.datasource.model.corpus.Token;
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 
 import javax.persistence.*;
@@ -16,12 +15,8 @@ public class Category {
     @Column(columnDefinition = "serial")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "category_to_token", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "token_id"))
-    private List<Token> tokens = new ArrayList<Token>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "category_to_form", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "form_id"))
@@ -41,14 +36,6 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Token> getTokens() {
-        return tokens;
-    }
-
-    public void setTokens(List<Token> tokens) {
-        this.tokens = tokens;
     }
 
     public List<Form> getForms() {

@@ -1,6 +1,7 @@
 package ru.eventflow.ccg.datasource.model.dictionary;
 
 import org.apache.openjpa.persistence.jdbc.Index;
+import ru.eventflow.ccg.datasource.model.syntax.Category;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,8 +24,8 @@ public class Form {
     @JoinColumn(name = "lexeme_id", nullable = false)
     private Lexeme lexeme;
 
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="form_to_grammeme", joinColumns=@JoinColumn(name="form_id"), inverseJoinColumns=@JoinColumn(name="grammeme_id"))
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "form_to_grammeme", joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "grammeme_id"))
     private List<Grammeme> grammemes = new ArrayList<Grammeme>();
 
     @Column(name = "orthography")
@@ -36,6 +37,9 @@ public class Form {
 
     @Column(name = "flags")
     private byte[] flags;
+
+    @ManyToMany(mappedBy = "forms")
+    private List<Category> categories = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -83,5 +87,13 @@ public class Form {
 
     public void setFlags(byte[] flags) {
         this.flags = flags;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void addCategory(Category category) {
+        categories.add(category);
     }
 }

@@ -1,6 +1,6 @@
-package ru.eventflow.ccg.parser.cyk.rules;
+package ru.eventflow.ccg.parser.rules;
 
-import ru.eventflow.ccg.parser.cyk.Category;
+import ru.eventflow.ccg.parser.SynCat;
 
 public abstract class Rule {
 
@@ -24,18 +24,18 @@ public abstract class Rule {
         }
     }
 
-    protected Category left;
-    protected Category right;
+    protected SynCat left;
+    protected SynCat right;
 
-    public void setLeft(Category left) {
+    public void setLeft(SynCat left) {
         this.left = left;
     }
 
-    public void setRight(Category right) {
+    public void setRight(SynCat right) {
         this.right = right;
     }
 
-    public abstract Category apply();
+    public abstract SynCat apply();
 
     public abstract Type getType();
 

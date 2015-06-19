@@ -1,4 +1,4 @@
-package ru.eventflow.ccg.parser.cyk;
+package ru.eventflow.ccg.parser;
 
 import java.util.HashSet;
 import java.util.Set;

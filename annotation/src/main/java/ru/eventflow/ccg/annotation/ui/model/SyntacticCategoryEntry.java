@@ -2,12 +2,12 @@ package ru.eventflow.ccg.annotation.ui.model;
 
 import ru.eventflow.ccg.datasource.model.dictionary.Form;
 
-public class CategoryEntry extends LexiconEntry {
+public class SyntacticCategoryEntry extends LexiconEntry {
 
-    private String category;
+    private String name;
 
-    public CategoryEntry(String category, int count) {
-        this.category = category;
+    public SyntacticCategoryEntry(String name, int count) {
+        this.name = name;
         this.count = count;
     }
 
@@ -23,6 +23,6 @@ public class CategoryEntry extends LexiconEntry {
 
     @Override
     public String toString() {
-        return category;
+        return name;
     }
 }

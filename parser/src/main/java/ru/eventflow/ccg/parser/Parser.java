@@ -1,12 +1,15 @@
-package ru.eventflow.ccg.parser.cyk;
+package ru.eventflow.ccg.parser;
 
-import ru.eventflow.ccg.parser.cyk.rules.*;
+import ru.eventflow.ccg.parser.rules.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * CYK parser for CCG
+ */
 public class Parser {
 
     Set<Entry> lexicon;
@@ -31,7 +34,7 @@ public class Parser {
         this.lexicon = lexicon;
     }
 
-    public List<Item> parse(List<T> tokens) {
+    public List<Item> parse(List<Tok> tokens) {
 
         // create chart
         int n = tokens.size();
@@ -45,10 +48,10 @@ public class Parser {
 
         // scan phase
         for (int idx = 0; idx < n; idx++) {
-            T token = tokens.get(idx);
+            Tok token = tokens.get(idx);
             for (Entry entry : lexicon) {
                 if (entry.getOrthography().equals(token.getValue())) {
-                    chart.get(idx).get(0).add(new Item(entry.getCategory(), idx, idx + 1));
+                    chart.get(idx).get(0).add(new Item(entry.getSynCat(), idx, idx + 1));
                 }
             }
         }
@@ -65,7 +68,7 @@ public class Parser {
                         // type raising rules are applied to simple categories only
                         if (item.left == null && item.right == null) {
                             for (Rule rr : typeRaisingRules) {
-                                rr.setLeft(item.category);
+                                rr.setLeft(item.synCat);
                                 Item p = new Item(rr.apply(), idx, idx + span, item, null, rr.getType());
                                 if (!chart.get(idx).get(span).contains(p)) {
                                     newItems.add(p);
@@ -78,9 +81,9 @@ public class Parser {
                     for (int splitOffset = 1; splitOffset <= span; splitOffset++) {
                         for (Item left : chart.get(idx).get(splitOffset - 1)) {
                             for (Item right : chart.get(idx + splitOffset).get(span - splitOffset)) {
-                                rule.setLeft(left.category);
-                                rule.setRight(right.category);
-                                Category reduced = rule.apply();
+                                rule.setLeft(left.synCat);
+                                rule.setRight(right.synCat);
+                                SynCat reduced = rule.apply();
                                 if (reduced != null) {
                                     Item p = new Item(reduced, idx, idx + span, left, right, rule.getType());
                                     if (!chart.get(idx).get(span).contains(p)) {
@@ -97,7 +100,7 @@ public class Parser {
         // accept and backtrack
         List<Item> parses = new ArrayList<Item>();
         for (Item item : chart.get(0).get(tokens.size() - 1)) {
-            if (acceptable.contains(item.category.toString())) {
+            if (acceptable.contains(item.synCat.toString())) {
                 parses.add(item);
             }
         }

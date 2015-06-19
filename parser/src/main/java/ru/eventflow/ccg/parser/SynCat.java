@@ -1,18 +1,21 @@
-package ru.eventflow.ccg.parser.cyk;
+package ru.eventflow.ccg.parser;
 
-public class Category {
+/**
+ * Syntactic category
+ */
+public class SynCat {
 
-    private Category left;
-    private Category right;
+    private SynCat left;
+    private SynCat right;
     boolean forward; // either forward slash or backslash
 
     private String name;
 
-    public Category(String name) {
+    public SynCat(String name) {
         this.name = name.toLowerCase();
     }
 
-    public Category(Category left, Category right, boolean forward) {
+    public SynCat(SynCat left, SynCat right, boolean forward) {
         this.left = left;
         this.right = right;
         this.forward = forward;
@@ -28,11 +31,11 @@ public class Category {
         return !forward;
     }
 
-    public Category getLeft() {
+    public SynCat getLeft() {
         return left;
     }
 
-    public Category getRight() {
+    public SynCat getRight() {
         return right;
     }
 
@@ -40,25 +43,25 @@ public class Category {
         return name;
     }
 
-    public void setLeft(Category left) {
+    public void setLeft(SynCat left) {
         this.left = left;
     }
 
-    public void setRight(Category right) {
+    public void setRight(SynCat right) {
         this.right = right;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Category)) return false;
+        if (!(o instanceof SynCat)) return false;
 
-        Category category = (Category) o;
+        SynCat synCat = (SynCat) o;
 
-        if (forward != category.forward) return false;
-        if (left != null ? !left.equals(category.left) : category.left != null) return false;
-        if (name != null ? !name.equals(category.name) : category.name != null) return false;
-        if (right != null ? !right.equals(category.right) : category.right != null) return false;
+        if (forward != synCat.forward) return false;
+        if (left != null ? !left.equals(synCat.left) : synCat.left != null) return false;
+        if (name != null ? !name.equals(synCat.name) : synCat.name != null) return false;
+        if (right != null ? !right.equals(synCat.right) : synCat.right != null) return false;
 
         return true;
     }

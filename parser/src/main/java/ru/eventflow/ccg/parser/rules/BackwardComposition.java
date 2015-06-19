@@ -1,7 +1,7 @@
-package ru.eventflow.ccg.parser.cyk.rules;
+package ru.eventflow.ccg.parser.rules;
 
-import ru.eventflow.ccg.parser.cyk.Category;
-import ru.eventflow.ccg.parser.cyk.CategoryBuilder;
+import ru.eventflow.ccg.parser.SynCat;
+import ru.eventflow.ccg.parser.CategoryBuilder;
 
 /**
  * (<B)  Y\Z  X\Y  ->  X\Z
@@ -20,10 +20,10 @@ public class BackwardComposition extends Rule {
     }
 
     @Override
-    public Category apply() {
+    public SynCat apply() {
         if (left.getRight() != null && right.getRight() != null &&
                 left.isForward() && right.isForward() && left.getLeft().equals(right.getRight())) {
-            return CategoryBuilder.normalize(new Category(right.getLeft(), left.getRight(), false));
+            return CategoryBuilder.normalize(new SynCat(right.getLeft(), left.getRight(), false));
         }
         return null;
     }

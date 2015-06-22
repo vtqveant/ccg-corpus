@@ -110,6 +110,12 @@ public class UnificationTest {
         assertNotNull(result);
     }
 
+    @Test
+    public void testTopWithTop() {
+        Node result = Unification.unify(new Node(), new Node());
+        assertNotNull(result);
+    }
+
     /**
      * unifying anything with contradiction is contradiction
      */

@@ -58,6 +58,7 @@ public class Node {
         if (features.size() > 0) {
             sb.deleteCharAt(sb.length() - 1);
             sb.deleteCharAt(sb.length() - 1);
+            sb.deleteCharAt(sb.length() - 1);
         }
         sb.append(')');
         return sb.toString();

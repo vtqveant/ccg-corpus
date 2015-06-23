@@ -20,6 +20,7 @@
     <modules>
         <module>importer</module>
         <module>datasource</module>
+        <module>hlmc</module>
         <module>parser</module>
         <module>annotation</module>
     </modules>

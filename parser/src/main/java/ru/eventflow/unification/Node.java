@@ -56,9 +56,7 @@ public class Node {
         }
         // trim trailing ampersand
         if (features.size() > 0) {
-            sb.deleteCharAt(sb.length() - 1);
-            sb.deleteCharAt(sb.length() - 1);
-            sb.deleteCharAt(sb.length() - 1);
+            sb.delete(sb.length() - 3, sb.length());
         }
         sb.append(')');
         return sb.toString();

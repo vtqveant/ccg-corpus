@@ -1,9 +1,13 @@
 package ru.eventflow.unification;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Node {
+    private static int COUNTER = 0;
+    private final int id;
     String label;
     Map<String, Node> features;
     Node clazz;
@@ -12,18 +16,50 @@ public class Node {
         this.label = null;
         this.features = new HashMap<String, Node>();
         this.clazz = Node.this;
+        this.id = COUNTER++;
+    }
+
+    public String getNominal() {
+        return "n" + id;
     }
 
     @Override
     public String toString() {
-        if (label != null) return label;
+        return toHL(new ArrayList<String>());
+    }
 
+    /**
+     * @param accessibles to stop when a cycle is detected
+     */
+    protected String toHL(List<String> accessibles) {
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (String name : features.keySet()) {
-            sb.append(name);
+        sb.append('@');
+        sb.append(getNominal());
+        sb.append('(');
+        if (label != null) sb.append(label);
+
+        for (Map.Entry<String, Node> feature : features.entrySet()) {
+            String nominal = feature.getValue().getNominal();
+
+            sb.append('<');
+            sb.append(feature.getKey().toLowerCase());
+            sb.append(">(");
+            sb.append(nominal);
+            sb.append(") & ");
+
+            // if not a loop
+            if (!accessibles.contains(nominal) && !nominal.equals(getNominal())) {
+                accessibles.add(nominal);
+                sb.append(feature.getValue().toHL(accessibles));
+                sb.append(" & ");
+            }
         }
-        sb.append("]");
+        // trim trailing ampersand
+        if (features.size() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        sb.append(')');
         return sb.toString();
     }
 

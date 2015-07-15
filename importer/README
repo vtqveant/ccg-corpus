@@ -1,7 +1,0 @@
-generate with
-
-  $ mvn generate-sources
-
-s. http://stackoverflow.com/questions/8005689/jaxb2-maven-plugin-and-configuration-inside-execution-tag
-
-Import is destructive!!!

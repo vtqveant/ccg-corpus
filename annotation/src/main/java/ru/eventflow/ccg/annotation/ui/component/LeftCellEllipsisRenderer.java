@@ -20,16 +20,15 @@ public class LeftCellEllipsisRenderer extends DefaultTableCellRenderer {
         setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
         setBorder(noFocusBorder);
 
-        //  Determine the width available to render the text
+        // determine the width available to render the text
         int availableWidth = table.getColumnModel().getColumn(column).getWidth();
         availableWidth -= table.getIntercellSpacing().getWidth();
-        Insets borderInsets = getBorder().getBorderInsets((Component) this);
+        Insets borderInsets = getBorder().getBorderInsets(this);
         availableWidth -= (borderInsets.left + borderInsets.right);
         String cellText = getText();
         FontMetrics fm = getFontMetrics(getFont());
 
-        //  Not enough space so start rendering from the end of the string
-        // until all the space is used up
+        // not enough space so start rendering from the end of the string until all the space is used up
         if (fm.stringWidth(cellText) > availableWidth) {
             int textWidth = fm.stringWidth(DOTS);
             int i = cellText.length() - 1;

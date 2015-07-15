@@ -45,3 +45,9 @@
   more on autocomplete
 
     http://www.orbital-computer.de/JComboBox/
+
+--------
+
+    java.lang.ProcessBuilder
+    $ coqtop -ideslave (XML interface)
+    https://github.com/tomtung/latex2unicode

@@ -43,7 +43,7 @@ public class BootstrapDBTest {
         }
     }
 
-    @Test
+//    @Test
     public void testGetOccurences() {
         DataManagerImpl dataManager = new DataManagerImpl(DataSource.DEFAULT);
         Form form = dataManager.getFormById(1562247); // злословия

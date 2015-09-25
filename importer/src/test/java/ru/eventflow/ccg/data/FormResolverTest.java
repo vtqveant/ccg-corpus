@@ -27,7 +27,7 @@ public class FormResolverTest {
         assertEquals(bs2, bitset1);
     }
 
-    @Test
+//    @Test
     public void testResolver() throws SQLException {
         final String url = "jdbc:postgresql://localhost/corpus?user=corpus&password=corpus";
         SQLDataBridge bridge = new SQLDataBridge(url);

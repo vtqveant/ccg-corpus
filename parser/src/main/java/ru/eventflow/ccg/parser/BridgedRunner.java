@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Example parser with manual mapping of grammmemes to syntactic categories
+ * Example parser with manual mapping of grammemes to syntactic categories
  */
 public class BridgedRunner {
 

@@ -1,0 +1,13 @@
+PSCyr fonts
+    $ sudo apt-get install scalable-cyrfonts-tex
+
+Cyrillic (Russian for babel)
+    $ sudo apt-get install texlive-lang-cyrillic
+
+QTree etc.
+    $ sudo apt-get install texlive-humanities
+
+for packages use
+    $ sudo apt-get install xzdec perl-tk  // prerequisite for tlmgr GUI
+    $ tlmgr init-usertree                 // initialize TLPDB
+    $ tlmgr gui

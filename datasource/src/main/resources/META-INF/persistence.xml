@@ -24,6 +24,7 @@
 
         <properties>
             <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/corpus"/>
+            <!--<property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:2344/corpus"/>-->
             <property name="openjpa.ConnectionUserName" value="corpus"/>
             <property name="openjpa.ConnectionPassword" value="corpus"/>
             <property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>

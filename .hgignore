@@ -12,9 +12,9 @@ target
 data/downloads
 data/resources
 
-report/.*\.(aux|bbl|blg|dvi|fdb.*|gl[gos]|idx)
-report/.*\.(ilg|ind|ist|lo[fgt]|nav|nlo|out|pdf(sync)?|ps|snm)
-report/.*\.(synctex\.gz|toc|vrb|maf|mtc0?|bak|bcf|run\.xml)
+papers/.*\.(aux|bbl|blg|dvi|fdb.*|gl[gos]|idx)
+papers/.*\.(ilg|ind|ist|lo[fgt]|nav|nlo|out|pdf(sync)?|ps|snm)
+papers/.*\.(synctex\.gz|toc|vrb|maf|mtc0?|bak|bcf|run\.xml)
 
 vagrant/modules
 vagrant/.vagrant

@@ -1,0 +1,122 @@
+\documentclass[a4paper]{article}
+
+\usepackage{afterpage}
+
+\usepackage{authblk}
+\renewcommand\Affilfont{\itshape\small}
+
+%%% Кодировки и шрифты %%%
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{amssymb,amsfonts,amsmath,amsthm,amscd,mathtext}
+
+\usepackage{cmap}   % чтобы работал поиск по pdf
+\usepackage{graphicx}
+\pdfcompresslevel=9
+
+%% красная строка
+\usepackage{indentfirst}
+\setlength{\parindent}{5.5ex}   % 5 символов
+
+%% интерлиньяж
+\linespread{1.1}                   
+
+%%% Общее форматирование
+\usepackage[singlelinecheck=off,center]{caption} % Многострочные подписи
+\usepackage{soul} % Поддержка переносоустойчивых подчёркиваний и зачёркиваний
+
+%%% Гиперссылки %%%
+\usepackage[plainpages=false,pdfpagelabels=false]{hyperref}
+
+\usepackage{geometry}
+\geometry{a4paper,top=2cm,bottom=2cm,left=2cm,right=1cm}
+
+%%% Выравнивание и переносы %%%
+\sloppy
+\clubpenalty=10000
+\widowpenalty=10000
+
+%%% biblatex
+\usepackage{csquotes} % recommended by pdflatex
+\usepackage[%
+    style = gost-authoryear-min,
+    singletitle = false,
+    autolang = other,
+    language = auto,
+    backend = biber,
+    defernumbers = true,
+    sortlocale = ru
+]{biblatex}
+\addbibresource{bibliography/bibliography.bib}
+
+\defbibenvironment{bibliography}
+{\enumerate{}
+{\setlength{\leftmargin}{\bibhang}%
+\setlength{\itemindent}{-\leftmargin}%
+\setlength{\itemsep}{\bibitemsep}%
+\setlength{\parsep}{\bibparsep}}}
+{\endenumerate}
+{\item}
+
+
+\usepackage{hyperref}
+\hypersetup{%
+    colorlinks = true,
+    hidelinks = false
+}
+
+%% graphics
+\graphicspath{{images/}}
+
+%% math environments
+\newtheoremstyle{example-style}% name
+{5pt}  % space above 
+{5pt}  % space below 
+{}     % body font
+{\parindent}  % indent 
+{\bfseries}  % theorem head font
+{.}  % punctuation after theorem head
+{.5em}  % space after theorem head 
+{}  % theorem head spec (can be left empty, meaning 'normal')
+
+\theoremstyle{example-style}
+\newtheorem{example}{Example}
+
+
+%% Nat­u­ral de­duc­tion proofs in styles used by Jaśkowski and Kal­ish and Mon­tague
+\usepackage{natded}
+
+%% Gentzen style natural deduction proof trees
+\usepackage{bussproofs}
+\usepackage{latexsym}
+
+%%% linguistic packages
+\usepackage{tikz-qtree,tikz-qtree-compat}   % regular trees (e.g. GB style)
+\usepackage{tikz-dependency}                % dependency trees (bracket style)
+\usetikzlibrary{matrix,arrows}              % for commutative diagrams
+
+\usepackage{gb4e}  % numbered lists for linguistic examples (IMPORTANT: If you use gb4e package, let it be the last \usepackage call in the document's preamble. Otherwise you may get exceeded parameter stack size error.)
+
+
+\begin{document}
+
+\title{Syntactic Annotation by Interactive Proof Search}
+\author[1]{Konstantin Sokolov}
+\author[2]{Dimitri Timofeev}
+\author[3]{Yury Kizhaev}
+\affil[1]{Department of Mathematical Linguistics, St.~Petersburg State University, St.~Petersburg, Russia}
+\affil[2]{Institute of Computer Science and Technology, Peter the Great St.~Petersburg Polytechnic University, St.~Petersburg, Russia}
+\affil[3]{JetBrains Research, St.~Petersburg, Russia}
+\date{}
+
+\maketitle
+
+\section{Introduction}
+
+\section{Ssdfdfs}
+
+\nocite{*}
+\printbibliography[resetnumbers=true]
+
+\end{document}

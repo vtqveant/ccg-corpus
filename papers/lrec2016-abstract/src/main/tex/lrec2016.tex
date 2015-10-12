@@ -112,38 +112,77 @@
 
 \maketitle
 
-% 1. Introduction
-% CCG -- положительные аспекты формализма (выразительность -- mildly context sensitive, дистантные зависимости, свободный порядок слов, синт.-семант. интерфейс как для логической семантики, так и для дистрибутивной), подходит для моделирования синтаксиса русского языка; лексикализованный -- возможность обучания wide-coverage парсера по размеченному корпусу; мультимодальные расширения (как для и. Ламбека, так и CCG); отрицательные аспекты -- spurious ambiguity
-% Подходы к получению корпуса с синт. разметкой -- а) полностью ручная, б) конвертация имеющегося корпуса другого формата (подход применен Hockenmeier, CCGBank, в) использование парсера, обучающегося по размечаемому корпусу (bootstrapping). 
-% Особенности применения CCG в русском языке: отечественная традиция ориентирована на грамматики зависимостей (ср. сравнение парсеров на Диалог-2012); готового общедоступного корпуса корпуса для трансляции нет либо лиценционные сложности (SynTagRus); положительные аспекты -- традиция исследований в области категориальных грамматик (исчисление Ламбека, Пентус)
-% Наша цель -- построить корпус русского языка с разметкой в формализме, относящемся к категориальным грамматикам (аналогично CCGBank), построить семантический парсер  (следуя [Curran, Clark] и работам по синт-сем интерфейсу для CCG (Clark, Bos, Grefenstette, Sadrzadeh и др.) Мы предлагаем подход на основе интерактивного поиска доказательств (proof assistants) с опорой на логическое направление в категориальных грамматиках, следуя работам французской школы (Moot, Retore, Cocuand, Huet, Girard). Это должно позволить значительно ускорить разметку за счет автоматизации рутинных операций и обеспечить качество.
-
-% 2. Related Work
-% Логический подход к синтаксису: a) parsing as deduction (Pereira, Warren) и др., b) исчисление Ламбека, с) комбинаторная логика для КГ -- CCG
-% теоретико-типовая семантика -- использование формальных систем (Ранта и пр.)
-% про proof assistants (исчисление индуктивных конструкций, зависимые типы, тактики и т.п.)
-% Proof assistants for natural language syntax: а) Grail3 \parencite{moot2002proof}, б) библиотека Icharate для Coq \parencite{anoun2007approche}, в) CatLog -- парсер и прувер на языке Prolog в рамках Type-Logical Grammar, \parencite{morrill2012catlog}, г) серия работ по Natural Language Inference (NLI) в Coq в рамках теоретико-типового подхода к семантике, \parencite{chatzikyriakidis2014natural}
-% про OpenCorpora и их tagset
-
-% 3. Our approach
-% Initial mapping of existing morphological tags to syntactic categories; 
-% layered approach (multimodal grammars) -- use the mininimal subset where possible; manual intervention when the inference process is stuck; мера сложности разбора (какие правила задействованы в выводе, насколько сложные синт. категории использованы)
-% добавление синт. категории для какой-то словоформы формирует конечный набор возможных разборов для тех предложений, в которых эта словоформа встречается; процесс построения вариантов разборов для этих предложений может быть полностью автоматическим, от пользователя требуется только аудит. В некоторых случаях даже выбор из возможных вариантов разборов можно автоматизировать (эвристика -- более простой разбор предпочтителен, сложность разбора считается автоматически)
-% т.о. предполагаемая процедура разметки: предварительный этап -- начальный набор синт. категорий формируется вручную на основе морфологической информации, с его помощью размечается первоначальный набор предложений (максимально простые разборы); далее итеративно -- а) выбирается частично разобранное предложение (для которого не хватает одной словоформы), строится разбор (интерактивно, т.е. с подсказками от системы),  синт. категория для словоформы добавляется в БД, б) система строит автоматические разборы с использованием добавленной словоформы, ранжирует варианты по сложности, пользователь проводит аудит и подтвержает приемлемые разборы; на новый цикл
-
-% 4. Discussion
-% Оценки числа синт. категорий в получаемом подкорпусе (ср. CCGBank -- ок. 1200), субкатегоризация
-% оценки объема наборов предложений под автоматическую разметку (очевидно, влияет частотность словоформ, но также и сложность предложений)
-% оценки числа вариантов разборов для отдельных предложений (реальная омонимия, ложная омонимия). Но нас интересует получение одного канонического разбора в тексте, а не все варианты, поэтому для корпуса это не проблема (может быть проблемой для парсера)
-% тактики доказательств -- какие способы разметки можно автоматизировать скриптованием (ср. тактики в Coq)
-% имеется ли проблема циклических зависимостей? (Гипотетическая проблема: две словоформы, принять решение о синт. категории одной из них можно только зная синт. категорию другой и наоборот)
-% crowdsourcing в нашем подходе не применим, но насколько высоки требования к теоретической подготовке аннотаторов? (Предположительно, меньшие, чем в традиционной ручной разметке, т.к. здесь количество сложных решений при разметке, требующих хорошей теоретической подготовке в области ситнаксиса, может быть сильно меньше)
-% оценки скорости разметки, т.е. сколько всего времени потребуется на разметку OpenCorpora (ориентировочная цель -- разметка миллионного корпуса за год)
-% возможность непосредственного переноса технологии на другие корпуса с морфологической разметкой и другие языки.
-
-% 5. Conclusion
- 
-
 \section{Introduction}
 
-\section{Ssdfdfs}
+  Categorial Grammar, positive aspects: expressivity (CCG is mildly context sensitive); capable of expressing distant 
+dependencies and word order alternations; allow for creation of an interface both with logical semantics approaches (Montague grammar, DRT, etc.) and with distibutional semantics; is promising as a formal basis for modeling syntax of Russian;  lexicalized, allows for creation of a wide-coverage statistical parser based on a syntactically annotated corpus; multimodal extensions (both for CCG and Lambek calculus) allow for good control of expressivity and help overcome some known problems like spurious ambiguity.
+
+  Categorial Grammar and Russian: traditional for russian NLP community is to use dependency grammar (cf. Toldova et al., 2012 parser comparison track), we cannot use an approach of \parencite{hockenmaier2007ccgbank} directly because there is no freely available  corpus with constituency structure annotation. An existing SynTagRus is problematic for our approach as it is dependency-based (which would require extra effort to covert it first to phrase structure formalism with large amount of manual error correction and quality check) and is only available under a closed license. A positive aspect is that there exists an established tradition of research in formal aspects of categorial grammar and Lambek calculus (Pentus).
+  
+  Known approaches to creation of syntactically annotated corpora: 
+    fully manual,
+    conversion of a corpus of another format (CCGBank, Hockenmaier et al.),
+    bootstrapping along with a parser (iterative training, parsing of a subcorpus, error correction)
+    
+  Our aim is to create a corpus of Russian with syntactic annotation in a formalism related to categorial grammar (analoguously to CCGBank for English) which can be used as a basis for statistically trained semantic parser for Russian (following \parencite{clark2007wide} and works in syntax-semantics interface for CCG (Clark, Bos, Grefenstette, Sadrzadeh and others). We propose a method of annotation based on interactive proof search, oriented towards the logical direction of categorial grammar and adopting many ideas of the French school of logic and automated reasoning (Moot, Retore, Coquand, Huet, Girard). We expect that our approach can significantly speed up the annotation process due to automatization of routine tasks and quality assurance.
+     
+
+\section{Related Work}
+
+ Logical approach to syntax
+ \begin{itemize}
+ 	\item parsing as deduction \parencite{pereira1983parsing,kallmeyer2010parsing}
+ 	\item Lambek calculus \parencite{lambek1958mathematics,lambek1961calculus,konig1989parsing}
+ 	\item combinatory logic as a basis for extensions of categorial grammar (Steedman ?)
+ \end{itemize}
+ 
+ Lexical semantics based of type-theory (starting with Ranta 1994) builds on earlier proposals by Montague and allows for a connection with the compositional treatment of semantics of the sentence. Later proposals by Cooper, Asher, Luo, Retor\'{e} and others are non-trivial extensions of the initial ideas which build on various type systems. Due to Curry-Howard correspondence these proposals can be given a computational implementation. This initiated multiple attempts to apply proof assistant technology to syntax and semantics of natural language. Among these proposals are Grail3, an interactive prover based on proof nets for non-associative Lambek calculus \parencite{moot2002proof}, Icharate library implemented in Coq \parencite{anoun2007approche}, a Prolog-based prover CatLog for Type-Logical Grammar \parencite{morrill2012catlog}, a series of works in Natural Language Inference with implementations in Coq \parencite{chatzikyriakidis2014natural}.
+ 
+ Some remarks about OpenCorpora and their morphological information (tagset, builds on Zaliznyak's dictionary).
+
+
+\section{Our Approach}
+
+  * Initial mapping of existing morphological tags to syntactic categories; \\
+  
+  * layered approach (multimodal grammars) -- use the mininimal subset where possible; manual intervention when 
+    the inference process is stuck; a measure of parse complexity (which rules were used in the deduction, how complex are the syntactic categories used) \\
+    
+  * addition of a syntactic category for a word form results in building a set of possible parses for sentences containing that form; these parses can be build fully automatically, a user is required only for an audit thereof. In many cases even the selection from the possible parses can be automated (heuristic: the simplest parse is better, parse complexity is computed automatically) \\
+  
+  * thus the proposed procedure of annotation. The preliminary step consists of assigning basic syntactic categories to words based on their morphological annotation (e.g. their POS tags map straightforwardly to the basic syntactic categories, e.g. NOUN maps to np, ADJV to np/np etc.) This way an initial limited set of parses is created, which contains only the simplest possible deductions. Next we apply iteratively the following procedures:
+  \begin{itemize}
+  	\item we pick a partially parsed sentence (that for which there is only one assignment of a syntactic category to a word form is missing), a deduction is built interactively with the help from the system; when the deduction is complete, the missing syntactic category is added to the DB
+  	\item when a new synt. category is added, the system automatically builds parses which are made possible by the addition; the user checks the parses and accepts the correct ones; to the new cycle
+  \end{itemize} 
+  
+  * standard syntactic constructions (coordination, government relation, distant dependencies, etc.) can be extracted to tactics 
+    
+
+\section{Discussion}
+
+  * estimation of the number of syntactic categories (cf. CCGBank ca. 1200), subcategorization \\
+  
+  * estimation of the size of the sets of automatically parsed sentences after a form/category is added to DB (apparently, word frequency is important, but also sentence complexity) \\
+  
+  * estimation of the number of possible parses of a sentence (real/spurious ambiguity), also for variants of formalism with different expressivity (like associative vs. non-associative Lambek calculus). However, we are interested in obtaining a single canonical parse in a text, not all possible parses (which is the task for a parser, not for a corpus annotation tool) \\
+  
+  * proof tactics -- what syntactic constructions and annotation strategies can be automated by scription (cf. tactics in Coq) \\
+  
+  * crowdsourcing is not applicable in our approach \\
+  
+  * what are the requirements for the annotators? Supposedly, not too high, since in our approach there will be much less decisions  to make as compared to the traditional approach, which would require lower qualification in the area of theoretical syntax. Also, a decent library of tactics can help a lot. \\
+  
+  * estimation of the speed of annotation process. Tentatively it should be possible to annotate a million word corpus in one year.\\
+  
+  * a library of tactics as a syntactic theory \\
+  
+  * a syntactic formalism (e.g. Lambek calculus with product, LC non-associative, with different sets of deduction rules) as a theory implemented in a proof assistant. The possibility of validation of parses against various formal theories of syntax, the possibility to analyze syntactic structure from the standpoint of expressivity of a formalism that validates a parse (estimation of syntactic complexity as deducibility in the particular formal theory); such information in a corpus is valuable data and it is proved infromation (cf. the question whether natural language is context-free, which was a long standing problem, and the notion of mild context sensitivity by A. Joshi, such data can help get insights about these matters).
+
+\section{Conclusion}
+
+
+\nocite{*}
+\printbibliography[resetnumbers=true]
+
+\end{document}

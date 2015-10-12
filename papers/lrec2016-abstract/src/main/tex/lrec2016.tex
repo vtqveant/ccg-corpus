@@ -114,34 +114,32 @@
 
 \section{Introduction}
 
-  Categorial Grammar, positive aspects: expressivity (CCG is mildly context sensitive); capable of expressing distant 
-dependencies and word order alternations; allow for creation of an interface both with logical semantics approaches (Montague grammar, DRT, etc.) and with distibutional semantics; is promising as a formal basis for modeling syntax of Russian;  lexicalized, allows for creation of a wide-coverage statistical parser based on a syntactically annotated corpus; multimodal extensions (both for CCG and Lambek calculus) allow for good control of expressivity and help overcome some known problems like spurious ambiguity.
+Categorial Grammar (CG), being one of the oldest formal approaches to syntax, has achieved significant adoption in the recent years. Development of multimodal extensions for both its logical version (Lambek calculus) and its combinatorial version (Combinatory Categorial Grammar) allowed for good control of expressivity and helped overcome some known problems like spurious ambiguity. Valuable tools, inculding a number of wide-coverage statistical parsers \parencite{curran2007linguistically,white2008open} were developed. Among the positive aspects of the approach is its clear connection with various theories of semantic modeling, both logical (Montague Grammar \parencite{steedman2000syntactic}, Discourse Representation Theory \parencite{bos2008wide}, Hybrid Logic Dependency Semantics \parencite{baldridge2002coupling}) and distributional \parencite{maillard2014type}. Capability of expressing distant dependencies and word order alternations by type shifting makes it promising as a formal basis for modeling syntax of free word order languages like Russian.
 
-  Categorial Grammar and Russian: traditional for russian NLP community is to use dependency grammar (cf. Toldova et al., 2012 parser comparison track), we cannot use an approach of \parencite{hockenmaier2007ccgbank} directly because there is no freely available  corpus with constituency structure annotation. An existing SynTagRus is problematic for our approach as it is dependency-based (which would require extra effort to covert it first to phrase structure formalism with large amount of manual error correction and quality check) and is only available under a closed license. A positive aspect is that there exists an established tradition of research in formal aspects of categorial grammar and Lambek calculus (Pentus).
-  
-  Known approaches to creation of syntactically annotated corpora: 
-    fully manual,
-    conversion of a corpus of another format (CCGBank, Hockenmaier et al.),
-    bootstrapping along with a parser (iterative training, parsing of a subcorpus, error correction)
-    
-  Our aim is to create a corpus of Russian with syntactic annotation in a formalism related to categorial grammar (analoguously to CCGBank for English) which can be used as a basis for statistically trained semantic parser for Russian (following \parencite{clark2007wide} and works in syntax-semantics interface for CCG (Clark, Bos, Grefenstette, Sadrzadeh and others). We propose a method of annotation based on interactive proof search, oriented towards the logical direction of categorial grammar and adopting many ideas of the French school of logic and automated reasoning (Moot, Retore, Coquand, Huet, Girard). We expect that our approach can significantly speed up the annotation process due to automatization of routine tasks and quality assurance.
+Variants of CG seem to be an attractive formalism for syntactic annotation of corpora, with CCGBank \parencite{hockenmaier2007ccgbank} being the notable example of a widely useful linguistic resource of that kind. An approach adopted by Hockenmaier and Steedman consisted in semi-automatic conversion of a corpus of another format (namely, constituency structures). Another commonly considered possibilities are manual annotation, possibly using a third party parser to obtain preliminary parses prior to manual error correction. It is also possible to bootstrap a corpus along with a parser by training, parsing and performing error correction iteratively.
+
+Our aim is to create a freely available corpus of Russian with syntactic annotation in a formalism related to categorial grammar (analoguously to CCGBank for English) which can be used as a basis for statistically trained semantic parser for Russian (following \parencite{clark2007wide} and works in syntax-semantics interface for CCG (Clark, Bos, Grefenstette, Sadrzadeh and others). Some special considerations are to be made when applying CG to Russian. For historical reasons, russian NLP community has a strong bias towards dependency grammar \parencite{toldova2012nlp}. There are no freely available Russian corpora with phrase structure annotation, therefore we cannot use an approach of \parencite{hockenmaier2007ccgbank} directly. An existing SynTagRus corpus \parencite{boguslavsky2002development} is non-free and dependency-based, which is contrary to our goals and problematic for our approach. It would require extra effort to convert it to phrase structure formalism with large amount of manual error correction and quality check, which makes an idea of applying the Hockenmaier and Steedman's method less attractive.
+ 
+In this paper we propose another method of annotation based on interactive proof search, oriented towards the logical branch of categorial grammar and adopting many ideas of the French school of logic and automated reasoning (Moot, Retor\'{e}, Coquand, Huet, Girard). We require as input a morphologically annotated corpus and currently use a fully disambiguated subcorpus from OpenCorpora \parencite{granovsky2010opencorpora} as a starting point. However, our method applies to any morphologically annotated corpus. We expect that our approach can significantly speed up the annotation process due to automatization of routine tasks and quality assurance.
      
 
 \section{Related Work}
 
- Logical approach to syntax
+Logical approach to syntax
  \begin{itemize}
  	\item parsing as deduction \parencite{pereira1983parsing,kallmeyer2010parsing}
  	\item Lambek calculus \parencite{lambek1958mathematics,lambek1961calculus,konig1989parsing}
  	\item combinatory logic as a basis for extensions of categorial grammar (Steedman ?)
  \end{itemize}
  
- Lexical semantics based of type-theory (starting with Ranta 1994) builds on earlier proposals by Montague and allows for a connection with the compositional treatment of semantics of the sentence. Later proposals by Cooper, Asher, Luo, Retor\'{e} and others are non-trivial extensions of the initial ideas which build on various type systems. Due to Curry-Howard correspondence these proposals can be given a computational implementation. This initiated multiple attempts to apply proof assistant technology to syntax and semantics of natural language. Among these proposals are Grail3, an interactive prover based on proof nets for non-associative Lambek calculus \parencite{moot2002proof}, Icharate library implemented in Coq \parencite{anoun2007approche}, a Prolog-based prover CatLog for Type-Logical Grammar \parencite{morrill2012catlog}, a series of works in Natural Language Inference with implementations in Coq \parencite{chatzikyriakidis2014natural}.
+Lexical semantics based of type-theory (starting with Ranta 1994) builds on earlier proposals by Montague and allows for a connection with the compositional treatment of semantics of the sentence. Later proposals by Cooper, Asher, Luo, Retor\'{e} and others are non-trivial extensions of the initial ideas which build on various type systems. Due to Curry-Howard correspondence these proposals can be given a computational implementation. This initiated multiple attempts to apply proof assistant technology to syntax and semantics of natural language. Among these proposals are Grail3, an interactive prover based on proof nets for non-associative Lambek calculus \parencite{moot2002proof}, Icharate library implemented in Coq \parencite{anoun2007approche}, a Prolog-based prover CatLog for Type-Logical Grammar \parencite{morrill2012catlog}, a series of works in Natural Language Inference with implementations in Coq \parencite{chatzikyriakidis2014natural}.
  
- Some remarks about OpenCorpora and their morphological information (tagset, builds on Zaliznyak's dictionary).
+Some remarks about OpenCorpora and their morphological information (tagset, builds on Zaliznyak's dictionary).
 
 
 \section{Our Approach}
+
+As CG is lexicalized, the final artifact is a database containing assignments of syntactic categories to word forms (many to many relation).
 
   * Initial mapping of existing morphological tags to syntactic categories; \\
   

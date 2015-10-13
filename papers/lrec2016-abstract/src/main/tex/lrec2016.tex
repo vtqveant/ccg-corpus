@@ -143,10 +143,9 @@ As CG is lexicalized, the final artifact is a database containing assignments of
 
   * Initial mapping of existing morphological tags to syntactic categories; \\
   
-  * layered approach (multimodal grammars) -- use the mininimal subset where possible; manual intervention when 
-    the inference process is stuck; a measure of parse complexity (which rules were used in the deduction, how complex are the syntactic categories used) \\
+  * layered approach (multimodal grammars) -- use the mininimal subset where possible; manual intervention when the inference process is stuck; a measure of parse complexity (which rules were used in the deduction, how complex are the syntactic categories used) \\
     
-  * addition of a syntactic category for a word form results in building a set of possible parses for sentences containing that form; these parses can be build fully automatically, a user is required only for an audit thereof. In many cases even the selection from the possible parses can be automated (heuristic: the simplest parse is better, parse complexity is computed automatically) \\
+  * addition of a syntactic category for a word form results in building a set of possible parses for sentences containing that form; these parses can be built fully automatically, a user is required only for an audit thereof. In many cases even the selection from the possible parses can be automated (heuristic: the simplest parse is better, parse complexity is computed automatically) \\
   
   * thus the proposed procedure of annotation. The preliminary step consists of assigning basic syntactic categories to words based on their morphological annotation (e.g. their POS tags map straightforwardly to the basic syntactic categories, e.g. NOUN maps to np, ADJV to np/np etc.) This way an initial limited set of parses is created, which contains only the simplest possible deductions. Next we apply iteratively the following procedures:
   \begin{itemize}
@@ -156,6 +155,26 @@ As CG is lexicalized, the final artifact is a database containing assignments of
   
   * standard syntactic constructions (coordination, government relation, distant dependencies, etc.) can be extracted to tactics 
     
+Examples:
+
+\begin{table}[]
+\centering
+\caption{Initial mapping of grammemes to syntactic categories}
+\label{my-label}
+\begin{tabular}{lll}
+NOUN, nomn & n         & \textbf{школа}                              \\
+NOUN, accs & n         & \textbf{язык}                               \\
+NOUN, gent & n\textbackslash n      & школа \textbf{злословия}       \\
+VERB, tran & (s\textbackslash n)/s & \textbf{учит} прикусить язык    \\
+INFN       & s/n       & \textbf{прикусить}                          \\
+PNCT       & n/n       & \textbf{\textless\textless} школа           \\
+PNCT       & n\textbackslash n      & злословия \textbf{\textgreater\textgreater} 
+\end{tabular}
+\end{table}    
+    
+Example 2. \textless\textless Школа злословия \textgreater\textgreater учит прикусить язык
+This sentence has 18 parses with the above mapping.
+
 
 \section{Discussion}
 
@@ -165,7 +184,7 @@ As CG is lexicalized, the final artifact is a database containing assignments of
   
   * estimation of the number of possible parses of a sentence (real/spurious ambiguity), also for variants of formalism with different expressivity (like associative vs. non-associative Lambek calculus). However, we are interested in obtaining a single canonical parse in a text, not all possible parses (which is the task for a parser, not for a corpus annotation tool) \\
   
-  * proof tactics -- what syntactic constructions and annotation strategies can be automated by scription (cf. tactics in Coq) \\
+  * proof tactics -- what syntactic constructions and annotation strategies can be automated by scripting (cf. tactics in Coq) \\
   
   * crowdsourcing is not applicable in our approach \\
   
@@ -175,12 +194,10 @@ As CG is lexicalized, the final artifact is a database containing assignments of
   
   * a library of tactics as a syntactic theory \\
   
-  * a syntactic formalism (e.g. Lambek calculus with product, LC non-associative, with different sets of deduction rules) as a theory implemented in a proof assistant. The possibility of validation of parses against various formal theories of syntax, the possibility to analyze syntactic structure from the standpoint of expressivity of a formalism that validates a parse (estimation of syntactic complexity as deducibility in the particular formal theory); such information in a corpus is valuable data and it is proved infromation (cf. the question whether natural language is context-free, which was a long standing problem, and the notion of mild context sensitivity by A. Joshi, such data can help get insights about these matters).
+  * a syntactic formalism (e.g. Lambek calculus with product, LC non-associative, with different sets of deduction rules) as a theory implemented in a proof assistant. The possibility of validation of parses against various formal theories of syntax, the possibility to analyze syntactic structure from the standpoint of expressivity of a formalism that validates a parse (estimation of syntactic complexity as deducibility in the particular formal theory); such information in a corpus is valuable data and it is proved infromation (cf. the question whether natural language is context-free, which was a long-standing problem, and the notion of mild context sensitivity by A. Joshi, such data can help get insights about these matters).
 
 \section{Conclusion}
 
-
-\nocite{*}
 \printbibliography[resetnumbers=true]
 
 \end{document}

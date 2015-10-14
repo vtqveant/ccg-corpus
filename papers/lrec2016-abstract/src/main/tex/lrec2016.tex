@@ -114,11 +114,9 @@
 
 \section{Introduction}
 
-Categorial grammar, being one of the oldest formal approaches to syntax, has achieved significant adoption in the recent years. It is an attractive formalism for creation of syntactically annotated corpora, with CCGbank \parencite{hockenmaier2007ccgbank} being the notable example of a widely useful linguistic resource of that kind. A method adopted by its creators consisted in semi-automatic conversion of a corpus of another format (namely, constituency structures). Another commonly considered possibility is some form of manual annotation, possibly using a third party parser to obtain preliminary parses prior to manual error correction. It is also possible to bootstrap a corpus along with a parser by training, parsing and performing error correction iteratively. Whatever the method, creation of a corpus is extremely time consuming and demands high qualification from annotators. Powerful and flexible tools are of great importance for anyone involved in such an effort.
+The purpose of this paper is to introduce a method of syntactic annotation in the categorial grammar formalism, that fully utilizes its logical nature to automate routine tasks and ensure high quality of the resulting corpus. Categorial grammar, being one of the oldest formal approaches to syntax, has achieved significant adoption in the recent years. It is an attractive formalism for creation of syntactically annotated corpora, with CCGbank \parencite{hockenmaier2007ccgbank} being the notable example of a widely useful linguistic resource of that kind. A method adopted by its creators consisted in semi-automatic conversion of a corpus of another format (namely, constituency structures). Another commonly considered possibility is some form of manual annotation, possibly using a third party parser to obtain preliminary parses prior to manual error correction. It is also possible to bootstrap a corpus along with a parser by training, parsing and performing error correction iteratively. Whatever the method, creation of a corpus is extremely time consuming and demands high qualification from annotators. Powerful and flexible tools are of great importance for anyone involved in such an effort.
 
-Our aim is to create a freely available corpus of Russian with syntactic annotation in a categorial grammar formalism (analoguously to CCGbank for English) which can be used as a basis for statistically trained semantic parser for Russian (following \parencite{clark2007wide} and works in syntax-semantics interface for CCG  by Clark, Bos, Grefenstette, Sadrzadeh and others). Some special considerations are to be made when applying categorial grammar to Russian. For historical reasons, the russian community has a strong bias towards dependency grammar \parencite{toldova2012nlp}. There are no freely available Russian corpora with phrase structure annotation, therefore we cannot use an approach of \parencite{hockenmaier2007ccgbank} directly. An existing SynTagRus corpus \parencite{boguslavsky2002development} is non-free and dependency-based, which is contrary to our goals and problematic for the  approach used for creation of CCGbank, since it would require an extra step of converting to phrase structure formalism with large amount of manual error correction.
- 
-In this paper we propose another method of annotation based on interactive proof search, oriented towards the logical branch of categorial grammar. We adopt many ideas of the French school of logic and automated reasoning (Moot, Retor\'{e}, Coquand, Huet, Girard). A morphologically annotated corpus is required as input and we currently use a fully disambiguated subcorpus from OpenCorpora \parencite{granovsky2010opencorpora} as a starting point. However, our method applies to any morphologically annotated corpus. We expect that our approach can significantly speed up the annotation process due to automation of routine tasks and quality assurance.
+Our aim is to create a freely available corpus of Russian with syntactic annotation in a categorial grammar formalism (analoguously to CCGbank for English) which can be used as a basis for statistically trained semantic parser for Russian (following \parencite{clark2007wide} and works in syntax-semantics interface for CCG  by Clark, Bos, Grefenstette, Sadrzadeh and others). Some special considerations are to be made when applying categorial grammar to Russian. For historical reasons, the Russian community has a strong bias towards dependency grammar \parencite{toldova2012nlp}. There are no freely available Russian corpora with constituency structure annotation, therefore we cannot use an approach of \parencite{hockenmaier2007ccgbank} directly. An existing SynTagRus corpus \parencite{boguslavsky2002development} is non-free and dependency-based, which is contrary to our goals and problematic for the  approach used for creation of CCGbank, since it would require an extra step of converting to phrase structure formalism with large amount of manual error correction. In this paper we propose another method of annotation based on interactive proof search, oriented towards the logical branch of categorial grammar. We adopt many ideas of the French school of logic and automated reasoning (Moot, Retor\'{e}, Coquand, Huet, Girard). A morphologically annotated corpus is required as input and we currently use a fully disambiguated subcorpus from OpenCorpora \parencite{granovsky2010opencorpora} as a starting point. However, our method applies to any morphologically annotated corpus. We expect that our approach can significantly speed up the annotation process due to automation of routine tasks and quality assurance.
      
 
 \section{Related Work}
@@ -134,25 +132,9 @@ Due to Curry-Howard correspondence, the deductive formulation of syntactic proce
 
 \section{Our Approach}
 
-Some remarks about OpenCorpora and their morphological information (tagset, builds on Zaliznyak's dictionary).
+Final artifacts of the project are a database containing assignments of syntactic categories to word forms (many to many relation), canonical derivations (parses) for each sentence and scripts that a proof assistant should use to verify these derivations. A possible byproduct is a library of tactics, i.e. specialized subroutines that formalize some high-level syntactic constructs and were used to produce the parses. 
 
-As CG is lexicalized, the final artifact is a database containing assignments of syntactic categories to word forms (many to many relation).
-
-  * Initial mapping of existing morphological tags to syntactic categories; \\
-  
-  * layered approach (multimodal grammars) -- use the mininimal subset where possible; manual intervention when the inference process is stuck; a measure of parse complexity (which rules were used in the deduction, how complex are the syntactic categories used) \\
-    
-  * addition of a syntactic category for a word form results in building a set of possible parses for sentences containing that form; these parses can be built fully automatically, a user is required only for an audit thereof. In many cases even the selection from the possible parses can be automated (heuristic: the simplest parse is better, parse complexity is computed automatically) \\
-  
-  * thus the proposed procedure of annotation. The preliminary step consists of assigning basic syntactic categories to words based on their morphological annotation (e.g. their POS tags map straightforwardly to the basic syntactic categories, e.g. NOUN maps to np, ADJV to np/np etc.) This way an initial limited set of parses is created, which contains only the simplest possible deductions. Next we apply iteratively the following procedures:
-  \begin{itemize}
-  	\item we pick a partially parsed sentence (that for which there is only one assignment of a syntactic category to a word form is missing), a deduction is built interactively with the help from the system; when the deduction is complete, the missing syntactic category is added to the DB
-  	\item when a new synt. category is added, the system automatically builds parses which are made possible by the addition; the user checks the parses and accepts the correct ones; to the new cycle
-  \end{itemize} 
-  
-  * standard syntactic constructions (coordination, government relation, distant dependencies, etc.) can be extracted to tactics 
-    
-Examples:
+The proposed method of annotation requires a preliminary step of initial mapping of existing morphological tags to syntactic categories. The tagset used in the OpenCorpora project consists of 113 morphological tags and a number of auxilary tags like PNCT for punctuation, NUMB for numbers, etc. It is straightforward to assign the most simple syntactic categories to word forms based on their morphological features like part of speech, case, transitivity etc.
 
 \begin{table}[ht]
 \centering
@@ -168,32 +150,21 @@ PNCT       & n/n       & \textbf{\textless\textless} школа           \\
 PNCT       & n\textbackslash n      & злословия \textbf{\textgreater\textgreater} 
 \end{tabular}
 \end{table}    
-    
-Example 2. \textless\textless Школа злословия \textgreater\textgreater учит прикусить язык
-This sentence has 18 parses with the above mapping.
+  
+We adopt a ``layered'' approach of multimodal extensions of categorial grammar, which can be seen as a requirement to use the mininimal subset of inference rules where possible. This ensures that we obtain the simplest parses first and avoid use of the more expressive portions of the formalism unless strictly required. Another benefit of this strategy is the possibility to introduce a measure of parse complexity based on the rules used for deduction and the complexity of syntactic categories that were chosen for the word forms. Having an initial assignment, a limited set of parses is created automatically to serve as a basis for an iterative annotation process, consisting of the following steps. First, pick a partially parsed sentence, i.e. a sentence where some words lack an assignment of syntactic category licensing an acceptable parse. To fill in the gaps, a deduction is built interactively with assistance from the system, consisting of instant evaluation of variants and performing trivial steps of deduction in a fully automated manner. When the deduction is complete, the missing assignments are stored in the database. At the next step, an automatic analysis of the corpus is preformed to determine what new parses are made possible by the addition. The system may automatically produce the new parses, compute their structural complexity measure and propose an ordered list of parses for review. 
 
+A standard feature of proof assistant technology is the possibility to extract large portions of typical deductions into tactics. In our setting tactics can represent special syntactic constructs that frequently appear in the corpus and can be applied at a certain point in the deduction process. For instance, a diathetic construct like passive can be easily determined by an annotator on the basis of the meaning of a sentence, but it might require considerable effort to provide a correct formal encoding. Besides having access to morphological information in the corpus and the previous (partial) parses, tactics can use another tactics and encode high level syntactic information, which makes it a very powerful tool. Morever, if for some reason a syntactic construct need be given a different treatment, it is much easier to make changes to the corresponding tactics than to manually fix all incorrect parses, as the tactics are applied automatically and the updated parses are produced without manual intervention.
+  
 
 \section{Discussion}
 
-  * estimation of the number of syntactic categories (cf. CCGBank ca. 1200), subcategorization \\
-  
-  * estimation of the size of the sets of automatically parsed sentences after a form/category is added to DB (apparently, word frequency is important, but also sentence complexity) \\
-  
-  * estimation of the number of possible parses of a sentence (real/spurious ambiguity), also for variants of formalism with different expressivity (like associative vs. non-associative Lambek calculus). However, we are interested in obtaining a single canonical parse in a text, not all possible parses (which is the task for a parser, not for a corpus annotation tool) \\
-  
-  * proof tactics -- what syntactic constructions and annotation strategies can be automated by scripting (cf. tactics in Coq) \\
-  
-  * crowdsourcing is not applicable in our approach \\
-  
-  * what are the requirements for the annotators? Supposedly, not too high, since in our approach there will be much less decisions  to make as compared to the traditional approach, which would require lower qualification in the area of theoretical syntax. Also, a decent library of tactics can help a lot. \\
-  
-  * estimation of the speed of annotation process. Tentatively it should be possible to annotate a million word corpus in one year.\\
-  
-  * a library of tactics as a syntactic theory \\
-  
-  * a syntactic formalism (e.g. Lambek calculus with product, LC non-associative, with different sets of deduction rules) as a theory implemented in a proof assistant. The possibility of validation of parses against various formal theories of syntax, the possibility to analyze syntactic structure from the standpoint of expressivity of a formalism that validates a parse (estimation of syntactic complexity as deducibility in the particular formal theory); such information in a corpus is valuable data and it is proved infromation (cf. the question whether natural language is context-free, which was a long-standing problem, and the notion of mild context sensitivity by A. Joshi, such data can help get insights about these matters).
+Whereas OpenCorpora is a community effort, in our approach crowdsourcing is not applicable. However, the requirements for the annotators are not too high, since in our approach there will be much less decisions to make as compared to the traditional approach to annotation. A decent library of tactics encoding standard syntactic constructs can help a lot. It is yet to be determined as to what syntactic constructs and annotation strategies can be automated by scripting.
 
-\section{Conclusion}
+To assess enhancement of the annotation process a number of statistics has to be collected. An estimation of the number of syntactic categories in the final database is important (cf. ca. 1200 for CCGBank). Also estimates of the number of possible parses of a sentence (real and spurious ambiguity), including variants of a formalism of different expressivity (like associative vs. non-associative Lambek calculus), have to be made. It should be noted, however, that we are interested in obtaining a single canonical parse in a text and not all possible parses, therefore ambiguity is much less problematic for an annotation tool than for a parser.
+  
+Another promising area of application of logic-based syntactic annotation is the possibility to analyze syntactic structure from the standpoint of expressivity of a formalism that validates a particular parse. It is still an open area of investigation as to what expressivity is required for various subsystems of natural language and sound empirical data can help get insights about these matters.
+
+
 
 \printbibliography[resetnumbers=true]
 

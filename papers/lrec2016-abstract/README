@@ -1,7 +1,14 @@
-TODO
 
-OpenCorpora -- ISLRN, LRE Map
-CCGBank
+Это нужно будет при подаче абстракта:
+
+OpenCorpora    ISLRN 557-170-636-161-5
+CCGBank        ISRLN 181-921-208-336-7
+SynTagRus      ISLRN n/a (?)
+
+tagsets тоже можно в ISLRN заводить...
+
+
+TODO
 
 название для нас?
 дописать сравнение с подходом Хокенмайер-? про генерацию всего и pruning (то, что с Д. обсуждали)

@@ -30,7 +30,7 @@ public class GlossesView extends JPanel {
 
             JLabel tokenLabel = new JLabel(token);
             tokenLabel.setHorizontalAlignment(SwingConstants.LEFT);
-            tokenLabel.setFont(Defaults.NORMAL_FONT);
+            tokenLabel.setFont(Defaults.ARIAL_FONT);
             tokenLabel.setForeground(GLOSS_COLOR);
             add(tokenLabel);
 

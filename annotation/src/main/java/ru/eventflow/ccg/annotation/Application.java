@@ -29,6 +29,11 @@ public class Application {
             props.put("tooltipBackgroundColor", "255 255 204"); // light yellow
             props.put("tooltipCastShadow", "on");
             props.put("tooltipShadowSize", "1");
+            props.put("controlTextFont", "Arial plain 12");
+            props.put("systemTextFont", "Arial plain 12");
+            props.put("userTextFont", "Arial plain 12");
+            props.put("menuTextFont", "Arial plain 12");
+            props.put("subTextFont", "Arial plain 12");
 
             FastLookAndFeel.setCurrentTheme(props);
             UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");

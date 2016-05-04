@@ -84,7 +84,7 @@ public class MainView extends JPanel {
         button.setIcon(panel.getIcon());
         button.setMaximumSize(new Dimension(60, 22));
         button.setMinimumSize(new Dimension(60, 22));
-        button.setFont(Defaults.SMALL_FONT);
+        button.setFont(Defaults.ARIAL_FONT);
         button.addItemListener(new ToggleItemListener(panel));
         group.add(button);
 

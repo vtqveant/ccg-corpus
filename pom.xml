@@ -59,25 +59,13 @@
 
     <distributionManagement>
         <repository>
-            <id>eventflow-releases</id>
-            <url>http://nexus.eventflow.ru/nexus/content/repositories/eventflow-releases</url>
+            <id>eventflow-nexus</id>
+            <url>http://nexus.eventflow.ru/repository/maven-releases</url>
         </repository>
         <snapshotRepository>
-            <id>eventflow-snapshots</id>
-            <url>http://nexus.eventflow.ru/nexus/content/repositories/eventflow-snapshots</url>
+            <id>eventflow-nexus</id>
+            <url>http://nexus.eventflow.ru/repository/maven-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-
-    <repositories>
-        <repository>
-            <id>mvnsearch</id>
-            <url>http://www.mvnsearch.org/maven2</url>
-        </repository>
-        <repository>
-            <id>maven-central</id>
-            <name>Maven Central Repo</name>
-            <url>http://repo1.maven.org/maven2/</url>
-        </repository>
-    </repositories>
 
 </project>

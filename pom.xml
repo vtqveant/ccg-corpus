@@ -58,14 +58,14 @@
     </build>
 
     <distributionManagement>
-        <repository>
-            <id>eventflow-nexus</id>
-            <url>http://nexus.eventflow.ru/repository/maven-releases</url>
-        </repository>
         <snapshotRepository>
-            <id>eventflow-nexus</id>
-            <url>http://nexus.eventflow.ru/repository/maven-snapshots</url>
+            <id>crplab-artifactory</id>
+            <url>https://services.crplab.ru/artifactory/nlu</url>
         </snapshotRepository>
+        <repository>
+            <id>crplab-artifactory</id>
+            <url>https://services.crplab.ru/artifactory/nlu</url>
+        </repository>
     </distributionManagement>
 
 </project>

@@ -1,39 +1,32 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
+import ru.eventflow.ccg.annotation.ui.Defaults;
+
+import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
-public class AboutDialog extends JDialog implements WindowFocusListener {
-
-    private static final int WIDTH = 360;
-    private static final int HEIGHT = 200;
+public class AboutDialog extends AbstractDialog implements WindowFocusListener {
 
     private static final String HTML = "<html>" +
             "<div height=\"110\">" +
-            "Categorial Grammar Annotation for OpenCorpora<br/>" +
-            "<div align=\"right\"><font size=\"-2\"><i>Inspired by Mathlingvo</i></font></div>" +
+            "CCG Corpus Annotation Tool<br/>" +
             "</div>" +
             "<div align=\"right\"><font size=\"-2\">by Kosta Sokolov<br/>vtqveant@gmail.com</font></div></html>";
 
-    public AboutDialog(JFrame owner) {
-        super(owner);
-
-        setSize(WIDTH, HEIGHT);
-        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (screenSize.width / 2) - (WIDTH / 2);
-        int y = (screenSize.height / 2) - (HEIGHT / 2);
-        setLocation(x, y);
+    @Inject
+    public AboutDialog(final JFrame owner) {
+        super(owner, null, false);
 
         setUndecorated(true);
-        setAlwaysOnTop(true);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         addWindowFocusListener(this);
 
         JLabel label = new JLabel();
         label.setBackground(Color.LIGHT_GRAY);
         label.setText(HTML);
+        label.setFont(Defaults.SMALL_FONT);
 
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));

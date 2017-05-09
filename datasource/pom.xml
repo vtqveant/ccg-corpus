@@ -15,7 +15,7 @@
     <name>CCG Corpus :: Datasource</name>
 
     <properties>
-        <openjpa.version>2.3.0</openjpa.version>
+        <openjpa.version>2.4.1</openjpa.version>
     </properties>
 
     <dependencies>
@@ -40,34 +40,27 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.openjpa</groupId>
-                <artifactId>openjpa-maven-plugin</artifactId>
-                <version>2.2.0</version>
-                <configuration>
-                    <includes>**/model/**/*.class</includes>
-                    <addDefaultConstructor>true</addDefaultConstructor>
-                    <enforcePropertyRestrictions>true</enforcePropertyRestrictions>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.2</version>
                 <executions>
                     <execution>
-                        <id>enhancer</id>
                         <phase>process-classes</phase>
+                        <configuration>
+                            <tasks>
+                                <taskdef name="openjpac" classname="org.apache.openjpa.ant.PCEnhancerTask" classpathref="maven.compile.classpath"/>
+                                <openjpac>
+                                    <classpath refid="maven.compile.classpath"/>
+                                </openjpac>
+                            </tasks>
+                        </configuration>
                         <goals>
-                            <goal>enhance</goal>
+                            <goal>run</goal>
                         </goals>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.openjpa</groupId>
-                        <artifactId>openjpa</artifactId>
-                        <!-- set the version to be the same as the level in your runtime -->
-                        <version>${openjpa.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
-
     </build>
 
 </project>

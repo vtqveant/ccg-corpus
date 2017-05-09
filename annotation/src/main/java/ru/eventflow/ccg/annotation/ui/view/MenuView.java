@@ -1,17 +1,17 @@
 package ru.eventflow.ccg.annotation.ui.view;
 
-import ru.eventflow.ccg.annotation.ui.Settings;
-
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 
 public class MenuView extends JMenuBar {
 
     public static final String ITEM_FORMAT = "%-20s";
-    private static final ImageIcon TICK_ICON = icon("tick.gif");
     private static final ImageIcon PLACEHOLDER_ICON = icon("placeholder.png");
+    private final JMenuItem openMenuItem;
+    private final JMenuItem saveMenuItem;
+    private final JMenuItem settingsMenuItem;
     private final JMenuItem exitMenuItem;
-    private final SettingMenuItem glossesMenuItem;
-    private final SettingMenuItem statusBarMenuItem;
     private final JMenuItem aboutMenuItem;
 
 
@@ -19,9 +19,49 @@ public class MenuView extends JMenuBar {
         setBorder(BorderFactory.createEmptyBorder());
 
         JMenu fileMenu = new JMenu("File");
-        addDisabledMenuItem(fileMenu, "Settings");
+        openMenuItem = addMenuItem(fileMenu, "Open Project");
+        saveMenuItem = addMenuItem(fileMenu, "Save");
+        settingsMenuItem = addMenuItem(fileMenu, "Settings");
         exitMenuItem = addMenuItem(fileMenu, "Exit");
         add(fileMenu);
+
+
+        settingsMenuItem.setAction(new Action() {
+            @Override
+            public Object getValue(String key) {
+                return null;
+            }
+
+            @Override
+            public void putValue(String key, Object value) {
+
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return false;
+            }
+
+            @Override
+            public void setEnabled(boolean b) {
+
+            }
+
+            @Override
+            public void addPropertyChangeListener(PropertyChangeListener listener) {
+
+            }
+
+            @Override
+            public void removePropertyChangeListener(PropertyChangeListener listener) {
+
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
         JMenu editMenu = new JMenu("Edit");
         addDisabledMenuItem(editMenu, "Undo", icon("undo.png"));
@@ -32,30 +72,6 @@ public class MenuView extends JMenuBar {
         addDisabledMenuItem(editMenu, "Paste");
         addDisabledMenuItem(editMenu, "Delete");
         add(editMenu);
-
-        JMenu viewMenu = new JMenu("View");
-        glossesMenuItem = new SettingMenuItem("Glosses", true, Settings.GLOSSES);
-        viewMenu.add(glossesMenuItem);
-        statusBarMenuItem = new SettingMenuItem("Status Bar", true, Settings.STATUSBAR);
-        viewMenu.add(statusBarMenuItem);
-        add(viewMenu);
-
-        // like in CoqIDE
-        JMenu navigationMenu = new JMenu("Navigation");
-        addDisabledMenuItem(navigationMenu, "Forward", icon("forward.png"));
-        addDisabledMenuItem(navigationMenu, "Backward", icon("backward.png"));
-        addDisabledMenuItem(navigationMenu, "Go to");
-        addDisabledMenuItem(navigationMenu, "Start");
-        addDisabledMenuItem(navigationMenu, "End");
-        addDisabledMenuItem(navigationMenu, "Interrupt");
-        addDisabledMenuItem(navigationMenu, "Hide");
-        add(navigationMenu);
-
-        JMenu tacticsMenu = new JMenu("Tactics");
-        addDisabledMenuItem(tacticsMenu, "simpl");
-        addDisabledMenuItem(tacticsMenu, "reflexivity");
-        addDisabledMenuItem(tacticsMenu, "admit");
-        add(tacticsMenu);
 
         JMenu helpMenu = new JMenu("Help");
         addDisabledMenuItem(helpMenu, "Manual");
@@ -91,42 +107,19 @@ public class MenuView extends JMenuBar {
         return exitMenuItem;
     }
 
-    public SettingMenuItem getGlossesMenuItem() {
-        return glossesMenuItem;
-    }
-
-    public SettingMenuItem getStatusBarMenuItem() {
-        return statusBarMenuItem;
-    }
-
     public JMenuItem getAboutMenuItem() {
         return aboutMenuItem;
     }
 
-    /**
-     * to emulate the behaviour of the ugly JCheckBoxMenuItem
-     */
-    public class SettingMenuItem extends JMenuItem {
-        private boolean checked;
-        private Settings setting;
+    public JMenuItem getSaveMenuItem() {
+        return saveMenuItem;
+    }
 
-        public SettingMenuItem(String text, boolean checked, Settings setting) {
-            super(String.format(ITEM_FORMAT, text));
-            this.setting = setting;
-            setChecked(checked);
-        }
+    public JMenuItem getOpenMenuItem() {
+        return openMenuItem;
+    }
 
-        public Settings getSetting() {
-            return setting;
-        }
-
-        public boolean isChecked() {
-            return checked;
-        }
-
-        public void setChecked(boolean checked) {
-            this.checked = checked;
-            setIcon(checked ? TICK_ICON : PLACEHOLDER_ICON);
-        }
+    public JMenuItem getSettingsMenuItem() {
+        return settingsMenuItem;
     }
 }

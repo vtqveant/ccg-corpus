@@ -3,19 +3,19 @@ package ru.eventflow.ccg.annotation;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.jtattoo.plaf.fast.FastLookAndFeel;
-import ru.eventflow.ccg.annotation.ui.presenter.MainPresenter;
-import ru.eventflow.ccg.annotation.ui.presenter.MenuPresenter;
-import ru.eventflow.ccg.annotation.ui.presenter.Presenter;
+import ru.eventflow.ccg.annotation.ui.presenter.*;
 import ru.eventflow.ccg.annotation.ui.view.MainView;
 import ru.eventflow.ccg.annotation.ui.view.MenuView;
+import ru.eventflow.ccg.annotation.ui.view.OpenDialog;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class Application {
 
-    private static final Injector injector = Guice.createInjector(new AnnotationModule());
+    private static final Injector injector = Guice.createInjector(new GUIModule());
     private static final ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("images/corpus.png"));
 
     public static void main(String[] args) {
@@ -42,6 +42,8 @@ public class Application {
 
             final Presenter<MainView> mainPresenter = injector.getInstance(MainPresenter.class);
             final Presenter<MenuView> menuPresenter = injector.getInstance(MenuPresenter.class);
+
+            Arrays.asList(AboutDialogPresenter.class, SettingsDialogPresenter.class, OpenDialogPresenter.class).forEach(injector::getInstance);
 
             SwingUtilities.invokeLater(new Runnable() {
                 @Override

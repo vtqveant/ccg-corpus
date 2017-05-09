@@ -14,7 +14,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <compiler.version>1.7</compiler.version>
+        <compiler.version>1.8</compiler.version>
     </properties>
 
     <modules>
@@ -26,19 +26,19 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.0.2</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.21</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.0.2</version>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.9</version>
+            <version>4.10</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -56,16 +56,5 @@
             </plugin>
         </plugins>
     </build>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>crplab-artifactory</id>
-            <url>https://services.crplab.ru/artifactory/nlu</url>
-        </snapshotRepository>
-        <repository>
-            <id>crplab-artifactory</id>
-            <url>https://services.crplab.ru/artifactory/nlu</url>
-        </repository>
-    </distributionManagement>
 
 </project>
